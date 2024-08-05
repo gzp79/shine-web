@@ -1,0 +1,69 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/*customize daisyui*/
+@layer component {
+    html:has(.drawer-toggle:checked) {
+        scrollbar-gutter: auto;
+    }
+
+    .drawer-toggle:checked ~ .drawer-side {
+        pointer-events: auto;
+        visibility: visible;
+        overflow-y: hidden;
+    }
+}
+
+.settings {
+    @apply m-2 h-min w-1/2 max-w-lg rounded border bg-base-200 p-2;
+    &-label {
+        @apply label ml-2;
+    }
+    &-key-value {
+        @apply mb-4 grid grid-cols-2 gap-1;
+    }
+}
+
+@layer utilities {
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        overscroll-behavior-y: none;
+    }
+
+    .grid {
+        &-cols-1-auto {
+            grid-template-columns: repeat(1, max-content);
+        }
+        &-cols-2-auto {
+            grid-template-columns: repeat(2, max-content);
+        }
+        &-cols-3-auto {
+            grid-template-columns: repeat(3, max-content);
+        }
+        &-cols-4-auto {
+            grid-template-columns: repeat(4, max-content);
+        }
+        &-cols-5-auto {
+            grid-template-columns: repeat(5, max-content);
+        }
+        &-cols-6-auto {
+            grid-template-columns: repeat(6, max-content);
+        }
+    }
+}
+
+.app {
+    @apply flex flex-col;
+
+    height: 100lvh;
+    width: 100lvw;
+    max-height: 100lvh;
+    max-width: 100lvw;
+
+    overflow: hidden;
+}
