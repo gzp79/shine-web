@@ -1,3 +1,12 @@
 {
-    "title": "Debug beállítások"
+    "title": "Beállítások",
+    "enableClientLogs": "Kliens naplók engedélyezése",
+    "language": "Nyelv",
+    "theme": "Téma",
+    "themes": {
+        "light": "Világos",
+        "dark": "Sötét",
+        "system": "Alapértelmezett"
+    },
+    "backToRoot": "Vissza a gyökérhez"
 }

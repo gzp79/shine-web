@@ -1,3 +1,12 @@
 {
-    "title": "Debug settings"
+    "title": "Settings",
+    "enableClientLogs": "Enable client logs",
+    "language": "Language",
+    "theme": "Theme",
+    "themes": {
+        "light": "Light",
+        "dark": "Dark",
+        "system": "Default"
+    },
+    "backToRoot": "Back to the root"
 }

@@ -20,20 +20,20 @@
     <fieldset class="settings self-center">
         <legend class="settings-label">{$t('tools.title')}</legend>
         <div class="settings-key-value">
-            <span class="label">Enable client logs</span>
+            <span class="label">{$t('tools.enableClientLogs')}</span>
             <input
                 type="checkbox"
                 class="checkbox-primary checkbox justify-self-center"
                 disabled={!browser}
                 bind:checked={logEnabled}
             />
-            <span class="label mr-4">Theme</span>
+            <span class="label mr-4">{$t('tools.theme')}</span>
             <select class="select select-bordered select-primary max-w-xs" bind:value={theme.current}>
-                <option value="light">Light</option>
-                <option value="dark">Dark</option>
-                <option value="system">Default</option>
+                <option value="light">{$t('tools.themes.light')}</option>
+                <option value="dark">{$t('tools.themes.dark')}</option>
+                <option value="system">{$t('tools.themes.system')}</option>
             </select>
-            <span class="label mr-4">Language</span>
+            <span class="label mr-4">{$t('tools.language')}</span>
             <select class="select select-bordered select-primary max-w-xs" bind:value={language.current}>
                 {#each langList as value}
                     <option {value} selected={language.current === value}>{$t(`lang.${value}`)}</option>
@@ -41,5 +41,5 @@
             </select>
         </div>
     </fieldset>
-    <a href="/">Back to the root</a>
+    <a href="/">{ $t('tools.backToRoot') }</a>
 </div>

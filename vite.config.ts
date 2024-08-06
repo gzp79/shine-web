@@ -14,9 +14,6 @@ if (fs.existsSync('certificates/cert.key')) {
     throw new Error('No certificates were found, using http for serving');
 }
 
-console.log('To enable log messages, run "localStorage.debug = \'app:*\';" in the browser console');
-console.log('To disable log messages, run "localStorage.removeItem(\'debug\');" in the browser console');
-
 export default defineConfig({
     plugins: [sveltekit()],
     server: {

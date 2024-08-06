@@ -7,7 +7,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 
     event.locals.theme = theme;
 
-    // Modify the response
     const response = await resolve(event, {
         transformPageChunk: ({ html }) => {
             const themeAttribute = theme.theme === 'system' ? '' : `data-theme=${event.locals.theme.theme}`;
