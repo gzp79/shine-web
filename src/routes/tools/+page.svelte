@@ -1,25 +1,23 @@
 <script lang="ts">
     import { browser } from '$app/environment';
     import { langList, t, languageStore } from '$lib/i18n/i18n.svelte';
-    import { themeStore } from '$lib/theme/themeStore.svelte';
+    import { themeStore } from '$lib/theme/theme.svelte';
 
     let logEnabled = $state(browser ? !!localStorage?.debug : false);
-    let currentLanguage = languageStore();
+    let language = languageStore();
     let theme = themeStore();
 
     $effect(() => {
         if (logEnabled) {
-            console.log('Enable logs');
             localStorage.debug = 'app:*';
         } else {
-            console.log('Disable logs');
             delete localStorage.debug;
         }
     });
 </script>
 
-<div class="bg-b flex h-screen justify-center">
-    <fieldset class="settings">
+<div class="bg-b flex h-screen flex-col">
+    <fieldset class="settings self-center">
         <legend class="settings-label">{$t('tools.title')}</legend>
         <div class="settings-key-value">
             <span class="label">Enable client logs</span>
@@ -30,21 +28,18 @@
                 bind:checked={logEnabled}
             />
             <span class="label mr-4">Theme</span>
-            <select class="select select-bordered select-primary max-w-xs" bind:value={theme.value}>
+            <select class="select select-bordered select-primary max-w-xs" bind:value={theme.current}>
                 <option value="light">Light</option>
                 <option value="dark">Dark</option>
                 <option value="system">Default</option>
             </select>
             <span class="label mr-4">Language</span>
-            <select
-                class="select select-bordered select-primary max-w-xs"
-                bind:value={currentLanguage.current}
-            >
+            <select class="select select-bordered select-primary max-w-xs" bind:value={language.current}>
                 {#each langList as value}
-                    <option {value} selected={currentLanguage.current === value}>{$t(`lang.${value}`)}</option
-                    >
+                    <option {value} selected={language.current === value}>{$t(`lang.${value}`)}</option>
                 {/each}
             </select>
         </div>
     </fieldset>
+    <a href="/">Back to the root</a>
 </div>
