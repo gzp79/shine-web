@@ -1,0 +1,34 @@
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Permissions-Policy: document-domain=()
+  Content-Security-Policy: worker-src 'none'; script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' challenges.cloudflare.com static.cloudflareinsights.com; frame-ancestors 'none';
+
+# notes on security policy
+#   script-src:
+#     unsafe-inline - required for inline js scripts and on* event handlers
+#     wasm-unsafe-eval - required for wasm compilation
+
+/static/*
+  Cache-Control: public, immutable, max-age=31536000
+  ! Content-Security-Policy
+  ! Permissions-Policy
+
+# to be removed into some large file storage
+/content/*
+  Cache-Control: public, immutable, max-age=31536000
+  ! Content-Security-Policy
+  ! Permissions-Policy  
+
+/*.wasm
+  Content-Type: application/wasm
+
+/*.js
+  Content-Type: application/javascript
+
+/*.css
+  Content-Type: text/css
+
+/*.html
+  Content-Type: text/html
