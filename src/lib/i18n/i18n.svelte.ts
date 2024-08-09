@@ -20,7 +20,7 @@ function defaultBrowserLanguage() {
     return `${navigator.language}`.toLowerCase();
 }
 
-function createLoader(key: string, routes?: string[]) {
+function createLoader(key: string, routes?: RegExp[]) {
     return langList.map((locale) => ({
         locale: locale,
         key: key,
@@ -34,7 +34,7 @@ const config: Config = {
         level: dev ? 'warn' : 'error'
     },
     translations: langList.reduce((r, v) => ({ ...r, ...{ [v]: { lang } } }), {}),
-    loaders: [...createLoader('common', ['/']), ...createLoader('tools')]
+    loaders: [...createLoader('common', [/.*/]), ...createLoader('tools')]
 };
 
 const { t, locale, locales, translations, loadTranslations, setLocale, setRoute } = new i18n(config);
