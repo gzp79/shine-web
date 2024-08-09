@@ -65,30 +65,30 @@ jobs:
               run: |
                   echo "**Deployment url**: <${DEPLOYMENT_URL}>" >> $GITHUB_STEP_SUMMARY
 
-            # - name: Start web server
-            #   uses: JarvusInnovations/background-action@v1
+            - name: Start web server
+              uses: JarvusInnovations/background-action@v1
+              with:
+                  run: |
+                      npm run preview
+                  log-output: true
+                  wait-on: |
+                      https://localhost:4443
+                  wait-for: 2m
+
+            # - name: Test
+            #   run: |
+            #     sudo echo "127.0.0.1 local-web.scytta.com" | sudo tee -a /etc/hosts
+            #     npx playwright install --with-deps
+            #     npm run test:setup
+            #     npm run test
+            #     npm run test:report
+
+            # - name: Publish test results
+            #   if: github.ref == 'refs/heads/master' || steps.test.conclusion == 'failure'
+            #   uses: actions/upload-artifact@v4
             #   with:
-            #       run: |
-            #           npm run preview
-            #       log-output: true
-            #       wait-on: |
-            #           https://localhost:4443
-            #       wait-for: 2m
-
-        # - name: Test
-        #   run: |
-        #     sudo echo "127.0.0.1 local-web.scytta.com" | sudo tee -a /etc/hosts
-        #     npx playwright install --with-deps
-        #     npm run test:setup
-        #     npm run test
-        #     npm run test:report
-
-        # - name: Publish test results
-        #   if: github.ref == 'refs/heads/master' || steps.test.conclusion == 'failure'
-        #   uses: actions/upload-artifact@v4
-        #   with:
-        #     name: test-reports
-        #     path: ./reports
+            #     name: test-reports
+            #     path: ./reports
 
     deploy:
         needs: build
