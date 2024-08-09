@@ -1,24 +1,24 @@
 name: Cleanup Outdated CF
 
-on: 
-  workflow_dispatch:
-  schedule:
-    - cron:  '0 0 * * *'
+on:
+    workflow_dispatch:
+    schedule:
+        - cron: '0 0 * * *'
 
 jobs:
-  cleanup_job:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Delete outdated website deployments
-        run: |
-          expired_before=$(date -d '1 month ago' +%s)
-          deployments=$(curl -X GET "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/pages/projects/shine-web/deployments" \
-            -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
-            -H "Accept: application/json")
-          id_list=$(echo $deployments | jq -r --argjson eb "$expired_before" '.result[] | select((.created_on | sub("\\.[0-9]+Z"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) <= $eb) | .id')
-          for id in $id_list; do
-            echo "Deleting deployment $id"
-            curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/pages/projects/shine-web/deployments/$id" \
-              -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
-              -H "Accept: application/json"
-          done
+    cleanup_job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Delete outdated website deployments
+              run: |
+                  expired_before=$(date -d '1 month ago' +%s)
+                  deployments=$(curl -X GET "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/pages/projects/shine-web/deployments" \
+                    -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+                    -H "Accept: application/json")
+                  id_list=$(echo $deployments | jq -r --argjson eb "$expired_before" '.result[] | select((.created_on | sub("\\.[0-9]+Z"; "Z") | strptime("%Y-%m-%dT%H:%M:%SZ") | mktime) <= $eb) | .id')
+                  for id in $id_list; do
+                    echo "Deleting deployment $id"
+                    curl -X DELETE "https://api.cloudflare.com/client/v4/accounts/${{ secrets.CLOUDFLARE_ACCOUNT_ID }}/pages/projects/shine-web/deployments/$id" \
+                      -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
+                      -H "Accept: application/json"
+                  done

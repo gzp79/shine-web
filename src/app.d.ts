@@ -3,7 +3,7 @@ declare global {
         interface Locals {
             theme: ThemeProps;
         }
-     
+
         interface Platform {
             env: {
                 COUNTER: DurableObjectNamespace;

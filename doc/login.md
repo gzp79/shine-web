@@ -16,7 +16,7 @@ sequenceDiagram
     Site->>Browser: index.html
     deactivate Site
 
-    alt Has session 
+    alt Has session
         Browser->>Identity: Get user info
         activate Identity
         Identity->>Browser: User info
@@ -37,20 +37,20 @@ sequenceDiagram
             Note right of Browser: Restart form beginning
         else No token
             Browser->>Identity: Login with token
-            activate Identity            
+            activate Identity
             Identity->>Browser: Redirect to "/login?prompt=true"
             deactivate Identity
             User->>Browser: Login with ...
             Browser->>Identity: Login with ...
-            activate Identity  
+            activate Identity
             #create participant External
             Identity->>Browser: Redirect to External
-            deactivate Identity            
+            deactivate Identity
             Browser->>External: Redirect
-            activate External              
+            activate External
             User->>External: Login
             External->>Identity: Authorize
-            deactivate External  
+            deactivate External
             activate Identity
             Identity->>Browser: Redirect to "/"
             deactivate Identity

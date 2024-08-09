@@ -42,4 +42,3 @@ export function setCookie(key: string, value: string) {
 export function deleteCookie(key: string) {
     updateCookie(key, '', new Date(0));
 }
-

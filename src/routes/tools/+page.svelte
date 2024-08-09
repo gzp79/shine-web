@@ -41,5 +41,5 @@
             </select>
         </div>
     </fieldset>
-    <a href="/">{ $t('tools.backToRoot') }</a>
+    <a href="/">{$t('tools.backToRoot')}</a>
 </div>
