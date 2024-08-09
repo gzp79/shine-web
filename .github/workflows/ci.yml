@@ -1,0 +1,107 @@
+name: Build and Test
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+# cancel outdated builds
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: recursive
+    
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18.x
+
+    - name: Pre-build
+      run: |
+        npm ci --legacy-peer-deps
+        npm run mkcert
+        npm run lint
+        npm run check
+    
+    - name: Build
+      run: |
+        npm run build
+
+    # Upload the release artifact before test would modify anything
+    - name: Upload website artifacts
+      if: github.ref == 'refs/heads/master'
+      uses: actions/upload-artifact@v4
+      with:
+        name: website-artifacts
+        path: .svelte-kit/cloudflare
+
+    # Create a preview 
+    # Consider if this temp site should be used for testing
+    - name: Publish website to preview site
+      if: github.event_name == 'pull_request'
+      uses: cloudflare/wrangler-action@v3
+      with:
+        apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        projectName: shine-web
+        branch:  ${{ github.head_ref || github.ref_name }}
+        directory: .svelte-kit/cloudflare
+        
+    - name: Start web server
+      uses: JarvusInnovations/background-action@v1
+      with:
+        run: |
+          npm run preview
+        log-output: true
+        wait-on: |
+          https://localhost:4443        
+        wait-for: 2m
+
+    # - name: Test
+    #   run: |
+    #     sudo echo "127.0.0.1 local-web.scytta.com" | sudo tee -a /etc/hosts
+    #     npx playwright install --with-deps
+    #     npm run test:setup
+    #     npm run test
+    #     npm run test:report
+
+    # - name: Publish test results
+    #   if: github.ref == 'refs/heads/master' || steps.test.conclusion == 'failure'
+    #   uses: actions/upload-artifact@v4
+    #   with:
+    #     name: test-reports
+    #     path: ./reports
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Download website artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: website-artifacts
+          path: ./dist
+
+      - name: Publish website to site
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: shine-web
+          directory: ./dist
