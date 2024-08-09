@@ -62,7 +62,8 @@ jobs:
             - name: Preview Url
               env:
                 DEPLOYMENT_URL: ${{ steps.preview_deploy.outputs.deployment-url }}
-                run: echo '**Deployment url**: <${DEPLOYMENT_URL}>' >> $GITHUB_STEP_SUMMARY
+              run: |
+                echo "**Deployment url**: <${DEPLOYMENT_URL}>" >> $GITHUB_STEP_SUMMARY
 
             # - name: Start web server
             #   uses: JarvusInnovations/background-action@v1
