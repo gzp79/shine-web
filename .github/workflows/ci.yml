@@ -50,6 +50,7 @@ jobs:
             # Create a preview
             # Consider if this temp site should be used for testing
             - name: Publish website to preview site
+              id: preview_deploy
               if: github.event_name == 'pull_request'
               uses: cloudflare/wrangler-action@v3
               with:
@@ -57,6 +58,11 @@ jobs:
                   accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
                   workingDirectory: .svelte-kit/cloudflare
                   command: pages deploy --project-name=shine-web --branch=${{ github.head_ref || github.ref_name }} .
+
+            - name: Preview Url
+              env:
+                DEPLOYMENT_URL: ${{ steps.preview_deploy.outputs.deployment-url }}
+                run: echo '**Deployment url**: <${DEPLOYMENT_URL}>' >> $GITHUB_STEP_SUMMARY
 
             # - name: Start web server
             #   uses: JarvusInnovations/background-action@v1

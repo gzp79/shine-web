@@ -1,3 +1,9 @@
 {
-    "cSpell.words": ["daisyui", "tailwindcss"]
+    "cSpell.words": [
+        "daisyui",
+        "tailwindcss"
+    ],
+    "cSpell.ignorePaths": [
+        "/static/_headers"
+    ]
 }
