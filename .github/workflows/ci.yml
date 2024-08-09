@@ -55,9 +55,8 @@ jobs:
               with:
                   apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
                   accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-                  projectName: shine-web
-                  branch: ${{ github.head_ref || github.ref_name }}
-                  directory: .svelte-kit/cloudflare
+                  workingDirectory: .svelte-kit/cloudflare
+                  command: pages publish public --project-name=shine-web --branch=${{ github.head_ref || github.ref_name }}
 
             # - name: Start web server
             #   uses: JarvusInnovations/background-action@v1
@@ -104,4 +103,4 @@ jobs:
                   apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
                   accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
                   projectName: shine-web
-                  directory: ./dist
+                  workingDirectory: ./dist
