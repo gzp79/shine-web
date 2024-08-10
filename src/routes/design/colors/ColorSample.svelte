@@ -12,7 +12,7 @@
 
     onMount(() => {
         if (divRef) {
-            const   computedStyle = getComputedStyle(divRef);
+            const computedStyle = getComputedStyle(divRef);
             const backgroundColor = computedStyle.backgroundColor;
 
             const context = document.createElement('canvas')?.getContext('2d');
