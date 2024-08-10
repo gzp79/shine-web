@@ -5,7 +5,8 @@
         {
             title: 'Atoms',
             items: [
-                { title: 'Cards', href: 'card' },
+                { title: 'Colors', href: 'colors' },
+                { title: 'Cards', href: 'cards' },
                 { title: 'Key Value table', href: 'key-value-table' },
                 { title: 'Styled SVG', href: 'svg' },
                 { title: 'Close button', href: 'close_button' },
@@ -18,7 +19,6 @@
         {
             title: 'Templates',
             items: [
-                { title: 'Colors', href: 'colors' },
                 { title: 'Icons', href: 'icons' },
                 { title: 'Loadings', href: 'loadings' },
                 { title: 'Styled SVG', href: 'svg' },
