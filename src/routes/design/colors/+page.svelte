@@ -1,6 +1,6 @@
 <script lang="ts">
     import { colorList } from '$components/types';
-    import ColorSample from './ColorSample.svelte';
+    import ColorSample from './_colorSample.svelte';
 </script>
 
 <div class="flex flex-wrap justify-center gap-2">

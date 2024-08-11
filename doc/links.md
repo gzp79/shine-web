@@ -13,6 +13,7 @@
     -   <https://www.svgrepo.com/>
     -   <https://lineicons.com/free-icons>
     -   <https://uxwing.com/?s=firefox>
+    -   <https://github.com/edent/SuperTinyIcons>
 -   dev tools
     -   [Svg path editor](https://yqnn.github.io/svg-path-editor/)
     -   [Lots of css tools](https://dev.to/lissy93/super-useful-css-resources-1ba)

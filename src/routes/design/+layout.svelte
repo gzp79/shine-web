@@ -6,6 +6,8 @@
             title: 'Atoms',
             items: [
                 { title: 'Colors', href: 'colors' },
+                { title: 'Buttons', href: 'buttons' },
+                { title: 'Icons', href: 'icons' },
                 { title: 'Cards', href: 'cards' },
                 { title: 'Key Value table', href: 'key-value-table' },
                 { title: 'Styled SVG', href: 'svg' },
@@ -23,7 +25,7 @@
                 { title: 'Loadings', href: 'loadings' },
                 { title: 'Styled SVG', href: 'svg' },
                 { title: 'Close button', href: 'close_button' },
-                { title: 'Buttons', href: 'buttons' },
+
                 { title: 'Toggle', href: 'toggle' },
                 { title: 'Tooltip', href: 'tooltip' },
                 { title: 'Circle menu', href: 'circle_menu' }

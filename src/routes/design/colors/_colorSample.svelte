@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { colorBgMap, colorTextContentMap, type Color } from '$components/types';
+    import { colorMaps, type Color } from '$components/types';
     import { onMount } from 'svelte';
 
     interface Props {
@@ -32,8 +32,8 @@
     });
 </script>
 
-<div bind:this={divRef} class="m-2 flex h-24 w-24 items-center justify-center rounded-lg border {colorBgMap[color]}">
-    <p class="text-center {colorTextContentMap[color]}">Content</p>
+<div bind:this={divRef} class="m-2 flex h-24 w-24 items-center justify-center rounded-lg border {colorMaps.bg[color]}">
+    <p class="text-center {colorMaps.textContent[color]}">Content</p>
 </div>
 <p class="text-center">{color}</p>
 <p class="text-center">{colorValue}</p>

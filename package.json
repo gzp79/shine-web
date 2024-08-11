@@ -53,6 +53,7 @@
     "dependencies": {
         "debug": "^4.3.6",
         "runed": "^0.15.0",
-        "sveltekit-i18n": "^2.4.2"
+        "sveltekit-i18n": "^2.4.2",
+        "tailwind-merge": "^2.5.0"
     }
 }
