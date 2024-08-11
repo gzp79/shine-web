@@ -65,15 +65,15 @@ jobs:
               run: |
                   echo "**Deployment url**: <${DEPLOYMENT_URL}>" >> $GITHUB_STEP_SUMMARY
 
-            - name: Start web server
-              uses: JarvusInnovations/background-action@v1
-              with:
-                  run: |
-                      npm run preview
-                  log-output: true
-                  wait-on: |
-                      https://localhost:4443
-                  wait-for: 2m
+            # - name: Start web server
+             # uses: JarvusInnovations/background-action@v1
+             # with:
+             #     run: |
+             #         npm run preview
+             #     log-output: true
+             #     wait-on: |
+             #         https://localhost:4443
+             #     wait-for: 2m
 
             # - name: Test
             #   run: |
