@@ -3,7 +3,7 @@
 @import 'tailwindcss/utilities';
 
 /*customize daisyui*/
-@layer utilities {
+@layer components {
     html:has(.drawer-toggle:checked) {
         scrollbar-gutter: auto;
     }
@@ -12,6 +12,25 @@
         pointer-events: auto;
         visibility: visible;
         overflow-y: auto;
+    }
+
+    /* similar to collapse-rev-arrow, but arrow direction is reversed */
+    .collapse-rev-arrow > .collapse-title:after {
+        @apply absolute block h-2 w-2 translate-y-[-100%] rotate-[225deg] transition-all ease-out;
+        transition-duration: 0.2s;
+        top: 1.9rem;
+        inset-inline-end: 1.4rem;
+        content: '';
+        transform-origin: 75% 75%;
+        box-shadow: 2px 2px;
+        pointer-events: none;
+    }
+    .collapse[open].collapse-rev-arrow > .collapse-title:after,
+    .collapse-open.collapse-rev-arrow > .collapse-title:after,
+    .collapse-rev-arrow:focus:not(.collapse-close) > .collapse-title:after,
+    .collapse-rev-arrow:not(.collapse-close) > input[type='checkbox']:checked ~ .collapse-title:after,
+    .collapse-rev-arrow:not(.collapse-close) > input[type='radio']:checked ~ .collapse-title:after {
+        @apply translate-y-[-50%] rotate-[45deg];
     }
 }
 
@@ -62,6 +81,8 @@
 
     height: 100lvh;
     width: 100lvw;
+    max-height: 100lvh;
+    max-width: 100lvw;
 
     overflow: hidden;
 }

@@ -79,6 +79,12 @@ export async function loadLanguage(url: URL, languageProps: Maybe<LanguageProps>
     await setRoute(i18n.route);
 }
 
+export function refreshLanguage() {
+    let loc = getCookie('lang') ?? defaultBrowserLanguage();
+    loc = getSupportedLocale(loc);
+    locale.set(loc);
+}
+
 export function languageStore() {
     const rune = new Store(locale);
 
