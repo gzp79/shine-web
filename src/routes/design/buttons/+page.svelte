@@ -2,7 +2,7 @@
     import Select from '$components/settings/Select.svelte';
     import Button from '$components/Button.svelte';
     import Card from '$components/Card.svelte';
-    import { colorList } from '$components/types';
+    import { colorList, sizeList } from '$components/types';
     import CheckBox from '$components/settings/CheckBox.svelte';
     import { Google, Twitter, Discord } from '$components/icons/idps';
     import { Chrome } from '$components/icons/clients';
@@ -40,62 +40,76 @@
 {#snippet settings()}
     <Select label="Color" options={colorList} bind:value={color} />
     <Select label="Icon" options={iconList} bind:value={icon} />
-    <!-- <IconShapeInput label="Icon" value=icon/> -->
     <CheckBox label="Outline" bind:value={outline} />
     <CheckBox label="Disabled" bind:value={disabled} />
 {/snippet}
 
-<div class="w-min-content self-center">
+<div class="flex flex-wrap justify-center gap-2">
     <Card caption="Button" variant="fieldset">
-        <div class="grid-cols-3-auto grid w-fit gap-4">
-            <Button size="xs" icon={iconComp[icon]} {color} {outline} {disabled} {onclick} />
-            <Button size="xs" label="Button-xs" {color} {outline} {disabled} {onclick} />
-            <Button size="xs" label="Button-xs" icon={iconComp[icon]} {color} {outline} {disabled} {onclick} />
-            <Button size="sm" icon={iconComp[icon]} {color} {outline} {disabled} {onclick} />
-            <Button size="sm" label="Button-sm" {color} {outline} {disabled} {onclick} />
-            <Button size="sm" label="Button-sm" icon={iconComp[icon]} {color} {outline} {disabled} {onclick} />
-            <Button size="md" icon={iconComp[icon]} {color} {outline} {disabled} {onclick} />
-            <Button size="md" label="Button-md" {color} {outline} {disabled} {onclick} />
-            <Button size="md" label="Button-md" icon={iconComp[icon]} {color} {outline} {disabled} {onclick} />
-            <Button size="lg" icon={iconComp[icon]} {color} {outline} {disabled} {onclick} />
-            <Button size="lg" label="Button-lg" {color} {outline} {disabled} {onclick} />
-            <Button size="lg" label="Button-lg" icon={iconComp[icon]} {color} {outline} {disabled} {onclick} />
+        <div class="flex flex-col items-start gap-2">
+            {#each sizeList as size}
+                <Button {size} icon={iconComp[icon]} {color} {outline} {disabled} {onclick} />
+            {/each}
+        </div>
+    </Card>
+    <Card caption="Button" variant="fieldset">
+        <div class="flex flex-col items-start gap-2">
+            {#each sizeList as size}
+                <Button {size} label="Button-xs" {color} {outline} {disabled} {onclick} />
+            {/each}
+        </div>
+    </Card>
+    <Card caption="Button" variant="fieldset">
+        <div class="flex flex-col items-start gap-2">
+            {#each sizeList as size}
+                <Button {size} label="Button-xs" icon={iconComp[icon]} {color} {outline} {disabled} {onclick} />
+            {/each}
         </div>
     </Card>
 </div>
-<div class="w-min-content self-center">
+<div class="flex flex-wrap justify-center gap-2">
     <Card caption="Link" variant="fieldset">
-        <div class="grid-cols-3-auto grid w-fit gap-4">
-            <Button size="xs" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
-            <Button size="xs" label="Button-xs" {color} {outline} {disabled} {href} />
-            <Button size="xs" label="Button-xs" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
-            <Button size="sm" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
-            <Button size="sm" label="Button-sm" {color} {outline} {disabled} {href} />
-            <Button size="sm" label="Button-sm" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
-            <Button size="md" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
-            <Button size="md" label="Button-md" {color} {outline} {disabled} {href} />
-            <Button size="md" label="Button-md" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
-            <Button size="lg" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
-            <Button size="lg" label="Button-lg" {color} {outline} {disabled} {href} />
-            <Button size="lg" label="Button-lg" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
+        <div class="flex flex-col items-start gap-2">
+            {#each sizeList as size}
+                <Button {size} icon={iconComp[icon]} {color} {outline} {disabled} {href} />
+            {/each}
+        </div>
+    </Card>
+    <Card caption="Link" variant="fieldset">
+        <div class="flex flex-col items-start gap-2">
+            {#each sizeList as size}
+                <Button {size} label="Button-xs" {color} {outline} {disabled} {href} />
+            {/each}
+        </div>
+    </Card>
+    <Card caption="Link" variant="fieldset">
+        <div class="flex flex-col items-start gap-2">
+            {#each sizeList as size}
+                <Button {size} label="Button-xs" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
+            {/each}
         </div>
     </Card>
 </div>
-<div class="w-min-content self-center">
+<div class="flex flex-wrap justify-center gap-2">
     <Card caption="Link with click" variant="fieldset">
-        <div class="grid-cols-3-auto grid w-fit gap-4">
-            <Button size="xs" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
-            <Button size="xs" label="Button-xs" {color} {outline} {disabled} {href} />
-            <Button size="xs" label="Button-xs" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
-            <Button size="sm" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
-            <Button size="sm" label="Button-sm" {color} {outline} {disabled} {href} />
-            <Button size="sm" label="Button-sm" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
-            <Button size="md" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
-            <Button size="md" label="Button-md" {color} {outline} {disabled} {href} />
-            <Button size="md" label="Button-md" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
-            <Button size="lg" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
-            <Button size="lg" label="Button-lg" {color} {outline} {disabled} {href} />
-            <Button size="lg" label="Button-lg" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
+        <div class="flex flex-col items-start gap-2">
+            {#each sizeList as size}
+                <Button {size} icon={iconComp[icon]} {color} {outline} {disabled} {onclick} {href} />
+            {/each}
+        </div>
+    </Card>
+    <Card caption="Link with click" variant="fieldset">
+        <div class="flex flex-col items-start gap-2">
+            {#each sizeList as size}
+                <Button {size} label="Button-xs" {color} {outline} {disabled} {onclick} {href} />
+            {/each}
+        </div>
+    </Card>
+    <Card caption="Link with click" variant="fieldset">
+        <div class="flex flex-col items-start gap-2">
+            {#each sizeList as size}
+                <Button {size} label="Button-xs" icon={iconComp[icon]} {color} {outline} {disabled} {onclick} {href} />
+            {/each}
         </div>
     </Card>
 </div>

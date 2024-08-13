@@ -11,6 +11,7 @@
 -   icons
     -   <https://www.iconfinder.com/search/icons?family=doodle-11>
     -   <https://www.svgrepo.com/>
+    -   <https://icons8.com/icons/doodle>
     -   <https://lineicons.com/free-icons>
     -   <https://uxwing.com/?s=firefox>
     -   <https://github.com/edent/SuperTinyIcons>

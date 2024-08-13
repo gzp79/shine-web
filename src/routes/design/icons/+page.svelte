@@ -1,7 +1,17 @@
 <script lang="ts">
     import Card from '$components/Card.svelte';
     import { Chrome, Edge, Opera, Safari } from '$components/icons/clients';
-    import { Check, Cross, Hamburger, Info, Settings, Warning } from '$components/icons/common';
+    import {
+        Check,
+        Cross,
+        Dark,
+        DarkAndLight,
+        Hamburger,
+        Info,
+        Light,
+        Settings,
+        Warning
+    } from '$components/icons/common';
     import { Discord, Github, Google, Twitter } from '$components/icons/idps';
     import Checkbox from '$components/settings/CheckBox.svelte';
     import Select from '$components/settings/Select.svelte';
@@ -41,6 +51,9 @@
         {@render icon(Settings, 'Settings')}
         {@render icon(Info, 'Info')}
         {@render icon(Warning, 'Warning')}
+        {@render icon(Light, 'Light')}
+        {@render icon(Dark, 'Dark')}
+        {@render icon(DarkAndLight, 'Dark and Light')}
     </div>
 </Card>
 

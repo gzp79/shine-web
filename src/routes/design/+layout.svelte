@@ -17,8 +17,9 @@
 </script>
 
 <script lang="ts">
-    import { t } from '$lib/i18n/i18n.svelte';
     import SettingsForm from '$components/settings/SettingsForm.svelte';
+    import Section from '$components/settings/Section.svelte';
+    import ThemeSwitch from '$lib/theme/ThemeSwitch.svelte';
 
     const { children } = $props();
 
@@ -34,36 +35,21 @@
             title: 'Atoms',
             items: [
                 { title: 'Colors', href: 'colors' },
-                { title: 'Buttons', href: 'buttons' },
                 { title: 'Icons', href: 'icons' },
-                { title: 'Cards', href: 'cards' },
-                { title: 'Key Value table', href: 'key-value-table' },
-                { title: 'Styled SVG', href: 'svg' },
-                { title: 'Close button', href: 'close_button' },
                 { title: 'Buttons', href: 'buttons' },
-                { title: 'Toggle', href: 'toggle' },
-                { title: 'Tooltip', href: 'tooltip' },
-                { title: 'Circle menu', href: 'circle_menu' }
+                { title: 'Toggle', href: 'toggles' },
+                { title: 'Cards', href: 'cards' }
             ]
         },
         {
             title: 'Templates',
-            items: [
-                { title: 'Icons', href: 'icons' },
-                { title: 'Loadings', href: 'loadings' },
-                { title: 'Styled SVG', href: 'svg' },
-                { title: 'Close button', href: 'close_button' },
-
-                { title: 'Toggle', href: 'toggle' },
-                { title: 'Tooltip', href: 'tooltip' },
-                { title: 'Circle menu', href: 'circle_menu' }
-            ]
+            items: [{ title: 'Circle menu', href: 'circle_menu' }]
         }
     ];
 </script>
 
 {#snippet noSettings()}
-    <p>No settings available</p>
+    <Section>No settings</Section>
 {/snippet}
 
 <div class="navbar bg-base-300">
@@ -71,11 +57,8 @@
         icon
         <!-- <Icon shape=IconShape::Hamburger class="inline-block"/> -->
     </label>
-    <div class="flex-1 overflow-hidden text-ellipsis text-pretty px-2">
-        Design <span class="inline-block text-[0.5rem]">version</span>
-    </div>
-    {$t('common.helloWorld')}
-    <!-- <SwitchTheme class="flex-none"/> -->
+    <div class="flex-1 overflow-hidden text-ellipsis text-pretty px-2">Design</div>
+    <ThemeSwitch class="flex-none" />
 </div>
 
 <div class="drawer flex-1 auto-rows-fr overflow-hidden lg:drawer-open">
@@ -87,8 +70,8 @@
 
     <div class="drawer-side absolute h-full">
         <label for="design-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-        <div class="grid h-full w-[50lvw] grid-rows-2 bg-base-200 lg:w-[35lvw]">
-            <div class="overflow-y-auto">
+        <div class="flex h-full w-fit min-w-72 grid-rows-2 flex-col bg-base-200 lg:w-[20lvw]">
+            <div class="h-full flex-grow overflow-y-auto">
                 {#each menu as group}
                     <div class="collapse collapse-plus">
                         <input type="checkbox" name="design-menu" />
@@ -103,12 +86,12 @@
                     </div>
                 {/each}
             </div>
-            <div class="self-end">
+            <div class="">
                 {#if currentSettings}
-                    <div class="collapse-rev-arrow collapse">
+                    <div class="collapse-rev-arrow collapse rounded-none">
                         <input type="checkbox" name="settings-menu" bind:checked={showSettings} />
                         <div class="collapse-title text-xl">Settings</div>
-                        <div class="collapse-content">
+                        <div class="collapse-content m-2 max-h-[50lvh] overflow-y-auto rounded-xl bg-base-300 p-2">
                             <SettingsForm>
                                 {@render currentSettings()}
                             </SettingsForm>
@@ -118,4 +101,9 @@
             </div>
         </div>
     </div>
+</div>
+
+<div class="footer flex w-full items-center justify-between bg-base-300 p-1">
+    <span class="inline-block text-xs">123</span>
+    <span class="inline-block text-xs">version</span>
 </div>

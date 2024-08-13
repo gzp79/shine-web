@@ -4,7 +4,10 @@ import Hamburger from './_hamburger.svelte';
 import Settings from './_settings.svelte';
 import Info from './_info.svelte';
 import Warning from './_warning.svelte';
+import Light from './_light.svelte';
+import Dark from './_dark.svelte';
+import DarkAndLight from './_dark_light.svelte';
 
 export const transparency = 0.3;
 
-export { Check, Cross, Hamburger, Settings, Info, Warning };
+export { Check, Cross, Hamburger, Settings, Info, Warning, Light, Dark, DarkAndLight };
