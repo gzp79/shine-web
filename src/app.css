@@ -76,13 +76,10 @@
     }
 }
 
+body {
+    @apply flex h-screen w-screen flex-col overflow-hidden;
+}
+
 #app {
-    @apply flex flex-col;
-
-    height: 100lvh;
-    width: 100lvw;
-    max-height: 100lvh;
-    max-width: 100lvw;
-
-    overflow: hidden;
+    @apply flex h-full w-full flex-col overflow-hidden;
 }

@@ -1,6 +1,6 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vitest/config';
 import fs from 'fs';
+import { defineConfig } from 'vitest/config';
 
 let https;
 if (fs.existsSync('certificates/cert.key')) {

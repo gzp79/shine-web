@@ -1,4 +1,4 @@
-import { getCookie, setCookie, type Maybe } from '$lib/utils';
+import { type Maybe, getCookie, setCookie } from '$lib/utils';
 import type { Cookies } from '@sveltejs/kit';
 
 export type Theme = 'light' | 'dark' | 'system';
@@ -32,7 +32,6 @@ export function refreshTheme() {
 
 export function themeStore() {
     $effect(() => {
-        console.log('Setting theme:', rune);
         setCookie('theme', rune);
         if (rune === 'system') document.body.removeAttribute('data-theme');
         else document.body.setAttribute('data-theme', rune);

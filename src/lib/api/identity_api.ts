@@ -1,5 +1,5 @@
 import { config } from '$lib/config';
-import { fetchError, type Fetch } from '$lib/utils';
+import { type Fetch, fetchError } from '$lib/utils';
 import debug from 'debug';
 
 const log = debug('app:auth_api');
@@ -7,6 +7,7 @@ const log = debug('app:auth_api');
 export const GUEST_PROVIDER_ID = 'guest';
 
 export type CurrentUser = {
+    isAuthenticated: boolean;
     userId: string;
     name: string;
     email?: string;
@@ -64,7 +65,7 @@ class IdentityApi {
         public readonly webUrl: string
     ) {}
 
-    async getCurrentUser(fetch: Fetch): Promise<CurrentUser | null> {
+    async getCurrentUser(fetch: Fetch): Promise<CurrentUser> {
         const url = `${this.serviceUrl}/identity/api/auth/user/info`;
         const response = await fetch(url, {
             method: 'GET',
@@ -72,10 +73,18 @@ class IdentityApi {
             cache: 'no-store'
         });
         if (response.ok) {
-            return await response.json();
+            const user = await response.json();
+            user.isAuthenticated = true;
+            return user;
         } else if (response.status == 401) {
-            log('No current user found: ', await response.text());
-            return null;
+            return {
+                isAuthenticated: false,
+                userId: '',
+                name: '',
+                isEmailConfirmed: false,
+                roles: [],
+                session_length: 0
+            };
         } else {
             throw await fetchError('Failed to getCurrentUser', response);
         }

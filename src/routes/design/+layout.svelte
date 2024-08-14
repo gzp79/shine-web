@@ -10,7 +10,6 @@
         context.setSettings(settings);
 
         onDestroy(() => {
-            console.log('removing settings');
             context.setSettings(null);
         });
     }

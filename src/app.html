@@ -6,8 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         %sveltekit.head%
     </head>
-    <body id="app" data-sveltekit-preload-data="hover" %svelte:data-theme%>
+    <body data-sveltekit-preload-data="hover" %svelte:data-theme%>
         <noscript>You need to enable JavaScript to run this app.</noscript>
-        %sveltekit.body%
+        <div id="app" style="display: contents">%sveltekit.body%</div>
     </body>
 </html>

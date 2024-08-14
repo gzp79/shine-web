@@ -23,7 +23,7 @@
     />
 </svg> -->
 
-<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 39.19421 36.70639" class={svgClass}>
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="-2 0 43.19421 36.70639" class={svgClass}>
     <path
         fill-opacity={transparency}
         stroke-width="4%"

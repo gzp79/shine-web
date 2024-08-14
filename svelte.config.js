@@ -9,7 +9,7 @@ const config = {
     kit: {
         adapter: adapter(),
         alias: {
-            $i18n: './src/i18n',
+            $src: './src',
             $components: './src/components',
             $lib: './src/lib'
         }

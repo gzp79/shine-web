@@ -1,7 +1,7 @@
 <script lang="ts">
     import { browser } from '$app/environment';
-    import { langList, t, languageStore } from '$lib/i18n/i18n.svelte';
     import { themeStore } from '$lib/theme/theme.svelte';
+    import { t, languageStore, langList } from '$lib/i18n/i18n.svelte';
 
     let logEnabled = $state(browser ? !!localStorage?.debug : false);
     let language = languageStore();

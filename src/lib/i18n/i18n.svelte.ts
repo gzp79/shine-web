@@ -1,14 +1,15 @@
 /* cspell: disable */
-import i18n, { type Config } from 'sveltekit-i18n';
-import lang from './lang.json';
-import { browser, dev } from '$app/environment';
+import { browser } from '$app/environment';
+import { type Maybe, getCookie } from '$lib/utils';
+import { i18n } from '$src/translations/i18n';
 import type { Cookies } from '@sveltejs/kit';
 import { Store } from 'runed';
-import { getCookie, type Maybe } from '$lib/utils';
+
 /* cspell: enable */
 
-export const langList = Object.keys(lang);
-export const defaultLocale = 'en';
+const { langList, defaultLocale, t, loadTranslations, locale, locales, setLocale, setRoute, translations } = i18n;
+
+export { langList, defaultLocale, t };
 
 function getSupportedLocale(candidate: string) {
     const supportedLocales = locales.get().map((l) => l.toLowerCase());
@@ -19,26 +20,6 @@ function getSupportedLocale(candidate: string) {
 function defaultBrowserLanguage() {
     return `${navigator.language}`.toLowerCase();
 }
-
-function createLoader(key: string, routes?: RegExp[]) {
-    return langList.map((locale) => ({
-        locale: locale,
-        key: key,
-        routes: routes ?? [`/${key}`],
-        loader: async () => (await import(`./${locale}/${key}.json`)).default
-    }));
-}
-
-const config: Config = {
-    log: {
-        level: dev ? 'warn' : 'error'
-    },
-    translations: langList.reduce((r, v) => ({ ...r, ...{ [v]: { lang } } }), {}),
-    loaders: [...createLoader('common', [/.*/]), ...createLoader('tools')]
-};
-
-const { t, locale, locales, translations, loadTranslations, setLocale, setRoute } = new i18n(config);
-export { t };
 
 export interface LanguageProps {
     i18n: { locale: string; route: string };

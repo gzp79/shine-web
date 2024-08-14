@@ -1,3 +1,5 @@
+import type { TurnstileObject } from 'turnstile-types';
+
 declare global {
     namespace App {
         interface Locals {
@@ -13,6 +15,10 @@ declare global {
             };
             caches: CacheStorage & { default: Cache };
         }
+    }
+
+    interface Window {
+        turnstile?: TurnstileObject;
     }
 }
 
