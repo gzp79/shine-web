@@ -25,6 +25,6 @@
 
 {#await currentUser}
     Loading...
-{:then _}
+{:then _user}
     {@render children()}
 {/await}
