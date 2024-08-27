@@ -5,6 +5,7 @@
     import type { Snippet } from 'svelte';
     import '../app.css';
     import type { CurrentUser } from '$lib/api/identity_api';
+    import LoadingCard from '$src/components/LoadingCard.svelte';
 
     interface Props {
         data: {
@@ -24,7 +25,9 @@
 </script>
 
 {#await currentUser}
-    Loading...
+    <div class="flex h-full items-center justify-center">
+        <LoadingCard />
+    </div>
 {:then _user}
     {@render children()}
 {/await}

@@ -19,6 +19,7 @@
     import SettingsForm from '$components/settings/SettingsForm.svelte';
     import Section from '$components/settings/Section.svelte';
     import ThemeSwitch from '$lib/theme/ThemeSwitch.svelte';
+    import Hamburger from '$src/components/icons/common/_hamburger.svelte';
 
     const { children } = $props();
 
@@ -53,8 +54,7 @@
 
 <div class="navbar bg-base-300">
     <label for="design-drawer" aria-label="open sidebar" class="btn btn-square btn-ghost flex-none lg:hidden">
-        icon
-        <!-- <Icon shape=IconShape::Hamburger class="inline-block"/> -->
+        <Hamburger class="inline-block" />
     </label>
     <div class="flex-1 overflow-hidden text-ellipsis text-pretty px-2">Design</div>
     <ThemeSwitch class="flex-none" />

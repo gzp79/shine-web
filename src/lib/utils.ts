@@ -21,6 +21,10 @@ export function delay(ms: number): Promise<void> {
     return new Promise((resolver) => setTimeout(resolver, ms));
 }
 
+export function never(): Promise<never> {
+    return new Promise(() => {});
+}
+
 export function getCookie(key: string): string | undefined {
     const value = document.cookie.split('; ').reduce((r, v) => {
         const parts = v.split('=');

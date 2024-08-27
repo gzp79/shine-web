@@ -12,6 +12,7 @@
         Settings,
         Warning
     } from '$components/icons/common';
+    import { Infinity, Spinner, Ball, Dots, Ring } from '$src/components/icons/animated';
     import { Discord, Github, Google, Twitter } from '$components/icons/idps';
     import Checkbox from '$components/settings/CheckBox.svelte';
     import Select from '$components/settings/Select.svelte';
@@ -72,5 +73,15 @@
         {@render icon(Github, 'Github')}
         {@render icon(Google, 'Google')}
         {@render icon(Twitter, 'Twitter')}
+    </div>
+</Card>
+
+<Card caption="Animated" variant="fieldset" class="flex flex-col items-center">
+    <div class="flex flex-wrap justify-center gap-2">
+        {@render icon(Spinner, 'Spinner')}
+        {@render icon(Ball, 'Ball')}
+        {@render icon(Dots, 'Dots')}
+        {@render icon(Ring, 'Ring')}
+        {@render icon(Infinity, 'Infinity')}
     </div>
 </Card>

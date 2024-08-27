@@ -1,5 +1,5 @@
 import { type CurrentUser, identityApi } from '../api/identity_api';
-import type { Fetch, Maybe } from '../utils';
+import { type Fetch, type Maybe } from '../utils';
 
 let user = $state(null as Maybe<CurrentUser>);
 let nextUpdate = $state(0);

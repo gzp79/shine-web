@@ -117,6 +117,13 @@ export const sizeMaps: Record<string, Record<Size, string>> = {
         sm: 'w-10 h-10',
         md: 'w-14 h-14',
         lg: 'w-20 h-20'
+    },
+
+    loading: {
+        xs: 'loading-xs',
+        sm: 'loading-sm',
+        md: 'loading-md',
+        lg: 'loading-lg'
     }
 };
 
