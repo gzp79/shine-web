@@ -6,8 +6,8 @@
     import { Check, Cross, Dark, DarkAndLight, Hamburger, Info, Light, Settings, Warning } from '$atoms/icons/common';
     import { Infinity, Spinner, Ball, Dots, Ring } from '$atoms/icons/animated';
     import { Discord, Github, Google, Twitter } from '$atoms/icons/idps';
-    import Checkbox from '$atoms/settings/CheckBox.svelte';
-    import Select from '$atoms/settings/Select.svelte';
+    import Checkbox from '$components/settings/CheckBox.svelte';
+    import Select from '$components/settings/Select.svelte';
     import { setSettings } from '../+layout.svelte';
 
     let size = $state(defaultSize);

@@ -5,14 +5,14 @@
     import { transparency } from '.';
 
     let { color, size = 'md', disabled = false, class: className }: IconProps = $props();
-
     let svgClass = $derived(
-        twMerge(`
-        stroke-none
-        ${color ? colorMaps.fill[color] : 'fill-current'}
-        ${sizeMaps.icon[size]} 
-        ${className} 
-        ${disabled ? 'grayscale' : ''}`)
+        twMerge(
+            color ? colorMaps.stroke[color] : 'stroke-current',
+            color ? colorMaps.fill[color] : 'fill-current',
+            sizeMaps.icon[size],
+            className,
+            disabled ? 'grayscale' : ''
+        )
     );
 </script>
 

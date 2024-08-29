@@ -1,9 +1,9 @@
 <script lang="ts">
     import { colorList, defaultColor, sizeList } from '$components/types';
-    import Select from '$atoms/settings/Select.svelte';
     import Card from '$atoms/Card.svelte';
-    import CheckBox from '$atoms/settings/CheckBox.svelte';
     import Toggle from '$atoms/Toggle.svelte';
+    import Select from '$components/settings/Select.svelte';
+    import CheckBox from '$components/settings/CheckBox.svelte';
     import { setSettings } from '../+layout.svelte';
 
     let value = $state(true);

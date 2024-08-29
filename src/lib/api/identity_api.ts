@@ -13,7 +13,7 @@ export type CurrentUser = {
     email?: string;
     isEmailConfirmed: boolean;
     roles: string[];
-    session_length: number;
+    sessionLength: number;
 };
 
 export type LinkedIdentity = {
@@ -83,7 +83,7 @@ class IdentityApi {
                 name: '',
                 isEmailConfirmed: false,
                 roles: [],
-                session_length: 0
+                sessionLength: 0
             };
         } else {
             throw await fetchError('Failed to getCurrentUser', response);

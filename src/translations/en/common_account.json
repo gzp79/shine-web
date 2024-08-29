@@ -1,0 +1,9 @@
+{
+    "userInfo": "User Info",
+    "userName": "User name:",
+    "userId": "User id:",
+    "role": "Roles:",
+    "email": "Email:",
+    "logout": "Logout",
+    "logoutAll": "Logout from all devices"
+}

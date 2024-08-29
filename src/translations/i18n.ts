@@ -8,13 +8,16 @@ import I18N, { type Config, type Modifier, type Parser } from 'sveltekit-i18n';
 const langList = Object.keys(lang);
 const defaultLocale = 'en';
 
-function createLoader(key: string, routes?: RegExp[]) {
-    return langList.map((locale) => ({
-        locale: locale,
-        key: key,
-        routes: routes ?? [`/${key}`],
-        loader: async () => (await import(`./${locale}/${key}.json`)).default
-    }));
+function createLoader(path: string, key: string, routes?: RegExp[]) {
+    return langList.map((locale) => {
+        console.log(`${locale}/${key} -> ./${locale}/${path}.json`);
+        return {
+            locale: locale,
+            key: key,
+            routes: routes ?? [`/${key}`],
+            loader: async () => (await import(`./${locale}/${path}.json`)).default
+        };
+    });
 }
 
 const config: Config = {
@@ -22,7 +25,11 @@ const config: Config = {
         level: dev ? 'warn' : 'error'
     },
     translations: langList.reduce((r, v) => ({ ...r, ...{ [v]: { lang } } }), {}),
-    loaders: [...createLoader('common', [/.*/]), ...createLoader('tools')]
+    loaders: [
+        ...createLoader('common_common', 'common', [/.*/]),
+        ...createLoader('common_account', 'account', [/.*/]),
+        ...createLoader('tools', 'tools')
+    ]
 };
 
 class I18NEx<Params extends Parser.Params<P, M>, P = Parser.PayloadDefault, M = Modifier.DefaultProps> extends I18N<

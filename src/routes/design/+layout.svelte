@@ -16,9 +16,9 @@
 </script>
 
 <script lang="ts">
-    import SettingsForm from '$atoms/settings/SettingsForm.svelte';
-    import Section from '$atoms/settings/Section.svelte';
     import Hamburger from '$atoms/icons/common/_hamburger.svelte';
+    import SettingsForm from '$components/settings/SettingsForm.svelte';
+    import Section from '$components/settings/Section.svelte';
     import ThemeSwitch from '$lib/theme/ThemeSwitch.svelte';
 
     const { children } = $props();
@@ -38,12 +38,14 @@
                 { title: 'Icons', href: 'icons' },
                 { title: 'Buttons', href: 'buttons' },
                 { title: 'Toggle', href: 'toggles' },
-                { title: 'Cards', href: 'cards' }
+                { title: 'Cards', href: 'cards' },
+                { title: 'Key-Value Table', href: 'key-value-tables' }
             ]
         },
         {
             title: 'Templates',
-            items: [{ title: 'Circle menu', href: 'circle_menu' }]
+            //items: [{ title: 'Circle menu', href: 'circle_menu' }]
+            items: [{ title: 'Current User Card', href: 'current-user' }]
         }
     ];
 </script>

@@ -56,7 +56,7 @@
     };
 
     const btnClass = $derived(
-        twMerge(`btn w-fit
+        twMerge(`btn w-fit shadow-base shadow-md hover:shadow-sm hover:shadow-base m-1
             ${colorBtnMap[color]}
             ${sizeBtnMap[size]} 
             ${outline ? 'btn-outline' : ''} 

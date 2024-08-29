@@ -1,6 +1,7 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+@import 'tailwindcss/variants';
 
 /*customize daisyui*/
 @layer components {
@@ -77,7 +78,7 @@
 }
 
 body {
-    @apply flex h-screen w-screen flex-col overflow-hidden;
+    @apply flex h-[100dvh] w-[100dwh] flex-col overflow-hidden;
 }
 
 #app {

@@ -1,6 +1,7 @@
 <script lang="ts">
     import { lorem } from '$components/lorem';
     import Card from '$atoms/Card.svelte';
+    import Button from '$atoms/Button.svelte';
 </script>
 
 <div class="max-w-xl">
@@ -13,9 +14,9 @@
         <h1>This is the content</h1>
         <p>{lorem.slice(0, 50)}</p>
         {#snippet action()}
-            <button class="btn btn-primary"> Ok</button>
-            <button class="btn btn-secondary"> Cancel</button>
-            <button class="btn btn-warning"> Maybe</button>
+            <Button label="Ok" />
+            <Button label="Cancel" color="secondary" />
+            <Button label="Maybe" color="warning" />
         {/snippet}
     </Card>
 
@@ -28,11 +29,11 @@
             <h1>This is the content</h1>
             <p>{lorem.slice(0, 50)}</p>
             {#snippet action()}
-                <button class="btn"> Action</button>
+                <Button label="Action" />
             {/snippet}
         </Card>
         {#snippet action()}
-            <button class="btn btn-warning">Done</button>
+            <Button label="Done" color="warning" />
         {/snippet}
     </Card>
 </div>

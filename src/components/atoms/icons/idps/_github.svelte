@@ -4,7 +4,7 @@
     import type { GlyphProps } from '../types';
 
     let { size = 'md', disabled = false, class: className }: GlyphProps = $props();
-    let svgClass = $derived(twMerge(`${sizeMaps.glyph[size]} ${className} ${disabled ? 'grayscale' : ''}`));
+    let svgClass = $derived(twMerge(sizeMaps.glyph[size], className, disabled ? 'grayscale' : ''));
 </script>
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class={svgClass}>

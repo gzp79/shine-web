@@ -4,6 +4,7 @@
 
 <script lang="ts">
     import type { Snippet } from 'svelte';
+    import { twMerge } from 'tailwind-merge';
 
     interface Props {
         caption?: string;
@@ -18,21 +19,30 @@
         switch (variant) {
             case 'fieldset':
                 return {
-                    card: 'card card-bordered relative m-3 border-primary bg-base-200 text-base-content shadow-lg shadow-base p-4',
+                    card: twMerge(
+                        'card card-bordered relative m-3 border-primary bg-base-200 text-base-content shadow-lg shadow-base p-4',
+                        className
+                    ),
                     content: 'max-h-[50lvh] overflow-auto',
                     action: 'card-action flex flex-row justify-end gap-1 mt-4'
                 };
 
             case 'top':
                 return {
-                    card: 'card card-bordered relative mx-3 my-6 border-primary bg-base-200 text-base-content shadow-lg shadow-base',
+                    card: twMerge(
+                        'card card-bordered relative mx-3 my-6 border-primary bg-base-200 text-base-content shadow-lg shadow-base max-w-lg',
+                        className
+                    ),
                     content: 'max-h-[50lvh] overflow-auto',
                     action: 'card-action flex flex-row justify-end gap-1'
                 };
 
             case 'data':
                 return {
-                    card: 'card card-compact relative mx-1 my-2 bg-base-300 text-base-content shadow-md shadow-base md:card-side',
+                    card: twMerge(
+                        'card card-compact relative mx-1 my-2 bg-base-300 text-base-content shadow-md shadow-base md:card-side',
+                        className
+                    ),
                     content: '',
                     action: 'card-action flex flex-row justify-end gap-1'
                 };
@@ -58,7 +68,7 @@
         {@render content()}
     </fieldset>
 {:else}
-    <div class="{cardClass} {className}">
+    <div class={cardClass}>
         <div class="card-body">
             {#if caption}
                 <h2 class="card-title">{caption}</h2>

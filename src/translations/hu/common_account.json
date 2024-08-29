@@ -1,0 +1,9 @@
+{
+    "userInfo": "Felhasználói adatok",
+    "userName": "Felhasználónév",
+    "userId": "Felhasználói azonosító",
+    "role": "Szerepkör",
+    "email": "Email",
+    "logout": "Kijelentkezés",
+    "logoutAll": "Minden eszközről kijelentkezés"
+}

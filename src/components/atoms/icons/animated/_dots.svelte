@@ -5,13 +5,13 @@
 
     let { size = 'md', disabled = false, class: className, color }: IconProps = $props();
     let spanClass = $derived(
-        twMerge(`
-        loading loading-dots 
-        ${color && colorMaps.text[color]}
-        ${sizeMaps.loading[size]} 
-        ${className} 
-        ${disabled ? 'grayscale' : ''}
-    `)
+        twMerge(
+            'loading loading-ball',
+            color && colorMaps.text[color],
+            sizeMaps.loading[size],
+            className,
+            disabled ? 'grayscale' : ''
+        )
     );
 </script>
 
