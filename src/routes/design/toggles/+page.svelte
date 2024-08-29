@@ -1,10 +1,10 @@
 <script lang="ts">
-    import Select from '$components/settings/Select.svelte';
-    import Card from '$components/Card.svelte';
     import { colorList, defaultColor, sizeList } from '$components/types';
-    import CheckBox from '$components/settings/CheckBox.svelte';
+    import Select from '$atoms/settings/Select.svelte';
+    import Card from '$atoms/Card.svelte';
+    import CheckBox from '$atoms/settings/CheckBox.svelte';
+    import Toggle from '$atoms/Toggle.svelte';
     import { setSettings } from '../+layout.svelte';
-    import Toggle from '$components/Toggle.svelte';
 
     let value = $state(true);
     let color = $state(defaultColor);

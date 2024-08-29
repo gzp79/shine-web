@@ -5,7 +5,7 @@
     import type { Snippet } from 'svelte';
     import '../app.css';
     import type { CurrentUser } from '$lib/api/identity_api';
-    import LoadingCard from '$src/components/LoadingCard.svelte';
+    import LoadingCard from '$atoms/LoadingCard.svelte';
 
     interface Props {
         data: {

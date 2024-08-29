@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Card from '$components/Card.svelte';
     import { lorem } from '$components/lorem';
+    import Card from '$atoms/Card.svelte';
 </script>
 
 <div class="max-w-xl">

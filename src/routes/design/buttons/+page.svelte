@@ -1,13 +1,13 @@
 <script lang="ts">
-    import Select from '$components/settings/Select.svelte';
-    import Button from '$components/Button.svelte';
-    import Card from '$components/Card.svelte';
-    import { colorList, sizeList } from '$components/types';
-    import CheckBox from '$components/settings/CheckBox.svelte';
-    import { Google, Twitter, Discord } from '$components/icons/idps';
-    import { Chrome } from '$components/icons/clients';
     import type { Component } from 'svelte';
-    import { Check, Cross, Info, Warning } from '$components/icons/common';
+    import { colorList, sizeList } from '$components/types';
+    import Select from '$atoms/settings/Select.svelte';
+    import Button from '$atoms/Button.svelte';
+    import Card from '$atoms/Card.svelte';
+    import CheckBox from '$atoms/settings/CheckBox.svelte';
+    import { Google, Twitter, Discord } from '$atoms/icons/idps';
+    import { Chrome } from '$atoms/icons/clients';
+    import { Check, Cross, Info, Warning } from '$atoms/icons/common';
     import { setSettings } from '../+layout.svelte';
 
     const iconList = ['twitter', 'chrome', 'google', 'discord', 'check', 'cross', 'info', 'warning'];

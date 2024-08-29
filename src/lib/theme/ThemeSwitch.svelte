@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { DarkAndLight, Dark, Light } from '$components/icons/common';
+    import { DarkAndLight, Dark, Light } from '$atoms/icons/common';
     import { twMerge } from 'tailwind-merge';
     import { themeStore } from './theme.svelte';
 

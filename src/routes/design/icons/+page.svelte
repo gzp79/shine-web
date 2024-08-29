@@ -1,23 +1,13 @@
 <script lang="ts">
-    import Card from '$components/Card.svelte';
-    import { Chrome, Edge, Opera, Safari } from '$components/icons/clients';
-    import {
-        Check,
-        Cross,
-        Dark,
-        DarkAndLight,
-        Hamburger,
-        Info,
-        Light,
-        Settings,
-        Warning
-    } from '$components/icons/common';
-    import { Infinity, Spinner, Ball, Dots, Ring } from '$src/components/icons/animated';
-    import { Discord, Github, Google, Twitter } from '$components/icons/idps';
-    import Checkbox from '$components/settings/CheckBox.svelte';
-    import Select from '$components/settings/Select.svelte';
-    import { colorList, defaultColor, defaultSize, sizeList } from '$components/types';
     import { type Component } from 'svelte';
+    import { colorList, defaultColor, defaultSize, sizeList } from '$components/types';
+    import Card from '$atoms/Card.svelte';
+    import { Chrome, Edge, Opera, Safari } from '$atoms/icons/clients';
+    import { Check, Cross, Dark, DarkAndLight, Hamburger, Info, Light, Settings, Warning } from '$atoms/icons/common';
+    import { Infinity, Spinner, Ball, Dots, Ring } from '$atoms/icons/animated';
+    import { Discord, Github, Google, Twitter } from '$atoms/icons/idps';
+    import Checkbox from '$atoms/settings/CheckBox.svelte';
+    import Select from '$atoms/settings/Select.svelte';
     import { setSettings } from '../+layout.svelte';
 
     let size = $state(defaultSize);

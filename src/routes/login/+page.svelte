@@ -1,11 +1,11 @@
 <script lang="ts">
-    import Button from '$components/Button.svelte';
-    import Turnstile from '$components/Turnstile.svelte';
+    import config from '$src/config';
     import { identityApi } from '$lib/api/identity_api';
     import { languageStore } from '$lib/i18n/i18n.svelte';
     import { themeStore } from '$lib/theme/theme.svelte';
     import ThemeSwitch from '$lib/theme/ThemeSwitch.svelte';
-    import config from '$src/config';
+    import Turnstile from '$components/Turnstile.svelte';
+    import Button from '$atoms/Button.svelte';
 
     interface Props {
         data: {

@@ -16,10 +16,10 @@
 </script>
 
 <script lang="ts">
-    import SettingsForm from '$components/settings/SettingsForm.svelte';
-    import Section from '$components/settings/Section.svelte';
+    import SettingsForm from '$atoms/settings/SettingsForm.svelte';
+    import Section from '$atoms/settings/Section.svelte';
+    import Hamburger from '$atoms/icons/common/_hamburger.svelte';
     import ThemeSwitch from '$lib/theme/ThemeSwitch.svelte';
-    import Hamburger from '$src/components/icons/common/_hamburger.svelte';
 
     const { children } = $props();
 
