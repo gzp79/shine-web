@@ -1,5 +1,5 @@
-import { config } from '$lib/config';
 import { type Fetch, fetchError } from '$lib/utils';
+import config from '$src/config';
 import debug from 'debug';
 
 const log = debug('app:auth_api');

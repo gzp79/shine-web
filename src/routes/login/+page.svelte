@@ -5,6 +5,7 @@
     import { languageStore } from '$lib/i18n/i18n.svelte';
     import { themeStore } from '$lib/theme/theme.svelte';
     import ThemeSwitch from '$lib/theme/ThemeSwitch.svelte';
+    import config from '$src/config';
 
     interface Props {
         data: {
@@ -36,7 +37,7 @@
 
 <ThemeSwitch />
 <Turnstile
-    siteKey="3x00000000000000000000FF"
+    siteKey={config.turnstile.siteKey}
     theme={captchaTheme}
     size="compact"
     language={captchaLang}

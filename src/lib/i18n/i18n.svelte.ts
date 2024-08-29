@@ -3,7 +3,6 @@ import { browser } from '$app/environment';
 import { type Maybe, getCookie } from '$lib/utils';
 import { i18n } from '$src/translations/i18n';
 import type { Cookies } from '@sveltejs/kit';
-import { Store } from 'runed';
 
 /* cspell: enable */
 
@@ -67,11 +66,21 @@ export function refreshLanguage() {
 }
 
 export function languageStore() {
-    const rune = new Store(locale);
-
-    $effect(() => {
-        document.cookie = `lang=${rune.current}; max-age=31536000; path=/`;
+    let rune = $state(locale.get());
+    locale.subscribe((value) => {
+        rune = value;
     });
 
-    return rune;
+    $effect(() => {
+        document.cookie = `lang=${rune}; max-age=31536000; path=/`;
+    });
+
+    return {
+        get current() {
+            return rune;
+        },
+        set current(value: string) {
+            locale.set(value);
+        }
+    };
 }
