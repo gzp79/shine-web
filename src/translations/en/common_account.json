@@ -4,6 +4,12 @@
     "userId": "User id:",
     "role": "Roles:",
     "email": "Email:",
+    "noEmail": "No email",
+    "linkWarning": "Your account is currently not linked to any social network, so you may lose access.",
     "logout": "Logout",
-    "logoutAll": "Logout from all devices"
+    "logoutAll": "Logout from all devices",
+    "linkedIdentities": "Linked identities",
+    "provider": "Provider:",
+    "providerUserId": "Provider user id:",
+    "linkDate": "Link date:"
 }

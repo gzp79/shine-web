@@ -1,4 +1,4 @@
-<script lang="ts" generics="T">
+<script lang="ts">
     import { uniqueId } from '$components/types';
 
     interface Props {

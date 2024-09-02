@@ -6,9 +6,9 @@
     import { Chrome } from '$atoms/icons/clients';
     import { Check, Cross, Info, Warning } from '$atoms/icons/common';
     import { Google, Twitter, Discord } from '$atoms/icons/idps';
-    import { setSettings } from '../+layout.svelte';
     import Select from '$components/settings/Select.svelte';
     import CheckBox from '$components/settings/CheckBox.svelte';
+    import { setSettings } from '../../+layout.svelte';
 
     const iconList = ['twitter', 'chrome', 'google', 'discord', 'check', 'cross', 'info', 'warning'];
 

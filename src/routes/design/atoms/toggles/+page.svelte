@@ -4,7 +4,7 @@
     import Toggle from '$atoms/Toggle.svelte';
     import Select from '$components/settings/Select.svelte';
     import CheckBox from '$components/settings/CheckBox.svelte';
-    import { setSettings } from '../+layout.svelte';
+    import { setSettings } from '../../+layout.svelte';
 
     let value = $state(true);
     let color = $state(defaultColor);

@@ -10,7 +10,6 @@ const defaultLocale = 'en';
 
 function createLoader(path: string, key: string, routes?: RegExp[]) {
     return langList.map((locale) => {
-        console.log(`${locale}/${key} -> ./${locale}/${path}.json`);
         return {
             locale: locale,
             key: key,

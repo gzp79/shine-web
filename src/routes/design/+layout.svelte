@@ -1,16 +1,18 @@
 <script lang="ts" context="module">
-    import { getContext, onDestroy, setContext, type Snippet } from 'svelte';
+    import { getContext, setContext, type Snippet } from 'svelte';
 
     interface SettingsContext {
         setSettings: (settings: Snippet | null) => void;
     }
 
     export function setSettings(settings: Snippet) {
-        const context = getContext<SettingsContext>('DesignSetting');
-        context.setSettings(settings);
+        $effect(() => {
+            const context = getContext<SettingsContext>('DesignSetting');
+            context.setSettings(settings);
 
-        onDestroy(() => {
-            context.setSettings(null);
+            return () => {
+                context.setSettings(null);
+            };
         });
     }
 </script>
@@ -34,18 +36,22 @@
         {
             title: 'Atoms',
             items: [
-                { title: 'Colors', href: 'colors' },
-                { title: 'Icons', href: 'icons' },
-                { title: 'Buttons', href: 'buttons' },
-                { title: 'Toggle', href: 'toggles' },
-                { title: 'Cards', href: 'cards' },
-                { title: 'Key-Value Table', href: 'key-value-tables' }
+                { title: 'Colors', href: 'atoms/colors' },
+                { title: 'Icons', href: 'atoms/icons' },
+                { title: 'Buttons', href: 'atoms/buttons' },
+                { title: 'Toggle', href: 'atoms/toggles' },
+                { title: 'Cards', href: 'atoms/cards' },
+                { title: 'Alerts', href: 'atoms/alerts' },
+                { title: 'Key-Value Table', href: 'atoms/key-value-tables' }
             ]
         },
         {
             title: 'Templates',
             //items: [{ title: 'Circle menu', href: 'circle_menu' }]
-            items: [{ title: 'Current User Card', href: 'current-user' }]
+            items: [
+                { title: 'Current User Card', href: 'current-user' },
+                { title: 'Linked Identities', href: 'linked-identities' }
+            ]
         }
     ];
 </script>

@@ -4,6 +4,12 @@
     "userId": "Felhasználói azonosító",
     "role": "Szerepkör",
     "email": "Email",
+    "noEmail": "Nincs email",
+    "linkWarning": "Fiókod jelenleg nincs összekapcsolva egyetlen közösségi hálózattal sem, ezért elveszítheted a hozzáférést.",
     "logout": "Kijelentkezés",
-    "logoutAll": "Minden eszközről kijelentkezés"
+    "logoutAll": "Minden eszközről kijelentkezés",
+    "linkedIdentities": "Összekapcsolt azonosítók",
+    "provider": "Szolgáltató:",
+    "providerUserId": "Szolgáltató felhasználói azonosító:",
+    "linkDate": "Összekapcsolás dátuma:"
 }

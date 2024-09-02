@@ -78,7 +78,7 @@
 }
 
 body {
-    @apply flex h-[100dvh] w-[100dwh] flex-col overflow-hidden;
+    @apply flex h-[100dvh] w-[100dvw] flex-col overflow-hidden;
 }
 
 #app {

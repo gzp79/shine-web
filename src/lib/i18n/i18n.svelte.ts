@@ -48,7 +48,6 @@ export async function loadLanguage(url: URL, languageProps: Maybe<LanguageProps>
     if (!i18n) {
         if (!browser)
             throw new Error('No languageProps provided, loadLanguageServerSide must be called on the server side.');
-        console.log('Loading language from browser...');
         let locale = getCookie('lang') ?? defaultBrowserLanguage();
         locale = getSupportedLocale(locale);
         const route = url.pathname;

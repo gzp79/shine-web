@@ -1,8 +1,8 @@
-<script lang="ts">
+<script lang="ts" generics="T">
     import { uniqueId } from '$components/types';
 
-    //todo: workaround for eslint error on <script lang="ts" generics="T">
-    type T = unknown;
+    // generics="T" is not respected by the eslint
+    /* eslint no-undef: "off" */
 
     interface Props<T> {
         label: string;

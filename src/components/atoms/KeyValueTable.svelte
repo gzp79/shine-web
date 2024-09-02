@@ -4,18 +4,19 @@
     import { twMerge } from 'tailwind-merge';
 
     interface Props {
-        items: [string, Snippet | string][];
+        items: ([string, Snippet | string] | null)[];
         size?: Size;
     }
-    let { items, size = 'md' }: Props = $props();
+    const { items, size = 'md' }: Props = $props();
+    const filteredItems = items.filter((x) => x !== null);
 
     const tableClass = $derived(twMerge('table rounded-none', sizeMaps.table[size]));
 </script>
 
 <table class={tableClass}>
     <tbody>
-        {#each items as [key, value]}
-            <tr>
+        {#each filteredItems as [key, value]}
+            <tr class="border-none">
                 <th class="w-min-content text-nowrap">{key}</th>
                 <td class="w-full">
                     {#if typeof value === 'string'}

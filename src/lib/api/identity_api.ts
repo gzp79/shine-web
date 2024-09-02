@@ -8,6 +8,7 @@ export const GUEST_PROVIDER_ID = 'guest';
 
 export type CurrentUser = {
     isAuthenticated: boolean;
+    isLinked: boolean;
     userId: string;
     name: string;
     email?: string;
@@ -20,7 +21,7 @@ export type LinkedIdentity = {
     //userId: string,
     provider: string;
     providerUserId: string;
-    linked_at: Date;
+    linkedAt: Date;
     name?: string;
     email?: string;
 };
@@ -79,6 +80,7 @@ class IdentityApi {
         } else if (response.status == 401) {
             return {
                 isAuthenticated: false,
+                isLinked: false,
                 userId: '',
                 name: '',
                 isEmailConfirmed: false,

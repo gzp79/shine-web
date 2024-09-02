@@ -2,10 +2,10 @@
     import { defaultSize, sizeList } from '$components/types';
     import Card from '$atoms/Card.svelte';
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
-    import { setSettings } from '../+layout.svelte';
     import Button from '$atoms/Button.svelte';
     import Toggle from '$atoms/Toggle.svelte';
     import Select from '$components/settings/Select.svelte';
+    import { setSettings } from '../../+layout.svelte';
 
     let size = $state(defaultSize);
 
