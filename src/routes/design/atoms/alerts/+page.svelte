@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Alert from '$src/components/atoms/Alert.svelte';
-    import KeyValueTable from '$src/components/atoms/KeyValueTable.svelte';
+    import Alert from '$components/atoms/Alert.svelte';
+    import KeyValueTable from '$components/atoms/KeyValueTable.svelte';
 </script>
 
 <div class="max-w-lg">

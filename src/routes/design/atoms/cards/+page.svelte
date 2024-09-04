@@ -3,8 +3,8 @@
     import Card, { listVariants, type Variant } from '$atoms/Card.svelte';
     import Button from '$atoms/Button.svelte';
     import Google from '$atoms/icons/idps/_google.svelte';
-    import CheckBox from '$src/components/settings/CheckBox.svelte';
-    import Select from '$src/components/settings/Select.svelte';
+    import CheckBox from '$components/settings/CheckBox.svelte';
+    import Select from '$components/settings/Select.svelte';
     import { setSettings } from '../../+layout.svelte';
 
     let variant = $state('top' as Variant);

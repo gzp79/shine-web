@@ -1,6 +1,6 @@
 <script lang="ts">
     import { currentUserStore } from '$lib/account/currentUser.svelte';
-    import CurrentUserCard from '$src/components/account/CurrentUserCard.svelte';
+    import CurrentUserCard from '$components/account/CurrentUserCard.svelte';
 
     let currentUser = currentUserStore();
 </script>

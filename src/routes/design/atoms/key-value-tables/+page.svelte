@@ -9,6 +9,14 @@
 
     let size = $state(defaultSize);
 
+    let count = $state(1);
+    $effect(() => {
+        const interval = setInterval(() => {
+            count = count + 1;
+        }, 1000);
+        return () => clearInterval(interval);
+    });
+
     setSettings(settings);
 </script>
 
@@ -59,6 +67,7 @@
         {size}
         items={[
             ['key simple', simpleValue],
+            ['counter', count.toString()],
             ['key button', buttonValue],
             ['key toggle', toggleValue],
             ['key nest', nestedValue],

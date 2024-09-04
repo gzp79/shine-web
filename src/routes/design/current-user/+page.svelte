@@ -1,9 +1,11 @@
 <script lang="ts">
     import { v4 as uuid } from 'uuid';
-    import CurrentUserCard from '$src/components/account/CurrentUserCard.svelte';
-    import { delay, never } from '$src/lib/utils';
+    import CurrentUserCard from '$components/account/CurrentUserCard.svelte';
+    import { async } from '$lib/utils';
+    import type { CurrentUser } from '$src/lib/api/identity_api';
 
-    const sampleUser = (userId: string) => {
+    let fetchReactiveUser = async (userId: string): Promise<CurrentUser> => {
+        await async.delay(1000);
         return {
             isAuthenticated: true,
             isLinked: true,
@@ -15,16 +17,10 @@
         };
     };
 
-    let reactiveUserId = $state(uuid());
-    let fetchReactiveUser = async function fetchUserData() {
-        let guid = reactiveUserId;
-        await delay(1000);
-        return sampleUser(guid);
-    };
-
+    let randomUserId = $state(uuid());
     $effect(() => {
         const interval = setInterval(() => {
-            reactiveUserId = uuid();
+            randomUserId = uuid();
         }, 3000);
         return () => clearInterval(interval);
     });
@@ -104,18 +100,20 @@
 
 <div class="divider">Reactive Update</div>
 
-<CurrentUserCard user={never} onLogout={() => console.log('logout')} onLogoutAll={() => console.log('logout all')} />
-
 <CurrentUserCard
-    user={async () => {
-        throw new Error('Test error');
-    }}
+    user={async.never()}
     onLogout={() => console.log('logout')}
     onLogoutAll={() => console.log('logout all')}
 />
 
 <CurrentUserCard
-    user={fetchReactiveUser}
+    user={async.error(new Error('Test error'))}
+    onLogout={() => console.log('logout')}
+    onLogoutAll={() => console.log('logout all')}
+/>
+
+<CurrentUserCard
+    user={fetchReactiveUser(randomUserId)}
     onLogout={() => console.log('logout')}
     onLogoutAll={() => console.log('logout all')}
 />

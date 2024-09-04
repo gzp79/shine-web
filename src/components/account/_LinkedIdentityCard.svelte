@@ -1,38 +1,17 @@
-<script context="module" lang="ts">
-    import type { LinkedIdentity } from '$src/lib/api/identity_api';
-
-    export class ActiveLinkedIdentity {
-        provider = $state<string>(null!);
-        providerUserId = $state<string>(null!);
-        linkedAt = $state<Date>(null!);
-        name = $state<string | undefined>();
-        email = $state<string | undefined>();
-
-        disableUnlink = $state(false);
-
-        constructor({ provider, providerUserId, linkedAt, name, email }: LinkedIdentity) {
-            this.provider = provider;
-            this.providerUserId = providerUserId;
-            this.linkedAt = new Date(linkedAt);
-            this.name = name;
-            this.email = email;
-        }
-    }
-</script>
-
 <script lang="ts">
     import { t } from '$lib/i18n/i18n.svelte';
+    import type { LinkedIdentity } from '$lib/api/identity_api';
     import Card from '$atoms/Card.svelte';
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
     import { Discord, Github, Google, Twitter } from '$atoms/icons/idps';
     import Button from '$atoms/Button.svelte';
 
     interface Props {
-        identity: ActiveLinkedIdentity;
-        /// Unlink the identity from the account and return if the unlink was successful.
-        onUnlink: (identity: ActiveLinkedIdentity) => Promise<void>;
+        identity: LinkedIdentity;
+        dataVersion: number;
+        onUnlink: (provider: string, providerUserId: string) => Promise<void>;
     }
-    const { identity, onUnlink }: Props = $props();
+    const { identity, dataVersion, onUnlink }: Props = $props();
 
     const providerImage = $derived.by(() => {
         switch (identity.provider) {
@@ -49,9 +28,12 @@
         }
     });
 
+    // Using disableVersion and dataVersion, we can prevent multiple unlink requests by disabling the button until the list refresh has been completed.
+    let disableVersion = $state(0);
     const unlink = async () => {
-        identity.disableUnlink = true;
-        await onUnlink(identity);
+        // memorize the current dataVersion to prevent multiple unlink requests
+        disableVersion = dataVersion;
+        await onUnlink(identity.provider, identity.providerUserId);
     };
 </script>
 
@@ -71,7 +53,10 @@
         ]}
     />
 
+    <p>dataVersion: {dataVersion}</p>
+    <p>disableVersion: {disableVersion}</p>
+
     {#snippet action()}
-        <Button label="Unlink" disabled={identity.disableUnlink} color="error" onclick={unlink} />
+        <Button label="Unlink" disabled={disableVersion >= dataVersion} color="error" onclick={unlink} />
     {/snippet}
 </Card>

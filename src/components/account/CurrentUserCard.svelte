@@ -1,6 +1,6 @@
 <script lang="ts">
     import { t } from '$lib/i18n/i18n.svelte';
-    import type { CurrentUser } from '$src/lib/api/identity_api';
+    import type { CurrentUser } from '$lib/api/identity_api';
     import Button from '$atoms/Button.svelte';
     import Card from '$atoms/Card.svelte';
     import { Warning } from '$atoms/icons/common';
@@ -11,17 +11,16 @@
     import ResourceFetch from '../atoms/ResourceFetch.svelte';
 
     interface Props {
-        user: CurrentUser | (() => Promise<CurrentUser>);
+        user: CurrentUser | Promise<CurrentUser>;
         onLogout?: string | (() => void);
         onLogoutAll?: string | (() => void);
     }
     const { user, onLogout: logout, onLogoutAll: logoutAll }: Props = $props();
     let isLoading = $state(true);
-    const fetchUser = async (): Promise<CurrentUser> => (typeof user === 'function' ? await user() : user);
 </script>
 
 <Card caption={$t('account.userInfo')} variant="top">
-    <ResourceFetch fetch={fetchUser} bind:isLoading>
+    <ResourceFetch fetch={user} onState={(state) => (isLoading = state == 'loading')}>
         {#snippet loading()}
             <LoadingCard />
         {/snippet}

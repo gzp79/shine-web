@@ -17,13 +17,19 @@ export async function fetchError(message: string, response: Response): Promise<E
     return new FetchError(message, response.status, body);
 }
 
-export function delay(ms: number): Promise<void> {
-    return new Promise((resolver) => setTimeout(resolver, ms));
-}
+export const async = {
+    delay(ms: number): Promise<void> {
+        return new Promise((resolver) => setTimeout(resolver, ms));
+    },
 
-export function never(): Promise<never> {
-    return new Promise(() => {});
-}
+    never(): Promise<never> {
+        return new Promise(() => {});
+    },
+
+    async error(error: Error): Promise<never> {
+        throw error;
+    }
+};
 
 export function getCookie(key: string): string | undefined {
     const value = document.cookie.split('; ').reduce((r, v) => {

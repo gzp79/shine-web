@@ -8,8 +8,8 @@
         size?: Size;
     }
     const { items, size = 'md' }: Props = $props();
-    const filteredItems = items.filter((x) => x !== null);
 
+    const filteredItems = $derived(items.filter((x) => x !== null));
     const tableClass = $derived(twMerge('table rounded-none', sizeMaps.table[size]));
 </script>
 

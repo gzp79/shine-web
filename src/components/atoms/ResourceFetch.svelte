@@ -1,3 +1,7 @@
+<script lang="ts" context="module">
+    export type State = 'loading' | 'completed' | 'error';
+</script>
+
 <script lang="ts" generics="T">
     import type { Snippet } from 'svelte';
 
@@ -6,31 +10,41 @@
 
     interface Props<T> {
         initial?: T;
-        fetch: () => Promise<T>;
+        fetch: T | Promise<T>;
         loading: Snippet;
         content: Snippet<[data: T, isDirty: boolean]>;
         error: Snippet<[error: Error]>;
-        isLoading?: boolean;
+        onState?: (state: State) => void;
     }
-    let { initial, fetch, loading, content, error, isLoading = $bindable() }: Props<T> = $props();
-    let previousResource = $state((initial ?? null) as T | null);
-    const fetchResource = async (): Promise<T> => {
-        isLoading = true;
-        const resource = await fetch();
-        previousResource = resource;
-        isLoading = false;
-        return resource;
+    let { initial, fetch, loading, content, error, onState }: Props<T> = $props();
+
+    let loadingState = $state(false);
+    let resourceState = $state((initial ?? null) as T | null);
+
+    const fetchResource = async (): Promise<void> => {
+        onState?.('loading');
+        loadingState = true;
+        try {
+            resourceState = await fetch;
+            onState?.('completed');
+        } catch (err) {
+            resourceState = null;
+            onState?.('error');
+            throw err;
+        } finally {
+            loadingState = false;
+        }
     };
 </script>
 
 {#await fetchResource()}
-    {#if previousResource === null}
+    {#if !resourceState}
         {@render loading()}
-    {:else}
-        {@render content(previousResource, true)}
     {/if}
-{:then resource}
-    {@render content(resource, false)}
 {:catch err}
     {@render error(err)}
 {/await}
+
+{#if resourceState !== null}
+    {@render content(resourceState, loadingState)}
+{/if}

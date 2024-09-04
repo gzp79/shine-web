@@ -1,6 +1,6 @@
 // hooks.server.ts
-import { loadThemeServerSide } from '$lib/theme/theme.svelte';
 import type { Handle } from '@sveltejs/kit';
+import { loadThemeServerSide } from '$lib/theme/theme.svelte';
 
 export const handle: Handle = async ({ event, resolve }) => {
     const theme = await loadThemeServerSide(event.cookies);

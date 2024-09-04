@@ -1,8 +1,8 @@
 /* cspell: disable */
+import type { Cookies } from '@sveltejs/kit';
 import { browser } from '$app/environment';
 import { type Maybe, getCookie } from '$lib/utils';
-import { i18n } from '$src/translations/i18n';
-import type { Cookies } from '@sveltejs/kit';
+import { i18n } from '../../translations/i18n';
 
 /* cspell: enable */
 
