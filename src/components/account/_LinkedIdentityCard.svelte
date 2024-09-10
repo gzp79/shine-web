@@ -28,7 +28,6 @@
         }
     });
 
-    // Using disableVersion and dataVersion, we can prevent multiple unlink requests by disabling the button until the list refresh has been completed.
     let disableVersion = $state(0);
     const unlink = async () => {
         // memorize the current dataVersion to prevent multiple unlink requests
@@ -61,6 +60,6 @@
     />
 
     {#snippet action()}
-        <Button label="Unlink" disabled={disableVersion >= dataVersion} color="error" onclick={unlink} />
+        <Button label={$t('account.unlink')} disabled={disableVersion >= dataVersion} color="error" onclick={unlink} />
     {/snippet}
 </Card>

@@ -13,7 +13,6 @@
     }
     const { identities, onUnlink }: Props = $props();
 
-    // Using disableVersion and dataVersion, we can prevent multiple unlink requests by disabling the button until the list refresh has been completed.
     let dataVersion = $state(0);
 </script>
 

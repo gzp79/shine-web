@@ -5,6 +5,7 @@
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
     import UAParser from 'ua-parser-js';
     import { Mac, Opera, Safari, Edge, Chrome, Firefox, Mobile, Android, IPhone } from '../atoms/icons/clients';
+    import { formatLocation } from '$src/lib/i18n/utils';
 
     interface Props {
         session: ActiveSession;
@@ -46,25 +47,7 @@
         return null;
     });
 
-    const location = $derived.by(() => {
-        let location = '';
-        // return location information
-        if (session.country) {
-            location += session.country + ', ';
-        }
-        if (session.region) {
-            location += session.region + ', ';
-        }
-        if (session.city) {
-            location += session.city;
-        }
-        return location;
-    });
-
-    const date = $derived.by(() => {
-        // format the date into a current selected locale
-        return session.createdAt;
-    });
+    const location = $derived(formatLocation(session));
 </script>
 
 <Card variant="data">
@@ -75,10 +58,15 @@
     <KeyValueTable
         size="xs"
         items={[
+            [$t('account.sessionFingerprint'), session.fingerprint],
             [$t('account.userAgent'), session.agent],
             [
                 $t('account.loginDate'),
-                $t('common.dateTime', { value: date }, { date: { dateStyle: 'long', timeStyle: 'medium' } })
+                $t(
+                    'common.dateTime',
+                    { value: session.createdAt },
+                    { date: { dateStyle: 'long', timeStyle: 'medium' } }
+                )
             ],
             [$t('account.location'), location]
         ]}

@@ -51,7 +51,8 @@
             items: [
                 { title: 'Current User Card', href: 'current-user' },
                 { title: 'Linked Identities', href: 'linked-identities' },
-                { title: 'Active Sessions', href: 'active-sessions' }
+                { title: 'Active Sessions', href: 'active-sessions' },
+                { title: 'Active Tokens', href: 'active-tokens' }
             ]
         }
     ];

@@ -40,6 +40,8 @@ export type ActiveSession = {
     city?: string;
 };
 
+export type TokenKind = 'singleAccess' | 'persistent' | 'access';
+
 export type ActiveSessions = {
     sessions: ActiveSession[];
 };
@@ -47,14 +49,14 @@ export type ActiveSessions = {
 export type ActiveToken = {
     //userId: string,
     tokenFingerprint: string;
-    kind: string;
+    kind: TokenKind;
     createdAt: Date;
     expireAt: Date;
     isExpired: boolean;
     agent: string;
     country?: string;
     region?: string;
-    city: string;
+    city?: string;
 };
 
 export type ActiveTokens = {
