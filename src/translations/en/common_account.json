@@ -11,5 +11,9 @@
     "linkedIdentities": "Linked identities",
     "provider": "Provider:",
     "providerUserId": "Provider user id:",
-    "linkDate": "Link date:"
+    "linkDate": "Link date:",
+    "activeSessions": "Active sessions",
+    "userAgent": "User agent:",
+    "loginDate": "Login date:",
+    "location": "Location:"
 }

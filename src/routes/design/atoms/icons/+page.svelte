@@ -2,7 +2,7 @@
     import { type Component } from 'svelte';
     import { colorList, defaultColor, defaultSize, sizeList } from '$components/types';
     import Card from '$atoms/Card.svelte';
-    import { Chrome, Edge, Opera, Safari } from '$atoms/icons/clients';
+    import { Chrome, Edge, Opera, Safari, Firefox, Mobile, Android, IPhone, Mac } from '$atoms/icons/clients';
     import { Check, Cross, Dark, DarkAndLight, Hamburger, Info, Light, Settings, Warning } from '$atoms/icons/common';
     import { Infinity, Spinner, Ball, Dots, Ring } from '$atoms/icons/animated';
     import { Discord, Github, Google, Twitter } from '$atoms/icons/idps';
@@ -54,6 +54,11 @@
         {@render icon(Edge, 'Edge')}
         {@render icon(Opera, 'Opera')}
         {@render icon(Safari, 'Safari')}
+        {@render icon(Firefox, 'Firefox')}
+        {@render icon(Mobile, 'Mobile')}
+        {@render icon(Android, 'Android')}
+        {@render icon(IPhone, 'IPhone')}
+        {@render icon(Mac, 'Mac')}
     </div>
 </Card>
 

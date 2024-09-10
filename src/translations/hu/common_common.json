@@ -1,4 +1,6 @@
 {
     "loading": "Betöltés...",
-    "error": "Valami hiba történt"
+    "error": "Valami hiba történt",
+    "dateTime": "{{value:date}}",
+    "currency": "{{value:currency}}"
 }

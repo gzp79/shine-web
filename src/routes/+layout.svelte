@@ -4,7 +4,7 @@
     import { refreshTheme } from '$lib/theme/theme.svelte';
     import type { Snippet } from 'svelte';
     import '../app.css';
-    import type { CurrentUser } from '$lib/api/identity_api';
+    import type { CurrentUser } from '$src/lib/api/identity-api';
     import LoadingCard from '$atoms/LoadingCard.svelte';
 
     interface Props {

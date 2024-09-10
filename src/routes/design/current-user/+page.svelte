@@ -2,7 +2,7 @@
     import { v4 as uuid } from 'uuid';
     import CurrentUserCard from '$components/account/CurrentUserCard.svelte';
     import { async } from '$lib/utils';
-    import type { CurrentUser } from '$src/lib/api/identity_api';
+    import type { CurrentUser } from '$src/lib/api/identity-api';
 
     let fetchReactiveUser = async (userId: string): Promise<CurrentUser> => {
         await async.delay(1000);

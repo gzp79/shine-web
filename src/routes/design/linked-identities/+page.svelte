@@ -2,7 +2,7 @@
     import { v4 as uuid } from 'uuid';
     import LinkedIdentitiesCard from '$components/account/LinkedIdentitiesCard.svelte';
     import { async } from '$lib/utils';
-    import type { LinkedIdentity } from '$lib/api/identity_api';
+    import type { LinkedIdentity } from '$src/lib/api/identity-api';
 
     // emulate some backend stored list
     let identities: LinkedIdentity[] = $state([
@@ -48,7 +48,7 @@
         {
             provider: 'twitter',
             providerUserId: '3 - simple remove',
-            linkedAt: new Date('2021-08-01T12:00:00Z'),
+            linkedAt: new Date('2021-08-01T12:13:14Z'),
             name: 'remove'
         },
         {

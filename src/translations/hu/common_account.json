@@ -11,5 +11,9 @@
     "linkedIdentities": "Összekapcsolt azonosítók",
     "provider": "Szolgáltató:",
     "providerUserId": "Szolgáltató felhasználói azonosító:",
-    "linkDate": "Összekapcsolás dátuma:"
+    "linkDate": "Összekapcsolás dátuma:",
+    "activeSessions": "Aktív munkamenetek",
+    "userAgent": "Felhasználói ügynök:",
+    "loginDate": "Bejelentkezés dátuma:",
+    "location": "Helyszín:"
 }

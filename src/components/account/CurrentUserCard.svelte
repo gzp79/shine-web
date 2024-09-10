@@ -1,6 +1,6 @@
 <script lang="ts">
     import { t } from '$lib/i18n/i18n.svelte';
-    import type { CurrentUser } from '$lib/api/identity_api';
+    import type { CurrentUser } from '$src/lib/api/identity-api';
     import Button from '$atoms/Button.svelte';
     import Card from '$atoms/Card.svelte';
     import { Warning } from '$atoms/icons/common';

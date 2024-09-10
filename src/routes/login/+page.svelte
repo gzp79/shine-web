@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { identityApi } from '$lib/api/identity_api';
+    import { identityApi } from '$src/lib/api/identity-api';
     import { languageStore } from '$lib/i18n/i18n.svelte';
     import { themeStore } from '$lib/theme/theme.svelte';
     import ThemeSwitch from '$lib/theme/ThemeSwitch.svelte';

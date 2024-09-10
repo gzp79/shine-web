@@ -32,7 +32,8 @@ export type LinkedIdentities = {
 
 export type ActiveSession = {
     //userId: string,
-    created_at: Date;
+    fingerprint: string;
+    createdAt: Date;
     agent: string;
     country?: string;
     region?: string;

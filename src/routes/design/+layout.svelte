@@ -50,7 +50,8 @@
             //items: [{ title: 'Circle menu', href: 'circle_menu' }]
             items: [
                 { title: 'Current User Card', href: 'current-user' },
-                { title: 'Linked Identities', href: 'linked-identities' }
+                { title: 'Linked Identities', href: 'linked-identities' },
+                { title: 'Active Sessions', href: 'active-sessions' }
             ]
         }
     ];

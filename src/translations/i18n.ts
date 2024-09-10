@@ -19,7 +19,11 @@ function createLoader(path: string, key: string, routes?: RegExp[]) {
     });
 }
 
-const config: Config = {
+interface Params {
+    value: number | string | Date;
+}
+
+const config: Config<Partial<Params>> = {
     log: {
         level: dev ? 'warn' : 'error'
     },
