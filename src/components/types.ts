@@ -43,6 +43,20 @@ export const colorMaps: Record<string, Record<Color, string>> = {
         error: 'text-error'
     },
 
+    select: {
+        primary: 'select-primary',
+        secondary: 'select-secondary',
+        accent: 'select-accent',
+        neutral: 'select-neutral',
+        base100: 'select-base100',
+        base200: 'select-base200',
+        base300: 'select-base300',
+        info: 'select-info',
+        success: 'select-success',
+        warning: 'select-warning',
+        error: 'select-error'
+    },
+
     textContent: {
         primary: 'text-primary-content',
         secondary: 'text-secondary-content',
@@ -96,6 +110,13 @@ export const sizeMaps: Record<string, Record<Size, string>> = {
         sm: 'table-sm',
         md: 'table-md',
         lg: 'table-lg'
+    },
+
+    select: {
+        xs: 'select-xs',
+        sm: 'select-sm',
+        md: 'select-md',
+        lg: 'select-lg'
     },
 
     text: {

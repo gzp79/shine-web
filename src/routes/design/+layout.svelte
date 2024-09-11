@@ -40,6 +40,7 @@
                 { title: 'Icons', href: 'atoms/icons' },
                 { title: 'Buttons', href: 'atoms/buttons' },
                 { title: 'Toggle', href: 'atoms/toggles' },
+                { title: 'Select', href: 'atoms/selects' },
                 { title: 'Cards', href: 'atoms/cards' },
                 { title: 'Alerts', href: 'atoms/alerts' },
                 { title: 'Key-Value Table', href: 'atoms/key-value-tables' }
@@ -49,10 +50,10 @@
             title: 'Templates',
             //items: [{ title: 'Circle menu', href: 'circle_menu' }]
             items: [
-                { title: 'Current User Card', href: 'current-user' },
-                { title: 'Linked Identities', href: 'linked-identities' },
-                { title: 'Active Sessions', href: 'active-sessions' },
-                { title: 'Active Tokens', href: 'active-tokens' }
+                { title: 'Current User Card', href: 'account/current-user' },
+                { title: 'Linked Identities', href: 'account/linked-identities' },
+                { title: 'Active Sessions', href: 'account/active-sessions' },
+                { title: 'Active Tokens', href: 'account/active-tokens' }
             ]
         }
     ];
