@@ -22,7 +22,7 @@
             case 'fieldset':
                 return {
                     card: twMerge(
-                        'card card-bordered relative m-3 border-primary bg-base-200 text-base-content shadow-lg shadow-base p-4',
+                        'card card-bordered  m-3 border-primary bg-base-200 text-base-content shadow-lg shadow-base p-4',
                         className
                     ),
                     content: 'max-h-[50lvh] overflow-auto',
@@ -32,7 +32,7 @@
             case 'top':
                 return {
                     card: twMerge(
-                        'card card-bordered relative mx-3 my-6 border-primary bg-base-200 text-base-content shadow-lg shadow-base',
+                        'card card-bordered  mx-3 my-6 border-primary bg-base-200 text-base-content shadow-lg shadow-base',
                         className
                     ),
                     content: 'max-h-[50lvh] overflow-auto',
@@ -42,7 +42,7 @@
             case 'data':
                 return {
                     card: twMerge(
-                        'card card-compact relative mx-1 my-2 bg-base-300 text-base-content shadow-md shadow-base sm:card-side',
+                        'card card-compact  mx-1 my-2 bg-base-300 text-base-content shadow-md shadow-base sm:card-side',
                         className
                     ),
                     content: '',

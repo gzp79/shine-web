@@ -1,4 +1,7 @@
 export type Maybe<T> = T | null;
+export function maybeNull<T>(): Maybe<T> {
+    return null;
+}
 
 export type Fetch = (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>;
 

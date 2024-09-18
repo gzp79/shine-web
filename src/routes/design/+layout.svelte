@@ -22,6 +22,7 @@
     import SettingsForm from '$components/settings/SettingsForm.svelte';
     import Section from '$components/settings/Section.svelte';
     import ThemeSwitch from '$lib/theme/ThemeSwitch.svelte';
+    import Select from '$src/components/atoms/Select.svelte';
 
     const { children } = $props();
 
@@ -68,6 +69,15 @@
         <Hamburger class="inline-block" />
     </label>
     <div class="flex-1 overflow-hidden text-ellipsis text-pretty px-2">Design</div>
+    <Select
+        placeholder="Select an icon"
+        options={[
+            ['v1', 'icon1'],
+            ['v2', 'icon2'],
+            ['v3', 'icon3'],
+            ['v4', 'icon4']
+        ]}
+    />
     <ThemeSwitch class="flex-none" />
 </div>
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { sizeMaps, type Color, type Size } from '$components/types';
+    import { colorMaps, sizeMaps, type Color, type Size } from '$components/types';
     import type { Component } from 'svelte';
     import { twMerge } from 'tailwind-merge';
 
@@ -27,27 +27,6 @@
         href
     }: Props = $props();
 
-    const colorBtnMap: Record<Color, string> = {
-        primary: 'btn-primary',
-        secondary: 'btn-secondary',
-        accent: 'btn-accent',
-        neutral: 'btn-neutral',
-        base100: 'btn-base-100',
-        base200: 'btn-base-200',
-        base300: 'btn-base-300',
-        info: 'btn-info',
-        success: 'btn-success',
-        warning: 'btn-warning',
-        error: 'btn-error'
-    };
-
-    const sizeBtnMap: Record<Size, string> = {
-        xs: 'btn-xs',
-        sm: 'btn-sm',
-        md: 'btn-md',
-        lg: 'btn-lg'
-    };
-
     const sizeIconMargin: Record<Size, string> = {
         xs: '',
         sm: 'mr-0.5',
@@ -56,17 +35,15 @@
     };
 
     const btnClass = $derived(
-        twMerge(`btn w-fit shadow-base shadow-md hover:shadow-sm hover:shadow-base m-1
-            ${colorBtnMap[color]}
-            ${sizeBtnMap[size]} 
-            ${outline ? 'btn-outline' : ''} 
-            ${disabled ? 'btn-disabled' : ''}`)
+        twMerge([
+            'btn w-fit shadow-base shadow-md hover:shadow-sm hover:shadow-base m-1',
+            colorMaps.button[color],
+            sizeMaps.button[size],
+            outline && 'btn-outline',
+            disabled && 'btn-disabled'
+        ])
     );
-    const iconClass = $derived(
-        twMerge(`
-        ${sizeMaps.icon[size]} 
-        ${label ? sizeIconMargin[size] : ''}`)
-    );
+    const iconClass = $derived(twMerge([sizeMaps.icon[size], label && sizeIconMargin[size]]));
 </script>
 
 {#snippet content()}

@@ -1,11 +1,11 @@
 <script lang="ts">
     import { afterNavigate } from '$app/navigation';
+    import type { Snippet } from 'svelte';
     import { refreshLanguage } from '$lib/i18n/i18n.svelte';
     import { refreshTheme } from '$lib/theme/theme.svelte';
-    import type { Snippet } from 'svelte';
-    import '../app.css';
-    import type { CurrentUser } from '$src/lib/api/identity-api';
+    import type { CurrentUser } from '$lib/api/identity-api';
     import LoadingCard from '$atoms/LoadingCard.svelte';
+    import '../app.css';
 
     interface Props {
         data: {

@@ -29,6 +29,20 @@ export const colorMaps: Record<string, Record<Color, string>> = {
         error: 'bg-error'
     },
 
+    hover_bg: {
+        primary: 'hover:bg-primary',
+        secondary: 'hover:bg-secondary',
+        accent: 'hover:bg-accent',
+        neutral: 'hover:bg-neutral',
+        base100: 'hover:bg-base100',
+        base200: 'hover:bg-base200',
+        base300: 'hover:bg-base300',
+        info: 'hover:bg-info',
+        success: 'hover:bg-success',
+        warning: 'hover:bg-warning',
+        error: 'hover:bg-error'
+    },
+
     text: {
         primary: 'text-primary',
         secondary: 'text-secondary',
@@ -41,6 +55,20 @@ export const colorMaps: Record<string, Record<Color, string>> = {
         success: 'text-success',
         warning: 'text-warning',
         error: 'text-error'
+    },
+
+    button: {
+        primary: 'btn-primary',
+        secondary: 'btn-secondary',
+        accent: 'btn-accent',
+        neutral: 'btn-neutral',
+        base100: 'btn-base-100',
+        base200: 'btn-base-200',
+        base300: 'btn-base-300',
+        info: 'btn-info',
+        success: 'btn-success',
+        warning: 'btn-warning',
+        error: 'btn-error'
     },
 
     select: {
@@ -97,6 +125,20 @@ export const colorMaps: Record<string, Record<Color, string>> = {
         success: 'stroke-success',
         warning: 'stroke-warning',
         error: 'stroke-error'
+    },
+
+    border: {
+        primary: 'border-primary',
+        secondary: 'border-secondary',
+        accent: 'border-accent',
+        neutral: 'border-neutral',
+        base100: 'border-base100',
+        base200: 'border-base200',
+        base300: 'border-base300',
+        info: 'border-info',
+        success: 'border-success',
+        warning: 'border-warning',
+        error: 'border-error'
     }
 };
 
@@ -110,6 +152,13 @@ export const sizeMaps: Record<string, Record<Size, string>> = {
         sm: 'table-sm',
         md: 'table-md',
         lg: 'table-lg'
+    },
+
+    button: {
+        xs: 'btn-xs',
+        sm: 'btn-sm',
+        md: 'btn-md',
+        lg: 'btn-lg'
     },
 
     select: {
