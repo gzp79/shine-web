@@ -14,6 +14,8 @@
 
         onclick?: () => void;
         href?: string;
+
+        id?: string;
     }
 
     let {
@@ -24,7 +26,8 @@
         outline = false,
         disabled = false,
         onclick,
-        href
+        href,
+        ...rest
     }: Props = $props();
 
     const sizeIconMargin: Record<Size, string> = {
@@ -56,11 +59,11 @@
 {/snippet}
 
 {#if href}
-    <a class={btnClass} {href} {onclick}>
+    <a class={btnClass} {href} {onclick} {...rest}>
         {@render content()}
     </a>
 {:else}
-    <button class={btnClass} {disabled} {onclick}>
+    <button class={btnClass} {disabled} {onclick} {...rest}>
         {@render content()}
     </button>
 {/if}

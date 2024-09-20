@@ -22,7 +22,7 @@
     import SettingsForm from '$components/settings/SettingsForm.svelte';
     import Section from '$components/settings/Section.svelte';
     import ThemeSwitch from '$lib/theme/ThemeSwitch.svelte';
-    import Select from '$src/components/atoms/Select.svelte';
+    import LangSwitch from '$src/lib/i18n/LangSwitch.svelte';
 
     const { children } = $props();
 
@@ -41,7 +41,7 @@
                 { title: 'Icons', href: 'atoms/icons' },
                 { title: 'Buttons', href: 'atoms/buttons' },
                 { title: 'Toggle', href: 'atoms/toggles' },
-                { title: 'Select', href: 'atoms/selects' },
+                { title: 'Popper', href: 'atoms/popper' },
                 { title: 'Cards', href: 'atoms/cards' },
                 { title: 'Alerts', href: 'atoms/alerts' },
                 { title: 'Key-Value Table', href: 'atoms/key-value-tables' }
@@ -69,15 +69,7 @@
         <Hamburger class="inline-block" />
     </label>
     <div class="flex-1 overflow-hidden text-ellipsis text-pretty px-2">Design</div>
-    <Select
-        placeholder="Select an icon"
-        options={[
-            ['v1', 'icon1'],
-            ['v2', 'icon2'],
-            ['v3', 'icon3'],
-            ['v4', 'icon4']
-        ]}
-    />
+    <LangSwitch />
     <ThemeSwitch class="flex-none" />
 </div>
 

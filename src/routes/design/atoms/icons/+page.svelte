@@ -9,6 +9,7 @@
     import Checkbox from '$components/settings/CheckBox.svelte';
     import Select from '$components/settings/Select.svelte';
     import { setSettings } from '../../+layout.svelte';
+    import { FlagGB, FlagHU } from '$src/components/atoms/icons/flags';
 
     let size = $state(defaultSize);
     let color = $state(defaultColor);
@@ -59,6 +60,13 @@
         {@render icon(Android, 'Android')}
         {@render icon(IPhone, 'IPhone')}
         {@render icon(Mac, 'Mac')}
+    </div>
+</Card>
+
+<Card caption="Flags" variant="fieldset" class="flex flex-col items-center">
+    <div class="flex flex-wrap justify-center gap-2">
+        {@render icon(FlagHU, 'HU')}
+        {@render icon(FlagGB, 'GB')}
     </div>
 </Card>
 
