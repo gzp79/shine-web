@@ -25,30 +25,30 @@
 <p class="min-h-[500px]">a</p>
 
 <Card caption="Clickable" variant="fieldset">
-    <Button id="mybutton1" label="Open" />
-    <Button id="mybutton1" label="Open" />
-    <Button id="mybutton1" label="Open" />
+    <Button id="mybutton1" label="Click" />
+    <Button id="mybutton1" label="Click" />
+    <Button id="mybutton1" label="Click" />
     <Popper trigger="#mybutton1" clickable {location}>This is a popper</Popper>
 </Card>
 
 <Card caption="Hoverable" variant="fieldset">
-    <Button id="mybutton2" label="Open" />
-    <Button id="mybutton2" label="Open" />
-    <Button id="mybutton2" label="Open" />
+    <Button id="mybutton2" label="Hover" />
+    <Button id="mybutton2" label="Hover" />
+    <Button id="mybutton2" label="Hover" />
     <Popper trigger="#mybutton2" hoverable {location}>This is a popper</Popper>
 </Card>
 
 <Card caption="Clickable and Hoverable" variant="fieldset">
-    <Button id="mybutton3" label="Open" />
-    <Button id="mybutton3" label="Open" />
-    <Button id="mybutton3" label="Open" />
+    <Button id="mybutton3" label="Click&Hover" />
+    <Button id="mybutton3" label="Click&Hover" />
+    <Button id="mybutton3" label="Click&Hover" />
     <Popper trigger="#mybutton3" hoverable clickable {location}>This is a popper</Popper>
 </Card>
 
 <Card caption="Focusable" variant="fieldset">
-    <Button id="mybutton4" label="Open" />
-    <Button id="mybutton4" label="Open" />
-    <Button id="mybutton4" label="Open" />
+    <Button id="mybutton4" label="Focus" />
+    <Button id="mybutton4" label="Focus" />
+    <Button id="mybutton4" label="Focus" />
     <Popper trigger="#mybutton4" focusable {location}>This is a popper</Popper>
 </Card>
 
