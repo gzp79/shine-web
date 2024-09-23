@@ -9,33 +9,30 @@
     let { class: className }: Props = $props();
 
     let theme = themeStore();
-
-    let checked = $derived(theme.current === 'dark' ? true : false);
-    let indeterminate = $derived(theme.current === 'system' ? true : false);
+    let btnClass = $derived(twMerge(['h-10 w-10 fill-current', className]));
 </script>
 
-<label class={twMerge('btn btn-square btn-ghost swap swap-rotate', className)}>
-    <input
-        type="checkbox"
-        class="theme-controller"
-        {checked}
-        {indeterminate}
-        oninput={() => {
-            switch (theme.current) {
-                case 'dark':
-                    theme.current = 'light';
-                    break;
-                case 'light':
-                    theme.current = 'system';
-                    break;
-                default:
-                    theme.current = 'dark';
-                    break;
-            }
-        }}
-    />
-
-    <Dark class="swap-on h-10 w-10 fill-current" />
-    <Light class="swap-off h-10 w-10 fill-current" />
-    <DarkAndLight class="swap-indeterminate h-10 w-10 fill-current" />
-</label>
+<button
+    class={btnClass}
+    onclick={() => {
+        switch (theme.current) {
+            case 'dark':
+                theme.current = 'light';
+                break;
+            case 'light':
+                theme.current = 'system';
+                break;
+            default:
+                theme.current = 'dark';
+                break;
+        }
+    }}
+>
+    {#if theme.current === 'dark'}
+        <Dark />
+    {:else if theme.current === 'light'}
+        <Light />
+    {:else}
+        <DarkAndLight />
+    {/if}
+</button>

@@ -52,7 +52,7 @@
     let divStyle = $derived(
         [
             `transform: translate(${posX}px, ${posY}px) ${isAbove ? 'translateY(-100%)' : ''}`,
-            !isOpen ? 'visible: hidden; opacity: 0' : '',
+            !isOpen ? 'display: none; opacity: 0' : '',
             alignWidth ? `width: ${width}px` : ''
         ].join(';')
     );
@@ -95,14 +95,12 @@
 
         if (trigger) triggerEls = [...document.querySelectorAll<HTMLElement>(trigger)];
         else triggerEls = contentEl?.previousElementSibling ? [contentEl.previousElementSibling as HTMLElement] : [];
-        console.log(triggerEls);
         if (!triggerEls.length) {
             console.error('No triggers found.');
         }
 
         if (reference) referenceEl = document.querySelector<HTMLElement>(reference);
         else referenceEl = triggerEls[0];
-        console.log(referenceEl);
         if (!referenceEl) {
             console.error('No reference element found.');
         }
@@ -154,6 +152,8 @@
                 hide();
             }
         };
+        // since popup reposition is not stable and smooth enough, it is safer to hide it
+        const handleLayoutChanged = hide;
 
         const forEachReferenceParent = (action: (parent: HTMLElement) => void) => {
             for (
@@ -168,12 +168,12 @@
         if (isOpen) {
             updatePosition();
             if (clickable) window.addEventListener('click', handleClickOutside);
-            forEachReferenceParent((x) => x.addEventListener('scroll', updatePosition));
-            window.addEventListener('resize', updatePosition);
+            forEachReferenceParent((x) => x.addEventListener('scroll', handleLayoutChanged));
+            window.addEventListener('resize', handleLayoutChanged);
         } else {
             window.removeEventListener('click', handleClickOutside);
-            forEachReferenceParent((x) => x.removeEventListener('scroll', hide));
-            window.removeEventListener('resize', updatePosition);
+            forEachReferenceParent((x) => x.removeEventListener('scroll', handleLayoutChanged));
+            window.removeEventListener('resize', handleLayoutChanged);
         }
     });
 </script>
