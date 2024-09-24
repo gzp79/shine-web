@@ -3,21 +3,29 @@ export function maybeNull<T>(): Maybe<T> {
     return null;
 }
 
-export type Fetch = (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>;
+type ErrorKind = 'fetch' | 'other';
 
-export class FetchError extends Error {
-    constructor(
-        message: string,
-        public status: number,
-        public body: string
-    ) {
-        super(message);
-    }
+// A interface for any ssr error that is captured and delegated to the client
+export interface AppError {
+    errorKind: ErrorKind;
+    message: string;
+    detail?: unknown;
 }
 
-export async function fetchError(message: string, response: Response): Promise<Error> {
+export type Fetch = (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>;
+
+export class FetchError implements AppError {
+    errorKind: ErrorKind = 'fetch';
+
+    constructor(
+        public message: string,
+        public detail: { status: number; body: string }
+    ) {}
+}
+
+export async function fetchError(message: string, response: Response): Promise<FetchError> {
     const body = await response.text();
-    return new FetchError(message, response.status, body);
+    return new FetchError(message, { status: response.status, body });
 }
 
 export const async = {

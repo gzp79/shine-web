@@ -6,6 +6,12 @@ declare global {
             theme: ThemeProps;
         }
 
+        interface Error {
+            code: number;
+            message: string;
+            detail: unknown;
+        }
+
         interface Platform {
             env: {
                 COUNTER: DurableObjectNamespace;

@@ -138,7 +138,7 @@ class IdentityApi {
         return `${this.serviceUrl}/identity/auth/logout?redirectUrl=${redirectUrl}&errorUrl=${errorUrl}&terminateAll=${terminateAll}`;
     }
 
-    async getLinkedIdentities(): Promise<LinkedIdentities> {
+    async getLinkedIdentities(): Promise<LinkedIdentity[]> {
         const url = `${this.serviceUrl}/identity/api/auth/user/links`;
         const response = await fetch(url, {
             method: 'GET',
@@ -150,7 +150,7 @@ class IdentityApi {
             throw await fetchError('Failed to getLinkedIdentities', response);
         }
 
-        return await response.json();
+        return ((await response.json()) as LinkedIdentities).links;
     }
 
     async unlinkIdentity(provider: string, providerUserId: string): Promise<void> {
@@ -166,7 +166,7 @@ class IdentityApi {
         }
     }
 
-    async getActiveSessions(): Promise<ActiveSessions> {
+    async getActiveSessions(): Promise<ActiveSession[]> {
         const url = `${this.serviceUrl}/identity/api/auth/user/sessions`;
         const response = await fetch(url, {
             method: 'GET',
@@ -178,10 +178,10 @@ class IdentityApi {
             throw await fetchError('Failed to getActiveSessions', response);
         }
 
-        return await response.json();
+        return ((await response.json()) as ActiveSessions).sessions;
     }
 
-    async getActiveTokens(): Promise<ActiveTokens> {
+    async getActiveTokens(): Promise<ActiveToken[]> {
         const url = `${this.serviceUrl}/identity/api/auth/user/tokens`;
         const response = await fetch(url, {
             method: 'GET',
@@ -193,7 +193,20 @@ class IdentityApi {
             throw await fetchError('Failed to getActiveTokens', response);
         }
 
-        return await response.json();
+        return ((await response.json()) as ActiveTokens).tokens;
+    }
+
+    async revokeToken(fingerprint: string): Promise<void> {
+        const url = `${this.serviceUrl}/identity/api/auth/user/tokens/${fingerprint}`;
+        const response = await fetch(url, {
+            method: 'DELETE',
+            credentials: 'include',
+            cache: 'no-store'
+        });
+
+        if (!response.ok) {
+            throw await fetchError('Failed to revokeToken', response);
+        }
     }
 }
 

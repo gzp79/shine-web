@@ -3,10 +3,9 @@
 </script>
 
 <script lang="ts">
-    import type { Maybe } from '$src/lib/utils';
-
-    import type { Snippet } from 'svelte';
+    import { onMount, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
+    import type { Maybe } from '$src/lib/utils';
 
     interface Props {
         // trigger events, mount-time only
@@ -77,7 +76,7 @@
         }
     };
 
-    $effect(() => {
+    onMount(() => {
         if (focusable && clickable) {
             console.error('focusable and clickable cannot be true at the same time');
         }
@@ -152,6 +151,7 @@
                 hide();
             }
         };
+
         // since popup reposition is not stable and smooth enough, it is safer to hide it
         const handleLayoutChanged = hide;
 

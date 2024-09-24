@@ -7,7 +7,7 @@
     let svgClass = $derived(twMerge(sizeMaps.glyph[size], className, disabled ? 'grayscale' : ''));
 </script>
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 292 292" class={svgClass}>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-20 -20 322 322" class={svgClass}>
     <path fill="#2394bc" stroke="black" stroke-width="7" d="M146 4a136 136 0 1 1 0 273 136 136 0 0 1 0-273z" />
     <path
         fill="#ec8840"

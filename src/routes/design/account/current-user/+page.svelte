@@ -1,8 +1,9 @@
 <script lang="ts">
     import { v4 as uuid } from 'uuid';
-    import CurrentUserCard from '$components/account/CurrentUserCard.svelte';
+    import { onMount } from 'svelte';
     import { async } from '$lib/utils';
-    import type { CurrentUser } from '$src/lib/api/identity-api';
+    import type { CurrentUser } from '$lib/api/identity-api';
+    import CurrentUserCard from '$components/account/CurrentUserCard.svelte';
 
     let fetchReactiveUser = async (userId: string): Promise<CurrentUser> => {
         await async.delay(1000);
@@ -18,7 +19,7 @@
     };
 
     let randomUserId = $state(uuid());
-    $effect(() => {
+    onMount(() => {
         const interval = setInterval(() => {
             randomUserId = uuid();
         }, 3000);

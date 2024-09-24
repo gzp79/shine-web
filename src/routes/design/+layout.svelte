@@ -1,12 +1,12 @@
 <script lang="ts" context="module">
-    import { getContext, setContext, type Snippet } from 'svelte';
+    import { getContext, onMount, setContext, type Snippet } from 'svelte';
 
     interface SettingsContext {
         setSettings: (settings: Snippet | null) => void;
     }
 
     export function setSettings(settings: Snippet) {
-        $effect(() => {
+        onMount(() => {
             const context = getContext<SettingsContext>('DesignSetting');
             context.setSettings(settings);
 
