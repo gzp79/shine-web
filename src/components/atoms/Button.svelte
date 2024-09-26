@@ -20,7 +20,7 @@
 
     let {
         label,
-        icon,
+        icon: Icon,
         color = 'primary',
         size = 'md',
         outline = false,
@@ -50,8 +50,8 @@
 </script>
 
 {#snippet content()}
-    {#if icon}
-        <svelte:component this={icon} {disabled} class={iconClass} />
+    {#if Icon}
+        <Icon {disabled} class={iconClass} />
     {/if}
     {#if label}
         <span class="inline-block {sizeMaps.text[size]}">{label}</span>

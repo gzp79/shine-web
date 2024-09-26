@@ -13,7 +13,7 @@
     const { session }: Props = $props();
 
     const agent = $derived.by(() => new UAParser(session.agent).getResult());
-    const agentImage = $derived.by(() => {
+    const AgentImage = $derived.by(() => {
         const browser = agent.browser.name?.toLowerCase();
         const os = agent.os.name?.toLowerCase();
         const device = agent.device.type?.toLowerCase();
@@ -52,7 +52,7 @@
 
 <Card variant="data">
     {#snippet image()}
-        <svelte:component this={agentImage} />
+        <AgentImage />
     {/snippet}
 
     <KeyValueTable

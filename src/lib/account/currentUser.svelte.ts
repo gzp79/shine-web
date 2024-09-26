@@ -1,57 +1,89 @@
 import { type CurrentUser, identityApi } from '../api/identity-api';
-import { type AppError, type Fetch, FetchError, maybeNull } from '../utils';
+import { logUser } from '../loggers';
+import { type AppError, type Fetch } from '../utils';
 
-let user = $state(maybeNull<CurrentUser | AppError>());
+type UserState = CurrentUser | AppError | null | { isLoading: number };
+
+function isLoaded(user: UserState): user is CurrentUser | AppError {
+    return user !== null && !('isLoading' in user);
+}
+
+function isMaybeError(user: UserState): user is AppError | null {
+    return user === null || 'errorKind' in user;
+}
+
+function isCurrentUser(user: UserState): user is CurrentUser {
+    return isLoaded(user) && !('isLoading' in user);
+}
+
+let user = $state<UserState>(null);
 let nextUpdate = $state(0);
 
 // Update the current user every n seconds
 const UPDATE_INTERVAL = 15 * 60;
 
-export async function loadCurrentUser(fetch: Fetch): Promise<CurrentUser | AppError> {
+async function refreshCurrentUser(fetch: Fetch): Promise<void> {
     const now = Date.now();
     if (user === null || now > nextUpdate) {
+        logUser('Refreshing current user', nextUpdate, user);
         try {
-            const usr = await identityApi.getCurrentUser(fetch);
-            user = usr;
+            user = { isLoading: now };
             nextUpdate = now + UPDATE_INTERVAL * 1000;
-        } catch (error) {
-            if (error instanceof FetchError) {
-                console.error('Failed to load current user', error);
-                user = error;
-                nextUpdate = 0;
-            } else {
-                throw error;
+
+            const usr = await identityApi.getCurrentUser(fetch);
+            if ('isLoading' in user && user.isLoading == now) {
+                //update user only if it hasn't changed yet
+                user = usr;
+                nextUpdate = now + UPDATE_INTERVAL * 1000;
             }
+        } catch (error) {
+            if (error !== null && typeof error === 'object') {
+                if ('errorKind' in error && 'message' in error) {
+                    user = error as AppError;
+                } else if ('message' in error) {
+                    user = { errorKind: 'other', message: (error as Error).message };
+                } else {
+                    user = { errorKind: 'other', message: JSON.stringify(error) };
+                }
+            } else {
+                user = { errorKind: 'other', message: String(error) };
+            }
+            nextUpdate = 0;
         }
+
+        logUser('Refreshed current user', nextUpdate, user);
     }
-    return user;
 }
 
 export function currentUserStore() {
     return {
+        get isNull(): boolean {
+            return user === null;
+        },
+
         get isLoaded(): boolean {
-            return user !== null;
+            return isLoaded(user);
         },
 
-        get isAuthenticated(): boolean {
-            return user !== null && !('errorKind' in user) && user.isAuthenticated;
-        },
-
-        forgetUser(): void {
+        forget(): void {
             user = null;
         },
 
-        async refreshUser(): Promise<void> {
-            await loadCurrentUser(fetch);
+        async refresh(): Promise<void> {
+            await refreshCurrentUser(fetch);
         },
 
         get error(): AppError | null {
-            if (user !== null && 'errorKind' in user) return user;
+            if (isMaybeError(user)) return user;
             return null;
         },
 
+        get isAuthenticated(): boolean {
+            return isCurrentUser(user) && user.isAuthenticated;
+        },
+
         get user(): CurrentUser {
-            if (user === null || 'errorKind' in user) throw new Error('User not loaded');
+            if (!isCurrentUser(user)) throw new Error('User not loaded');
             return user as CurrentUser;
         }
     };

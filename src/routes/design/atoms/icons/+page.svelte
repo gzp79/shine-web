@@ -18,11 +18,11 @@
     setSettings(settings);
 </script>
 
-{#snippet icon(shape: Component, name: string)}
+{#snippet icon(Shape: Component, name: string)}
     <div class="flex flex-col items-center rounded-lg border">
         <div class="m-2">
             <div class="m-2 flex items-center justify-center">
-                <svelte:component this={shape} {disabled} {size} {color} />
+                <Shape {disabled} {size} {color} />
             </div>
             <p class="text-center">{name}</p>
         </div>

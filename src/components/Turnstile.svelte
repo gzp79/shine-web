@@ -3,6 +3,7 @@
     import type { Action } from 'svelte/action';
     import type { RenderParameters, WidgetId } from 'turnstile-types';
     import { browser } from '$app/environment';
+    import { logAPI } from '$lib/loggers';
 
     interface Props {
         /**
@@ -200,17 +201,17 @@
             callback?.(t);
         },
         'error-callback': (code: string) => {
-            console.log('captcha error: ', code);
+            logAPI('Turnstile, captcha error: ', code);
             token = '';
             error?.(code);
         },
         'timeout-callback': () => {
-            console.log('captcha timeout');
+            logAPI('Turnstile, captcha timeout');
             token = '';
             timeout?.();
         },
         'expired-callback': () => {
-            console.log('captcha expired');
+            logAPI('Turnstile, captcha expired');
             token = '';
             expired?.();
         },

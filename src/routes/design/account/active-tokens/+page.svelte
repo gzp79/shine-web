@@ -3,6 +3,7 @@
     import ActiveTokensCard from '$components/account/ActiveTokensCard.svelte';
     import { async } from '$lib/utils';
     import type { ActiveToken } from '$src/lib/api/identity-api';
+    import { logDesigner } from '$src/lib/loggers';
 
     // emulate some backend stored list
     let tokens: ActiveToken[] = $state([
@@ -68,19 +69,19 @@
     };
 
     const revoke = async (tokenFingerprint: string): Promise<void> => {
-        console.log(`Revoking: ${tokenFingerprint}`);
+        logDesigner(`Revoking token: ${tokenFingerprint}`);
 
-        console.log('Emulating a longer backend call');
+        logDesigner('Emulating a longer backend call');
         await async.delay(2000);
 
         const token = tokens.find((i) => i.tokenFingerprint === tokenFingerprint);
         if (!token) {
-            console.log('Element not found, no change');
+            logDesigner('Element not found, no change');
             return;
         }
 
         if (tokenFingerprint.startsWith('1')) {
-            console.log('Emulate a change in the tokens');
+            logDesigner('Emulate a change in the tokens');
 
             tokens = [
                 {
@@ -90,10 +91,10 @@
                 ...tokens.filter((i) => i.tokenFingerprint !== tokenFingerprint)
             ];
         } else if (tokenFingerprint.startsWith('2')) {
-            console.log('Emulate a failed revoke');
+            logDesigner('Emulate a failed revoke');
             tokens = [...tokens];
         } else if (tokenFingerprint.startsWith('3')) {
-            console.log('Emulate a successful revoke');
+            logDesigner('Emulate a successful revoke');
             tokens = tokens.filter((i) => i.tokenFingerprint !== tokenFingerprint);
         }
     };

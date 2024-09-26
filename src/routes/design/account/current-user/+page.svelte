@@ -2,6 +2,7 @@
     import { v4 as uuid } from 'uuid';
     import { onMount } from 'svelte';
     import { async } from '$lib/utils';
+    import { logDesigner } from '$lib/loggers';
     import type { CurrentUser } from '$lib/api/identity-api';
     import CurrentUserCard from '$components/account/CurrentUserCard.svelte';
 
@@ -39,8 +40,8 @@
         roles: ['admin', 'user', 'god'],
         sessionLength: 1234
     }}
-    onLogout={() => console.log('logout')}
-    onLogoutAll={() => console.log('logout all')}
+    onLogout={() => logDesigner('logout')}
+    onLogoutAll={() => logDesigner('logout all')}
 ></CurrentUserCard>
 
 <CurrentUserCard
@@ -53,7 +54,7 @@
         roles: ['admin', 'user'],
         sessionLength: 1234
     }}
-    onLogout={() => console.log('logout')}
+    onLogout={() => logDesigner('logout')}
 ></CurrentUserCard>
 
 <CurrentUserCard
@@ -66,7 +67,7 @@
         roles: ['admin', 'user'],
         sessionLength: 1234
     }}
-    onLogoutAll={() => console.log('logout all')}
+    onLogoutAll={() => logDesigner('logout all')}
 ></CurrentUserCard>
 
 <CurrentUserCard
@@ -80,8 +81,8 @@
         roles: [],
         sessionLength: 1234
     }}
-    onLogout={() => console.log('logout')}
-    onLogoutAll={() => console.log('logout all')}
+    onLogout={() => logDesigner('logout')}
+    onLogoutAll={() => logDesigner('logout all')}
 ></CurrentUserCard>
 
 <CurrentUserCard
@@ -95,26 +96,26 @@
         roles: [],
         sessionLength: 1234
     }}
-    onLogout={() => console.log('logout')}
-    onLogoutAll={() => console.log('logout all')}
+    onLogout={() => logDesigner('logout')}
+    onLogoutAll={() => logDesigner('logout all')}
 ></CurrentUserCard>
 
 <div class="divider">Reactive Update</div>
 
 <CurrentUserCard
     user={async.never()}
-    onLogout={() => console.log('logout')}
-    onLogoutAll={() => console.log('logout all')}
+    onLogout={() => logDesigner('logout')}
+    onLogoutAll={() => logDesigner('logout all')}
 />
 
 <CurrentUserCard
     user={async.error(new Error('Test error'))}
-    onLogout={() => console.log('logout')}
-    onLogoutAll={() => console.log('logout all')}
+    onLogout={() => logDesigner('logout')}
+    onLogoutAll={() => logDesigner('logout all')}
 />
 
 <CurrentUserCard
     user={fetchReactiveUser(randomUserId)}
-    onLogout={() => console.log('logout')}
-    onLogoutAll={() => console.log('logout all')}
+    onLogout={() => logDesigner('logout')}
+    onLogoutAll={() => logDesigner('logout all')}
 />

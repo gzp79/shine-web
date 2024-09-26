@@ -19,7 +19,9 @@
             <LoadingCard />
         {/snippet}
 
-        {#snippet content(sessions: ActiveSession[], _isDirty: boolean)}
+        <!-- todo: generic fails on svelte-check -->
+        <!-- eslint-disable @typescript-eslint/no-explicit-any -->
+        {#snippet content(sessions: /*ActiveSession[]*/ any, _isDirty: boolean)}
             {#each sessions as session (session.fingerprint)}
                 <ActiveSessionCard {session} />
             {/each}

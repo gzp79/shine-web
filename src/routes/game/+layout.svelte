@@ -1,60 +1,52 @@
 <script lang="ts">
     import { onMount, type Snippet } from 'svelte';
-    import { goto } from '$app/navigation';
-    import { currentUserStore, loadCurrentUser } from '$lib/account/currentUser.svelte';
-    import type { CurrentUser } from '$lib/api/identity-api';
+    import { afterNavigate, goto } from '$app/navigation';
+    import { currentUserStore } from '$lib/account/currentUser.svelte';
+    import { logUser } from '$lib/loggers';
+    import ErrorPage from '$components/ErrorPage.svelte';
     import LoadingCard from '$atoms/LoadingCard.svelte';
-    import ErrorPage from '$src/components/ErrorPage.svelte';
 
     interface Props {
         children: Snippet;
-        data: {
-            streams: {
-                currentUser: Promise<CurrentUser>;
-            };
-        };
     }
-    let { children, data }: Props = $props();
+    let { children }: Props = $props();
 
     let currentUser = currentUserStore();
     $effect(() => {
-        if (!currentUser.isLoaded) {
-            /*await*/ loadCurrentUser(fetch);
-        }
+        if (currentUser.isNull) currentUser.refresh();
     });
 
     onMount(() => {
         const handleDocumentVisibility = async () => {
             if (document.visibilityState === 'visible') {
-                console.log('Checking user after document focus...');
-                await loadCurrentUser(fetch);
+                logUser('Checking user after document focus...');
+                currentUser.refresh();
             }
         };
 
         document.addEventListener('visibilitychange', handleDocumentVisibility);
+
         return () => {
             document.removeEventListener('visibilitychange', handleDocumentVisibility);
         };
     });
+
+    afterNavigate(() => {
+        currentUserStore().refresh();
+    });
 </script>
 
-{#await data.streams.currentUser}
+<button onclick={() => currentUser.forget()}>Refresh User</button>
+
+{#if currentUser.error}
+    {#await goto('/error', { state: currentUser.error })}{/await}
+    <ErrorPage error={currentUser.error} />
+{:else if !currentUser.isLoaded}
     <div class="flex h-full items-center justify-center">
-        initial
         <LoadingCard />
     </div>
-{:then}
-    {#if currentUser.error}
-        {#await goto('/error', { state: currentUser.error })}{/await}
-        <ErrorPage error={currentUser.error} />
-    {:else if !currentUser.isLoaded}
-        <div class="flex h-full items-center justify-center">
-            reload
-            <LoadingCard />
-        </div>
-    {:else if currentUser.isAuthenticated}
-        {@render children()}
-    {:else}
-        {#await goto('/login')}{/await}
-    {/if}
-{/await}
+{:else if currentUser.isAuthenticated}
+    {@render children()}
+{:else}
+    {#await goto('/login')}{/await}
+{/if}

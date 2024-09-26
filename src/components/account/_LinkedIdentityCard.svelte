@@ -13,7 +13,7 @@
     }
     const { identity, dataVersion, onUnlink }: Props = $props();
 
-    const providerImage = $derived.by(() => {
+    const ProviderImage = $derived.by(() => {
         switch (identity.provider) {
             case 'twitter':
                 return Twitter;
@@ -38,7 +38,7 @@
 
 <Card variant="data">
     {#snippet image()}
-        <svelte:component this={providerImage} />
+        <ProviderImage />
     {/snippet}
 
     <KeyValueTable

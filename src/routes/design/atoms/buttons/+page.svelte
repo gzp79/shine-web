@@ -9,6 +9,7 @@
     import Select from '$components/settings/Select.svelte';
     import CheckBox from '$components/settings/CheckBox.svelte';
     import { setSettings } from '../../+layout.svelte';
+    import { logDesigner } from '$src/lib/loggers';
 
     const iconList = ['twitter', 'chrome', 'google', 'discord', 'check', 'cross', 'info', 'warning'];
 
@@ -31,7 +32,7 @@
     };
 
     function onclick() {
-        console.log('clicked');
+        logDesigner('clicked');
     }
 
     setSettings(settings);

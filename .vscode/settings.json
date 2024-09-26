@@ -3,6 +3,6 @@
         "NODE_ENV": "dev"
     },
 
-    "cSpell.words": ["crossenv", "daisyui", "hoverable", "tailwindcss"],
+    "cSpell.words": ["crossenv", "daisyui", "hoverable", "scytta", "tailwindcss"],
     "cSpell.ignorePaths": ["/static/_headers"]
 }

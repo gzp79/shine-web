@@ -25,7 +25,9 @@
             <LoadingCard />
         {/snippet}
 
-        {#snippet content(user: CurrentUser, _isDirty: boolean)}
+        <!-- todo: generic fails on svelte-check -->
+        <!-- eslint-disable @typescript-eslint/no-explicit-any -->
+        {#snippet content(user: /*CurrentUser*/ any, _isDirty: boolean)}
             {#if !user.isLinked}
                 <Alert variant="warning" text={$t('account.linkWarning')} />
             {/if}

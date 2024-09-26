@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
     import { getContext, onMount, setContext, type Snippet } from 'svelte';
 
     interface SettingsContext {

@@ -22,7 +22,9 @@
             <LoadingCard />
         {/snippet}
 
-        {#snippet content(identities: LinkedIdentity[], _isDirty: boolean)}
+        <!-- todo: generic fails on svelte-check -->
+        <!-- eslint-disable @typescript-eslint/no-explicit-any -->
+        {#snippet content(identities: /*LinkedIdentity[]*/ any, _isDirty: boolean)}
             {#each identities as identity (`${identity.provider}/${identity.providerUserId}`)}
                 <LinkedIdentityCard {identity} {onUnlink} {dataVersion} />
             {/each}

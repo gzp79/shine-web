@@ -1,4 +1,4 @@
-<script lang="ts" context="module">
+<script lang="ts" module>
     export type Location = 'above' | 'below' | 'auto';
 </script>
 

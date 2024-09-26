@@ -1,8 +1,9 @@
 <script lang="ts">
     import { v4 as uuid } from 'uuid';
-    import LinkedIdentitiesCard from '$components/account/LinkedIdentitiesCard.svelte';
     import { async } from '$lib/utils';
-    import type { LinkedIdentity } from '$src/lib/api/identity-api';
+    import { logDesigner } from '$lib/loggers';
+    import type { LinkedIdentity } from '$lib/api/identity-api';
+    import LinkedIdentitiesCard from '$components/account/LinkedIdentitiesCard.svelte';
 
     // emulate some backend stored list
     let identities: LinkedIdentity[] = $state([
@@ -64,18 +65,18 @@
     };
 
     const unlink = async (provider: string, providerUserId: string): Promise<void> => {
-        console.log(`Unlinking: ${provider}/${providerUserId}`);
+        logDesigner(`Unlinking identity: ${provider}/${providerUserId}`);
 
-        console.log('Emulating a longer backend call');
+        logDesigner('Emulating a longer backend call');
         await async.delay(2000);
 
         if (identities.every((i) => i.provider !== provider || i.providerUserId !== providerUserId)) {
-            console.log('Element not found, no change');
+            logDesigner('Element not found, no change');
             return;
         }
 
         if (providerUserId.startsWith('1')) {
-            console.log('Emulate a change in the identities and add new linked identity');
+            logDesigner('Emulate a change in the identities and add new linked identity');
             identities = [
                 {
                     provider,
@@ -86,10 +87,10 @@
                 ...identities.filter((i) => i.provider !== provider || i.providerUserId !== providerUserId)
             ];
         } else if (providerUserId.startsWith('2')) {
-            console.log('Emulate an unlink fail when no changes are made');
+            logDesigner('Emulate an unlink fail when no changes are made');
             identities = [...identities];
         } else if (providerUserId.startsWith('3')) {
-            console.log('Emulate a successful unlink when the selected identity is removed');
+            logDesigner('Emulate a successful unlink when the selected identity is removed');
             identities = identities.filter((i) => i.provider !== provider || i.providerUserId !== providerUserId);
         }
     };

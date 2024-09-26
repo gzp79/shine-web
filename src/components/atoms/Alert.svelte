@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script lang="ts" module>
     export type Variant = 'info' | 'success' | 'warning' | 'error';
 
     const alertMap: Record<Variant, string> = {
@@ -25,7 +25,7 @@
 
     const { variant = 'info', text, class: className, children }: Props = $props();
 
-    const icon = $derived.by(() => {
+    const Icon = $derived.by(() => {
         switch (variant) {
             case 'info':
                 return Info;
@@ -42,7 +42,7 @@
 </script>
 
 <div role="alert" class={alertClass}>
-    <svelte:component this={icon} size="md" class="inline-block shrink-0" />
+    <Icon size="md" class="inline-block shrink-0" />
     <div>
         {#if children}
             <h3 class="font-bold">{text}</h3>

@@ -1,4 +1,4 @@
-<script context="module" lang="ts">
+<script lang="ts" module>
     export const listVariants = ['top', 'data', 'fieldset'];
     export type Variant = 'top' | 'data' | 'fieldset';
 </script>
