@@ -1,8 +1,8 @@
 import debug from 'debug';
 
-process.env.DEBUG = 'app:user';
+process.env.DEBUG = 'app:api';
 
+export const logAPI = debug('app:api');
 export const logUser = debug('app:user');
-export const logAPI = debug('app:admin');
 
 export const logDesigner = debug('designer:design');

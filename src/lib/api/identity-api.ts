@@ -1,8 +1,6 @@
+import { logAPI } from '$lib/loggers';
 import { type Fetch, fetchCacheOption, fetchError } from '$lib/utils';
-import debug from 'debug';
 import config from '../../config';
-
-const log = debug('app:auth_api');
 
 export const GUEST_PROVIDER_ID = 'guest';
 
@@ -70,6 +68,7 @@ class IdentityApi {
     ) {}
 
     async getCurrentUser(fetch: Fetch): Promise<CurrentUser> {
+        logAPI('getCurrentUser...');
         const url = `${this.serviceUrl}/identity/api/auth/user/info`;
         const response = await fetch(url, {
             method: 'GET',
@@ -78,9 +77,11 @@ class IdentityApi {
         });
         if (response.ok) {
             const user = await response.json();
+            logAPI('getCurrentUser completed,', user);
             user.isAuthenticated = true;
             return user;
         } else if (response.status == 401) {
+            logAPI('getCurrentUser failed with 401');
             return {
                 isAuthenticated: false,
                 isLinked: false,
@@ -91,7 +92,9 @@ class IdentityApi {
                 sessionLength: 0
             };
         } else {
-            throw await fetchError('Failed to getCurrentUser', response);
+            const error = await fetchError('Failed to getCurrentUser', response);
+            logAPI('getCurrentUser failed with error', error);
+            throw error;
         }
     }
 
@@ -109,6 +112,7 @@ class IdentityApi {
     }
 
     async getExternalLoginProviders(fetch: Fetch): Promise<string[]> {
+        logAPI('getExternalLoginProviders...');
         const url = `${this.serviceUrl}/identity/api/auth/providers`;
         const response = await fetch(url, {
             method: 'GET',
@@ -117,11 +121,13 @@ class IdentityApi {
         });
 
         if (!response.ok) {
-            throw await fetchError('Failed to getLoginProviders', response);
+            const error = await fetchError('Failed to getExternalLoginProviders', response);
+            logAPI('getExternalLoginProviders failed with error', error);
+            throw error;
         }
 
         const providers = await response.json();
-        log('providers: ', providers);
+        logAPI('getExternalLoginProviders completed,', providers);
 
         return providers.providers;
     }
@@ -139,6 +145,7 @@ class IdentityApi {
     }
 
     async getLinkedIdentities(): Promise<LinkedIdentity[]> {
+        logAPI('getLinkedIdentities...');
         const url = `${this.serviceUrl}/identity/api/auth/user/links`;
         const response = await fetch(url, {
             method: 'GET',
@@ -147,13 +154,18 @@ class IdentityApi {
         });
 
         if (!response.ok) {
-            throw await fetchError('Failed to getLinkedIdentities', response);
+            const error = await fetchError('Failed to getLinkedIdentities', response);
+            logAPI('getLinkedIdentities failed with error', error);
+            throw error;
         }
 
-        return ((await response.json()) as LinkedIdentities).links;
+        const identities: LinkedIdentities = await response.json();
+        logAPI('getLinkedIdentities completed,', identities);
+        return identities.links;
     }
 
     async unlinkIdentity(provider: string, providerUserId: string): Promise<void> {
+        logAPI('unlinkIdentity...');
         const url = `${this.serviceUrl}/identity/api/auth/user/links/${provider}/${providerUserId}`;
         const response = await fetch(url, {
             method: 'DELETE',
@@ -162,11 +174,16 @@ class IdentityApi {
         });
 
         if (!response.ok) {
-            throw await fetchError('Failed to unlinkIdentity', response);
+            const error = await fetchError('Failed to unlinkIdentity', response);
+            logAPI('unlinkIdentity failed with error', error);
+            throw error;
         }
+
+        logAPI('getLinkedIdentities completed');
     }
 
     async getActiveSessions(): Promise<ActiveSession[]> {
+        logAPI('getActiveSessions...');
         const url = `${this.serviceUrl}/identity/api/auth/user/sessions`;
         const response = await fetch(url, {
             method: 'GET',
@@ -175,13 +192,18 @@ class IdentityApi {
         });
 
         if (!response.ok) {
-            throw await fetchError('Failed to getActiveSessions', response);
+            const error = await fetchError('Failed to getActiveSessions', response);
+            logAPI('getActiveSessions failed with error', error);
+            throw error;
         }
 
-        return ((await response.json()) as ActiveSessions).sessions;
+        const sessions: ActiveSessions = await response.json();
+        logAPI('getActiveSessions completed,', sessions);
+        return sessions.sessions;
     }
 
     async getActiveTokens(): Promise<ActiveToken[]> {
+        logAPI('getActiveTokens...');
         const url = `${this.serviceUrl}/identity/api/auth/user/tokens`;
         const response = await fetch(url, {
             method: 'GET',
@@ -190,13 +212,18 @@ class IdentityApi {
         });
 
         if (!response.ok) {
-            throw await fetchError('Failed to getActiveTokens', response);
+            const error = await fetchError('Failed to getActiveTokens', response);
+            logAPI('getActiveTokens failed with error', error);
+            throw error;
         }
 
-        return ((await response.json()) as ActiveTokens).tokens;
+        const tokens: ActiveTokens = await response.json();
+        logAPI('getActiveTokens completed,', tokens);
+        return tokens.tokens;
     }
 
     async revokeToken(fingerprint: string): Promise<void> {
+        logAPI('revokeToken...');
         const url = `${this.serviceUrl}/identity/api/auth/user/tokens/${fingerprint}`;
         const response = await fetch(url, {
             method: 'DELETE',
@@ -205,8 +232,12 @@ class IdentityApi {
         });
 
         if (!response.ok) {
-            throw await fetchError('Failed to revokeToken', response);
+            const error = await fetchError('Failed to revokeToken', response);
+            logAPI('revokeToken failed with error', error);
+            throw error;
         }
+
+        logAPI('revokeToken completed');
     }
 }
 
