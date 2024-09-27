@@ -30,13 +30,18 @@ async function refreshCurrentUser(fetch: Fetch): Promise<void> {
             user = { isLoading: now };
             nextUpdate = now + UPDATE_INTERVAL * 1000;
 
+            logUser('Fetching current user data...');
             const usr = await identityApi.getCurrentUser(fetch);
             if ('isLoading' in user && user.isLoading == now) {
+                logUser('Fetching current user data completed', usr);
                 //update user only if it hasn't changed yet
                 user = usr;
                 nextUpdate = now + UPDATE_INTERVAL * 1000;
+            } else {
+                logUser('Fetching current user data was late...');
             }
         } catch (error) {
+            logUser('Fetching current user data failed with error', error);
             if (error !== null && typeof error === 'object') {
                 if ('errorKind' in error && 'message' in error) {
                     user = error as AppError;
