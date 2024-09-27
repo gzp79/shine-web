@@ -1,4 +1,4 @@
-import { type Fetch, fetchError } from '$lib/utils';
+import { type Fetch, fetchCacheOption, fetchError } from '$lib/utils';
 import debug from 'debug';
 import config from '../../config';
 
@@ -74,7 +74,7 @@ class IdentityApi {
         const response = await fetch(url, {
             method: 'GET',
             credentials: 'include',
-            cache: 'no-store'
+            ...fetchCacheOption('no-store')
         });
         if (response.ok) {
             const user = await response.json();
@@ -113,7 +113,7 @@ class IdentityApi {
         const response = await fetch(url, {
             method: 'GET',
             //credentials: 'include',
-            cache: 'no-store'
+            ...fetchCacheOption('default')
         });
 
         if (!response.ok) {
@@ -143,7 +143,7 @@ class IdentityApi {
         const response = await fetch(url, {
             method: 'GET',
             credentials: 'include',
-            cache: 'no-store'
+            ...fetchCacheOption('no-store')
         });
 
         if (!response.ok) {
@@ -158,7 +158,7 @@ class IdentityApi {
         const response = await fetch(url, {
             method: 'DELETE',
             credentials: 'include',
-            cache: 'no-store'
+            ...fetchCacheOption('no-store')
         });
 
         if (!response.ok) {
@@ -171,7 +171,7 @@ class IdentityApi {
         const response = await fetch(url, {
             method: 'GET',
             credentials: 'include',
-            cache: 'no-store'
+            ...fetchCacheOption('no-store')
         });
 
         if (!response.ok) {
@@ -186,7 +186,7 @@ class IdentityApi {
         const response = await fetch(url, {
             method: 'GET',
             credentials: 'include',
-            cache: 'no-store'
+            ...fetchCacheOption('no-store')
         });
 
         if (!response.ok) {
@@ -201,7 +201,7 @@ class IdentityApi {
         const response = await fetch(url, {
             method: 'DELETE',
             credentials: 'include',
-            cache: 'no-store'
+            ...fetchCacheOption('no-store')
         });
 
         if (!response.ok) {

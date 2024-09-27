@@ -1,3 +1,5 @@
+import { browser } from '$app/environment';
+
 export type Maybe<T> = T | null;
 export function maybeNull<T>(): Maybe<T> {
     return null;
@@ -21,6 +23,14 @@ export class FetchError implements AppError {
         public message: string,
         public detail: { status: number; body: string }
     ) {}
+}
+
+// When building for CF, the cache is disabled and should not be set in the fetch options
+export function fetchCacheOption(cache: RequestCache): Partial<RequestInit> {
+    if (browser) {
+        return { cache };
+    }
+    return {};
 }
 
 export async function fetchError(message: string, response: Response): Promise<FetchError> {
