@@ -1,5 +1,5 @@
 <script>
-    import ErrorPage from '$src/components/ErrorPage.svelte';
+    import ErrorCard from '$src/components/atoms/ErrorCard.svelte';
 </script>
 
-<ErrorPage error={{ errorKind: 'other', message: '' }} />
+<ErrorCard error={{ errorKind: 'other', message: '' }} />

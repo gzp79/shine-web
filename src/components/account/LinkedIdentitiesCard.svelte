@@ -6,6 +6,7 @@
     import ErrorCard from '$atoms/ErrorCard.svelte';
     import ResourceFetch from '$atoms/ResourceFetch.svelte';
     import LinkedIdentityCard from './_LinkedIdentityCard.svelte';
+    import { type AppError } from '$src/lib/utils';
 
     interface Props {
         identities: LinkedIdentity[] | Promise<LinkedIdentity[]>;
@@ -30,7 +31,7 @@
             {/each}
         {/snippet}
 
-        {#snippet error(err: Error)}
+        {#snippet error(err: AppError)}
             <ErrorCard error={err} />
         {/snippet}
     </ResourceFetch>

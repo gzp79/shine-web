@@ -6,6 +6,7 @@
     import ErrorCard from '$atoms/ErrorCard.svelte';
     import ResourceFetch from '$atoms/ResourceFetch.svelte';
     import ActiveTokenCard from './_ActiveTokenCard.svelte';
+    import { type AppError } from '$src/lib/utils';
 
     interface Props {
         tokens: ActiveToken[] | Promise<ActiveToken[]>;
@@ -30,7 +31,7 @@
             {/each}
         {/snippet}
 
-        {#snippet error(err: Error)}
+        {#snippet error(err: AppError)}
             <ErrorCard error={err} />
         {/snippet}
     </ResourceFetch>

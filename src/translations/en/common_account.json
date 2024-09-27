@@ -26,5 +26,7 @@
     "activeStatus": "Status",
     "expired": "expired",
     "active": "active",
-    "revoke": "Revoke"
+    "revoke": "Revoke",
+    "failedToLoadUserInfo": "Failed to load user info",
+    "login": "Logging in ..."
 }

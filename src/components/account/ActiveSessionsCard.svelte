@@ -6,6 +6,7 @@
     import ErrorCard from '$atoms/ErrorCard.svelte';
     import ResourceFetch from '$atoms/ResourceFetch.svelte';
     import ActiveSessionCard from './_ActiveSessionCard.svelte';
+    import { type AppError } from '$lib/utils';
 
     interface Props {
         sessions: ActiveSession[] | Promise<ActiveSession[]>;
@@ -27,7 +28,7 @@
             {/each}
         {/snippet}
 
-        {#snippet error(err: Error)}
+        {#snippet error(err: AppError)}
             <ErrorCard error={err} />
         {/snippet}
     </ResourceFetch>

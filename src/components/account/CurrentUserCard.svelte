@@ -9,6 +9,7 @@
     import LoadingCard from '../atoms/LoadingCard.svelte';
     import ErrorCard from '../atoms/ErrorCard.svelte';
     import ResourceFetch from '../atoms/ResourceFetch.svelte';
+    import { type AppError } from '$src/lib/utils';
 
     interface Props {
         user: CurrentUser | Promise<CurrentUser>;
@@ -54,7 +55,7 @@
             />
         {/snippet}
 
-        {#snippet error(err: Error)}
+        {#snippet error(err: AppError)}
             <ErrorCard error={err} />
         {/snippet}
     </ResourceFetch>

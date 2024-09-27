@@ -3,6 +3,7 @@
 </script>
 
 <script lang="ts" generics="T">
+    import type { AppError } from '$lib/utils';
     import type { Snippet } from 'svelte';
 
     // generics="T" is not respected by the eslint
@@ -13,7 +14,7 @@
         fetch: T | Promise<T>;
         loading: Snippet;
         content: Snippet<[data: T, isDirty: boolean]>;
-        error: Snippet<[error: Error]>;
+        error: Snippet<[error: AppError]>;
         onState?: (state: State) => void;
     }
     let { initial, fetch, loading, content, error, onState }: Props<T> = $props();

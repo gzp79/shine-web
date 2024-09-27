@@ -26,5 +26,7 @@
     "activeStatus": "Állapot",
     "expired": "lejárt",
     "active": "aktív",
-    "revoke": "Visszavonás"
+    "revoke": "Visszavonás",
+    "failedToLoadUserInfo": "Nem sikerült betölteni a felhasználói adatokat",
+    "login": "Bejelentkezés ..."
 }
