@@ -39,6 +39,7 @@
             items: [
                 { title: 'Colors', href: 'atoms/colors' },
                 { title: 'Icons', href: 'atoms/icons' },
+                { title: 'Grids', href: 'atoms/grids' },
                 { title: 'Buttons', href: 'atoms/buttons' },
                 { title: 'Toggle', href: 'atoms/toggles' },
                 { title: 'Popper', href: 'atoms/popper' },
