@@ -46,10 +46,10 @@
     <div class="inline-block">Responsive columns xs=3 md=4 lg=6</div>
     <div class="m-3">
         <Grid columns={{ xs: 3, md: 4, lg: 6 }}>
-            <GridItem size={2}>{@render item('s=2')}</GridItem>
+            <GridItem size={1}>{@render item('s=1')}</GridItem>
             <GridItem size={2}>{@render item('s=2')}</GridItem>
             <GridItem size={3}>{@render item('s=3')}</GridItem>
-            <GridItem size={1}>{@render item('s=1')}</GridItem>
+            <GridItem size={4}>{@render item('s=4')}</GridItem>
         </Grid>
     </div>
 
@@ -73,6 +73,54 @@
             <GridItem size={2} span={2}>{@render item('SPAN')}</GridItem>
             {#each range(0, 7) as _i}
                 <GridItem>{@render item(`item`)}</GridItem>
+            {/each}
+        </Grid>
+    </div>
+
+    <div class="inline-block">Multi row span, dense</div>
+    <div class="m-3">
+        <Grid columns={5} dense>
+            {#each range(0, 6) as i}
+                <GridItem size={{ xs: 1, md: 2 }}>{@render item(`item 1.${i}`)}</GridItem>
+            {/each}
+            <GridItem size={3} span={2}>{@render item('SPAN')}</GridItem>
+            <GridItem size={2} span={2}>{@render item('SPAN')}</GridItem>
+            {#each range(0, 3) as i}
+                <GridItem size={2}>{@render item(`item 2.${i}`)}</GridItem>
+            {/each}
+            <GridItem size={2} span={2}>{@render item('SPAN')}</GridItem>
+            <GridItem size={2} span={2}>{@render item('SPAN')}</GridItem>
+            {#each range(0, 5) as i}
+                <GridItem size={1}>{@render item(`item 3.${i}`)}</GridItem>
+            {/each}
+            {#each range(0, 2) as i}
+                <GridItem size={3}>{@render item(`item 4.${i}`)}</GridItem>
+            {/each}
+            {#each range(0, 6) as i}
+                <GridItem size={1}>{@render item(`item 5.${i}`)}</GridItem>
+            {/each}
+        </Grid>
+    </div>
+
+    <div class="inline-block">Auto sized item</div>
+    <div class="m-3">
+        <Grid columns={{ xs: 2, md: 4, lg: 8 }}>
+            <GridItem size={'full'}>{@render item('full')}</GridItem>
+            {#each range(0, 8) as _i}
+                <GridItem>{@render item('item')}</GridItem>
+            {/each}
+        </Grid>
+    </div>
+
+    <div class="inline-block">Auto sized item, dense</div>
+    <div class="m-3">
+        <Grid columns={{ xs: 3, md: 4, lg: 6 }} dense>
+            {#each range(0, 6) as _i}
+                <GridItem>{@render item('before')}</GridItem>
+            {/each}
+            <GridItem size={'full'}>{@render item('full')}</GridItem>
+            {#each range(0, 6) as _i}
+                <GridItem>{@render item('after')}</GridItem>
             {/each}
         </Grid>
     </div>

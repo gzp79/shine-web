@@ -12,10 +12,11 @@
             | ResponsiveProp<Spaces>
             | { col: Spaces | ResponsiveProp<Spaces>; row: Spaces | ResponsiveProp<Spaces> };
         columns?: Columns | ResponsiveProp<Columns>;
+        dense?: boolean;
         children: Snippet;
     }
 
-    let { spacing = toResponsiveProp(2), columns, children }: Props = $props();
+    let { spacing = toResponsiveProp(2), columns, dense, children }: Props = $props();
 
     let spacingClass = $derived(
         typeof spacing === 'object' && 'col' in spacing
@@ -24,7 +25,14 @@
     );
 
     let containerClass = $derived.by(() =>
-        [`grid`, columns ? toResponsiveClass(columns, (s) => `grid-cols-${s}`) : '', ...spacingClass]
+        [
+            `grid`,
+            'auto-rows-fr',
+            'auto-cols-fr',
+            columns && toResponsiveClass(columns, (s) => `grid-cols-${s}`),
+            dense && 'grid-flow-dense',
+            ...spacingClass
+        ]
             .filter((x) => x)
             .join(' ')
     );
