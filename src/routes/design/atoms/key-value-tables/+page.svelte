@@ -4,8 +4,8 @@
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
     import Button from '$atoms/Button.svelte';
     import Toggle from '$atoms/Toggle.svelte';
-    import Select from '$components/settings/Select.svelte';
-    import { setSettings } from '../../+layout.svelte';
+    import { settingsStore } from '../../_components/currentSettings.svelte';
+    import Select from '../../_components/Select.svelte';
 
     let size = $state(defaultSize);
 
@@ -17,7 +17,7 @@
         return () => clearInterval(interval);
     });
 
-    setSettings(settings);
+    settingsStore().set(settings);
 </script>
 
 {#snippet settings()}

@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import type { Maybe } from '$src/lib/utils';
+    import type { Nullable } from '$src/lib/utils';
     import type { Middleware } from '@floating-ui/dom';
     import * as floatingDom from '@floating-ui/dom';
 
@@ -44,8 +44,10 @@
     }: Props = $props();
 
     let triggerEls: HTMLElement[] = [];
-    let referenceEl: Maybe<HTMLElement> = null;
+    let referenceEl: Nullable<HTMLElement> = null;
     let contentEl: HTMLElement = null!;
+
+    let autoUpdateCleanup: null | (() => void) = null;
 
     let width = $state(0);
 
@@ -123,8 +125,6 @@
             }
         });
 
-        let cleanup = floatingDom.autoUpdate(referenceEl!, contentEl, updatePosition);
-
         return () => {
             // detach event listeners from the trigger elements
             triggerEls.forEach((element: HTMLElement) => {
@@ -135,15 +135,19 @@
                 }
             });
             window.removeEventListener('click', handleClickOutside);
-            cleanup();
+            autoUpdateCleanup?.();
         };
     });
 
     $effect(() => {
         if (isOpen) {
             if (clickable) window.addEventListener('click', handleClickOutside);
+            autoUpdateCleanup?.(); // just in case
+            autoUpdateCleanup = floatingDom.autoUpdate(referenceEl!, contentEl, updatePosition);
         } else {
             window.removeEventListener('click', handleClickOutside);
+            autoUpdateCleanup?.();
+            autoUpdateCleanup = null;
         }
     });
 </script>

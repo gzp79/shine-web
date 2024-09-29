@@ -1,9 +1,10 @@
 <script lang="ts">
     import { colorList } from '$components/types';
+    import Story from '../../_components/Story.svelte';
     import ColorSample from './_colorSample.svelte';
 </script>
 
-<div class="flex flex-wrap justify-center gap-2">
+<Story dense>
     {#each colorList as color}
         <div class="flex flex-col items-center rounded-lg border">
             <div class="m-2">
@@ -11,4 +12,4 @@
             </div>
         </div>
     {/each}
-</div>
+</Story>

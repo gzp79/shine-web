@@ -2,15 +2,15 @@
     import { colorList, defaultColor, sizeList } from '$components/types';
     import Card from '$atoms/Card.svelte';
     import Toggle from '$atoms/Toggle.svelte';
-    import Select from '$components/settings/Select.svelte';
-    import CheckBox from '$components/settings/CheckBox.svelte';
-    import { setSettings } from '../../+layout.svelte';
+    import { settingsStore } from '../../_components/currentSettings.svelte';
+    import Select from '../../_components/Select.svelte';
+    import CheckBox from '../../_components/CheckBox.svelte';
 
     let value = $state(true);
     let color = $state(defaultColor);
     let disabled = $state(false);
 
-    setSettings(settings);
+    settingsStore().set(settings);
 </script>
 
 {#snippet settings()}

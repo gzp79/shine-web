@@ -2,10 +2,10 @@
     import { lorem } from '$components/lorem';
     import Card, { listVariants, type Variant } from '$atoms/Card.svelte';
     import Button from '$atoms/Button.svelte';
-    import Google from '$src/components/atoms/icons/social/_google.svelte';
-    import CheckBox from '$components/settings/CheckBox.svelte';
-    import Select from '$components/settings/Select.svelte';
-    import { setSettings } from '../../+layout.svelte';
+    import Google from '$atoms/icons/social/_google.svelte';
+    import { settingsStore } from '../../_components/currentSettings.svelte';
+    import Select from '../../_components/Select.svelte';
+    import CheckBox from '../../_components/CheckBox.svelte';
 
     let variant = $state('top' as Variant);
     let showImage = $state(true);
@@ -13,7 +13,7 @@
     let showContent = $state(4);
     let showAction = $state(2);
 
-    setSettings(settings);
+    settingsStore().set(settings);
 
     const caption = $derived(showCaption ? 'Caption' : undefined);
     const image = $derived(showImage ? imagePart : undefined);

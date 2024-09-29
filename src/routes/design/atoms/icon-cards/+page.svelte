@@ -1,20 +1,21 @@
 <script lang="ts">
     import { lorem } from '$components/lorem';
-    import { Google } from '$src/components/atoms/icons/social';
-    import CheckBox from '$components/settings/CheckBox.svelte';
-    import Select from '$components/settings/Select.svelte';
-    import { setSettings } from '../../+layout.svelte';
-    import IconCard from '$src/components/atoms/IconCard.svelte';
-    import KeyValueTable from '$src/components/atoms/KeyValueTable.svelte';
-    import { Settings } from '$src/components/atoms/icons/common';
+    import { Google } from '$atoms/icons/social';
+    import IconCard from '$atoms/IconCard.svelte';
+    import KeyValueTable from '$atoms/KeyValueTable.svelte';
+    import { Settings } from '$atoms/icons/common';
     import { range } from '$src/components/types';
+    import { settingsStore } from '../../_components/currentSettings.svelte';
+    import CheckBox from '../../_components/CheckBox.svelte';
+    import Select from '../../_components/Select.svelte';
+    import Story from '../../_components/Story.svelte';
 
     let showImage = $state(true);
     let showCaption = $state(true);
     let showContent = $state(3);
     let showAction = $state(2);
 
-    setSettings(settings);
+    settingsStore().set(settings);
 </script>
 
 {#snippet settings()}
@@ -44,11 +45,11 @@
     {/if}
 {/snippet}
 
-<div class="flex w-full flex-col items-center">
+<Story center>
     <IconCard
         caption={showCaption ? 'This is a caption' : undefined}
         icon={showImage ? imagePart : undefined}
-        children={contentPart}
+        children={showContent > 0 ? contentPart : undefined}
     />
 
     <IconCard caption="Identities">
@@ -91,4 +92,4 @@
             </IconCard>
         </IconCard>
     </IconCard>
-</div>
+</Story>

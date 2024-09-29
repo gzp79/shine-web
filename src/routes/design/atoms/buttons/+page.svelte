@@ -5,11 +5,11 @@
     import Card from '$atoms/Card.svelte';
     import { Chrome } from '$atoms/icons/clients';
     import { Check, Cross, Info, Warning } from '$atoms/icons/common';
-    import { Google, Twitter, Discord } from '$src/components/atoms/icons/social';
-    import Select from '$components/settings/Select.svelte';
-    import CheckBox from '$components/settings/CheckBox.svelte';
-    import { setSettings } from '../../+layout.svelte';
+    import { Google, Twitter, Discord } from '$atoms/icons/social';
     import { logDesigner } from '$src/lib/loggers';
+    import { settingsStore } from '../../_components/currentSettings.svelte';
+    import Select from '../../_components/Select.svelte';
+    import CheckBox from '../../_components/CheckBox.svelte';
 
     const iconList = ['twitter', 'chrome', 'google', 'discord', 'check', 'cross', 'info', 'warning'];
 
@@ -35,7 +35,7 @@
         logDesigner('clicked');
     }
 
-    setSettings(settings);
+    settingsStore().set(settings);
 </script>
 
 {#snippet settings()}

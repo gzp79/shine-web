@@ -1,7 +1,7 @@
 import { browser } from '$app/environment';
 
-export type Maybe<T> = T | null;
-export function maybeNull<T>(): Maybe<T> {
+export type Nullable<T> = T | null;
+export function maybeNull<T>(): Nullable<T> {
     return null;
 }
 

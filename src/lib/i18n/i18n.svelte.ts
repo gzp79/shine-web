@@ -1,7 +1,7 @@
 /* cspell: disable */
 import type { Cookies } from '@sveltejs/kit';
 import { browser } from '$app/environment';
-import { type Maybe, getCookie } from '$lib/utils';
+import { type Nullable, getCookie } from '$lib/utils';
 import { onMount } from 'svelte';
 import { i18n } from '../../translations/i18n';
 
@@ -43,7 +43,7 @@ export async function loadLanguageServerSide(url: URL, cookies: Cookies, headers
     };
 }
 
-export async function loadLanguage(url: URL, languageProps: Maybe<LanguageProps>): Promise<void> {
+export async function loadLanguage(url: URL, languageProps: Nullable<LanguageProps>): Promise<void> {
     let i18n = languageProps?.i18n;
 
     if (!i18n) {

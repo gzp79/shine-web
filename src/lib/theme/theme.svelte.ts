@@ -1,5 +1,5 @@
 import type { Cookies } from '@sveltejs/kit';
-import { type Maybe, getCookie, setCookie } from '$lib/utils';
+import { type Nullable, getCookie, setCookie } from '$lib/utils';
 
 export type Theme = 'light' | 'dark' | 'system';
 export const themeList: Theme[] = ['light', 'dark', 'system'];
@@ -22,7 +22,7 @@ export async function loadThemeServerSide(cookies: Cookies): Promise<ThemeProps>
     };
 }
 
-export async function loadTheme(themeProps: Maybe<ThemeProps>): Promise<void> {
+export async function loadTheme(themeProps: Nullable<ThemeProps>): Promise<void> {
     rune = themeProps?.theme ?? defaultTheme;
 }
 

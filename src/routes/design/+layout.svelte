@@ -1,37 +1,16 @@
-<script lang="ts" module>
-    import { getContext, onMount, setContext, type Snippet } from 'svelte';
-
-    interface SettingsContext {
-        setSettings: (settings: Snippet | null) => void;
-    }
-
-    export function setSettings(settings: Snippet) {
-        onMount(() => {
-            const context = getContext<SettingsContext>('DesignSetting');
-            context.setSettings(settings);
-
-            return () => {
-                context.setSettings(null);
-            };
-        });
-    }
-</script>
-
 <script lang="ts">
+    import { beforeNavigate } from '$app/navigation';
     import Hamburger from '$atoms/icons/common/_hamburger.svelte';
-    import SettingsForm from '$components/settings/SettingsForm.svelte';
-    import Section from '$components/settings/Section.svelte';
     import ThemeSwitch from '$lib/theme/ThemeSwitch.svelte';
     import LangSwitch from '$src/lib/i18n/LangSwitch.svelte';
+    import { settingsStore } from './_components/currentSettings.svelte';
+    import Section from './_components/Section.svelte';
+    import SettingsForm from './_components/SettingsForm.svelte';
 
     const { children } = $props();
 
-    let currentSettings = $state(noSettings);
+    let currentSettings = settingsStore();
     let showSettings = $state(true);
-
-    setContext<SettingsContext>('DesignSetting', {
-        setSettings: (settings: Snippet | null) => (currentSettings = settings ?? noSettings)
-    });
 
     const menu = [
         {
@@ -43,6 +22,7 @@
                 { title: 'Grids', href: 'atoms/grids' },
                 { title: 'Boxes', href: 'atoms/boxes' },
                 { title: 'IconCards', href: 'atoms/icon-cards' },
+                { title: 'ImageCards', href: 'atoms/image-cards' },
                 { title: '*Buttons', href: 'atoms/buttons' },
                 { title: '*Toggle', href: 'atoms/toggles' },
                 { title: 'Popper', href: 'atoms/popper' },
@@ -62,11 +42,11 @@
             ]
         }
     ];
-</script>
 
-{#snippet noSettings()}
-    <Section>No settings</Section>
-{/snippet}
+    beforeNavigate(() => {
+        currentSettings.set(null);
+    });
+</script>
 
 <div class="navbar bg-base-300">
     <label for="design-drawer" aria-label="open sidebar" class="btn btn-square btn-ghost flex-none lg:hidden">
@@ -103,17 +83,20 @@
                 {/each}
             </div>
             <div class="">
-                {#if currentSettings}
-                    <div class="collapse-rev-arrow collapse rounded-none">
-                        <input type="checkbox" name="settings-menu" bind:checked={showSettings} />
-                        <div class="collapse-title text-xl">Settings</div>
-                        <div class="collapse-content m-2 max-h-[50lvh] overflow-y-auto rounded-xl bg-base-300 p-2">
-                            <SettingsForm>
-                                {@render currentSettings()}
-                            </SettingsForm>
-                        </div>
+                <div class="collapse-rev-arrow collapse rounded-none">
+                    <input type="checkbox" name="settings-menu" bind:checked={showSettings} />
+                    <div class="collapse-title text-xl">Settings</div>
+                    <div class="collapse-content m-2 max-h-[50lvh] overflow-y-auto rounded-xl bg-base-300 p-2">
+                        <SettingsForm>
+                            {@const settings = currentSettings.get()}
+                            {#if settings}
+                                {@render settings()}
+                            {:else}
+                                <Section>No settings</Section>
+                            {/if}
+                        </SettingsForm>
                     </div>
-                {/if}
+                </div>
             </div>
         </div>
     </div>
