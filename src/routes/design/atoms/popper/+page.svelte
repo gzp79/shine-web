@@ -35,7 +35,7 @@
     <button class="btn select m-1 h-fit w-fit">
         <FlagHU size="xs" />
     </button>
-    <Popper clickable alignWidth class="flex flex-col items-center justify-center rounded-lg border bg-base-100">
+    <Popper clickable alignWidth display="flex flex-col items-center justify-center rounded-lg border bg-base-100">
         <button class="btn mt-1 h-fit w-full rounded-none" onclick={() => logDesigner('hu')}
             ><FlagHU size="xs" /></button
         >
@@ -47,7 +47,7 @@
 
 <Card caption="Open from code" variant="fieldset">
     <Button label="Open" onclick={() => (open = true)} />
-    <Popper class="flex items-center rounded-lg border bg-base-100 p-1" bind:open>
+    <Popper display="flex items-center rounded-lg border bg-base-100 p-1" bind:open>
         <Button label="Close" onclick={() => (open = false)} />
     </Popper>
 </Card>

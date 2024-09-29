@@ -3,7 +3,7 @@
     import type { LinkedIdentity } from '$src/lib/api/identity-api';
     import Card from '$atoms/Card.svelte';
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
-    import { Discord, Github, Google, Twitter } from '$atoms/icons/idps';
+    import { Discord, Github, Google, Twitter } from '$src/components/atoms/icons/social';
     import Button from '$atoms/Button.svelte';
 
     interface Props {

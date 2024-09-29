@@ -2,7 +2,7 @@
     import { lorem } from '$components/lorem';
     import Card, { listVariants, type Variant } from '$atoms/Card.svelte';
     import Button from '$atoms/Button.svelte';
-    import Google from '$atoms/icons/idps/_google.svelte';
+    import Google from '$src/components/atoms/icons/social/_google.svelte';
     import CheckBox from '$components/settings/CheckBox.svelte';
     import Select from '$components/settings/Select.svelte';
     import { setSettings } from '../../+layout.svelte';

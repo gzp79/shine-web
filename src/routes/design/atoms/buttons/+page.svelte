@@ -5,7 +5,7 @@
     import Card from '$atoms/Card.svelte';
     import { Chrome } from '$atoms/icons/clients';
     import { Check, Cross, Info, Warning } from '$atoms/icons/common';
-    import { Google, Twitter, Discord } from '$atoms/icons/idps';
+    import { Google, Twitter, Discord } from '$src/components/atoms/icons/social';
     import Select from '$components/settings/Select.svelte';
     import CheckBox from '$components/settings/CheckBox.svelte';
     import { setSettings } from '../../+layout.svelte';

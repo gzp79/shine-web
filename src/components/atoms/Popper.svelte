@@ -6,19 +6,30 @@
     import * as floatingDom from '@floating-ui/dom';
 
     interface Props {
-        // trigger events, mount-time only
+        //#region Mount-time only properties
+        // Selector for the trigger element
         trigger?: string;
+        // Selector for the reference element, defaults to the first trigger element
         reference?: string;
+        // Whether the popper should be triggered by click
         clickable?: boolean;
+        // Whether the popper should be triggered by hover
         hoverable?: boolean;
+        //#endregion
 
-        // other properties
+        //#region Reactive properties
+        // align the width of the popper to the reference element
         alignWidth?: boolean;
-        class?: string;
+        // class to use for the container div when open
+        display?: string;
+        //#endregion
 
-        // bind property
+        //#region Bindable properties
+        // In/Out state indicating whether the popper is open
         open?: boolean;
+        //#endregion
 
+        // children elements
         children: Snippet;
     }
     let {
@@ -27,7 +38,7 @@
         clickable = false,
         hoverable = false,
         alignWidth = false,
-        class: className,
+        display = 'block',
         open: isOpen = $bindable(),
         children
     }: Props = $props();
@@ -38,14 +49,8 @@
 
     let width = $state(0);
 
-    let divClass = $derived(twMerge(['fixed left-0 top-0 z-10', className]));
-    let divStyle = $derived(
-        [
-            //`transform: translate(${posX}px, ${posY}px) ${isAbove ? 'translateY(-100%)' : ''}`,
-            !isOpen ? 'display: none; opacity: 0' : '',
-            alignWidth ? `width: ${width}px` : ''
-        ].join(';')
-    );
+    let divClass = $derived(twMerge(['fixed left-0 top-0 z-10', !isOpen ? 'hidden' : display]));
+    let divStyle = $derived(alignWidth ? `width: ${width}px;` : '');
 
     const show = () => {
         isOpen = true;

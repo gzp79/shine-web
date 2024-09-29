@@ -1,19 +1,21 @@
 <script lang="ts">
     import { type Component } from 'svelte';
     import { colorList, defaultColor, defaultSize, sizeList } from '$components/types';
-    import Card from '$atoms/Card.svelte';
+    import IconCard from '$atoms/IconCard.svelte';
     import { Chrome, Edge, Opera, Safari, Firefox, Mobile, Android, IPhone, Mac } from '$atoms/icons/clients';
     import { Check, Cross, Dark, DarkAndLight, Hamburger, Info, Light, Settings, Warning } from '$atoms/icons/common';
     import { Infinity, Spinner, Ball, Dots, Ring } from '$atoms/icons/animated';
-    import { Discord, Github, Google, Twitter } from '$atoms/icons/idps';
+    import { Discord, Github, Google, Twitter } from '$atoms/icons/social';
+    import { FlagGB, FlagHU } from '$atoms/icons/flags';
     import Checkbox from '$components/settings/CheckBox.svelte';
     import Select from '$components/settings/Select.svelte';
     import { setSettings } from '../../+layout.svelte';
-    import { FlagGB, FlagHU } from '$src/components/atoms/icons/flags';
 
     let size = $state(defaultSize);
     let color = $state(defaultColor);
     let disabled = $state(false);
+
+    const gridClass = 'flex flex-wrap justify-center gap-2';
 
     setSettings(settings);
 </script>
@@ -35,8 +37,8 @@
     <Checkbox label="Disabled" bind:value={disabled} />
 {/snippet}
 
-<Card caption="Common" variant="fieldset" class="flex flex-col items-center">
-    <div class="flex flex-wrap justify-center gap-2">
+<IconCard caption="Common">
+    <div class={gridClass}>
         {@render icon(Check, 'Check')}
         {@render icon(Cross, 'Cross')}
         {@render icon(Hamburger, 'Hamburger')}
@@ -47,10 +49,10 @@
         {@render icon(Dark, 'Dark')}
         {@render icon(DarkAndLight, 'Dark and Light')}
     </div>
-</Card>
+</IconCard>
 
-<Card caption="Clients" variant="fieldset" class="flex flex-col items-center">
-    <div class="flex flex-wrap justify-center gap-2">
+<IconCard caption="User agents">
+    <div class={gridClass}>
         {@render icon(Chrome, 'Chrome')}
         {@render icon(Edge, 'Edge')}
         {@render icon(Opera, 'Opera')}
@@ -61,30 +63,30 @@
         {@render icon(IPhone, 'IPhone')}
         {@render icon(Mac, 'Mac')}
     </div>
-</Card>
+</IconCard>
 
-<Card caption="Flags" variant="fieldset" class="flex flex-col items-center">
-    <div class="flex flex-wrap justify-center gap-2">
+<IconCard caption="Flags">
+    <div class={gridClass}>
         {@render icon(FlagHU, 'HU')}
         {@render icon(FlagGB, 'GB')}
     </div>
-</Card>
+</IconCard>
 
-<Card caption="Identity providers" variant="fieldset" class="flex flex-col items-center">
-    <div class="flex flex-wrap justify-center gap-2">
+<IconCard caption="Social">
+    <div class={gridClass}>
         {@render icon(Discord, 'Discord')}
         {@render icon(Github, 'Github')}
         {@render icon(Google, 'Google')}
         {@render icon(Twitter, 'Twitter')}
     </div>
-</Card>
+</IconCard>
 
-<Card caption="Animated" variant="fieldset" class="flex flex-col items-center">
-    <div class="flex flex-wrap justify-center gap-2">
+<IconCard caption="Loader">
+    <div class={gridClass}>
         {@render icon(Spinner, 'Spinner')}
         {@render icon(Ball, 'Ball')}
         {@render icon(Dots, 'Dots')}
         {@render icon(Ring, 'Ring')}
         {@render icon(Infinity, 'Infinity')}
     </div>
-</Card>
+</IconCard>

@@ -16,7 +16,7 @@
 <button class="btn select m-1 h-fit w-fit">
     <svelte:component this={langs[language.current]} {size} />
 </button>
-<Popper clickable class="flex flex-col items-center justify-center rounded-lg border bg-base-100">
+<Popper clickable display="flex flex-col items-center justify-center rounded-lg border bg-base-100">
     <button class="btn h-fit w-fit" onclick={() => (language.current = 'hu')}><FlagHU {size} /></button>
     <button class="btn h-fit w-fit" onclick={() => (language.current = 'en')}><FlagGB {size} /></button>
 </Popper>

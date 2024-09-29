@@ -1,10 +1,9 @@
-import typography from '@tailwindcss/typography';
 import daisyui from 'daisyui';
 import themes from 'daisyui/src/theming/themes';
 
 module.exports = {
     content: ['./src/**/*.{svelte,js,ts}'],
-    plugins: [typography, daisyui],
+    plugins: [daisyui],
 
     theme: {
         extend: {
