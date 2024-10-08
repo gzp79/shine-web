@@ -3,11 +3,13 @@
     import Box from '$atoms/Box.svelte';
     import Button from '$atoms/Button.svelte';
     import { Firefox } from '$atoms/icons/clients';
-    import { Warning } from '$atoms/icons/common';
+    import { Settings, Warning } from '$atoms/icons/common';
     import { logDesigner } from '$src/lib/loggers';
     import { settingsStore } from '../../_components/currentSettings.svelte';
     import Select from '../../_components/Select.svelte';
     import Story from '../../_components/Story.svelte';
+    import { Spinner } from '$src/components/atoms/icons/animated';
+    import { Twitter } from '$src/components/atoms/icons/social';
 
     let color = $state('primary');
     let action = $state('href');
@@ -41,7 +43,15 @@
     <Box border class="flex h-max w-max flex-col">
         {#each sizeList as size}
             <div class="w-max">
-                <Button {size} {color} startIcon={Firefox} {onclick}>
+                <Button {size} {color} startIcon={Settings} {onclick} />
+            </div>
+        {/each}
+    </Box>
+
+    <Box border class="flex h-max w-max flex-col">
+        {#each sizeList as size}
+            <div class="w-max">
+                <Button {size} {color} startIcon={Twitter} {onclick}>
                     Button-{size}
                 </Button>
             </div>
@@ -51,7 +61,7 @@
     <Box border class="flex h-max w-max flex-col">
         {#each sizeList as size}
             <div class="w-max">
-                <Button {size} {color} endIcon={Firefox} {onclick}>
+                <Button {size} {color} endIcon={Twitter} {onclick}>
                     Button-{size}
                 </Button>
             </div>
@@ -61,11 +71,26 @@
     <Box border class="flex h-max w-max flex-col">
         {#each sizeList as size}
             <div class="w-max">
-                <Button {size} {color} startIcon={Firefox} endIcon={Firefox} {onclick}>
+                <Button {size} {color} startIcon={Twitter} endIcon={Twitter} {onclick}>
                     Button-{size}
                 </Button>
             </div>
         {/each}
+    </Box>
+
+    <Box border class="flex h-max w-max flex-col">
+        <div class="w-max">
+            <Button {color} {...btnAction} startIcon={Settings} />
+        </div>
+        <div class="w-max">
+            <Button {color} {...btnAction} startIcon={Settings}>Button</Button>
+        </div>
+        <div class="w-max">
+            <Button {color} {...btnAction} endIcon={Settings}>Button</Button>
+        </div>
+        <div class="w-max">
+            <Button {color} {...btnAction} startIcon={Settings} endIcon={Spinner}>Button</Button>
+        </div>
     </Box>
 
     <Box border class="flex h-max w-max flex-row">

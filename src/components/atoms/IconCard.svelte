@@ -19,7 +19,7 @@
 <Box border {shadow} {ghost} class="min-h-min overflow-y-auto">
     <div class="flex flex-col items-center md:flex-row md:items-start">
         {#if icon}
-            <div class="top-0 mb-2 h-auto max-w-full md:sticky md:mb-0 md:me-4">
+            <div class="icon-lg top-0 mb-2 h-auto max-w-full md:sticky md:mb-0 md:me-4">
                 {@render icon()}
             </div>
         {/if}

@@ -30,9 +30,9 @@
 {/snippet}
 
 {#snippet icon(Shape: Component, name: string)}
-    <Box ghost class="flex items-center justify-center">
+    <Box ghost class="flex flex-col items-center justify-center border">
         <Shape {disabled} {size} {color} />
-        <Typography variant="h3">{name}</Typography>
+        <Typography variant="h6">{name}</Typography>
     </Box>
 {/snippet}
 

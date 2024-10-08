@@ -12,7 +12,7 @@
 
     let currentSettings = settingsStore();
     //let showSettings = $state(true);
-    /*
+
     const menu = [
         {
             title: 'Atoms',
@@ -23,9 +23,9 @@
                 { title: 'Grids', href: 'atoms/grids' },
                 { title: 'Boxes', href: 'atoms/boxes' },
                 { title: 'IconCards', href: 'atoms/icon-cards' },
-                { title: 'Buttons', href: 'atoms/buttons' }
+                { title: 'Buttons', href: 'atoms/buttons' },
                 //{ title: '*Toggle', href: 'atoms/toggles' },
-                { title: 'Popper', href: 'atoms/popper' },
+                { title: 'Popper', href: 'atoms/popper' }
                 //{ title: '*Alerts', href: 'atoms/alerts' },
                 //{ title: '*Key-Value Table', href: 'atoms/key-value-tables' }
             ]
@@ -40,7 +40,7 @@
                 //{ title: 'Active Tokens', href: 'account/active-tokens' }
             ]
         }
-    ];*/
+    ];
 
     beforeNavigate(() => {
         currentSettings.set(null);
@@ -56,9 +56,29 @@
     <ThemeSwitch class="flex-none" />
 </header>
 
-<main class="h-full w-full overflow-auto">
-    {@render children()}
-</main>
+<div class="grid h-full grid-cols-1 md:grid-cols-[auto_1fr]">
+    <aside class="bg-surface-mute p-4">
+        {#each menu as group}
+            <div>
+                <Typography variant="h3">{group.title}</Typography>
+                <div class="collapse-content">
+                    <ul class="min-h-full w-full p-4">
+                        {#each group.items as item}
+                            <li class="hover:bg-surface-accent">
+                                <a href={`/design/${item.href}`}>
+                                    <Typography variant="h6">{item.title}</Typography>
+                                </a>
+                            </li>
+                        {/each}
+                    </ul>
+                </div>
+            </div>
+        {/each}
+    </aside>
+    <main class="h-full w-full overflow-auto">
+        {@render children()}
+    </main>
+</div>
 
 <!-- <div class="flex flex-row">
     <div class="flex h-full w-fit min-w-72 grid-rows-2 flex-col bg-base-200 lg:w-[20lvw] bg-[red]">

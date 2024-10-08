@@ -39,29 +39,41 @@
         md: 'text-base px-5 py-2.5',
         lg: 'text-lg px-7 py-3'
     };
-    const sizeModsStartIcon: Record<string, string> = {
+    const sizeModsIconOnly: Record<Size, string> = {
+        xs: 'p-1',
+        sm: 'p-2',
+        md: 'p-2',
+        lg: 'p-2'
+    };
+    const startIconPadding: Record<string, string> = {
         xs: '',
         sm: '',
         md: 'ps-4',
         lg: 'ps-5'
     };
-    const sizeModsEndIcon: Record<string, string> = {
+    const endIconPadding: Record<string, string> = {
         xs: '',
         sm: '',
         md: 'pe-4',
         lg: 'pe-5'
     };
-    const iconStartMargin: Record<Size, string> = {
+    const startIconMargin: Record<Size, string> = {
+        xs: 'me-0.5',
+        sm: 'me-1',
+        md: 'me-1.5',
+        lg: 'me-3'
+    };
+    const endIconMargin: Record<Size, string> = {
         xs: 'ms-0.5',
         sm: 'ms-1',
         md: 'ms-1.5',
         lg: 'ms-3'
     };
-    const iconEndMargin: Record<Size, string> = {
-        xs: 'me-0.5',
-        sm: 'me-1',
-        md: 'me-1.5',
-        lg: 'me-3'
+    const iconSize: Record<Size, string> = {
+        xs: 'w-4 h-4',
+        sm: 'w-5 h-5',
+        md: 'w-8 h-8',
+        lg: 'w-10 h-10'
     };
 
     const btnClass = $derived(
@@ -71,14 +83,18 @@
             'rounded-full',
             !outline && `bg-${color} text-on-${color}`,
             outline && `border border-2 border-${color} text-${color}`,
-            sizeMods[size],
-            StartIcon && sizeModsStartIcon[size],
-            EndIcon && sizeModsEndIcon[size],
+            children && sizeMods[size],
+            children && StartIcon && startIconPadding[size],
+            children && EndIcon && endIconPadding[size],
+            !children && sizeModsIconOnly[size],
             !disabled && 'active:scale-95 hover:brightness-125',
             disabled && '!opacity-30 !cursor-not-allowed'
             //disabled && 'grayscale !cursor-not-allowed'
         )
     );
+
+    const startIconClass = $derived(twMerge(children && startIconMargin[size], iconSize[size]));
+    const endIconClass = $derived(twMerge(children && endIconMargin[size], iconSize[size]));
 </script>
 
 <CompileTailwindClasses
@@ -93,13 +109,13 @@
 
 {#snippet content()}
     {#if StartIcon}
-        <StartIcon class="{iconEndMargin[size]} icon-{size}" />
+        <StartIcon class={startIconClass} />
     {/if}
     {#if children}
         {@render children()}
     {/if}
     {#if EndIcon}
-        <EndIcon class="{iconStartMargin[size]} icon-{size}" />
+        <EndIcon class={endIconClass} />
     {/if}
 {/snippet}
 
