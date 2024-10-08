@@ -15,7 +15,7 @@
 {/snippet}
 
 <Story>
-    <div class="sticky top-0 flex justify-center bg-base-200 p-1">
+    <div class="bg-base-200 sticky top-0 flex justify-center p-1">
         <div class="inline-block">
             Size:
             <span class="inline-block">XS</span>

@@ -4,54 +4,52 @@
     import ThemeSwitch from '$lib/theme/ThemeSwitch.svelte';
     import Typography from '$src/components/atoms/Typography.svelte';
     import LangSwitch from '$src/lib/i18n/LangSwitch.svelte';
-    //import { settingsStore } from './_components/currentSettings.svelte';
-    //    import Section from './_components/Section.svelte';
+    import { settingsStore } from './_components/currentSettings.svelte';
+    //import Section from './_components/Section.svelte';
     //import SettingsForm from './_components/SettingsForm.svelte';
 
     const { children } = $props();
 
-    //let currentSettings = settingsStore();
+    let currentSettings = settingsStore();
     //let showSettings = $state(true);
-
+    /*
     const menu = [
         {
             title: 'Atoms',
             items: [
-                { title: 'Colors', href: 'atoms/colors' }
-                /* { title: 'Typography', href: 'atoms/typography' },
+                { title: 'Colors', href: 'atoms/colors' },
+                { title: 'Typography', href: 'atoms/typography' },
                 { title: 'Icons', href: 'atoms/icons' },
                 { title: 'Grids', href: 'atoms/grids' },
                 { title: 'Boxes', href: 'atoms/boxes' },
                 { title: 'IconCards', href: 'atoms/icon-cards' },
-                { title: 'ImageCards', href: 'atoms/image-cards' },
-                { title: '*Buttons', href: 'atoms/buttons' },
-                { title: '*Toggle', href: 'atoms/toggles' },
+                { title: 'Buttons', href: 'atoms/buttons' }
+                //{ title: '*Toggle', href: 'atoms/toggles' },
                 { title: 'Popper', href: 'atoms/popper' },
-                { title: '*Cards', href: 'atoms/cards' },
-                { title: '*Alerts', href: 'atoms/alerts' },
-                { title: '*Key-Value Table', href: 'atoms/key-value-tables' }*/
+                //{ title: '*Alerts', href: 'atoms/alerts' },
+                //{ title: '*Key-Value Table', href: 'atoms/key-value-tables' }
             ]
         },
         {
             title: 'Templates',
             //items: [{ title: 'Circle menu', href: 'circle_menu' }]
             items: [
-                /* { title: 'Current User Card', href: 'account/current-user' },
-                { title: 'Linked Identities', href: 'account/linked-identities' },
-                { title: 'Active Sessions', href: 'account/active-sessions' },
-                { title: 'Active Tokens', href: 'account/active-tokens' }*/
+                // { title: 'Current User Card', href: 'account/current-user' },
+                //{ title: 'Linked Identities', href: 'account/linked-identities' },
+                //{ title: 'Active Sessions', href: 'account/active-sessions' },
+                //{ title: 'Active Tokens', href: 'account/active-tokens' }
             ]
         }
-    ];
+    ];*/
 
     beforeNavigate(() => {
-        //currentSettings.set(null);
+        currentSettings.set(null);
     });
 </script>
 
 <header class="flex items-center bg-surface p-4">
     <label aria-label="open sidebar" class="flex-none">
-        <Hamburger size='md' class="inline-block" />
+        <Hamburger size="md" class="inline-block" />
     </label>
     <Typography variant="h2" class="flex-1 overflow-hidden text-ellipsis text-pretty p-2">Design</Typography>
     <LangSwitch />

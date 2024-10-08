@@ -1,6 +1,6 @@
 <script lang="ts">
     import { type Color, type Size } from '$components/types';
-    import { getContext, type Component, type Snippet } from 'svelte';
+    import { type Component, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
     import CompileTailwindClasses from './utils/CompileTailwindClasses.svelte';
 

@@ -13,44 +13,38 @@
     <p class="min-h-[1000px]"></p>
 
     <Box border>
-        <Button id="mybutton1" label="Click" />
-        <Button id="mybutton1" label="Click" />
-        <Button id="mybutton1" label="Click" />
+        <Button id="mybutton1">Click</Button>
+        <Button id="mybutton1">Click</Button>
+        <Button id="mybutton1">Click</Button>
         <Popper trigger="#mybutton1" clickable>This is a popper</Popper>
     </Box>
 
     <Box border>
-        <Button id="mybutton2" label="Hover" />
-        <Button id="mybutton2" label="Hover" />
-        <Button id="mybutton2" label="Hover" />
+        <Button id="mybutton2">Hover</Button>
+        <Button id="mybutton2">Hover</Button>
+        <Button id="mybutton2">Hover</Button>
         <Popper trigger="#mybutton2" hoverable>This is a popper</Popper>
     </Box>
 
     <Box border>
-        <Button id="mybutton3" label="Click&Hover" />
-        <Button id="mybutton3" label="Click&Hover" />
-        <Button id="mybutton3" label="Click&Hover" />
+        <Button id="mybutton3">Click | Hover</Button>
+        <Button id="mybutton3">Click | Hover</Button>
+        <Button id="mybutton3">Click | Hover</Button>
         <Popper trigger="#mybutton3" hoverable clickable>This is a popper</Popper>
     </Box>
 
     <Box border>
-        <button class="btn select m-1 h-fit w-fit">
-            <FlagHU size="xs" />
-        </button>
+        <Button startIcon={FlagHU} />
         <Popper clickable alignWidth display="flex flex-col items-center justify-center rounded-lg border bg-base-100">
-            <button class="btn mt-1 h-fit w-full rounded-none" onclick={() => logDesigner('hu')}
-                ><FlagHU size="xs" /></button
-            >
-            <button class="btn mb-1 h-fit w-full rounded-none" onclick={() => logDesigner('gb')}
-                ><FlagGB size="xs" /></button
-            >
+            <Button startIcon={FlagHU} onclick={() => logDesigner('hu')} />
+            <Button startIcon={FlagGB} onclick={() => logDesigner('hu')} />
         </Popper>
     </Box>
 
     <Box border>
-        <Button label="Open" onclick={() => (open = true)} />
+        <Button onclick={() => (open = true)}>Open</Button>
         <Popper display="flex items-center rounded-lg border bg-base-100 p-1" bind:open>
-            <Button label="Close" onclick={() => (open = false)} />
+            <Button onclick={() => (open = false)}>Close</Button>
         </Popper>
     </Box>
 

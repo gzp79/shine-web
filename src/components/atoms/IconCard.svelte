@@ -30,9 +30,9 @@
                 >
             {/if}
             {#if children}
-            <div class="pb-2">
-                {@render children()}
-            </div>
+                <div class="pb-2">
+                    {@render children()}
+                </div>
             {/if}
         </div>
     </div>

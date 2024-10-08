@@ -1,17 +1,18 @@
 <script lang="ts">
     import { type Component } from 'svelte';
     import { colorList, sizeList, type Color, type Size } from '$components/types';
-    import IconCard from '$atoms/IconCard.svelte';
     import { Check, Cross, Dark, DarkAndLight, Hamburger, Info, Light, Settings, Warning } from '$atoms/icons/common';
     import { Chrome, Edge, Opera, Safari, Firefox, Mobile, Android, IPhone, Mac } from '$atoms/icons/clients';
     import { Infinity, Spinner, Ball, Dots, Ring } from '$atoms/icons/animated';
     import { Discord, Github, Google, Twitter } from '$atoms/icons/social';
     import { FlagGB, FlagHU } from '$atoms/icons/flags';
-    //import { settingsStore } from '../../_components/currentSettings.svelte';
+    import IconCard from '$atoms/IconCard.svelte';
+    import Typography from '$atoms/Typography.svelte';
+    import Box from '$atoms/Box.svelte';
+    import { settingsStore } from '../../_components/currentSettings.svelte';
     import Select from '../../_components/Select.svelte';
     import Checkbox from '../../_components/CheckBox.svelte';
     import Story from '../../_components/Story.svelte';
-    import ImageCard from '$src/components/atoms/ImageCard.svelte';
 
     let size = $state<Size>('md');
     let color = $state<Color>('primary');
@@ -19,21 +20,20 @@
 
     const gridClass = 'flex flex-wrap justify-center gap-2';
 
-    //settingsStore().set(settings);
+    settingsStore().set(settings);
 </script>
-
-{#snippet icon(Shape: Component, name: string)}
-    <ImageCard caption={name} dense ghost>
-        {#snippet image()}
-            <Shape {disabled} {size} {color} />
-        {/snippet}
-    </ImageCard>
-{/snippet}
 
 {#snippet settings()}
     <Select label="Size" options={sizeList} bind:value={size} />
     <Select label="Color" options={colorList} bind:value={color} />
     <Checkbox label="Disabled" bind:value={disabled} />
+{/snippet}
+
+{#snippet icon(Shape: Component, name: string)}
+    <Box ghost class="flex items-center justify-center">
+        <Shape {disabled} {size} {color} />
+        <Typography variant="h3">{name}</Typography>
+    </Box>
 {/snippet}
 
 <Story center>

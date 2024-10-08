@@ -2,29 +2,27 @@
     import { lorem } from '$components/lorem';
     import { Google } from '$atoms/icons/social';
     import IconCard from '$atoms/IconCard.svelte';
-    //import KeyValueTable from '$atoms/KeyValueTable.svelte';
     import { Settings } from '$atoms/icons/common';
     import { range } from '$src/components/types';
-    //import { settingsStore } from '../../_components/currentSettings.svelte';
-    //import CheckBox from '../../_components/CheckBox.svelte';
-    //import Select from '../../_components/Select.svelte';
+    import { settingsStore } from '../../_components/currentSettings.svelte';
+    import CheckBox from '../../_components/CheckBox.svelte';
+    import Select from '../../_components/Select.svelte';
     import Story from '../../_components/Story.svelte';
-    import Box from '$src/components/atoms/Box.svelte';
 
     let showImage = $state(true);
     let showCaption = $state(true);
     let showContent = $state(3);
     let showAction = $state(2);
 
-    //settingsStore().set(settings);
+    settingsStore().set(settings);
 </script>
 
-<!-- {#snippet settings()}
+{#snippet settings()}
     <CheckBox label="Image" bind:value={showImage} />
     <CheckBox label="Caption" bind:value={showCaption} />
     <Select label="Content detail" options={[0, 1, 2, 3, 4]} bind:value={showContent} />
     <Select label="Action detail" options={[0, 1, 2]} bind:value={showAction} />
-{/snippet} -->
+{/snippet}
 
 {#snippet imagePart()}
     <Google />

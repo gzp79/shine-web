@@ -13,10 +13,10 @@
 </script>
 
 <div class="flex h-full w-full items-center justify-center">
-    <div class="flex flex-col items-center rounded-lg bg-base-200 p-5">
-        <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-base-300">
+    <div class="bg-base-200 flex flex-col items-center rounded-lg p-5">
+        <div class="bg-base-300 mx-auto flex h-12 w-12 items-center justify-center rounded-full">
             <svg
-                class="h-6 w-6 text-error"
+                class="text-error h-6 w-6"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -28,7 +28,7 @@
         </div>
 
         <div class="mt-3 text-center sm:mt-5">
-            <h3 class="text-lg font-medium leading-6 text-error" id="modal-headline">
+            <h3 class="text-error text-lg font-medium leading-6" id="modal-headline">
                 {caption ?? $t('common.somethingWentWrong')}
             </h3>
             <div class="mt-2">
@@ -38,7 +38,7 @@
             </div>
             {#if error.detail}
                 <div class="mt-2">
-                    <div class="max-h-64 overflow-auto border bg-base-300 text-left text-xs">
+                    <div class="bg-base-300 max-h-64 overflow-auto border text-left text-xs">
                         <pre><code>{JSON.stringify(error.detail, null, 2)}</code></pre>
                     </div>
                 </div>
