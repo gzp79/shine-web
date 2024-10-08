@@ -5,8 +5,8 @@
 </script>
 
 <Story center>
-    <Box border shadow>
-        Default box with border
+    <Box>
+        Default default box
         <Box>
             Nested default box
             <Box>
@@ -22,12 +22,34 @@
         </Box>
     </Box>
 
+    <Box border>
+        Default box with border
+        <Box border>
+            Nested box with border
+            <Box border>
+                Nested box with border
+                <Box border>
+                    Nested box with border
+                    <Box border>
+                        Nested box with border
+                        <Box border>Nested box with border</Box>
+                    </Box>
+                </Box>
+            </Box>
+        </Box>
+    </Box>
+
     <Box border shadow>
+        Default box with border and shadow
         <Box border shadow>
+            Nested box with border and shadow
             <Box border shadow>
+                Nested box with border and shadow
                 <Box border shadow>
+                    Nested box with border and shadow
                     <Box border shadow>
-                        <Box border shadow>Nested boxes with border and shadow</Box>
+                        Nested box with border and shadow
+                        <Box border shadow>Nested box with border and shadow</Box>
                     </Box>
                 </Box>
             </Box>
@@ -38,8 +60,9 @@
         <Box border>Nested box with border</Box>
         <Box shadow>Nested box with shadow</Box>
         <Box border shadow>Nested box with border and shadow</Box>
-        <Box class="border border-secondary bg-primary shadow-lg shadow-secondary">Nested box with class</Box>
+        <Box class="border border-[red] bg-[blue] shadow-lg shadow-[black]">Nested box with custom class</Box>
         <Box border ghost>Nested ghost box with border</Box>
+        <Box border shadow ghost>Nested ghost box with border and shadow</Box>
     </Box>
 
     <Box border shadow>
@@ -47,7 +70,8 @@
             <Box border>Nested box with border</Box>
             <Box shadow>Nested box with shadow</Box>
             <Box border shadow>Nested box with border and shadow</Box>
-            <Box class="border border-secondary bg-primary shadow-lg shadow-secondary">Nested box with class</Box>
+            <Box class="border border-[red] bg-[blue] shadow-lg shadow-[black]">Nested box with custom class</Box>
+            <Box border shadow ghost>Nested ghost box with border and shadow</Box>
         </Box>
     </Box>
 

@@ -1,116 +1,100 @@
 <script lang="ts">
-    import type { Component } from 'svelte';
     import { colorList, sizeList } from '$components/types';
+    import Box from '$atoms/Box.svelte';
     import Button from '$atoms/Button.svelte';
-    import Card from '$atoms/Card.svelte';
-    import { Chrome } from '$atoms/icons/clients';
-    import { Check, Cross, Info, Warning } from '$atoms/icons/common';
-    import { Google, Twitter, Discord } from '$atoms/icons/social';
+    import { Firefox } from '$atoms/icons/clients';
+    import { Warning } from '$atoms/icons/common';
     import { logDesigner } from '$src/lib/loggers';
     import { settingsStore } from '../../_components/currentSettings.svelte';
     import Select from '../../_components/Select.svelte';
-    import CheckBox from '../../_components/CheckBox.svelte';
-
-    const iconList = ['twitter', 'chrome', 'google', 'discord', 'check', 'cross', 'info', 'warning'];
+    import Story from '../../_components/Story.svelte';
 
     let color = $state('primary');
-    let icon = $state('twitter');
-    let outline = $state(false);
-    let disabled = $state(false);
-
-    let href = 'foo';
-
-    const iconComp: Record<string, Component> = {
-        twitter: Twitter,
-        chrome: Chrome,
-        google: Google,
-        discord: Discord,
-        check: Check,
-        cross: Cross,
-        info: Info,
-        warning: Warning
-    };
+    let action = $state('href');
+    let href = '#top';
 
     function onclick() {
         logDesigner('clicked');
     }
+
+    let btnAction = $derived(action === 'click' ? { onclick } : { href });
 
     settingsStore().set(settings);
 </script>
 
 {#snippet settings()}
     <Select label="Color" options={colorList} bind:value={color} />
-    <Select label="Icon" options={iconList} bind:value={icon} />
-    <CheckBox label="Outline" bind:value={outline} />
-    <CheckBox label="Disabled" bind:value={disabled} />
+    <Select label="Action" options={['click', 'href']} bind:value={action} />
 {/snippet}
 
-<div class="flex flex-wrap justify-center gap-2">
-    <Card caption="Button" variant="fieldset">
-        <div class="flex flex-col items-start gap-2">
-            {#each sizeList as size}
-                <Button {size} icon={iconComp[icon]} {color} {outline} {disabled} {onclick} />
-            {/each}
+<Story dense>
+    <Box border class="flex h-max w-max flex-col">
+        {#each sizeList as size}
+            <div class="w-max">
+                <Button {size} {color} {...btnAction}>
+                    Button-{size}
+                </Button>
+            </div>
+        {/each}
+    </Box>
+
+    <Box border class="flex h-max w-max flex-col">
+        {#each sizeList as size}
+            <div class="w-max">
+                <Button {size} {color} startIcon={Firefox} {onclick}>
+                    Button-{size}
+                </Button>
+            </div>
+        {/each}
+    </Box>
+
+    <Box border class="flex h-max w-max flex-col">
+        {#each sizeList as size}
+            <div class="w-max">
+                <Button {size} {color} endIcon={Firefox} {onclick}>
+                    Button-{size}
+                </Button>
+            </div>
+        {/each}
+    </Box>
+
+    <Box border class="flex h-max w-max flex-col">
+        {#each sizeList as size}
+            <div class="w-max">
+                <Button {size} {color} startIcon={Firefox} endIcon={Firefox} {onclick}>
+                    Button-{size}
+                </Button>
+            </div>
+        {/each}
+    </Box>
+
+    <Box border class="flex h-max w-max flex-row">
+        <div class="flex flex-col justify-center">
+            <Button {color} {onclick}>Button</Button>
+            <Button {color} disabled {onclick}>Button</Button>
         </div>
-    </Card>
-    <Card caption="Button" variant="fieldset">
-        <div class="flex flex-col items-start gap-2">
-            {#each sizeList as size}
-                <Button {size} label="Button-xs" {color} {outline} {disabled} {onclick} />
-            {/each}
+        <div class="flex flex-col justify-center">
+            <Button {color} outline {onclick}>Button</Button>
+            <Button {color} outline disabled {onclick}>Button</Button>
         </div>
-    </Card>
-    <Card caption="Button" variant="fieldset">
-        <div class="flex flex-col items-start gap-2">
-            {#each sizeList as size}
-                <Button {size} label="Button-xs" icon={iconComp[icon]} {color} {outline} {disabled} {onclick} />
-            {/each}
+    </Box>
+
+    <Box border class="flex h-max w-max flex-wrap">
+        <div class="flex flex-col justify-center">
+            <Button {color} {onclick} startIcon={Firefox}>Button</Button>
+            <Button {color} disabled {onclick} startIcon={Firefox}>Button</Button>
         </div>
-    </Card>
-</div>
-<div class="flex flex-wrap justify-center gap-2">
-    <Card caption="Link" variant="fieldset">
-        <div class="flex flex-col items-start gap-2">
-            {#each sizeList as size}
-                <Button {size} icon={iconComp[icon]} {color} {outline} {disabled} {href} />
-            {/each}
+        <div class="flex flex-col justify-center">
+            <Button {color} outline {onclick} startIcon={Firefox}>Button</Button>
+            <Button {color} outline disabled {onclick} startIcon={Firefox}>Button</Button>
         </div>
-    </Card>
-    <Card caption="Link" variant="fieldset">
-        <div class="flex flex-col items-start gap-2">
-            {#each sizeList as size}
-                <Button {size} label="Button-xs" {color} {outline} {disabled} {href} />
-            {/each}
+        <div class="flex flex-col justify-center">
+            <Button {color} {onclick} startIcon={Warning}>Button</Button>
+            <Button {color} disabled {onclick} startIcon={Warning}>Button</Button>
         </div>
-    </Card>
-    <Card caption="Link" variant="fieldset">
-        <div class="flex flex-col items-start gap-2">
-            {#each sizeList as size}
-                <Button {size} label="Button-xs" icon={iconComp[icon]} {color} {outline} {disabled} {href} />
-            {/each}
+        <div class="flex flex-col justify-center">
+            <Button {color} outline {onclick} startIcon={Warning}>Button</Button>
+            <Button {color} outline disabled {onclick} startIcon={Warning}>Button</Button>
         </div>
-    </Card>
-</div>
-<div class="flex flex-wrap justify-center gap-2">
-    <Card caption="Link with click" variant="fieldset">
-        <div class="flex flex-col items-start gap-2">
-            {#each sizeList as size}
-                <Button {size} icon={iconComp[icon]} {color} {outline} {disabled} {onclick} {href} />
-            {/each}
-        </div>
-    </Card>
-    <Card caption="Link with click" variant="fieldset">
-        <div class="flex flex-col items-start gap-2">
-            {#each sizeList as size}
-                <Button {size} label="Button-xs" {color} {outline} {disabled} {onclick} {href} />
-            {/each}
-        </div>
-    </Card>
-    <Card caption="Link with click" variant="fieldset">
-        <div class="flex flex-col items-start gap-2">
-            {#each sizeList as size}
-                <Button {size} label="Button-xs" icon={iconComp[icon]} {color} {outline} {disabled} {onclick} {href} />
-            {/each}
-        </div>
-    </Card>
-</div>
+    </Box>
+</Story>

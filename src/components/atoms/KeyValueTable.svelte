@@ -1,7 +1,8 @@
 <script lang="ts">
     import type { Snippet } from 'svelte';
-    import { sizeMaps, type Size } from '$components/types';
+    import { type Size } from '$components/types';
     import { twMerge } from 'tailwind-merge';
+    import CompileTailwindClasses from './utils/CompileTailwindClasses.svelte';
 
     interface Props {
         items: ([string, Snippet | string] | null)[];
@@ -10,8 +11,10 @@
     const { items, size = 'md' }: Props = $props();
 
     const filteredItems = $derived(items.filter((x) => x !== null));
-    const tableClass = $derived(twMerge('table rounded-none', sizeMaps.table[size]));
+    const tableClass = $derived(twMerge('table rounded-none', `table-${size}`));
 </script>
+
+<CompileTailwindClasses classList={['table-xs table-sm table-md table-lg']} />
 
 <table class={tableClass}>
     <tbody>

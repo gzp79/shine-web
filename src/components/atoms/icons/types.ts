@@ -1,4 +1,4 @@
-import type { Size } from '$components/types';
+import type { Color, Size } from '$components/types';
 
 export interface GlyphProps {
     size?: Size;
@@ -7,7 +7,7 @@ export interface GlyphProps {
 }
 
 export interface IconProps {
-    color?: string;
+    color?: Color;
     size?: Size;
     disabled?: boolean;
     class?: string;

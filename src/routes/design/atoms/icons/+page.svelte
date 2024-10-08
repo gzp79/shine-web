@@ -1,37 +1,26 @@
 <script lang="ts">
     import { type Component } from 'svelte';
-    import { colorList, defaultColor, defaultSize, sizeList } from '$components/types';
+    import { colorList, sizeList, type Color, type Size } from '$components/types';
     import IconCard from '$atoms/IconCard.svelte';
-    import { Chrome, Edge, Opera, Safari, Firefox, Mobile, Android, IPhone, Mac } from '$atoms/icons/clients';
     import { Check, Cross, Dark, DarkAndLight, Hamburger, Info, Light, Settings, Warning } from '$atoms/icons/common';
+    import { Chrome, Edge, Opera, Safari, Firefox, Mobile, Android, IPhone, Mac } from '$atoms/icons/clients';
     import { Infinity, Spinner, Ball, Dots, Ring } from '$atoms/icons/animated';
     import { Discord, Github, Google, Twitter } from '$atoms/icons/social';
     import { FlagGB, FlagHU } from '$atoms/icons/flags';
-    import { settingsStore } from '../../_components/currentSettings.svelte';
+    //import { settingsStore } from '../../_components/currentSettings.svelte';
     import Select from '../../_components/Select.svelte';
     import Checkbox from '../../_components/CheckBox.svelte';
     import Story from '../../_components/Story.svelte';
     import ImageCard from '$src/components/atoms/ImageCard.svelte';
 
-    let size = $state(defaultSize);
-    let color = $state(defaultColor);
+    let size = $state<Size>('md');
+    let color = $state<Color>('primary');
     let disabled = $state(false);
 
     const gridClass = 'flex flex-wrap justify-center gap-2';
 
-    settingsStore().set(settings);
+    //settingsStore().set(settings);
 </script>
-
-<!-- {#snippet icon(Shape: Component, name: string)}
-    <div class="flex flex-col items-center rounded-lg border">
-        <div class="m-2">
-            <div class="m-2 flex items-center justify-center">
-                <Shape {disabled} {size} {color} />
-            </div>
-            <p class="text-center">{name}</p>
-        </div>
-    </div>
-{/snippet} -->
 
 {#snippet icon(Shape: Component, name: string)}
     <ImageCard caption={name} dense ghost>

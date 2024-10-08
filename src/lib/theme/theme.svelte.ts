@@ -33,8 +33,8 @@ export function refreshTheme() {
 export function themeStore() {
     $effect(() => {
         setCookie('theme', rune);
-        if (rune === 'system') document.body.removeAttribute('data-theme');
-        else document.body.setAttribute('data-theme', rune);
+        if (rune === 'system') document.documentElement.removeAttribute('data-theme');
+        else document.documentElement.setAttribute('data-theme', rune);
     });
 
     return {

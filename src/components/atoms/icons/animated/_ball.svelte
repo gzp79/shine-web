@@ -1,23 +1,12 @@
 <script lang="ts">
-    import { colorMaps, sizeMaps } from '$components/types';
-    import { twMerge } from 'tailwind-merge';
     import type { IconProps } from '../types';
+    import IconBase from '../IconBase.svelte';
 
-    let { size = 'md', disabled = false, class: className, color }: IconProps = $props();
-    let svgClass = $derived(
-        twMerge(
-            color ? colorMaps.stroke[color] : 'stroke-current',
-            color ? colorMaps.fill[color] : 'fill-current',
-            sizeMaps.icon[size],
-            className,
-            disabled ? 'grayscale' : ''
-        )
-    );
-
+    let props: IconProps = $props();
     const dur = '0.8s';
 </script>
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class={svgClass}>
+<IconBase viewBox={[0, 0, 24, 24]} {...props}>
     <ellipse cx="12" cy="5" rx="4" ry="4">
         <animate
             attributeName="cy"
@@ -41,4 +30,4 @@
             repeatCount="indefinite"
         />
     </ellipse>
-</svg>
+</IconBase>

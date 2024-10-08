@@ -15,23 +15,28 @@
 
     let { border, shadow, dense, ghost, class: className, children }: Props = $props();
 
+    const bgColorClasses = [
+        'bg-surface-mute text-on-surface',
+        'bg-surface text-on-surface',
+        'bg-surface-accent text-on-surface'
+    ];
+    const borderClasses = ['border-surface', 'border-surface-accent', 'border-surface-mute'];
+    const shadowClasses = ['shadow-surface', 'shadow-surface-accent', 'shadow-surface-mute'];
+
     // Get the current nesting level from the context or default to 0
     let nestingLevel: number = getContext('Box_nestingLevel') ?? 0;
     setContext('Box_nestingLevel', nestingLevel + 1);
-
-    const bgColorClasses = ['bg-base-100', 'bg-base-200', 'bg-base-300'];
-    const borderClasses = ['border-primary', 'border-secondary', 'border-base-100'];
-    const shadowClasses = ['shadow-primary', 'shadow-secondary', 'shadow-base-100'];
+    setContext('Box_color', bgColorClasses[nestingLevel % bgColorClasses.length]);
 
     let boxClass = $derived(
-        twMerge([
+        twMerge(
             'rounded-lg p-4',
             !dense && (nestingLevel < 1 ? 'm-4' : nestingLevel < 3 ? 'm-2' : 'm-1'),
             !ghost && bgColorClasses[nestingLevel % bgColorClasses.length],
             border && `border ${borderClasses[nestingLevel % borderClasses.length]}`,
             shadow && `shadow-md ${shadowClasses[nestingLevel % shadowClasses.length]}`,
             className
-        ])
+        )
     );
 </script>
 

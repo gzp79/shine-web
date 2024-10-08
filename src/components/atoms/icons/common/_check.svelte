@@ -1,25 +1,15 @@
 <script lang="ts">
-    import { colorMaps, sizeMaps } from '$components/types';
-    import { twMerge } from 'tailwind-merge';
     import type { IconProps } from '../types';
     import { TRANSPARENCY } from '.';
+    import IconBase from '../IconBase.svelte';
 
-    let { color, size = 'md', disabled = false, class: className }: IconProps = $props();
-    let svgClass = $derived(
-        twMerge(
-            color ? colorMaps.stroke[color] : 'stroke-current',
-            color ? colorMaps.fill[color] : 'fill-current',
-            sizeMaps.icon[size],
-            className,
-            disabled ? 'grayscale' : ''
-        )
-    );
+    let props: IconProps = $props();
 </script>
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class={svgClass}>
+<IconBase viewBox={[0, 0, 512, 512]} {...props}>
     <path
         fill-opacity={TRANSPARENCY}
         stroke-width="4%"
         d="M424.3,180c-1-1.2-1.5-2.8-1.5-4.3c-14.8-26.1-15.7-58-30.5-84.1c-41.7,23.4-70.2,65.1-97.4,103.1c-16.4,22.9-31.1,46.4-44.6,71.1c-13.6,24.8-26.8,49.9-42,73.8c-2.2,3.4-7.9,5-10.3,0.7c-7.2-13.3-15.3-26.2-24.6-38.2c-8-10.3-17.1-19.5-25.3-29.6c-12.7-15.7-26.3-34.5-43.9-45.4c-6.4,21-13.9,41.8-17.2,63.6c24.6,15.9,43.4,38.9,61.5,61.6c21.2,26.6,43.1,52,66.9,76.3c15.4-20.1,26-43.5,38.8-65.3c15.1-25.7,32.7-49.4,51.4-72.6c18.7-23.2,40.3-43.7,62-63.9c10.2-9.5,22.2-17.3,33.1-26c8.2-6.6,16.2-13.4,23.7-20.7C424.4,180.2,424.4,180.1,424.3,180z"
     />
-</svg>
+</IconBase>

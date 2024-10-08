@@ -1,27 +1,11 @@
 <script lang="ts">
-    import { colorMaps, sizeMaps } from '$components/types';
-    import { twMerge } from 'tailwind-merge';
     import type { IconProps } from '../types';
+    import IconBase from '../IconBase.svelte';
 
-    let { size = 'md', disabled = false, class: className, color }: IconProps = $props();
-    let svgClass = $derived(
-        twMerge(
-            color ? colorMaps.stroke[color] : 'stroke-current',
-            color ? colorMaps.fill[color] : 'fill-current',
-            sizeMaps.icon[size],
-            className,
-            disabled ? 'grayscale' : ''
-        )
-    );
+    let props: IconProps = $props();
 </script>
 
-<svg
-    xmlns="http://www.w3.org/2000/svg"
-    xmlns:xlink="http://www.w3.org/1999/xlink"
-    style="shape-rendering: auto;"
-    viewBox="0 0 100 100"
-    class={svgClass}
->
+<IconBase viewBox={[0, 0, 100, 100]} {...props}>
     <path
         fill="none"
         stroke-width="10"
@@ -38,4 +22,4 @@
             values="0;256.58892822265625"
         />
     </path>
-</svg>
+</IconBase>

@@ -2,28 +2,29 @@
     import { lorem } from '$components/lorem';
     import { Google } from '$atoms/icons/social';
     import IconCard from '$atoms/IconCard.svelte';
-    import KeyValueTable from '$atoms/KeyValueTable.svelte';
+    //import KeyValueTable from '$atoms/KeyValueTable.svelte';
     import { Settings } from '$atoms/icons/common';
     import { range } from '$src/components/types';
-    import { settingsStore } from '../../_components/currentSettings.svelte';
-    import CheckBox from '../../_components/CheckBox.svelte';
-    import Select from '../../_components/Select.svelte';
+    //import { settingsStore } from '../../_components/currentSettings.svelte';
+    //import CheckBox from '../../_components/CheckBox.svelte';
+    //import Select from '../../_components/Select.svelte';
     import Story from '../../_components/Story.svelte';
+    import Box from '$src/components/atoms/Box.svelte';
 
     let showImage = $state(true);
     let showCaption = $state(true);
     let showContent = $state(3);
     let showAction = $state(2);
 
-    settingsStore().set(settings);
+    //settingsStore().set(settings);
 </script>
 
-{#snippet settings()}
+<!-- {#snippet settings()}
     <CheckBox label="Image" bind:value={showImage} />
     <CheckBox label="Caption" bind:value={showCaption} />
     <Select label="Content detail" options={[0, 1, 2, 3, 4]} bind:value={showContent} />
     <Select label="Action detail" options={[0, 1, 2]} bind:value={showAction} />
-{/snippet}
+{/snippet} -->
 
 {#snippet imagePart()}
     <Google />
@@ -47,9 +48,16 @@
 
 <Story center>
     <IconCard
-        caption={showCaption ? 'This is a caption' : undefined}
+        caption={showCaption ? 'This is a simple card' : undefined}
         icon={showImage ? imagePart : undefined}
         children={showContent > 0 ? contentPart : undefined}
+    />
+
+    <IconCard
+        caption={showCaption ? 'This is a ghost chard' : undefined}
+        icon={showImage ? imagePart : undefined}
+        children={showContent > 0 ? contentPart : undefined}
+        ghost
     />
 
     <IconCard caption="Identities">
@@ -62,16 +70,10 @@
                 {#snippet icon()}
                     <Google />
                 {/snippet}
-
-                <KeyValueTable
-                    size="xs"
-                    items={[
-                        ['Provider', 'google'],
-                        ['User ID', '1 - updated properties'],
-                        ['Date', '2021-09-01'],
-                        ['Status', 'active']
-                    ]}
-                />
+                <p>Provider: google</p>
+                <p>User Id: 1234567890</p>
+                <p>Date: 2021-09-01</p>
+                <p>Status: active</p>
             </IconCard>
         {/each}
     </IconCard>

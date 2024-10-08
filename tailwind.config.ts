@@ -1,12 +1,61 @@
-import daisyui from 'daisyui';
-import themes from 'daisyui/src/theming/themes';
+const colorVariants = {
+    surface: 'rgb(var(--color-surface))',
+    'surface-mute': 'rgb(var(--color-surface-mute))',
+    'surface-accent': 'rgb(var(--color-surface-accent))',
+    primary: 'rgb(var(--color-primary))',
+    'primary-mute': 'rgb(var(--color-primary-mute))',
+    'primary-accent': 'rgb(var(--color-primary-accent))',
+    info: 'rgb(var(--color-info))',
+    'info-mute': 'rgb(var(--color-info-mute))',
+    'info-accent': 'rgb(var(--color-info-accent))',
+    warning: 'rgb(var(--color-warning))',
+    'warning-mute': 'rgb(var(--color-warning-mute))',
+    'warning-accent': 'rgb(var(--color-warning-accent))',
+    danger: 'rgb(var(--color-danger))',
+    'danger-mute': 'rgb(var(--color-danger-mute))',
+    'danger-accent': 'rgb(var(--color-danger-accent))',
+    success: 'rgb(var(--color-success))',
+    'success-mute': 'rgb(var(--color-success-mute))',
+    'success-accent': 'rgb(var(--color-success-accent))'
+};
+
+const colorOnVariants = {
+    'on-surface': 'rgb(var(--color-on-surface))',
+    'on-primary': 'rgb(var(--color-on-primary))',
+    'on-info': 'rgb(var(--color-on-info))',
+    'on-warning': 'rgb(var(--color-on-warning))',
+    'on-danger': 'rgb(var(--color-on-danger))',
+    'on-success': 'rgb(var(--color-on-success))'
+};
 
 module.exports = {
+    darkMode: 'class',
     content: ['./src/**/*.{svelte,js,ts}'],
-    plugins: [daisyui],
+    plugins: [],
 
     theme: {
         extend: {
+            colors: {
+                ...colorVariants,
+                ...colorOnVariants
+            },
+            backgroundColor: {
+                ...colorVariants
+            },
+            textColor: {
+                ...colorVariants,
+                ...colorOnVariants
+            },
+            stroke: {
+                ...colorVariants,
+                ...colorOnVariants,
+                highlight: 'hsl(var(--hc))'
+            },
+            fill: {
+                ...colorVariants,
+                ...colorOnVariants,
+                highlight: 'hsl(var(--hc))'
+            },
             width: {
                 'min-content': 'min-content'
             },
@@ -16,41 +65,7 @@ module.exports = {
             },
             boxShadowColor: {
                 base: 'var(--bsh)'
-            },
-            stroke: {
-                highlight: 'hsl(var(--hc))'
             }
         }
-    },
-
-    daisyui: {
-        themes: [
-            {
-                light: {
-                    ...themes['light'],
-                    '--hc': '259 94% 71%'
-                }
-            },
-            {
-                dark: {
-                    ...themes['dark'],
-                    primary: '#3B71CA',
-                    secondary: '#9FA6B2',
-                    //accent: '#00ffff',
-                    //neutral: '#ff00ff',
-                    'base-100': '#303030',
-                    'base-200': '#404040',
-                    'base-300': '#505050',
-                    'base-content': '#f5f5f5',
-                    '--bsh': '#101010',
-                    info: '#54B4D3',
-                    success: '#14A44D',
-                    warning: '#E4A11B',
-                    error: '#DC4C64',
-                    '--hc': '183 47% 79%'
-                }
-            }
-        ],
-        logs: true
     }
 };

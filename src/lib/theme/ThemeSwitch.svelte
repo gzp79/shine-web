@@ -9,7 +9,7 @@
     let { class: className }: Props = $props();
 
     let theme = themeStore();
-    let btnClass = $derived(twMerge(['h-10 w-10 fill-current', className]));
+    let btnClass = $derived(twMerge('h-10 w-10 fill-current', className));
 </script>
 
 <button

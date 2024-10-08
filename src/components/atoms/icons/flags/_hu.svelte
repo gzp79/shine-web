@@ -1,13 +1,11 @@
 <script lang="ts">
-    import { sizeMaps } from '$components/types';
-    import { twMerge } from 'tailwind-merge';
     import type { GlyphProps } from '../types';
+    import GlyphBase from '../GlyphBase.svelte';
 
-    let { size = 'md', disabled = false, class: className }: GlyphProps = $props();
-    let svgClass = $derived(twMerge(sizeMaps.glyph[size], className, disabled ? 'grayscale' : ''));
+    let props: GlyphProps = $props();
 </script>
 
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.986744 18.187277" class={svgClass}>
+<GlyphBase viewBox={[0, 0, 26.0, 18.2]} {...props}>
     <g stroke="#000" stroke-width=".5">
         <path
             fill="#38b47b"
@@ -22,4 +20,4 @@
             d="M23.0076167.2503142c-1.415732.0065-3.360205.117373-4.384745.142111-1.639264.03958-8.038098.454971-14.083895.185001C1.9589977.4622182 1.2144036.3463292.7526446 2.7013278c-.233917 1.192983-.336248 2.495786-.390157 3.623551.157482-.02733 2.5047371-.424678 5.1526571-.226343 2.745674.205657 7.226958-.281201 11.283549-.02636 2.357058.148075 8.246029-.175878 8.48527-.189135.03475-.4844.08871-1.013589.173116-1.611788.531031-3.7633826-.369894-3.5786856-.785482-3.8788326-.155845-.112556-.814542-.146034-1.663981-.142111z"
         />
     </g>
-</svg>
+</GlyphBase>

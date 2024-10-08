@@ -50,7 +50,7 @@
 
     let element = $derived(variantElement[variant]);
     let textClass = $derived(
-        twMerge([variantClasses[variant], weightClasses[weight], underline && 'underline', className])
+        twMerge(variantClasses[variant], weightClasses[weight], underline && 'underline', className)
     );
 </script>
 
