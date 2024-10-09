@@ -13,4 +13,4 @@
 <label for={id} class="max-w-xs">
     {label}
 </label>
-<input type="checkbox" {id} class="checkbox justify-self-center" bind:checked={value} />
+<input type="checkbox" {id} class="justify-self-center accent-surface" bind:checked={value} />

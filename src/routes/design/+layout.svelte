@@ -1,17 +1,18 @@
 <script lang="ts">
     import { beforeNavigate } from '$app/navigation';
-    import Hamburger from '$atoms/icons/common/_hamburger.svelte';
     import ThemeSwitch from '$lib/theme/ThemeSwitch.svelte';
-    import Typography from '$src/components/atoms/Typography.svelte';
     import LangSwitch from '$src/lib/i18n/LangSwitch.svelte';
+    import Box from '$atoms/Box.svelte';
+    import Typography from '$atoms/Typography.svelte';
+    import Hamburger from '$atoms/icons/common/_hamburger.svelte';
     import { settingsStore } from './_components/currentSettings.svelte';
-    //import Section from './_components/Section.svelte';
-    //import SettingsForm from './_components/SettingsForm.svelte';
+    import Section from './_components/Section.svelte';
 
     const { children } = $props();
 
     let currentSettings = settingsStore();
-    //let showSettings = $state(true);
+    let showSidebar = $state(false);
+    let showSettings = $state(true);
 
     const menu = [
         {
@@ -47,123 +48,67 @@
     });
 </script>
 
-<header class="flex items-center bg-surface p-4">
-    <label aria-label="open sidebar" class="flex-none">
-        <Hamburger size="md" class="inline-block" />
-    </label>
-    <Typography variant="h2" class="flex-1 overflow-hidden text-ellipsis text-pretty p-2">Design</Typography>
-    <LangSwitch />
-    <ThemeSwitch class="flex-none" />
-</header>
+<div class="grid h-full grid-rows-[auto_1fr_auto]">
+    <header class="flex items-center bg-surface-mute p-4">
+        <button aria-label="open sidebar" class="flex-none" onclick={() => (showSidebar = !showSidebar)}>
+            <Hamburger size="md" class="inline-block" />
+        </button>
+        <Typography variant="h2" class="flex-1 overflow-hidden text-ellipsis text-pretty p-2">Design</Typography>
+        <LangSwitch />
+        <ThemeSwitch class="flex-none" />
+    </header>
 
-<div class="grid h-full grid-cols-1 md:grid-cols-[auto_1fr]">
-    <aside class="bg-surface-mute p-4">
-        {#each menu as group}
-            <div>
-                <Typography variant="h3">{group.title}</Typography>
-                <div class="collapse-content">
-                    <ul class="min-h-full w-full p-4">
-                        {#each group.items as item}
-                            <li class="hover:bg-surface-accent">
-                                <a href={`/design/${item.href}`}>
-                                    <Typography variant="h6">{item.title}</Typography>
-                                </a>
-                            </li>
-                        {/each}
-                    </ul>
-                </div>
-            </div>
-        {/each}
-    </aside>
-    <main class="h-full w-full overflow-auto">
-        {@render children()}
-    </main>
-</div>
-
-<!-- <div class="flex flex-row">
-    <div class="flex h-full w-fit min-w-72 grid-rows-2 flex-col bg-base-200 lg:w-[20lvw] bg-[red]">
-        <div class="h-full flex-grow overflow-y-auto">
+    <div class="relative flex flex-row overflow-hidden">
+        <aside
+            class="flexh-full h-full w-[30dvw] min-w-max overflow-y-auto bg-surface p-4 {showSidebar
+                ? 'hidden'
+                : 'absolute left-0 top-0 md:static'}"
+        >
             {#each menu as group}
-                <div>
-                    <div class="collapse-title text-xl">{group.title}</div>
-                    <div class="collapse-content">
-                        <ul class="menu min-h-full w-full p-4">
-                            {#each group.items as item}
-                                <li><a href={`/design/${item.href}`}>{item.title}</a></li>
-                            {/each}
-                        </ul>
-                    </div>
-                </div>
+                <Typography variant="h3">{group.title}</Typography>
+                <ul class="mx-4 w-max">
+                    {#each group.items as item}
+                        <li class="hover:bg-surface-accent">
+                            <a href={`/design/${item.href}`}>
+                                <Typography variant="h6">{item.title}</Typography>
+                            </a>
+                        </li>
+                    {/each}
+                </ul>
             {/each}
-        </div>
-        <div class="">
-            <div class="collapse-rev-arrow collapse rounded-none">
-                <input type="checkbox" name="settings-menu" bind:checked={showSettings} />
-                <div class="collapse-title text-xl">Settings</div>
-                <div class="collapse-content m-2 max-h-[50lvh] overflow-y-auto rounded-xl bg-base-300 p-2">
-                    <SettingsForm>
-                        {@const settings = currentSettings.get()}
-                        {#if settings}
-                            {@render settings()}
-                        {:else}
-                            <Section>No settings</Section>
-                        {/if}
-                    </SettingsForm>
-                </div>
-            </div>
-        </div>
+            <button
+                onclick={() => (showSettings = !showSettings)}
+                class="flex w-full flex-row items-center justify-between hover:bg-surface-accent"
+            >
+                <Typography variant="h3" class="flex-start">Settings</Typography>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 448 512"
+                    class="flex-end h-4 w-4 fill-on-surface {showSettings && 'rotate-180'}"
+                >
+                    <path
+                        d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                    ></path>
+                </svg>
+            </button>
+            {#if showSettings}
+                <Box class="form-control mx-2 inline-grid w-full auto-cols-min grid-cols-2 items-center gap-4">
+                    {@const settings = currentSettings.get()}
+                    {#if settings}
+                        {@render settings()}
+                    {:else}
+                        <Section>No settings</Section>
+                    {/if}
+                </Box>
+            {/if}
+        </aside>
+        <main class="max-h-full w-full overflow-auto">
+            {@render children()}
+        </main>
     </div>
-    <div class="h-full overflow-auto flex-grow  bg-[green]">
-    {@render children()}
-    </div>
-</div> -->
 
-<!-- <div class="drawer flex-1 auto-rows-fr overflow-hidden lg:drawer-open">
-    <input id="design-drawer" type="checkbox" class="drawer-toggle" />
-
-    <div class="drawer-content flex h-full flex-col items-center overflow-auto">
-        
-    </div>
-
-    <div class="drawer-side absolute h-full">
-        <label for="design-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-        <div class="flex h-full w-fit min-w-72 grid-rows-2 flex-col bg-base-200 lg:w-[20lvw]">
-            <div class="h-full flex-grow overflow-y-auto">
-                {#each menu as group}
-                    <div class="collapse collapse-plus">
-                        <input type="checkbox" name="design-menu" />
-                        <div class="collapse-title text-xl">{group.title}</div>
-                        <div class="collapse-content">
-                            <ul class="menu min-h-full w-full p-4">
-                                {#each group.items as item}
-                                    <li><a href={`/design/${item.href}`}>{item.title}</a></li>
-                                {/each}
-                            </ul>
-                        </div>
-                    </div>
-                {/each}
-            </div>
-            <div class="">
-                <div class="collapse-rev-arrow collapse rounded-none">
-                    <input type="checkbox" name="settings-menu" bind:checked={showSettings} />
-                    <div class="collapse-title text-xl">Settings</div>
-                    <div class="collapse-content m-2 max-h-[50lvh] overflow-y-auto rounded-xl bg-base-300 p-2">
-                        <SettingsForm>
-                            {@const settings = currentSettings.get()}
-                            {#if settings}
-                                {@render settings()}
-                            {:else}
-                                <Section>No settings</Section>
-                            {/if}
-                        </SettingsForm>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <footer class="flex items-center justify-between bg-surface-mute p-1">
+        <div class="flex-start"></div>
+        <Typography variant="body1" class="self-end">© 2021</Typography>
+    </footer>
 </div>
-
-<div class="footer flex w-full items-center justify-between bg-base-300 p-1">
-    <span class="inline-block text-xs">123</span>
-    <span class="inline-block text-xs">version</span>
-</div> -->

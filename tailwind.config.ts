@@ -1,3 +1,5 @@
+import twForm from '@tailwindcss/forms';
+
 const colorVariants = {
     surface: 'rgb(var(--color-surface))',
     'surface-mute': 'rgb(var(--color-surface-mute))',
@@ -31,7 +33,11 @@ const colorOnVariants = {
 module.exports = {
     darkMode: 'class',
     content: ['./src/**/*.{svelte,js,ts}'],
-    plugins: [],
+    plugins: [
+        twForm({
+            strategy: 'class'
+        })
+    ],
 
     theme: {
         extend: {
