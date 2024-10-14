@@ -6,7 +6,7 @@
         variant?: 'dense' | 'center' | 'full';
         children: Snippet;
     }
-    let { variant = "full", children }: Props = $props();
+    let { variant = 'full', children }: Props = $props();
 
     let variantClass = {
         full: 'flex-col',
