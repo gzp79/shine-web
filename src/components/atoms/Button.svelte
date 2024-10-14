@@ -34,10 +34,10 @@
     }: Props = $props();
 
     const sizeMods: Record<Size, string> = {
-        xs: 'text-sm px-2 py-1.5',
-        sm: 'text-base px-3 py-2',
-        md: 'text-base px-5 py-2.5',
-        lg: 'text-lg px-7 py-3'
+        xs: 'text-sm leading-none px-2 py-1.5',
+        sm: 'text-base leading-none px-3 py-2',
+        md: 'text-base leading-none px-4 py-3',
+        lg: 'text-lg leading-none px-5 py-4'
     };
     const sizeModsIconOnly: Record<Size, string> = {
         xs: 'p-1',

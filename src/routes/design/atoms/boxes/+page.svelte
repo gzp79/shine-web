@@ -79,7 +79,7 @@
         Some custom class with dense layout
         <Box border class="flex flex-row flex-wrap justify-center">
             {#each range(0, 7) as _i}
-                <Box border dense class="w-max whitespace-nowrap">Nested dense box</Box>
+                <Box border compact class="w-max whitespace-nowrap p-3">Nested compact box</Box>
             {/each}
         </Box>
     </Box>

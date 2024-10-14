@@ -9,14 +9,14 @@
         children?: Snippet;
         side?: boolean;
         shadow?: boolean;
-        dense?: boolean;
+        compact?: boolean;
         ghost?: boolean;
     }
 
-    let { image, caption, children, side, shadow, dense, ghost }: Props = $props();
+    let { image, caption, children, side, shadow, compact, ghost }: Props = $props();
 </script>
 
-<Box border {shadow} {dense} {ghost} class="relative min-h-min w-fit">
+<Box border {shadow} {compact} {ghost} class="relative min-h-min w-fit">
     <div class="flex {side ? 'flex-row' : 'flex-col'}">
         <div class="flex flex-col items-center justify-center {side && 'me-4'}">
             {@render image()}

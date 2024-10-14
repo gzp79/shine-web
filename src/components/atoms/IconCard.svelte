@@ -1,6 +1,7 @@
 <script lang="ts">
     import Box from '$atoms/Box.svelte';
     import { type Snippet } from 'svelte';
+    import Typography from './Typography.svelte';
 
     interface Props {
         icon?: Snippet;
@@ -15,21 +16,21 @@
     let { icon, caption, shadow, ghost, children }: Props = $props();
 </script>
 
-<Box border {shadow} {ghost} class="min-h-min overflow-y-auto">
-    <div class="flex flex-col items-center md:flex-row md:items-start">
+<Box compact border {shadow} {ghost}>
+    <div class="flex h-max max-h-72 flex-col items-center overflow-y-auto p-4 md:flex-row md:items-start">
         {#if icon}
             <div class="icon-lg top-0 mb-2 h-auto max-w-full md:sticky md:mb-0 md:me-4">
                 {@render icon()}
             </div>
         {/if}
-        <div class="flex max-h-72 w-full flex-col">
+        <div class="flex h-full w-full flex-col">
             {#if caption}
-                <div class="h4 text-center font-semibold md:text-start {children && 'mb-4'}">
+                <Typography variant="h4" element="p" weight="emphasis" class="md:text-start {children && 'mb-4'}">
                     {caption}
-                </div>
+                </Typography>
             {/if}
             {#if children}
-                <div class="pb-2">
+                <div class="h-full pb-2">
                     {@render children()}
                 </div>
             {/if}

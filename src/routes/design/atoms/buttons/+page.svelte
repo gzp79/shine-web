@@ -44,6 +44,7 @@
         {#each sizeList as size}
             <div class="w-max">
                 <Button {size} {color} startIcon={Settings} {onclick} />
+                <Button outline {size} {color} startIcon={Settings} {onclick} />
             </div>
         {/each}
     </Box>

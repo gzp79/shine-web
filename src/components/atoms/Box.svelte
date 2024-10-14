@@ -5,15 +5,15 @@
     interface Props {
         border?: boolean;
         shadow?: boolean;
-        // Whether to use a dense layout and reduce margins
-        dense?: boolean;
+        // Whether to use a compact layout and reduce margins and padding
+        compact?: boolean;
         // Whether to use a ghost box with no background
         ghost?: boolean;
         class?: string;
         children?: Snippet;
     }
 
-    let { border, shadow, dense, ghost, class: className, children }: Props = $props();
+    let { border, shadow, compact, ghost, class: className, children }: Props = $props();
 
     const bgColorClasses = [
         'bg-surface-mute text-on-surface',
@@ -30,8 +30,9 @@
 
     let boxClass = $derived(
         twMerge(
-            'rounded-lg p-4',
-            !dense && (nestingLevel < 1 ? 'm-4' : nestingLevel < 3 ? 'm-2' : 'm-1'),
+            'rounded-lg overflow-hidden',
+            !compact && (nestingLevel < 1 ? 'm-4' : nestingLevel < 3 ? 'm-2' : 'm-1'),
+            !compact && 'p-4',
             !ghost && bgColorClasses[nestingLevel % bgColorClasses.length],
             border && `border ${borderClasses[nestingLevel % borderClasses.length]}`,
             shadow && `shadow-md ${shadowClasses[nestingLevel % shadowClasses.length]}`,
