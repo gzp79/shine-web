@@ -4,7 +4,7 @@
     import Story from '../../_components/Story.svelte';
 </script>
 
-<Story center>
+<Story variant="center">
     <Box>
         Default default box
         <Box>

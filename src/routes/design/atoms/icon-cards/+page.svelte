@@ -44,7 +44,7 @@
     {/if}
 {/snippet}
 
-<Story center>
+<Story variant="center">
     <IconCard
         caption={showCaption ? 'This is a simple card' : undefined}
         icon={showImage ? imagePart : undefined}

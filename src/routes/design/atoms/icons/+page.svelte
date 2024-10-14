@@ -36,7 +36,7 @@
     </Box>
 {/snippet}
 
-<Story center>
+<Story variant="center">
     <IconCard caption="Common">
         <div class={gridClass}>
             {@render icon(Check, 'Check')}

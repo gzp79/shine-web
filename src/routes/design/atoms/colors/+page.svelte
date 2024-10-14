@@ -4,7 +4,7 @@
     import ColorSample from './_colorSample.svelte';
 </script>
 
-<Story dense>
+<Story variant="dense">
     {#each colorList as color}
         <div class="flex flex-col items-center rounded-lg border">
             <div class="m-2">

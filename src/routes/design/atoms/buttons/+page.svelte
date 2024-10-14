@@ -29,7 +29,7 @@
     <Select label="Action" options={['click', 'href']} bind:value={action} />
 {/snippet}
 
-<Story dense>
+<Story variant="dense">
     <Box border class="flex h-max w-max flex-col">
         {#each sizeList as size}
             <div class="w-max">

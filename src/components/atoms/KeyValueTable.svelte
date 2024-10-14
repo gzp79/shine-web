@@ -11,7 +11,7 @@
     const { items, size = 'md' }: Props = $props();
 
     const filteredItems = $derived(items.filter((x) => x !== null));
-    const tableClass = $derived(twMerge('table rounded-none', `table-${size}`));
+    const tableClass = $derived(twMerge('table', `table-${size}`));
 </script>
 
 <CompileTailwindClasses classList={['table-xs table-sm table-md table-lg']} />

@@ -98,21 +98,6 @@
         }
     }
 
-    .glyph {
-        &-xs {
-            @apply h-8 w-8;
-        }
-        &-sm {
-            @apply h-10 w-10;
-        }
-        &-md {
-            @apply h-14 w-14;
-        }
-        &-lg {
-            @apply h-20 w-20;
-        }
-    }
-
     .grid {
         &-cols-1-auto {
             grid-template-columns: repeat(1, max-content);
@@ -131,6 +116,62 @@
         }
         &-cols-6-auto {
             grid-template-columns: repeat(6, max-content);
+        }
+    }
+
+    .table {
+        :where(table) {
+            @apply w-full text-left text-sm rtl:text-right;
+        }
+        :where(th, td) {
+            @apply px-4 py-3 align-middle;
+        }
+
+        /*
+        tr.active,
+        tr.active:nth-child(even) {
+            @apply brightness-125;
+        }
+        tr.hover,
+        tr.hover:nth-child(even) {
+            @apply [@media(hover:hover)]:hover:brightness-125;
+        }*/
+
+        /*:where(thead tr, tbody tr:not(:last-child), tbody tr:first-child:last-child) {
+            @apply border-b-base-200 border-b;
+        }
+    
+        :where(thead, tfoot) {
+            @apply text-base-content/60 whitespace-nowrap text-xs font-bold;
+        }
+
+        :where(tfoot) {
+            @apply border-t-base-200 border-t;
+        }*/
+
+        &-xs :not(thead):not(tfoot) tr {
+            @apply text-xs;
+        }
+        &-xs :where(th, td) {
+            @apply px-2 py-1;
+        }
+        &-sm :not(thead):not(tfoot) tr {
+            @apply text-sm;
+        }
+        &-sm :where(th, td) {
+            @apply px-3 py-2;
+        }
+        &-md :not(thead):not(tfoot) tr {
+            @apply text-sm;
+        }
+        &-md :where(th, td) {
+            @apply px-4 py-3;
+        }
+        &-lg :not(thead):not(tfoot) tr {
+            @apply text-base;
+        }
+        &-lg :where(th, td) {
+            @apply px-6 py-4;
         }
     }
 }

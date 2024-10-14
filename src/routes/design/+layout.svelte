@@ -26,9 +26,9 @@
                 { title: 'IconCards', href: 'atoms/icon-cards' },
                 { title: 'Buttons', href: 'atoms/buttons' },
                 //{ title: '*Toggle', href: 'atoms/toggles' },
-                { title: 'Popper', href: 'atoms/popper' }
+                { title: 'Popper', href: 'atoms/popper' },
                 //{ title: '*Alerts', href: 'atoms/alerts' },
-                //{ title: '*Key-Value Table', href: 'atoms/key-value-tables' }
+                { title: 'Key-Value Table', href: 'atoms/key-value-tables' }
             ]
         },
         {
@@ -49,11 +49,11 @@
 </script>
 
 <div class="grid h-full grid-rows-[auto_1fr_auto]">
-    <header class="flex items-center bg-surface-mute p-4">
+    <header class="flex items-center bg-surface-mute px-4 py-1">
         <button aria-label="open sidebar" class="flex-none" onclick={() => (showSidebar = !showSidebar)}>
             <Hamburger size="md" class="inline-block" />
         </button>
-        <Typography variant="h2" class="flex-1 overflow-hidden text-ellipsis text-pretty p-2">Design</Typography>
+        <Typography variant="h1" class="flex-1">Design</Typography>
         <LangSwitch />
         <ThemeSwitch class="flex-none" />
     </header>
@@ -65,12 +65,12 @@
                 : 'absolute left-0 top-0 md:static'}"
         >
             {#each menu as group}
-                <Typography variant="h3">{group.title}</Typography>
+                <Typography variant="h3" element="h2">{group.title}</Typography>
                 <ul class="mx-4 w-max">
                     {#each group.items as item}
                         <li class="hover:bg-surface-accent">
                             <a href={`/design/${item.href}`}>
-                                <Typography variant="h6">{item.title}</Typography>
+                                <Typography variant="h6" element="h3">{item.title}</Typography>
                             </a>
                         </li>
                     {/each}
@@ -109,6 +109,6 @@
 
     <footer class="flex items-center justify-between bg-surface-mute p-1">
         <div class="flex-start"></div>
-        <Typography variant="body1" class="self-end">© 2021</Typography>
+        <Typography variant="caption" class="self-end">© 2024</Typography>
     </footer>
 </div>

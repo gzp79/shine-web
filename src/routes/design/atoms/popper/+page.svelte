@@ -9,7 +9,7 @@
     let open = $state(false);
 </script>
 
-<Story center>
+<Story variant="center">
     <p class="min-h-[1000px]"></p>
 
     <Box border>

@@ -1,5 +1,5 @@
 <script lang="ts" module>
-    export type Variant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'body1' | 'body2' | 'caption';
+    export type Variant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'text' | 'caption';
     export type Weight = 'normal' | 'emphasis' | 'bold';
 </script>
 
@@ -9,6 +9,7 @@
 
     interface Props {
         variant: Variant;
+        element?: string;
 
         underline?: boolean;
         weight?: Weight;
@@ -16,7 +17,7 @@
 
         children: Snippet;
     }
-    let { variant, underline, weight = 'normal', class: className, children }: Props = $props();
+    let { variant, element, underline, weight = 'normal', class: className, children }: Props = $props();
 
     let variantElement = {
         h1: 'h1',
@@ -25,20 +26,19 @@
         h4: 'h4',
         h5: 'h5',
         h6: 'h6',
-        body1: 'p',
-        body2: 'p',
+        text: 'p',
         caption: 'p'
     };
 
+    const sharedHClasses = ' overflow-hidden text-ellipsis text-pretty';
     const variantClasses = {
-        h1: 'text-4xl',
-        h2: 'text-3xl',
-        h3: 'text-2xl',
-        h4: 'text-xl',
-        h5: 'text-lg',
-        h6: 'text-base',
-        body1: 'text-base',
-        body2: 'text-sm',
+        h1: `text-4xl p-2 ${sharedHClasses}`,
+        h2: `text-3xl p-1 ${sharedHClasses} `,
+        h3: `text-2xl p-0.5 ${sharedHClasses} `,
+        h4: `text-xl ${sharedHClasses}`,
+        h5: `text-lg ${sharedHClasses}`,
+        h6: `text-base ${sharedHClasses}`,
+        text: 'text-base',
         caption: 'text-xs'
     };
 
@@ -48,10 +48,10 @@
         bold: 'font-bold'
     };
 
-    let element = $derived(variantElement[variant]);
+    let el = $derived(element ?? variantElement[variant]);
     let textClass = $derived(
         twMerge(variantClasses[variant], weightClasses[weight], underline && 'underline', className)
     );
 </script>
 
-<svelte:element this={element} class={textClass}>{@render children()}</svelte:element>
+<svelte:element this={el} class={textClass}>{@render children()}</svelte:element>
