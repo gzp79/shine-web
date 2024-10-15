@@ -33,7 +33,7 @@
 {/snippet}
 
 {#snippet nestedValue()}
-    <Box border class="max-w-72">
+    <Box border class="max-w-80">
         <KeyValueTable
             size="xs"
             items={[
@@ -62,8 +62,18 @@
                 ['key1', 'value'],
                 ['key2', 'value'],
                 ['key', 'value with long string'],
+            ]}
+        />
+    </Box>
+
+    <Box border>
+        <KeyValueTable
+            {size}
+            items={[
                 ['key with long string', 'value'],
-                ['key with long string', 'value with long string']
+                ['k', 'with a longer value with some dummy text'],
+                ['key', 'duplicated key 1st'],
+                ['key', 'duplicated key 2nd']
             ]}
         />
     </Box>

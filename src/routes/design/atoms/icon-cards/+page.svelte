@@ -1,9 +1,10 @@
 <script lang="ts">
+    import { range } from '$src/components/types';
     import { lorem } from '$components/lorem';
     import { Google } from '$atoms/icons/social';
     import IconCard from '$atoms/IconCard.svelte';
     import { Settings } from '$atoms/icons/common';
-    import { range } from '$src/components/types';
+    import Button from '$atoms/Button.svelte';
     import { settingsStore } from '../../_components/currentSettings.svelte';
     import CheckBox from '../../_components/CheckBox.svelte';
     import Select from '../../_components/Select.svelte';
@@ -74,6 +75,13 @@
                 <p>Status: active</p>
             </IconCard>
         {/each}
+
+        {#snippet actions()}
+            <Button>Action 1</Button>
+            <Button>Action with long text</Button>
+            <Button>Action 2</Button>
+            <Button>Action 3</Button>            
+        {/snippet}
     </IconCard>
 
     <IconCard caption="Top level">

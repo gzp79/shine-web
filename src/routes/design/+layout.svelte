@@ -21,21 +21,21 @@
                 { title: 'Colors', href: 'atoms/colors' },
                 { title: 'Typography', href: 'atoms/typography' },
                 { title: 'Icons', href: 'atoms/icons' },
-                { title: 'Grids', href: 'atoms/grids' },
-                { title: 'Boxes', href: 'atoms/boxes' },
-                { title: 'IconCards', href: 'atoms/icon-cards' },
                 { title: 'Buttons', href: 'atoms/buttons' },
                 //{ title: '*Toggle', href: 'atoms/toggles' },
+                { title: 'Grids', href: 'atoms/grids' },
+                { title: 'Boxes', href: 'atoms/boxes' },
+                { title: 'Alerts', href: 'atoms/alerts' },
                 { title: 'Popper', href: 'atoms/popper' },
-                //{ title: '*Alerts', href: 'atoms/alerts' },
-                { title: 'Key-Value Table', href: 'atoms/key-value-tables' }
+                { title: 'IconCards', href: 'atoms/icon-cards' },
+                { title: 'Cards', href: 'atoms/cards' },
+                { title: 'Key-Value Table', href: 'atoms/key-value-tables' },
             ]
         },
         {
-            title: 'Templates',
-            //items: [{ title: 'Circle menu', href: 'circle_menu' }]
+            title: 'Account',
             items: [
-                // { title: 'Current User Card', href: 'account/current-user' },
+                { title: 'Current User Card', href: 'account/current-user' }
                 //{ title: 'Linked Identities', href: 'account/linked-identities' },
                 //{ title: 'Active Sessions', href: 'account/active-sessions' },
                 //{ title: 'Active Tokens', href: 'account/active-tokens' }

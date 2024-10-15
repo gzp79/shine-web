@@ -7,8 +7,10 @@
     interface Props {
         color?: Color;
         size?: Size;
+        wide?: boolean;
         outline?: boolean;
         disabled?: boolean;
+        class?: string;
 
         startIcon?: Component;
         endIcon?: Component;
@@ -25,8 +27,10 @@
         endIcon: EndIcon,
         color = 'primary',
         size = 'md',
+        wide,
         outline = false,
         disabled = false,
+        class: className,
         onclick,
         href,
         children,
@@ -81,6 +85,8 @@
             'inline-flex items-center justify-center m-1',
             'text-center whitespace-nowrap',
             'rounded-full',
+            wide ? 'min-w-full justify-between' : 'w-fit h-fit',
+            //wide ? 'min-w-full' : 'w-fit h-fit',
             !outline && `bg-${color} text-on-${color}`,
             outline && `border border-2 border-${color} text-${color}`,
             children && sizeMods[size],
@@ -88,8 +94,9 @@
             children && EndIcon && endIconPadding[size],
             !children && sizeModsIconOnly[size],
             !disabled && 'active:scale-95 hover:brightness-125',
-            disabled && '!opacity-30 !cursor-not-allowed'
-            //disabled && 'grayscale !cursor-not-allowed'
+            disabled && '!opacity-30 !cursor-not-allowed',
+            //disabled && 'grayscale !cursor-not-allowed',
+            className
         )
     );
 

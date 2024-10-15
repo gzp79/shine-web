@@ -11,13 +11,14 @@
         ghost?: boolean;
 
         children?: Snippet;
+        actions?: Snippet;
     }
 
-    let { icon, caption, shadow, ghost, children }: Props = $props();
+    let { icon, caption, shadow, ghost, children, actions }: Props = $props();
 </script>
 
-<Box compact border {shadow} {ghost}>
-    <div class="flex h-max max-h-72 flex-col items-center overflow-y-auto p-4 md:flex-row md:items-start">
+<Box compact border {shadow} {ghost} class="grid max-w-xl grid-rows items-center">
+    <div class="flex max-h-80 flex-col items-center overflow-y-auto px-4 pt-4 md:flex-row md:items-start">
         {#if icon}
             <div class="icon-lg top-0 mb-2 h-auto max-w-full md:sticky md:mb-0 md:me-4">
                 {@render icon()}
@@ -36,4 +37,9 @@
             {/if}
         </div>
     </div>
+    {#if actions}
+        <div class="my-2 mx-2 flex flex-col align-middle md:flex-row md:self-end">
+            {@render actions()}
+        </div>
+    {/if}
 </Box>

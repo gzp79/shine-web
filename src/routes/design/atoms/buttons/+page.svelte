@@ -30,71 +30,63 @@
 {/snippet}
 
 <Story variant="dense">
-    <Box border class="flex h-max w-max flex-col">
+    <Box border class="flex h-max flex-col">
         {#each sizeList as size}
-            <div class="w-max">
-                <Button {size} {color} {...btnAction}>
-                    Button-{size}
-                </Button>
-            </div>
+            <Button {size} {color} {...btnAction}>
+                Button-{size}
+            </Button>
         {/each}
     </Box>
 
-    <Box border class="flex h-max w-max flex-col">
+    <Box border class="flex h-max flex-col">
         {#each sizeList as size}
-            <div class="w-max">
+            <div>
                 <Button {size} {color} startIcon={Settings} {onclick} />
                 <Button outline {size} {color} startIcon={Settings} {onclick} />
             </div>
         {/each}
     </Box>
 
-    <Box border class="flex h-max w-max flex-col">
+    <Box border class="flex h-max flex-col">
         {#each sizeList as size}
-            <div class="w-max">
-                <Button {size} {color} startIcon={Twitter} {onclick}>
-                    Button-{size}
-                </Button>
-            </div>
+            <Button {size} {color} startIcon={Twitter} {onclick}>
+                Button-{size}
+            </Button>
         {/each}
     </Box>
 
-    <Box border class="flex h-max w-max flex-col">
+    <Box border class="flex h-max flex-col">
         {#each sizeList as size}
-            <div class="w-max">
-                <Button {size} {color} endIcon={Twitter} {onclick}>
-                    Button-{size}
-                </Button>
-            </div>
+            <Button {size} {color} endIcon={Twitter} {onclick}>
+                Button-{size}
+            </Button>
         {/each}
     </Box>
 
-    <Box border class="flex h-max w-max flex-col">
+    <Box border class="flex h-max flex-col">
         {#each sizeList as size}
-            <div class="w-max">
-                <Button {size} {color} startIcon={Twitter} endIcon={Twitter} {onclick}>
-                    Button-{size}
-                </Button>
-            </div>
+            <Button {size} {color} startIcon={Twitter} endIcon={Twitter} {onclick}>
+                Button-{size}
+            </Button>
         {/each}
     </Box>
 
-    <Box border class="flex h-max w-max flex-col">
-        <div class="w-max">
-            <Button {color} {...btnAction} startIcon={Settings} />
-        </div>
-        <div class="w-max">
-            <Button {color} {...btnAction} startIcon={Settings}>Button</Button>
-        </div>
-        <div class="w-max">
-            <Button {color} {...btnAction} endIcon={Settings}>Button</Button>
-        </div>
-        <div class="w-max">
-            <Button {color} {...btnAction} startIcon={Settings} endIcon={Spinner}>Button</Button>
-        </div>
+    <Box border class="flex h-max w-96 flex-col">
+        {#each sizeList as size}
+            <Button wide {size} {color} startIcon={Twitter} endIcon={Twitter} {onclick}>
+                Button-{size}
+            </Button>
+        {/each}
     </Box>
 
-    <Box border class="flex h-max w-max flex-row">
+    <Box border class="flex h-max flex-col">
+        <Button {color} {...btnAction} startIcon={Settings} />
+        <Button {color} {...btnAction} startIcon={Settings}>Button</Button>
+        <Button {color} {...btnAction} endIcon={Settings}>Button</Button>
+        <Button {color} {...btnAction} startIcon={Settings} endIcon={Spinner}>Button</Button>
+    </Box>
+
+    <Box border class="flex h-max flex-row">
         <div class="flex flex-col justify-center">
             <Button {color} {onclick}>Button</Button>
             <Button {color} disabled {onclick}>Button</Button>
@@ -105,7 +97,7 @@
         </div>
     </Box>
 
-    <Box border class="flex h-max w-max flex-wrap">
+    <Box border class="flex h-max flex-wrap">
         <div class="flex flex-col justify-center">
             <Button {color} {onclick} startIcon={Firefox}>Button</Button>
             <Button {color} disabled {onclick} startIcon={Firefox}>Button</Button>

@@ -1,11 +1,11 @@
 <script lang="ts">
     import { type Component } from 'svelte';
     import { colorList, sizeList, type Color, type Size } from '$components/types';
-    import { Check, Cross, Dark, DarkAndLight, Hamburger, Info, Light, Settings, Warning } from '$atoms/icons/common';
-    import { Chrome, Edge, Opera, Safari, Firefox, Mobile, Android, IPhone, Mac } from '$atoms/icons/clients';
-    import { Infinity, Spinner, Ball, Dots, Ring } from '$atoms/icons/animated';
-    import { Discord, Github, Google, Twitter } from '$atoms/icons/social';
-    import { FlagGB, FlagHU } from '$atoms/icons/flags';
+    import * as common from '$atoms/icons/common';
+    import * as clients from '$atoms/icons/clients';
+    import * as animated from '$atoms/icons/animated';
+    import * as social from '$atoms/icons/social';
+    import * as flags from '$atoms/icons/flags';
     import IconCard from '$atoms/IconCard.svelte';
     import Typography from '$atoms/Typography.svelte';
     import Box from '$atoms/Box.svelte';
@@ -39,55 +39,56 @@
 <Story variant="center">
     <IconCard caption="Common">
         <div class={gridClass}>
-            {@render icon(Check, 'Check')}
-            {@render icon(Cross, 'Cross')}
-            {@render icon(Hamburger, 'Hamburger')}
-            {@render icon(Settings, 'Settings')}
-            {@render icon(Info, 'Info')}
-            {@render icon(Warning, 'Warning')}
-            {@render icon(Light, 'Light')}
-            {@render icon(Dark, 'Dark')}
-            {@render icon(DarkAndLight, 'Dark and Light')}
+            {@render icon(common.Check, 'Check')}
+            {@render icon(common.Cross, 'Cross')}
+            {@render icon(common.Hamburger, 'Hamburger')}
+            {@render icon(common.Settings, 'Settings')}
+            {@render icon(common.Info, 'Info')}
+            {@render icon(common.Warning, 'Warning')}
+            {@render icon(common.Light, 'Light')}
+            {@render icon(common.Dark, 'Dark')}
+            {@render icon(common.DarkAndLight, 'Dark and Light')}
+            {@render icon(common.Fatal, 'Fatal')}
         </div>
     </IconCard>
 
     <IconCard caption="User agents">
         <div class={gridClass}>
-            {@render icon(Chrome, 'Chrome')}
-            {@render icon(Edge, 'Edge')}
-            {@render icon(Opera, 'Opera')}
-            {@render icon(Safari, 'Safari')}
-            {@render icon(Firefox, 'Firefox')}
-            {@render icon(Mobile, 'Mobile')}
-            {@render icon(Android, 'Android')}
-            {@render icon(IPhone, 'IPhone')}
-            {@render icon(Mac, 'Mac')}
+            {@render icon(clients.Chrome, 'Chrome')}
+            {@render icon(clients.Edge, 'Edge')}
+            {@render icon(clients.Opera, 'Opera')}
+            {@render icon(clients.Safari, 'Safari')}
+            {@render icon(clients.Firefox, 'Firefox')}
+            {@render icon(clients.Mobile, 'Mobile')}
+            {@render icon(clients.Android, 'Android')}
+            {@render icon(clients.IPhone, 'IPhone')}
+            {@render icon(clients.Mac, 'Mac')}
         </div>
     </IconCard>
 
     <IconCard caption="Flags">
         <div class={gridClass}>
-            {@render icon(FlagHU, 'HU')}
-            {@render icon(FlagGB, 'GB')}
+            {@render icon(flags.FlagHU, 'HU')}
+            {@render icon(flags.FlagGB, 'GB')}
         </div>
     </IconCard>
 
     <IconCard caption="Social">
         <div class={gridClass}>
-            {@render icon(Discord, 'Discord')}
-            {@render icon(Github, 'Github')}
-            {@render icon(Google, 'Google')}
-            {@render icon(Twitter, 'Twitter')}
+            {@render icon(social.Discord, 'Discord')}
+            {@render icon(social.Github, 'Github')}
+            {@render icon(social.Google, 'Google')}
+            {@render icon(social.Twitter, 'Twitter')}
         </div>
     </IconCard>
 
     <IconCard caption="Loader">
         <div class={gridClass}>
-            {@render icon(Spinner, 'Spinner')}
-            {@render icon(Ball, 'Ball')}
-            {@render icon(Dots, 'Dots')}
-            {@render icon(Ring, 'Ring')}
-            {@render icon(Infinity, 'Infinity')}
+            {@render icon(animated.Spinner, 'Spinner')}
+            {@render icon(animated.Ball, 'Ball')}
+            {@render icon(animated.Dots, 'Dots')}
+            {@render icon(animated.Ring, 'Ring')}
+            {@render icon(animated.Infinity, 'Infinity')}
         </div>
     </IconCard>
 </Story>

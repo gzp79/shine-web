@@ -1,5 +1,5 @@
 <script lang="ts" module>
-    export type Variant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'text' | 'caption';
+    export type Variant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'text' | 'code';
     export type Weight = 'normal' | 'emphasis' | 'bold';
 </script>
 
@@ -27,7 +27,7 @@
         h5: 'h5',
         h6: 'h6',
         text: 'p',
-        caption: 'p'
+        code: 'code'
     };
 
     const sharedHClasses = ' overflow-hidden text-ellipsis text-pretty';
@@ -39,7 +39,7 @@
         h5: `text-lg ${sharedHClasses}`,
         h6: `text-base ${sharedHClasses}`,
         text: 'text-base',
-        caption: 'text-xs'
+        code: 'text-sm'
     };
 
     const weightClasses = {
