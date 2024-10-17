@@ -7,7 +7,7 @@
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
     import LoadingCard from '$atoms/LoadingCard.svelte';
     import ResourceFetch from '$atoms/ResourceFetch.svelte';
-    import IconCard from '$atoms/IconCard.svelte';
+    import Card from '$atoms/Card.svelte';
     import ErrorCard from '$atoms/ErrorCard.svelte';
     import Alert from '$atoms/Alert.svelte';
 
@@ -20,7 +20,7 @@
     let isLoading = $state(true);
 </script>
 
-<IconCard caption={$t('account.userInfo')}>
+<Card caption={$t('account.userInfo')}>
     <ResourceFetch fetch={user} onState={(state) => (isLoading = state == 'loading')}>
         {#snippet loading()}
             <LoadingCard />
@@ -84,4 +84,4 @@
             </Button>
         {/if}
     {/snippet}
-</IconCard>
+</Card>

@@ -1,10 +1,11 @@
 <script lang="ts">
     import { type Color, type Size } from '$components/types';
-    import { type Component, type Snippet } from 'svelte';
+    import { getContext, type Component, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
     import CompileTailwindClasses from './utils/CompileTailwindClasses.svelte';
+    import type { GroupInfo } from './InputGroup.svelte';
 
-    interface Props {
+    interface Props extends Record<string, unknown> {
         color?: Color;
         size?: Size;
         wide?: boolean;
@@ -18,15 +19,16 @@
         onclick?: () => void;
         href?: string;
 
-        id?: string;
         children?: Snippet;
     }
+
+    let group: GroupInfo = getContext('group');
 
     let {
         startIcon: StartIcon,
         endIcon: EndIcon,
-        color = 'primary',
-        size = 'md',
+        color = group?.color ?? 'primary',
+        size = group?.size ?? 'md',
         wide,
         outline = false,
         disabled = false,
@@ -80,21 +82,28 @@
         lg: 'w-10 h-10'
     };
 
+    if (group) {
+        size = group.size;
+    }
+
     const btnClass = $derived(
         twMerge(
-            'inline-flex items-center justify-center m-1',
+            'inline-flex items-center justify-center',
             'text-center whitespace-nowrap',
-            'rounded-full',
-            wide ? 'min-w-full justify-between' : 'w-fit h-fit',
-            //wide ? 'min-w-full' : 'w-fit h-fit',
+            !group && 'm-1',
+            group && (group.vertical ? 'w-full h-fit' : 'w-fit h-full'),
+            !group && (wide ? 'min-w-full justify-between' : 'w-fit h-fit'),
+            group && (group.vertical ? 'first:rounded-t-lg last:rounded-b-lg' : 'first:rounded-s-lg last:rounded-e-lg'),
+            !group && 'rounded-full',
             !outline && `bg-${color} text-on-${color}`,
-            outline && `border border-2 border-${color} text-${color}`,
+            outline && `box-border border-2 border-${color} text-${color}`,
             children && sizeMods[size],
             children && StartIcon && startIconPadding[size],
             children && EndIcon && endIconPadding[size],
             !children && sizeModsIconOnly[size],
             !disabled && 'active:scale-95 hover:brightness-125',
             disabled && '!opacity-30 !cursor-not-allowed',
+
             //disabled && 'grayscale !cursor-not-allowed',
             className
         )

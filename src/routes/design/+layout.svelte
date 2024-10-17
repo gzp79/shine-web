@@ -23,20 +23,21 @@
                 { title: 'Icons', href: 'atoms/icons' },
                 { title: 'Buttons', href: 'atoms/buttons' },
                 //{ title: '*Toggle', href: 'atoms/toggles' },
+                { title: 'Input Groups', href: 'atoms/input-groups' },
                 { title: 'Grids', href: 'atoms/grids' },
                 { title: 'Boxes', href: 'atoms/boxes' },
                 { title: 'Alerts', href: 'atoms/alerts' },
                 { title: 'Popper', href: 'atoms/popper' },
-                { title: 'IconCards', href: 'atoms/icon-cards' },
                 { title: 'Cards', href: 'atoms/cards' },
-                { title: 'Key-Value Table', href: 'atoms/key-value-tables' },
+                { title: 'Helper Cards', href: 'atoms/helper-cards' },
+                { title: 'Key-Value Table', href: 'atoms/key-value-tables' }
             ]
         },
         {
             title: 'Account',
             items: [
-                { title: 'Current User Card', href: 'account/current-user' }
-                //{ title: 'Linked Identities', href: 'account/linked-identities' },
+                { title: 'Current User Card', href: 'account/current-user' },
+                { title: 'Linked Identities', href: 'account/linked-identities' }
                 //{ title: 'Active Sessions', href: 'account/active-sessions' },
                 //{ title: 'Active Tokens', href: 'account/active-tokens' }
             ]
@@ -109,6 +110,6 @@
 
     <footer class="flex items-center justify-between bg-surface-mute p-1">
         <div class="flex-start"></div>
-        <Typography variant="caption" class="self-end">© 2024</Typography>
+        <Typography variant="text" class="self-end">© 2024</Typography>
     </footer>
 </div>

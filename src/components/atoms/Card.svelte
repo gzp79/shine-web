@@ -1,95 +1,45 @@
-<script lang="ts" module>
-    export const listVariants = ['top', 'data', 'fieldset'];
-    export type Variant = 'top' | 'data' | 'fieldset';
-</script>
-
 <script lang="ts">
-    import type { Snippet } from 'svelte';
-    import { twMerge } from 'tailwind-merge';
+    import Box from '$atoms/Box.svelte';
+    import { type Snippet } from 'svelte';
+    import Typography from './Typography.svelte';
+    import type { Color } from '../types';
 
     interface Props {
+        icon?: Snippet;
         caption?: string;
-        variant?: Variant;
-        class?: string;
-        action?: Snippet;
-        image?: Snippet;
-        children: Snippet;
+
+        shadow?: boolean;
+        color?: Color;
+        ghost?: boolean;
+
+        children?: Snippet;
+        actions?: Snippet;
     }
-    let { caption, variant = 'top', class: className, image, children, action }: Props = $props();
 
-    function getVariantClasses(): { card: string; content: string; action: string } {
-        switch (variant) {
-            case 'fieldset':
-                return {
-                    card: twMerge(
-                        'card card-bordered  m-3 border-primary bg-base-200 text-base-content shadow-lg shadow-base p-4',
-                        className
-                    ),
-                    content: 'max-h-[50lvh] overflow-auto',
-                    action: 'card-action flex flex-row justify-end gap-1 mt-4'
-                };
-
-            case 'top':
-                return {
-                    card: twMerge(
-                        'card card-bordered  mx-3 my-6 border-primary bg-base-200 text-base-content shadow-lg shadow-base',
-                        className
-                    ),
-                    content: 'max-h-[50lvh] overflow-auto',
-                    action: 'card-action flex flex-row justify-end gap-1'
-                };
-
-            case 'data':
-                return {
-                    card: twMerge(
-                        'card card-compact  mx-1 my-2 bg-base-300 text-base-content shadow-md shadow-base sm:card-side',
-                        className
-                    ),
-                    content: '',
-                    action: 'card-action flex flex-row justify-end gap-1'
-                };
-        }
-    }
-    const { card: cardClass, content: contentClass, action: actionClass } = $derived(getVariantClasses());
+    let { icon, caption, shadow, color, ghost, children, actions }: Props = $props();
 </script>
 
-{#snippet imageContent()}
-    {#if image}
-        {#if variant === 'top'}
-            <figure>{@render image()}</figure>
-        {:else if variant === 'data'}
-            <div class="mx-0 mt-4 max-h-16 max-w-16 self-center overflow-clip md:my-0 md:ml-4">
-                {@render image()}
-            </div>
-        {/if}
+<Box compact border {color} {shadow} {ghost} class="grid max-w-lg grid-cols-[min-content,1fr] justify-items-center">
+    {#if icon}
+        <div class="icon-lg m-2 w-fit">
+            {@render icon()}
+        </div>
     {/if}
-{/snippet}
 
-{#if variant === 'fieldset'}
-    <fieldset class={cardClass}>
-        {@render imageContent()}
-        <div class="card-body">
-            <div class={contentClass}>
-                {@render children()}
-            </div>
-            {#if action}
-                <div class={actionClass}>{@render action()}</div>
-            {/if}
+    {#if caption}
+        <Typography variant="h4" element="p" weight="emphasis" class="mb-2 justify-self-start align-middle">
+            {caption}
+        </Typography>
+    {/if}
+    {#if children}
+        <div class="col-start-2 h-full max-h-64 w-full overflow-y-auto">
+            {@render children()}
         </div>
-    </fieldset>
-{:else}
-    <div class={cardClass}>
-        {@render imageContent()}
-        <div class="card-body">
-            {#if caption}
-                <h2 class="card-title">{caption}</h2>
-            {/if}
-            <div class={contentClass}>
-                {@render children()}
-            </div>
-            {#if action}
-                <div class={actionClass}>{@render action()}</div>
-            {/if}
+    {/if}
+    <!-- </div> -->
+    {#if actions}
+        <div class="col-span-full col-start-1 m-2 flex flex-grow flex-col md:flex-row md:self-end">
+            {@render actions()}
         </div>
-    </div>
-{/if}
+    {/if}
+</Box>

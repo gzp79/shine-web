@@ -1,8 +1,18 @@
 <script lang="ts">
     import Box from '$atoms/Box.svelte';
-    import { range } from '$src/components/types';
+    import { colorList, range } from '$src/components/types';
+    import { settingsStore } from '../../_components/currentSettings.svelte';
+    import Select from '../../_components/Select.svelte';
     import Story from '../../_components/Story.svelte';
+
+    let color = $state('primary');
+
+    settingsStore().set(settings);
 </script>
+
+{#snippet settings()}
+    <Select label="Color" options={colorList} bind:value={color} />
+{/snippet}
 
 <Story variant="center">
     <Box>
@@ -60,9 +70,10 @@
         <Box border>Nested box with border</Box>
         <Box shadow>Nested box with shadow</Box>
         <Box border shadow>Nested box with border and shadow</Box>
+        <Box ghost border>Nested box with ghost and border</Box>
+        <Box ghost shadow>Nested box with ghost and shadow</Box>
+        <Box ghost border shadow>Nested box with ghost and border and shadow</Box>
         <Box class="border border-[red] bg-[blue] shadow-lg shadow-[black]">Nested box with custom class</Box>
-        <Box border ghost>Nested ghost box with border</Box>
-        <Box border shadow ghost>Nested ghost box with border and shadow</Box>
     </Box>
 
     <Box border shadow>
@@ -70,8 +81,34 @@
             <Box border>Nested box with border</Box>
             <Box shadow>Nested box with shadow</Box>
             <Box border shadow>Nested box with border and shadow</Box>
+            <Box ghost border>Nested box with ghost and border</Box>
+            <Box ghost shadow>Nested box with ghost and shadow</Box>
+            <Box ghost border shadow>Nested box with ghost and border and shadow</Box>
             <Box class="border border-[red] bg-[blue] shadow-lg shadow-[black]">Nested box with custom class</Box>
-            <Box border shadow ghost>Nested ghost box with border and shadow</Box>
+        </Box>
+    </Box>
+    <Box border shadow>
+        <Box>
+            <Box>
+                <Box border>Nested box with border</Box>
+                <Box shadow>Nested box with shadow</Box>
+                <Box border shadow>Nested box with border and shadow</Box>
+                <Box ghost border>Nested box with ghost and border</Box>
+                <Box ghost shadow>Nested box with ghost and shadow</Box>
+                <Box ghost border shadow>Nested box with ghost and border and shadow</Box>
+                <Box class="border border-[red] bg-[blue] shadow-lg shadow-[black]">Nested box with custom class</Box>
+            </Box>
+        </Box>
+    </Box>
+
+    <Box border shadow>
+        <Box>
+            <Box border {color}>Nested box with border</Box>
+            <Box shadow {color}>Nested box with shadow</Box>
+            <Box border shadow {color}>Nested box with border and shadow</Box>
+            <Box ghost border {color}>Nested box with ghost and border</Box>
+            <Box ghost shadow {color}>Nested box with ghost and shadow</Box>
+            <Box ghost border shadow {color}>Nested box with ghost and border and shadow</Box>
         </Box>
     </Box>
 

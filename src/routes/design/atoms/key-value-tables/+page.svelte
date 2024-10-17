@@ -61,7 +61,7 @@
             items={[
                 ['key1', 'value'],
                 ['key2', 'value'],
-                ['key', 'value with long string'],
+                ['key', 'value with long string']
             ]}
         />
     </Box>

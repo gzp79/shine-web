@@ -1,5 +1,13 @@
 import twForm from '@tailwindcss/forms';
 
+const colorNames = ['surface', 'primary', 'info', 'warning', 'danger', 'success'];
+const extendedColorNames = [
+    ...colorNames,
+    ...colorNames.map((color) => `${color}-mute`),
+    ...colorNames.map((color) => `${color}-accent`),
+    ...colorNames.map((color) => `on-${color}`)
+];
+
 const colorVariants = {
     surface: 'rgb(var(--color-surface))',
     'surface-mute': 'rgb(var(--color-surface-mute))',
@@ -38,6 +46,15 @@ module.exports = {
             strategy: 'class'
         })
     ],
+    safelist: [
+        ...extendedColorNames.map((color) => `bg-${color}`),
+        ...extendedColorNames.map((color) => `text-on-${color}`),
+        ...extendedColorNames.map((color) => `text-${color}`),
+        ...extendedColorNames.map((color) => `border-${color}`),
+        ...extendedColorNames.map((color) => `shadow-${color}`),
+        ...extendedColorNames.map((color) => `fill-${color}`),
+        ...extendedColorNames.map((color) => `stroke-${color}`)
+    ],
 
     theme: {
         extend: {
@@ -49,6 +66,10 @@ module.exports = {
                 ...colorVariants
             },
             textColor: {
+                ...colorVariants,
+                ...colorOnVariants
+            },
+            shadowColor: {
                 ...colorVariants,
                 ...colorOnVariants
             },

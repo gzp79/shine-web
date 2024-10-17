@@ -1,10 +1,10 @@
 <script lang="ts">
     import { t } from '$lib/i18n/i18n.svelte';
     import type { LinkedIdentity } from '$src/lib/api/identity-api';
-    import Card from '$atoms/Card.svelte';
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
-    import { Discord, Github, Google, Twitter } from '$src/components/atoms/icons/social';
+    import * as social from '$atoms/icons/social';
     import Button from '$atoms/Button.svelte';
+    import Card from '$atoms/Card.svelte';
 
     interface Props {
         identity: LinkedIdentity;
@@ -16,13 +16,13 @@
     const ProviderImage = $derived.by(() => {
         switch (identity.provider) {
             case 'twitter':
-                return Twitter;
+                return social.Twitter;
             case 'google':
-                return Google;
+                return social.Google;
             case 'github':
-                return Github;
+                return social.Github;
             case 'discord':
-                return Discord;
+                return social.Discord;
             default:
                 return null;
         }
@@ -36,8 +36,8 @@
     };
 </script>
 
-<Card variant="data">
-    {#snippet image()}
+<Card>
+    {#snippet icon()}
         <ProviderImage />
     {/snippet}
 
@@ -59,7 +59,9 @@
         ]}
     />
 
-    {#snippet action()}
-        <Button label={$t('account.unlink')} disabled={disableVersion >= dataVersion} color="error" onclick={unlink} />
+    {#snippet actions()}
+        <Button disabled={disableVersion >= dataVersion} color="danger" onclick={unlink}>
+            {$t('account.unlink')}
+        </Button>
     {/snippet}
 </Card>

@@ -4,52 +4,46 @@
 
 <script lang="ts">
     import type { Snippet } from 'svelte';
-    import { Info, Check, Cross, Warning } from '$atoms/icons/common';
-    import Typography from '$atoms/Typography.svelte';
     import { twMerge } from 'tailwind-merge';
+    import * as commonIcons from '$atoms/icons/common';
+    import Typography from '$atoms/Typography.svelte';
+    import Box from '$atoms/Box.svelte';
+    import type { Color } from '../types';
 
     interface Props {
         variant?: Variant;
         text: string;
         ghost?: boolean;
+        shadow?: boolean;
         children?: Snippet;
     }
 
-    const { variant = 'info', text, ghost, children }: Props = $props();
+    const { variant = 'info', text, ghost, shadow, children }: Props = $props();
 
     const Icon = $derived.by(() => {
         switch (variant) {
             case 'info':
-                return Info;
+                return commonIcons.Info;
             case 'success':
-                return Check;
+                return commonIcons.Check;
             case 'warning':
-                return Warning;
+                return commonIcons.Warning;
             case 'error':
-                return Cross;
+                return commonIcons.Cross;
         }
     });
 
-    const variantClasses: Record<Variant, string> = {
-        info: 'bg-info text-on-info border-on-info',
-        success: 'bg-success text-on-success border-on-success',
-        warning: 'bg-warning text-on-warning border-on-warning',
-        error: 'bg-danger text-on-danger border-on-danger'
+    const colors: Record<Variant, Color> = {
+        info: 'info',
+        success: 'success',
+        warning: 'warning',
+        error: 'danger'
     };
 
-    const ghostVariantClasses: Record<Variant, string> = {
-        info: 'border-info text-info',
-        success: 'border-success text-success',
-        warning: 'border-warning text-warning',
-        error: 'border-danger text-danger'
-    };
-
-    const alertClass = $derived(
-        twMerge('flex flex-row rounded-lg border p-2', ghost ? ghostVariantClasses[variant] : variantClasses[variant])
-    );
+    const alertClass = $derived(twMerge('flex flex-row'));
 </script>
 
-<div role="alert" class={alertClass}>
+<Box border {shadow} color={colors[variant]} {ghost} class={alertClass} role="alert">
     <Icon size="md" class="me-1 inline-block shrink-0" />
     <div>
         <Typography variant="h3" element="p" weight="bold">{text}</Typography>
@@ -57,4 +51,4 @@
             {@render children()}
         {/if}
     </div>
-</div>
+</Box>

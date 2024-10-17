@@ -6,7 +6,7 @@
     import * as animated from '$atoms/icons/animated';
     import * as social from '$atoms/icons/social';
     import * as flags from '$atoms/icons/flags';
-    import IconCard from '$atoms/IconCard.svelte';
+    import Card from '$src/components/atoms/Card.svelte';
     import Typography from '$atoms/Typography.svelte';
     import Box from '$atoms/Box.svelte';
     import { settingsStore } from '../../_components/currentSettings.svelte';
@@ -37,7 +37,7 @@
 {/snippet}
 
 <Story variant="center">
-    <IconCard caption="Common">
+    <Card caption="Common">
         <div class={gridClass}>
             {@render icon(common.Check, 'Check')}
             {@render icon(common.Cross, 'Cross')}
@@ -50,9 +50,9 @@
             {@render icon(common.DarkAndLight, 'Dark and Light')}
             {@render icon(common.Fatal, 'Fatal')}
         </div>
-    </IconCard>
+    </Card>
 
-    <IconCard caption="User agents">
+    <Card caption="User agents">
         <div class={gridClass}>
             {@render icon(clients.Chrome, 'Chrome')}
             {@render icon(clients.Edge, 'Edge')}
@@ -64,25 +64,25 @@
             {@render icon(clients.IPhone, 'IPhone')}
             {@render icon(clients.Mac, 'Mac')}
         </div>
-    </IconCard>
+    </Card>
 
-    <IconCard caption="Flags">
+    <Card caption="Flags">
         <div class={gridClass}>
             {@render icon(flags.FlagHU, 'HU')}
             {@render icon(flags.FlagGB, 'GB')}
         </div>
-    </IconCard>
+    </Card>
 
-    <IconCard caption="Social">
+    <Card caption="Social">
         <div class={gridClass}>
             {@render icon(social.Discord, 'Discord')}
             {@render icon(social.Github, 'Github')}
             {@render icon(social.Google, 'Google')}
             {@render icon(social.Twitter, 'Twitter')}
         </div>
-    </IconCard>
+    </Card>
 
-    <IconCard caption="Loader">
+    <Card caption="Loader">
         <div class={gridClass}>
             {@render icon(animated.Spinner, 'Spinner')}
             {@render icon(animated.Ball, 'Ball')}
@@ -90,5 +90,5 @@
             {@render icon(animated.Ring, 'Ring')}
             {@render icon(animated.Infinity, 'Infinity')}
         </div>
-    </IconCard>
+    </Card>
 </Story>

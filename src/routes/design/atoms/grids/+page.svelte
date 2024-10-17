@@ -1,7 +1,7 @@
 <script lang="ts">
     import Grid from '$atoms/Grid.svelte';
     import GridItem from '$atoms/GridItem.svelte';
-    import IconCard from '$atoms/IconCard.svelte';
+    import Card from '$atoms/Card.svelte';
     import { range } from '$src/components/types';
     import Story from '../../_components/Story.svelte';
 </script>
@@ -25,34 +25,34 @@
         </div>
     </div>
 
-    <IconCard caption="Column 3">
+    <Card caption="Column 3">
         <Grid columns={3}>
             <GridItem size={1}>{@render item('s=1')}</GridItem>
             <GridItem size={3}>{@render item('s=3')}</GridItem>
             <GridItem size={2}>{@render item('s=2')}</GridItem>
             <GridItem size={1}>{@render item('s=1')}</GridItem>
         </Grid>
-    </IconCard>
+    </Card>
 
-    <IconCard caption="Responsive column">
+    <Card caption="Responsive column">
         <Grid>
             <GridItem size={{ xs: 6, md: 8, lg: 4 }}>{@render item('xs=6 md=8 lg=4')}</GridItem>
             <GridItem size={{ xs: 6, md: 4, lg: 1 }}>{@render item('xs=6 md=4 lg=1')}</GridItem>
             <GridItem size={{ xs: 6, md: 4, lg: 1 }}>{@render item('xs=6 md=4 lg=1')}</GridItem>
             <GridItem size={{ xs: 6, md: 8, lg: 2 }}>{@render item('xs=6 md=8 lg=2')}</GridItem>
         </Grid>
-    </IconCard>
+    </Card>
 
-    <IconCard caption="Responsive columns xs=3 md=4 lg=6">
+    <Card caption="Responsive columns xs=3 md=4 lg=6">
         <Grid columns={{ xs: 3, md: 4, lg: 6 }}>
             <GridItem size={1}>{@render item('s=1')}</GridItem>
             <GridItem size={2}>{@render item('s=2')}</GridItem>
             <GridItem size={3}>{@render item('s=3')}</GridItem>
             <GridItem size={4}>{@render item('s=4')}</GridItem>
         </Grid>
-    </IconCard>
+    </Card>
 
-    <IconCard caption="Start column">
+    <Card caption="Start column">
         <Grid columns={4}>
             <GridItem start={4}>{@render item('o=4')}</GridItem>
             <GridItem start={3}>{@render item('o=3')}</GridItem>
@@ -60,9 +60,9 @@
             <GridItem start={1}>{@render item('o=1')}</GridItem>
             <GridItem start={3}>{@render item('o=3')}</GridItem>
         </Grid>
-    </IconCard>
+    </Card>
 
-    <IconCard caption="Multi row span">
+    <Card caption="Multi row span">
         <Grid columns={4}>
             {#each range(0, 5) as _i}
                 <GridItem>{@render item(`item`)}</GridItem>
@@ -72,9 +72,9 @@
                 <GridItem>{@render item(`item`)}</GridItem>
             {/each}
         </Grid>
-    </IconCard>
+    </Card>
 
-    <IconCard caption="Multi row span, dense">
+    <Card caption="Multi row span, dense">
         <Grid columns={5} dense>
             {#each range(0, 6) as i}
                 <GridItem size={{ xs: 1, md: 2 }}>{@render item(`item 1.${i}`)}</GridItem>
@@ -96,18 +96,18 @@
                 <GridItem size={1}>{@render item(`item 5.${i}`)}</GridItem>
             {/each}
         </Grid>
-    </IconCard>
+    </Card>
 
-    <IconCard caption="Auto sized item">
+    <Card caption="Auto sized item">
         <Grid columns={{ xs: 2, md: 4, lg: 8 }}>
             <GridItem size={'full'}>{@render item('full')}</GridItem>
             {#each range(0, 8) as _i}
                 <GridItem>{@render item('item')}</GridItem>
             {/each}
         </Grid>
-    </IconCard>
+    </Card>
 
-    <IconCard caption="Auto sized item, dense">
+    <Card caption="Auto sized item, dense">
         <Grid columns={{ xs: 3, md: 4, lg: 6 }} dense>
             {#each range(0, 6) as _i}
                 <GridItem>{@render item('before')}</GridItem>
@@ -117,50 +117,50 @@
                 <GridItem>{@render item('after')}</GridItem>
             {/each}
         </Grid>
-    </IconCard>
+    </Card>
 
-    <IconCard caption="Spacing 0">
+    <Card caption="Spacing 0">
         <Grid spacing={0} columns={2}>
             <GridItem>{@render item('item')}</GridItem>
             <GridItem>{@render item('item')}</GridItem>
             <GridItem>{@render item('item')}</GridItem>
             <GridItem>{@render item('item')}</GridItem>
         </Grid>
-    </IconCard>
+    </Card>
 
-    <IconCard caption="Spacing 4">
+    <Card caption="Spacing 4">
         <Grid spacing={4} columns={2}>
             <GridItem>{@render item('item')}</GridItem>
             <GridItem>{@render item('item')}</GridItem>
             <GridItem>{@render item('item')}</GridItem>
             <GridItem>{@render item('item')}</GridItem>
         </Grid>
-    </IconCard>
+    </Card>
 
-    <IconCard caption="Spacing c=1 r=4">
+    <Card caption="Spacing c=1 r=4">
         <Grid spacing={{ col: 1, row: 4 }} columns={2}>
             <GridItem>{@render item('item')}</GridItem>
             <GridItem>{@render item('item')}</GridItem>
             <GridItem>{@render item('item')}</GridItem>
             <GridItem>{@render item('item')}</GridItem>
         </Grid>
-    </IconCard>
+    </Card>
 
-    <IconCard caption="Spacing xs=1 md=4 lg=8">
+    <Card caption="Spacing xs=1 md=4 lg=8">
         <Grid spacing={{ xs: 1, md: 4, lg: 8 }} columns={2}>
             <GridItem>{@render item('item')}</GridItem>
             <GridItem>{@render item('item')}</GridItem>
             <GridItem>{@render item('item')}</GridItem>
             <GridItem>{@render item('item')}</GridItem>
         </Grid>
-    </IconCard>
+    </Card>
 
-    <IconCard caption="Spacing xs=(1,4) md=(2,4) lg=(4,4)">
+    <Card caption="Spacing xs=(1,4) md=(2,4) lg=(4,4)">
         <Grid spacing={{ col: { xs: 1, md: 2, lg: 4 }, row: 4 }} columns={2}>
             <GridItem>{@render item('item')}</GridItem>
             <GridItem>{@render item('item')}</GridItem>
             <GridItem>{@render item('item')}</GridItem>
             <GridItem>{@render item('item')}</GridItem>
         </Grid>
-    </IconCard>
+    </Card>
 </Story>
