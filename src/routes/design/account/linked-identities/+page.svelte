@@ -4,6 +4,7 @@
     import { logDesigner } from '$lib/loggers';
     import type { LinkedIdentity } from '$lib/api/identity-api';
     import LinkedIdentitiesCard from '$components/account/LinkedIdentitiesCard.svelte';
+    import Story from '../../_components/Story.svelte';
 
     // emulate some backend stored list
     let identities: LinkedIdentity[] = $state([
@@ -96,6 +97,8 @@
     };
 </script>
 
-<LinkedIdentitiesCard identities={fetchIdentities(identities)} onUnlink={unlink} />
-<LinkedIdentitiesCard identities={async.never()} onUnlink={unlink} />
-<LinkedIdentitiesCard identities={async.error(new Error('Test error'))} onUnlink={unlink} />
+<Story variant="center">
+    <LinkedIdentitiesCard identities={fetchIdentities(identities)} onUnlink={unlink} />
+    <LinkedIdentitiesCard identities={async.never()} onUnlink={unlink} />
+    <LinkedIdentitiesCard identities={async.error(new Error('Test error'))} onUnlink={unlink} />
+</Story>

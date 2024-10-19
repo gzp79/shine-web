@@ -21,7 +21,7 @@
         {#each filteredItems as [key, value]}
             <tr class="border-none">
                 <th class="w-min-content text-nowrap">{key}</th>
-                <td class="w-full">
+                <td class="w-full text-ellipsis">
                     {#if typeof value === 'string'}
                         {value}
                     {:else}

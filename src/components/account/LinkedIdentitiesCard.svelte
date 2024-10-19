@@ -17,7 +17,7 @@
     let dataVersion = $state(0);
 </script>
 
-<Card caption={$t('account.linkedIdentities')}>
+<Card caption={$t('account.linkedIdentities')} cardClass="w-[95%]">
     <ResourceFetch fetch={identities} onState={(st) => st === 'completed' && (dataVersion += 1)}>
         {#snippet loading()}
             <LoadingCard />

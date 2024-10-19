@@ -62,8 +62,8 @@
     <div class="relative flex flex-row overflow-hidden">
         <aside
             class="flexh-full h-full w-[30dvw] min-w-max overflow-y-auto bg-surface p-4 {showSidebar
-                ? 'hidden'
-                : 'absolute left-0 top-0 md:static'}"
+                ? 'absolute left-0 top-0 z-20 opacity-90 md:static'
+                : 'hidden'}"
         >
             {#each menu as group}
                 <Typography variant="h3" element="h2">{group.title}</Typography>
@@ -103,7 +103,7 @@
                 </Box>
             {/if}
         </aside>
-        <main class="max-h-full w-full overflow-auto">
+        <main class="z-10 max-h-full w-full overflow-auto">
             {@render children()}
         </main>
     </div>

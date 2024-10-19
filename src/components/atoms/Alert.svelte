@@ -4,11 +4,9 @@
 
 <script lang="ts">
     import type { Snippet } from 'svelte';
-    import { twMerge } from 'tailwind-merge';
     import * as commonIcons from '$atoms/icons/common';
-    import Typography from '$atoms/Typography.svelte';
-    import Box from '$atoms/Box.svelte';
     import type { Color } from '../types';
+    import Card from './Card.svelte';
 
     interface Props {
         variant?: Variant;
@@ -39,16 +37,10 @@
         warning: 'warning',
         error: 'danger'
     };
-
-    const alertClass = $derived(twMerge('flex flex-row'));
 </script>
 
-<Box border {shadow} color={colors[variant]} {ghost} class={alertClass} role="alert">
-    <Icon size="md" class="me-1 inline-block shrink-0" />
-    <div>
-        <Typography variant="h3" element="p" weight="bold">{text}</Typography>
-        {#if children}
-            {@render children()}
-        {/if}
-    </div>
-</Box>
+<Card role="alert" {ghost} {shadow} caption={text} color={colors[variant]} {children}>
+    {#snippet icon()}
+        <Icon size="md" />
+    {/snippet}
+</Card>

@@ -20,7 +20,7 @@
     let isLoading = $state(true);
 </script>
 
-<Card caption={$t('account.userInfo')}>
+<Card caption={$t('account.userInfo')} cardClass="w-[95%]">
     <ResourceFetch fetch={user} onState={(state) => (isLoading = state == 'loading')}>
         {#snippet loading()}
             <LoadingCard />

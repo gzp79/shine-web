@@ -43,7 +43,6 @@
             sessionLength: 1234
         }}
         onLogout={() => logDesigner('logout')}
-        onLogoutAll={() => logDesigner('logout all')}
     />
 
     <CurrentUserCard
@@ -69,7 +68,7 @@
             roles: ['admin', 'user'],
             sessionLength: 1234
         }}
-        onLogoutAll={() => logDesigner('logout all')}
+        onLogout={() => logDesigner('logout')}
     />
 
     <CurrentUserCard
@@ -84,7 +83,6 @@
             sessionLength: 1234
         }}
         onLogout={() => logDesigner('logout')}
-        onLogoutAll={() => logDesigner('logout all')}
     />
 
     <CurrentUserCard
@@ -99,26 +97,13 @@
             sessionLength: 1234
         }}
         onLogout={() => logDesigner('logout')}
-        onLogoutAll={() => logDesigner('logout all')}
     />
 
     <div class="divider">Reactive Update</div>
 
-    <CurrentUserCard
-        user={async.never()}
-        onLogout={() => logDesigner('logout')}
-        onLogoutAll={() => logDesigner('logout all')}
-    />
+    <CurrentUserCard user={async.never()} onLogout={() => logDesigner('logout')} />
 
-    <CurrentUserCard
-        user={async.error(new Error('Test error'))}
-        onLogout={() => logDesigner('logout')}
-        onLogoutAll={() => logDesigner('logout all')}
-    />
+    <CurrentUserCard user={async.error(new Error('Test error'))} onLogout={() => logDesigner('logout')} />
 
-    <CurrentUserCard
-        user={fetchReactiveUser(randomUserId)}
-        onLogout={() => logDesigner('logout')}
-        onLogoutAll={() => logDesigner('logout all')}
-    />
+    <CurrentUserCard user={fetchReactiveUser(randomUserId)} onLogout={() => logDesigner('logout')} />
 </Story>

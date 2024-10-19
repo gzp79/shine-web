@@ -36,7 +36,7 @@
     };
 </script>
 
-<Card>
+<Card cardClass="w-full">
     {#snippet icon()}
         <ProviderImage />
     {/snippet}
