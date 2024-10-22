@@ -1,9 +1,10 @@
 <script lang="ts">
-    import { sizeList } from '$components/types';
+    import { range, sizeList } from '$components/types';
     import Box from '$atoms/Box.svelte';
     import LoadingCard from '$atoms/LoadingCard.svelte';
     import ErrorCard from '$atoms/ErrorCard.svelte';
     import Story from '../../_components/Story.svelte';
+    import Button from '$src/components/atoms/Button.svelte';
 </script>
 
 <Story variant="dense">
@@ -44,23 +45,21 @@
             }
         }}
     >
-        <div class="flex flex-col items-center">
-            <p>Some children</p>
-            <p>Some children</p>
-            <p>Some children</p>
-            <p>Some children</p>
-            <ErrorCard
-                caption="Nested error card"
-                error={{
-                    errorKind: 'other',
-                    message: 'This is the nested error message'
-                }}
-            />
-            <p>Some children</p>
-            <p>Some children</p>
-            <p>Some children</p>
-            <p>Some children</p>
-            <p>Some children</p>
-        </div>
+        {#each range(0, 3) as i}
+            <p>Some children {i}</p>
+        {/each}
+        <ErrorCard
+            caption="Nested error card"
+            error={{
+                errorKind: 'other',
+                message: 'This is the nested error message'
+            }}
+        />
+        {#each range(0, 5) as i}
+            <p>Some children {3 + i}</p>
+        {/each}
+        {#snippet actions()}
+            <Button>Retry</Button>
+        {/snippet}
     </ErrorCard>
 </Story>

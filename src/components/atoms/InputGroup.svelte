@@ -23,7 +23,7 @@
 
     let divClass = $derived(twMerge('inline-flex', vertical && 'flex-col w-max', !vertical && 'h-max'));
 
-    setContext('group', { size, color, vertical });
+    setContext('InputGroup_props', { size, color, vertical });
 </script>
 
 <div class={divClass}>

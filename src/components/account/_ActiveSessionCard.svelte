@@ -4,7 +4,7 @@
     import Card from '$atoms/Card.svelte';
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
     import UAParser from 'ua-parser-js';
-    import { Mac, Opera, Safari, Edge, Chrome, Firefox, Mobile, Android, IPhone } from '../atoms/icons/clients';
+    import * as clientIcons from '../atoms/icons/clients';
     import { formatLocation } from '$src/lib/i18n/utils';
 
     interface Props {
@@ -20,28 +20,28 @@
 
         if (device === 'mobile') {
             if (os === 'android') {
-                return Android;
+                return clientIcons.Android;
             }
             if (os === 'ios') {
-                return IPhone;
+                return clientIcons.IPhone;
             }
-            return Mobile;
+            return clientIcons.Mobile;
         }
 
         if (os === 'mac os') {
-            return Mac;
+            return clientIcons.Mac;
         }
 
         if (browser?.includes('edge')) {
-            return Edge;
+            return clientIcons.Edge;
         } else if (browser?.includes('safari')) {
-            return Safari;
+            return clientIcons.Safari;
         } else if (browser?.includes('firefox')) {
-            return Firefox;
+            return clientIcons.Firefox;
         } else if (browser?.includes('opera')) {
-            return Opera;
+            return clientIcons.Opera;
         } else if (browser?.includes('chrome')) {
-            return Chrome;
+            return clientIcons.Chrome;
         }
 
         return null;
@@ -50,8 +50,8 @@
     const location = $derived(formatLocation(session));
 </script>
 
-<Card variant="data">
-    {#snippet image()}
+<Card width="full">
+    {#snippet icon()}
         <AgentImage />
     {/snippet}
 

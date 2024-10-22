@@ -20,7 +20,7 @@
     let isLoading = $state(true);
 </script>
 
-<Card caption={$t('account.userInfo')} cardClass="w-[95%]">
+<Card caption={$t('account.userInfo')}>
     <ResourceFetch fetch={user} onState={(state) => (isLoading = state == 'loading')}>
         {#snippet loading()}
             <LoadingCard />
@@ -30,7 +30,7 @@
         <!-- eslint-disable @typescript-eslint/no-explicit-any -->
         {#snippet content(user: /*CurrentUser*/ any, _isDirty: boolean)}
             {#if !user.isLinked}
-                <Alert ghost variant="warning" text={$t('account.linkWarning')} />
+                <Alert variant="warning" caption={$t('account.linkWarning')} />
             {/if}
 
             {#snippet email()}
@@ -43,7 +43,7 @@
                         <Warning color="warning" size="sm" class="inline-block" />
                     {/if}
                 {:else}
-                    <span class="text-warning">{$t('account.noEmail')}</span>
+                    <i class="text-warning">{$t('account.noEmail')}</i>
                 {/if}
             {/snippet}
 

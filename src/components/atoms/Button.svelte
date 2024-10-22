@@ -22,7 +22,10 @@
         children?: Snippet;
     }
 
-    let group: GroupInfo = getContext('group');
+    // Hidden Dependency Info (InputGroup):
+    // - determine the color and size
+    // - fix the border and rounding
+    let group: GroupInfo = getContext('InputGroup_props');
 
     let {
         startIcon: StartIcon,

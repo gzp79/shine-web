@@ -37,9 +37,9 @@
             title: 'Account',
             items: [
                 { title: 'Current User Card', href: 'account/current-user' },
-                { title: 'Linked Identities', href: 'account/linked-identities' }
-                //{ title: 'Active Sessions', href: 'account/active-sessions' },
-                //{ title: 'Active Tokens', href: 'account/active-tokens' }
+                { title: 'Linked Identities', href: 'account/linked-identities' },
+                { title: 'Active Sessions', href: 'account/active-sessions' },
+                { title: 'Active Tokens', href: 'account/active-tokens' }
             ]
         }
     ];

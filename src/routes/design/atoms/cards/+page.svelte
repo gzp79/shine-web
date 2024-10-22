@@ -1,8 +1,7 @@
 <script lang="ts">
-    import { twMerge } from 'tailwind-merge';
     import { range } from '$src/components/types';
     import { Google } from '$atoms/icons/social';
-    import Card from '$atoms/Card.svelte';
+    import Card, { type Width } from '$atoms/Card.svelte';
     import { Settings } from '$atoms/icons/common';
     import Button from '$atoms/Button.svelte';
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
@@ -13,14 +12,14 @@
     import CheckBox from '../../_components/CheckBox.svelte';
 
     let showContent = $state(3);
-    let fixedSize = $state(true);
-
-    let cardClass = $derived(twMerge(fixedSize && 'w-[80%]'));
+    let showActions = $state(true);
+    let width = $state<Width>('default');
 
     settingsStore().set(settings);
 </script>
 
 {#snippet settings()}
+    <Select label="Width" options={['default', 'fit', 'full']} bind:value={width} />
     <Select
         label="Content detail"
         options={[
@@ -32,7 +31,7 @@
         ]}
         bind:value={showContent}
     />
-    <CheckBox label="Fixed size" bind:value={fixedSize} />
+    <CheckBox label="Actions" bind:value={showActions} />
 {/snippet}
 
 {#snippet contentPart()}
@@ -55,51 +54,49 @@
     {/if}
 {/snippet}
 
+{#snippet actionPart()}
+    <Button>Action 1</Button>
+    <Button>Action 2</Button>
+{/snippet}
+
+{#snippet iconPart()}
+    <Google />
+{/snippet}
+
 <Story variant="center">
-    <Card caption="Card with title and body" {cardClass}>
-        {#if showContent > 0}
-            {@render contentPart()}
-        {/if}
-        {#snippet actions()}
-            <Button>Action 1</Button>
-            <Button>Action 2</Button>
-            <Button>Action 3</Button>
-        {/snippet}
-    </Card>
+    <Card
+        caption="Card with title and body"
+        {width}
+        children={showContent ? contentPart : undefined}
+        actions={showActions ? actionPart : undefined}
+    />
 
-    <Card caption="Card with title, body and icon" {cardClass}>
-        {#snippet icon()}
-            <Google />
-        {/snippet}
-        {#if showContent > 0}
-            {@render contentPart()}
-        {/if}
-        {#snippet actions()}
-            <Button>Action 1</Button>
-            <Button>Action 2</Button>
-        {/snippet}
-    </Card>
+    <Card
+        caption="Card with title, body and icon"
+        {width}
+        icon={iconPart}
+        children={showContent ? contentPart : undefined}
+        actions={showActions ? actionPart : undefined}
+    />
 
-    <Card {cardClass}>
-        {#snippet icon()}
-            <Google />
-        {/snippet}
-        {#if showContent > 0}
-            {@render contentPart()}
-        {/if}
-        {#snippet actions()}
-            <Button>Action 1</Button>
-            <Button>Action 2</Button>
-        {/snippet}
-    </Card>
+    <Card
+        {width}
+        icon={iconPart}
+        children={showContent ? contentPart : undefined}
+        actions={showActions ? actionPart : undefined}
+    />
 
-    <Card caption="Nested cards" {cardClass}>
+    <Card
+        caption="Card with nested cards                       "
+        {width}
+        actions={showActions ? actionPart : undefined}
+    >
         {#snippet icon()}
             <Settings color="warning" />
         {/snippet}
 
         {#each range(0, 4) as _i}
-            <Card caption="Google" cardClass="w-full">
+            <Card caption="Google" width="full">
                 {#snippet icon()}
                     <Google />
                 {/snippet}
@@ -111,10 +108,5 @@
                 {/snippet}
             </Card>
         {/each}
-
-        {#snippet actions()}
-            <Button>Action 1</Button>
-            <Button>Action 2</Button>
-        {/snippet}
     </Card>
 </Story>

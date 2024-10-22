@@ -17,7 +17,7 @@
     let dataVersion = $state(0);
 </script>
 
-<Card variant="top" caption={$t('account.activeTokens')}>
+<Card caption={$t('account.activeTokens')}>
     <ResourceFetch fetch={tokens} onState={(st) => st === 'completed' && (dataVersion += 1)}>
         {#snippet loading()}
             <LoadingCard />

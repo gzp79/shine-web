@@ -14,7 +14,7 @@
     const { sessions }: Props = $props();
 </script>
 
-<Card variant="top" caption={$t('account.activeSessions')}>
+<Card caption={$t('account.activeSessions')}>
     <ResourceFetch fetch={sessions}>
         {#snippet loading()}
             <LoadingCard />

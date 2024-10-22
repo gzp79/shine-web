@@ -4,7 +4,7 @@
     import { formatLocation } from '$src/lib/i18n/utils';
     import Card from '$atoms/Card.svelte';
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
-    import Button from '../atoms/Button.svelte';
+    import Button from '$atoms/Button.svelte';
 
     interface Props {
         token: ActiveToken;
@@ -23,7 +23,7 @@
     const location = $derived(formatLocation(token));
 </script>
 
-<Card variant="data">
+<Card width="full">
     <KeyValueTable
         size="xs"
         items={[
@@ -42,7 +42,7 @@
         ]}
     />
 
-    {#snippet action()}
-        <Button label={$t('account.revoke')} disabled={revokeVersion >= dataVersion} color="error" onclick={revoke} />
+    {#snippet actions()}
+        <Button disabled={revokeVersion >= dataVersion} color="danger" onclick={revoke}>{$t('account.revoke')}</Button>
     {/snippet}
 </Card>

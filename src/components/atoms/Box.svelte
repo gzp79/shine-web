@@ -1,46 +1,66 @@
+<script lang="ts" module>
+    export interface Variant {
+        color?: Color;
+        outline?: boolean;
+    }
+</script>
+
 <script lang="ts">
     import { setContext, getContext, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
     import type { Color } from '../types';
 
     interface Props extends Record<string, unknown> {
+        variant?: Variant;
         border?: boolean;
         shadow?: boolean;
-        color?: Color;
-        // Whether to use a compact layout and reduce margins and padding
-        compact?: boolean;
-        // Whether to use a ghost box with no background
         ghost?: boolean;
+        compact?: boolean;
         class?: string;
         children?: Snippet;
     }
 
-    let { border, shadow, color, compact, ghost, class: className, children, ...rest }: Props = $props();
+    let { border, shadow, variant, compact, ghost, class: className, children, ...rest }: Props = $props();
 
-    const colorRotation = ['surface-mute', 'surface', 'surface-accent'];
+    const colorRotation = ['surface', 'surface-accent', 'surface-mute'];
 
-    // Get the current nesting level from the context or default to 0
-    let nestingLevel: number = getContext('Box_nestingLevel') ?? 0;
-    setContext('Box_nestingLevel', nestingLevel + 1);
+    let nestingLevel: number = (getContext<number>('Box_nestingLevel') ?? -1) + 1;
+    let colorIndex: number = ((getContext<number>('Box_colorIndex') ?? -1) + 1) % colorRotation.length;
 
-    let currentBgColor = $derived(color ?? colorRotation[nestingLevel % colorRotation.length]);
-    let currentColor = $derived(color ?? 'surface');
+    setContext('Box_nestingLevel', nestingLevel);
+    setContext('Box_colorIndex', colorIndex);
+
     let currentMargin = $derived(nestingLevel < 1 ? 'm-4' : nestingLevel < 3 ? 'm-2' : 'm-1');
+
+    let colors = $derived.by(() => {
+        if (variant) {
+            if (variant?.outline) {
+                return {
+                    fgColor: variant?.color,
+                    bgColor: colorRotation[(colorIndex + colorRotation.length - 1) % colorRotation.length]
+                };
+            } else {
+                return {
+                    fgColor: 'on-' + variant.color,
+                    bgColor: variant.color
+                };
+            }
+        } else {
+            return {
+                fgColor: 'on-' + colorRotation[colorIndex],
+                bgColor: colorRotation[colorIndex]
+            };
+        }
+    });
 
     let boxClass = $derived(
         twMerge(
             'rounded-lg overflow-hidden',
             !compact && `p-4 ${currentMargin}`,
-            !ghost && `bg-${currentBgColor} text-on-${color}`,
-            !ghost && border && `border border-on-${currentColor}`,
-            !ghost && shadow && `shadow-md shadow-on-${currentColor}`,
-            ghost && color && `text-${currentColor}`,
-            ghost && color && border && `border border-${currentColor}`,
-            ghost && color && shadow && `shadow-md shadow-${currentColor}`,
-            ghost && !color && `text-on-surface`,
-            ghost && !color && border && `border border-on-surface`,
-            ghost && !color && shadow && `shadow-md shadow-on-surface`,
-
+            !ghost && `bg-${colors.bgColor}`,
+            `text-${colors.fgColor}`,
+            border && `border border-${colors.fgColor}`,
+            shadow && `shadow-md shadow-${colors.fgColor}`,
             className
         )
     );

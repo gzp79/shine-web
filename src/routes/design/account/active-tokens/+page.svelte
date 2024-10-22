@@ -1,9 +1,10 @@
 <script lang="ts">
     import { v4 as uuid } from 'uuid';
-    import ActiveTokensCard from '$components/account/ActiveTokensCard.svelte';
     import { async } from '$lib/utils';
-    import type { ActiveToken } from '$src/lib/api/identity-api';
     import { logDesigner } from '$src/lib/loggers';
+    import type { ActiveToken } from '$src/lib/api/identity-api';
+    import ActiveTokensCard from '$components/account/ActiveTokensCard.svelte';
+    import Story from '../../_components/Story.svelte';
 
     // emulate some backend stored list
     let tokens: ActiveToken[] = $state([
@@ -100,6 +101,8 @@
     };
 </script>
 
-<ActiveTokensCard tokens={fetchTokens(tokens)} onRevoke={revoke} />
-<ActiveTokensCard tokens={async.never()} onRevoke={revoke} />
-<ActiveTokensCard tokens={async.error(new Error('Test error'))} onRevoke={revoke} />
+<Story variant="center">
+    <ActiveTokensCard tokens={fetchTokens(tokens)} onRevoke={revoke} />
+    <ActiveTokensCard tokens={async.never()} onRevoke={revoke} />
+    <ActiveTokensCard tokens={async.error(new Error('Test error'))} onRevoke={revoke} />
+</Story>
