@@ -21,7 +21,7 @@
 </script>
 
 <Card caption={$t('account.userInfo')}>
-    <ResourceFetch fetch={user} onState={(state) => (isLoading = state == 'loading')}>
+    <ResourceFetch fetch={user} onState={(state) => (isLoading = state !== 'completed')}>
         {#snippet loading()}
             <LoadingCard />
         {/snippet}
@@ -59,7 +59,9 @@
         {/snippet}
 
         {#snippet error(err: AppError)}
-            <ErrorCard error={err} />
+            <div class="self-center">
+                <ErrorCard error={err} />
+            </div>
         {/snippet}
     </ResourceFetch>
 

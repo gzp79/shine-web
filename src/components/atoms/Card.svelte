@@ -29,14 +29,14 @@
     let { icon, caption, shadow, variant, width = 'default', children, actions, role }: Props = $props();
 
     const widthVariants: Record<Width, string> = {
-        default: 'max-w-xl w-[90%]',
+        default: 'max-w-xl w-[100%]',
         fit: 'max-w-xl w-fit',
         full: 'w-full'
     };
 
     let boxClass = $derived(
         twMerge(
-            'm-2 overflow-hidden',
+            'm-1 overflow-hidden md:m-2',
             'grid',
             icon ? 'grid-cols-[min-content,auto]' : 'grid-cols-1',
             widthVariants[width]
@@ -48,7 +48,7 @@
     );
     let childClass = $derived(
         twMerge(
-            'relative z-10 col-start-2 flex w-full flex-grow flex-col px-2',
+            'relative z-10 col-start-2 flex w-full flex-col px-1 md:px-2',
             !actions && 'pb-2',
             variant?.outline && `text-on-surface`
         )
@@ -57,12 +57,12 @@
 
 <Box compact border {variant} {shadow} class={boxClass} {role}>
     {#if icon}
-        <div class="max-icon-lg min-icon-md m-2 w-fit">
+        <div class="max-icon-lg min-icon-md m-1 w-fit md:m-2">
             {@render icon()}
         </div>
     {/if}
 
-    <div class="relative max-h-96 w-full overflow-y-auto bg-inherit pe-2 {!icon && 'ps-2'}">
+    <div class="relative max-h-96 w-full overflow-y-auto bg-inherit pe-1 md:pe-2 {!icon && 'ps-1 md:ps-2'}">
         {#if caption}
             <Typography variant="h4" element="p" weight="emphasis" class={captionClass}>{caption}</Typography>
         {/if}

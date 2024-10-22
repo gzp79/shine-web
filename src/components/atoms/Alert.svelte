@@ -30,12 +30,11 @@
         }
     });
 
-    const outline = true;
     const variants: Record<Variant, CardVariant> = {
-        info: { color: 'info', outline },
-        success: { color: 'success', outline },
-        warning: { color: 'warning', outline },
-        error: { color: 'danger', outline }
+        info: { color: 'info', outline: true },
+        success: { color: 'success', outline: false },
+        warning: { color: 'warning', outline: true },
+        error: { color: 'danger', outline: false }
     };
 </script>
 

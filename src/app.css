@@ -181,25 +181,25 @@
             @apply text-xs;
         }
         &-xs :where(th, td) {
-            @apply px-2 py-1;
+            @apply px-1 py-1;
         }
         &-sm :not(thead):not(tfoot) tr {
             @apply text-sm;
         }
         &-sm :where(th, td) {
-            @apply px-3 py-2;
+            @apply px-2 py-1.5;
         }
         &-md :not(thead):not(tfoot) tr {
             @apply text-sm;
         }
         &-md :where(th, td) {
-            @apply px-4 py-3;
+            @apply px-3 py-2;
         }
         &-lg :not(thead):not(tfoot) tr {
             @apply text-base;
         }
         &-lg :where(th, td) {
-            @apply px-6 py-4;
+            @apply px-4 py-3;
         }
     }
 }
