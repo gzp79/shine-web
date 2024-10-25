@@ -1,10 +1,9 @@
 <script lang="ts">
-    import { colorList } from '$components/types';
+    import { colorList } from '$atoms/types';
     import Button from '$atoms/Button.svelte';
     import InputGroup from '$atoms/InputGroup.svelte';
-    import { settingsStore } from '../../_components/currentSettings.svelte';
-    import Select from '../../_components/Select.svelte';
-    import Story from '../../_components/Story.svelte';
+    import * as flags from '$atoms/icons/flags';
+    import { Select, settingsStore, Story } from '../../_components';
 
     let color = $state('primary');
     let size = $state('md');
@@ -16,29 +15,39 @@
     <Select label="Color" options={colorList} bind:value={color} />
 {/snippet}
 
-<Story variant="dense">
+<Story variant="center">
     <InputGroup {size} {color}>
-        <Button>Profile</Button>
+        <Button outline>Profile</Button>
         <Button>Settings</Button>
-        <Button>Messages</Button>
+        <Button>Config</Button>
+        <Button outline>Messages</Button>
+        <Button outline>Tools</Button>
+        <Button>Account</Button>
     </InputGroup>
+
     <InputGroup vertical {size} {color}>
-        <Button>Profile</Button>
+        <Button outline>Profile</Button>
         <Button>Settings</Button>
-        <Button>Messages</Button>
+        <Button>Config</Button>
+        <Button outline>Messages</Button>
+        <Button outline>Tools</Button>
+        <Button>Account</Button>
+    </InputGroup>
+
+    <InputGroup vertical {size} {color}>
+        <Button outline>Profile</Button>
+        <Button>Settings</Button>
+        <Button outline>Messages</Button>
         <Button>Account</Button>
     </InputGroup>
 
     <InputGroup {size} {color}>
-        <Button outline>Profile</Button>
-        <Button>Settings</Button>
-        <Button outline>Messages</Button>
-        <Button>Account</Button>
+        <Button>Merge</Button>
+        <Button startIcon={flags.FlagGB} />
     </InputGroup>
-    <InputGroup vertical {size} {color}>
-        <Button outline>Profile</Button>
-        <Button>Settings</Button>
-        <Button outline>Messages</Button>
-        <Button>Account</Button>
+
+    <InputGroup {size} {color}>
+        <Button outline>Merge</Button>
+        <Button outline startIcon={flags.FlagGB} />
     </InputGroup>
 </Story>

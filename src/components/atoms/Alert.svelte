@@ -4,10 +4,11 @@
 
 <script lang="ts">
     import type { Snippet } from 'svelte';
-    import * as commonIcons from '$atoms/icons/common';
+    import type { ElementProps } from './types';
+    import * as commonIcons from './icons/common';
     import Card, { type Variant as CardVariant } from './Card.svelte';
 
-    interface Props {
+    interface Props extends ElementProps {
         variant?: Variant;
         caption: string;
         shadow?: boolean;
@@ -15,7 +16,7 @@
         actions?: Snippet;
     }
 
-    const { variant = 'info', caption, shadow, children, actions }: Props = $props();
+    const { variant = 'info', caption, shadow, children, actions, role, ...rest }: Props = $props();
 
     const Icon = $derived.by(() => {
         switch (variant) {
@@ -38,7 +39,7 @@
     };
 </script>
 
-<Card role="alert" {shadow} {caption} variant={variants[variant]} width="fit" {children} {actions}>
+<Card role={role ?? 'alert'} {shadow} {caption} variant={variants[variant]} width="fit" {children} {actions} {...rest}>
     {#snippet icon()}
         <Icon size="md" />
     {/snippet}

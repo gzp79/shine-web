@@ -1,11 +1,9 @@
 <script lang="ts">
-    import Alert from '$components/atoms/Alert.svelte';
-    import KeyValueTable from '$components/atoms/KeyValueTable.svelte';
+    import Alert from '$atoms/Alert.svelte';
     import Box from '$atoms/Box.svelte';
-    import Typography from '$src/components/atoms/Typography.svelte';
-    import CheckBox from '../../_components/CheckBox.svelte';
-    import { settingsStore } from '../../_components/currentSettings.svelte';
-    import Story from '../../_components/Story.svelte';
+    import KeyValueTable from '$atoms/KeyValueTable.svelte';
+    import Typography from '$atoms/Typography.svelte';
+    import { settingsStore, CheckBox, Story } from '../../_components';
 
     let shadow = $state(true);
 

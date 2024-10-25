@@ -1,6 +1,4 @@
 <script lang="ts" module>
-    import { type Variant as BoxVariant } from '$atoms/Box.svelte';
-
     export type Width = 'default' | 'fit' | 'full';
     export type Variant = BoxVariant;
 </script>
@@ -8,10 +6,11 @@
 <script lang="ts">
     import { type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import Box from '$atoms/Box.svelte';
-    import Typography from '$atoms/Typography.svelte';
+    import type { ElementProps } from './types';
+    import Box, { type Variant as BoxVariant } from './Box.svelte';
+    import Typography from './Typography.svelte';
 
-    interface Props {
+    interface Props extends ElementProps {
         icon?: Snippet;
         caption?: string;
 
@@ -22,11 +21,9 @@
 
         children?: Snippet;
         actions?: Snippet;
-
-        role?: string;
     }
 
-    let { icon, caption, shadow, variant, width = 'default', children, actions, role }: Props = $props();
+    let { icon, caption, shadow, variant, width = 'default', children, actions, ...rest }: Props = $props();
 
     const widthVariants: Record<Width, string> = {
         default: 'max-w-xl w-[100%]',
@@ -55,7 +52,7 @@
     );
 </script>
 
-<Box compact border {variant} {shadow} class={boxClass} {role}>
+<Box compact border {variant} {shadow} class={boxClass} {...rest}>
     {#if icon}
         <div class="max-icon-lg min-icon-md m-1 w-fit md:m-2">
             {@render icon()}

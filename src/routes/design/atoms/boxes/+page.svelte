@@ -1,10 +1,7 @@
 <script lang="ts">
+    import { colorList, range } from '$atoms/types';
     import Box from '$atoms/Box.svelte';
-    import { colorList, range } from '$src/components/types';
-    import CheckBox from '../../_components/CheckBox.svelte';
-    import { settingsStore } from '../../_components/currentSettings.svelte';
-    import Select from '../../_components/Select.svelte';
-    import Story from '../../_components/Story.svelte';
+    import { CheckBox, Select, settingsStore, Story } from '../../_components';
 
     let color = $state('primary');
     let outline = $state(true);

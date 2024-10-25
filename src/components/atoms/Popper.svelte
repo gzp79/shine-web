@@ -1,9 +1,9 @@
 <script lang="ts">
     import { onMount, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import type { Nullable } from '$src/lib/utils';
     import type { Middleware } from '@floating-ui/dom';
     import * as floatingDom from '@floating-ui/dom';
+    import type { Nullable } from '$src/lib/utils';
 
     interface Props {
         //#region Mount-time only properties
@@ -52,7 +52,7 @@
     let width = $state(0);
 
     let divClass = $derived(twMerge('fixed left-0 top-0 z-50', !isOpen ? 'hidden' : display));
-    let divStyle = $derived(alignWidth ? `width: ${width}px;` : '');
+    let divStyle = $derived(alignWidth ? `min-width: ${width}px;` : '');
 
     const show = () => {
         isOpen = true;
@@ -112,8 +112,10 @@
         if (reference) referenceEl = document.querySelector<HTMLElement>(reference);
         else referenceEl = triggerEls[0];
         if (!referenceEl) {
-            console.error('No reference element found.');
+            console.error('No reference element found');
         }
+
+        console.log('Popper mounted', { triggerEls, referenceEl });
 
         // attach event listeners to the trigger elements
         triggerEls.forEach((element: HTMLElement) => {

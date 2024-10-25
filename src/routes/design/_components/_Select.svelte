@@ -1,5 +1,5 @@
 <script lang="ts" generics="T extends { toString(): string }">
-    import { uniqueId } from '$components/types';
+    import { uniqueId } from '$src/components/atoms/types';
 
     // generics="T" is not respected by the eslint
     /* eslint no-undef: "off" */
@@ -25,7 +25,7 @@
 <label for={id} class="max-w-xs">
     {label}
 </label>
-<select {id} class="w-full max-w-xs rounded bg-surface text-on-surface" bind:value>
+<select {id} class="w-full max-w-xs rounded bg-surface-mute text-on-surface" bind:value>
     {#each optionList as [display, val] (val)}
         <option value={val} selected={val === value}>
             {display}

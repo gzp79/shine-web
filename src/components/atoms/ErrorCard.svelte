@@ -2,21 +2,22 @@
     import type { Snippet } from 'svelte';
     import { t } from '$lib/i18n/i18n.svelte';
     import type { AppError } from '$lib/utils';
-    import Box from '$atoms/Box.svelte';
-    import Typography from '$atoms/Typography.svelte';
+    import type { ElementProps } from './types';
+    import Box from './Box.svelte';
+    import Typography from './Typography.svelte';
     import Alert from './Alert.svelte';
 
-    interface Props {
+    interface Props extends Omit<ElementProps, 'role'> {
         caption?: string;
         error: AppError;
         children?: Snippet;
         actions?: Snippet;
     }
 
-    let { caption, error, children, actions }: Props = $props();
+    let { caption, error, children, actions, ...rest }: Props = $props();
 </script>
 
-<Alert variant="error" shadow caption={caption ?? $t('common.somethingWentWrong')} {actions}>
+<Alert variant="error" caption={caption ?? $t('common.somethingWentWrong')} {actions} {...rest}>
     <Typography variant="text">
         {error.message}
     </Typography>

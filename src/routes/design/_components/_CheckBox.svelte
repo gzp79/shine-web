@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { uniqueId } from '$components/types';
+    import { uniqueId } from '$src/components/atoms/types';
 
     interface Props {
         label: string;
@@ -13,4 +13,4 @@
 <label for={id} class="max-w-xs">
     {label}
 </label>
-<input type="checkbox" {id} class="justify-self-center accent-surface" bind:checked={value} />
+<input type="checkbox" {id} class="justify-self-center accent-surface-mute" bind:checked={value} />

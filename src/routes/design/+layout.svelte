@@ -4,9 +4,8 @@
     import LangSwitch from '$src/lib/i18n/LangSwitch.svelte';
     import Box from '$atoms/Box.svelte';
     import Typography from '$atoms/Typography.svelte';
-    import Hamburger from '$atoms/icons/common/_hamburger.svelte';
-    import { settingsStore } from './_components/currentSettings.svelte';
-    import Section from './_components/Section.svelte';
+    import { Hamburger } from '$atoms/icons/common';
+    import { Section, settingsStore } from './_components';
 
     const { children } = $props();
 

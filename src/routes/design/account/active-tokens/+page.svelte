@@ -4,7 +4,7 @@
     import { logDesigner } from '$src/lib/loggers';
     import type { ActiveToken } from '$src/lib/api/identity-api';
     import ActiveTokensCard from '$components/account/ActiveTokensCard.svelte';
-    import Story from '../../_components/Story.svelte';
+    import Story from '../../_components/_Story.svelte';
 
     // emulate some backend stored list
     let tokens: ActiveToken[] = $state([

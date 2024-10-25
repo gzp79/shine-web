@@ -8,9 +8,9 @@
 <script lang="ts">
     import { setContext, getContext, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import type { Color } from '../types';
+    import type { Color, ElementProps } from './types';
 
-    interface Props extends Record<string, unknown> {
+    interface Props extends ElementProps {
         variant?: Variant;
         border?: boolean;
         shadow?: boolean;

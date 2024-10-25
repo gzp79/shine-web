@@ -1,7 +1,6 @@
 <script lang="ts">
-    import type { IconProps } from '../types';
     import { TRANSPARENCY } from '.';
-    import IconBase from '../IconBase.svelte';
+    import IconBase, { type IconProps } from '../IconBase.svelte';
 
     let props: IconProps = $props();
 </script>

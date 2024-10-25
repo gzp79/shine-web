@@ -1,3 +1,9 @@
+/// Common element props, those are usually passed through to the underlying HTML element.
+export interface ElementProps {
+    id?: string;
+    role?: string;
+}
+
 export const colorList = ['surface', 'primary', 'info', 'warning', 'danger', 'success'];
 export type Color = (typeof colorList)[number];
 
@@ -11,3 +17,5 @@ export function uniqueId(scope: string): string {
 export function range(start: number, end: number): number[] {
     return Array.from({ length: end - start }, (_, i) => start + i);
 }
+
+export * from './_responsive-prop';

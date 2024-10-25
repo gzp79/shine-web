@@ -1,6 +1,6 @@
 <script lang="ts">
     import Typography, { type Variant } from '$atoms/Typography.svelte';
-    import Story from '../../_components/Story.svelte';
+    import { Story } from '../../_components';
 
     const variants: Variant[] = ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'text', 'code'];
 </script>

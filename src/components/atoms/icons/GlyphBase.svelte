@@ -1,8 +1,16 @@
+<script lang="ts" module>
+    export interface GlyphProps {
+        size?: Size;
+        disabled?: boolean;
+        class?: string;
+    }
+</script>
+
 <script lang="ts">
     import { twMerge } from 'tailwind-merge';
-    import type { GlyphProps } from './types';
     import type { Snippet } from 'svelte';
-    import CompileTailwindClasses from '../utils/CompileTailwindClasses.svelte';
+    import CompileTailwindClasses from '../CompileTailwindClasses.svelte';
+    import type { Size } from '../types';
 
     interface Props extends GlyphProps {
         viewBox: number[];

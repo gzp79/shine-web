@@ -1,8 +1,17 @@
+<script lang="ts" module>
+    export interface IconProps {
+        color?: Color;
+        size?: Size;
+        disabled?: boolean;
+        class?: string;
+    }
+</script>
+
 <script lang="ts">
     import { twMerge } from 'tailwind-merge';
-    import type { IconProps } from './types';
     import type { Snippet } from 'svelte';
-    import CompileTailwindClasses from '../utils/CompileTailwindClasses.svelte';
+    import CompileTailwindClasses from '../CompileTailwindClasses.svelte';
+    import type { Color, Size } from '../types';
 
     interface Props extends IconProps {
         viewBox: number[];

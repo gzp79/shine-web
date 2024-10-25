@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { colorList } from '$components/types';
-    import Story from '../../_components/Story.svelte';
+    import { colorList } from '$atoms/types';
+    import { Story } from '../../_components';
     import ColorSample from './_colorSample.svelte';
 </script>
 

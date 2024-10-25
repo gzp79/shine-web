@@ -44,7 +44,11 @@ module.exports = {
     plugins: [
         twForm({
             strategy: 'class'
-        })
+        }),
+        function ({ addVariant }) {
+            addVariant('not-first', '&:not(:first-child)');
+            addVariant('not-last', '&:not(:last-child)');
+        }
     ],
     safelist: [
         ...extendedColorNames.map((color) => `bg-${color}`),
@@ -53,7 +57,12 @@ module.exports = {
         ...extendedColorNames.map((color) => `border-${color}`),
         ...extendedColorNames.map((color) => `shadow-${color}`),
         ...extendedColorNames.map((color) => `fill-${color}`),
-        ...extendedColorNames.map((color) => `stroke-${color}`)
+        ...extendedColorNames.map((color) => `stroke-${color}`),
+        ...extendedColorNames.map((color) => `hover:bg-${color}`),
+        ...extendedColorNames.map((color) => `hover:text-on-${color}`),
+        ...extendedColorNames.map((color) => `hover:text-${color}`),
+        ...extendedColorNames.map((color) => `hover:border-${color}`),
+        ...['icon-xs', 'icon-sm', 'icon-md', 'icon-lg']
     ],
 
     theme: {

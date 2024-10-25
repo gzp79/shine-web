@@ -1,8 +1,8 @@
 <script lang="ts">
     import type { Snippet } from 'svelte';
-    import { type Size } from '$components/types';
     import { twMerge } from 'tailwind-merge';
-    import CompileTailwindClasses from './utils/CompileTailwindClasses.svelte';
+    import { type Size } from './types';
+    import CompileTailwindClasses from './CompileTailwindClasses.svelte';
 
     interface Props {
         items: ([string, Snippet | string] | null)[];

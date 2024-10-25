@@ -5,7 +5,7 @@
     import { logDesigner } from '$lib/loggers';
     import type { CurrentUser } from '$lib/api/identity-api';
     import CurrentUserCard from '$components/account/CurrentUserCard.svelte';
-    import Story from '../../_components/Story.svelte';
+    import Story from '../../_components/_Story.svelte';
 
     let fetchReactiveUser = async (userId: string): Promise<CurrentUser> => {
         await async.delay(1000);

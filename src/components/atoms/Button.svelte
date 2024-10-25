@@ -1,16 +1,16 @@
 <script lang="ts">
-    import { type Color, type Size } from '$components/types';
     import { getContext, type Component, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import CompileTailwindClasses from './utils/CompileTailwindClasses.svelte';
+    import { type Color, type ElementProps, type Size } from './types';
     import type { GroupInfo } from './InputGroup.svelte';
 
-    interface Props extends Record<string, unknown> {
+    interface Props extends ElementProps {
         color?: Color;
         size?: Size;
         wide?: boolean;
         outline?: boolean;
         disabled?: boolean;
+        highlight?: boolean;
         class?: string;
 
         startIcon?: Component;
@@ -22,18 +22,14 @@
         children?: Snippet;
     }
 
-    // Hidden Dependency Info (InputGroup):
-    // - determine the color and size
-    // - fix the border and rounding
-    let group: GroupInfo = getContext('InputGroup_props');
-
     let {
         startIcon: StartIcon,
         endIcon: EndIcon,
-        color = group?.color ?? 'primary',
-        size = group?.size ?? 'md',
+        color: baseColor = 'primary',
+        size: baseSize = 'md',
         wide,
         outline = false,
+        highlight = false,
         disabled = false,
         class: className,
         onclick,
@@ -41,6 +37,13 @@
         children,
         ...rest
     }: Props = $props();
+
+    // Hidden Dependency (InputGroup):
+    // - determine the color and size
+    // - fix the border and rounding
+    let group: GroupInfo = getContext('InputGroup_props');
+    let color = $derived(group?.color ?? baseColor);
+    let size = $derived(group?.size ?? baseSize);
 
     const sizeMods: Record<Size, string> = {
         xs: 'text-sm leading-none px-2 py-1.5',
@@ -85,26 +88,37 @@
         lg: 'w-10 h-10'
     };
 
-    if (group) {
-        size = group.size;
-    }
-
     const btnClass = $derived(
         twMerge(
-            'inline-flex items-center justify-center',
-            'text-center whitespace-nowrap',
+            'inline-flex items-center justify-center text-center whitespace-nowrap',
             !group && 'm-1',
-            group && (group.vertical ? 'w-full h-fit' : 'w-fit h-full'),
+            group && (group.vertical ? 'self-stretch' : 'w-fit self-stretch'),
             !group && (wide ? 'min-w-full justify-between' : 'w-fit h-fit'),
-            group && (group.vertical ? 'first:rounded-t-lg last:rounded-b-lg' : 'first:rounded-s-lg last:rounded-e-lg'),
+            group &&
+                (group.vertical
+                    ? `first:rounded-t-lg last:rounded-b-lg ${wide && 'justify-between'}`
+                    : 'first:rounded-s-lg last:rounded-e-lg'),
             !group && 'rounded-full',
-            !outline && `bg-${color} text-on-${color}`,
-            outline && `box-border border-2 border-${color} text-${color}`,
+            !outline ? `bg-${color} text-on-${color}` : `text-${color}`,
+            !group && outline && `border-2 border-${color}`,
+            group &&
+                outline &&
+                (group.vertical
+                    ? 'first:border-t-2 last:border-b-2 border-x-2'
+                    : 'first:border-s-2 last:border-e-2 border-y-2'),
+            group &&
+                (group.vertical
+                    ? `not-first:border-t border-${color}-mute`
+                    : `not-first:border-s border-${color}-mute`),
+
             children && sizeMods[size],
             children && StartIcon && startIconPadding[size],
             children && EndIcon && endIconPadding[size],
             !children && sizeModsIconOnly[size],
-            !disabled && 'active:scale-95 hover:brightness-125',
+
+            highlight && 'brightness-125',
+            !disabled && !outline && 'active:scale-95 hover:brightness-125',
+            !disabled && outline && `active:scale-95 hover:bg-${color}-mute hover:text-${color}-accent`,
             disabled && '!opacity-30 !cursor-not-allowed',
 
             //disabled && 'grayscale !cursor-not-allowed',
@@ -115,16 +129,6 @@
     const startIconClass = $derived(twMerge(children && startIconMargin[size], iconSize[size]));
     const endIconClass = $derived(twMerge(children && endIconMargin[size], iconSize[size]));
 </script>
-
-<CompileTailwindClasses
-    classList={[
-        'bg-primary bg-info bg-warning bg-danger bg-success',
-        'text-on-primary text-on-info text-on-warning text-on-danger text-on-success',
-        'text-primary text-info text-warning text-danger text-success',
-        'border-primary border-info border-warning border-danger border-success',
-        'icon-xs icon-sm icon-md icon-lg'
-    ]}
-/>
 
 {#snippet content()}
     {#if StartIcon}

@@ -1,15 +1,13 @@
 <script lang="ts">
-    import { colorList, sizeList } from '$components/types';
+    import { logDesigner } from '$src/lib/loggers';
+    import { colorList, sizeList } from '$atoms/types';
     import Box from '$atoms/Box.svelte';
     import Button from '$atoms/Button.svelte';
     import { Firefox } from '$atoms/icons/clients';
     import { Settings, Warning } from '$atoms/icons/common';
-    import { logDesigner } from '$src/lib/loggers';
-    import { settingsStore } from '../../_components/currentSettings.svelte';
-    import Select from '../../_components/Select.svelte';
-    import Story from '../../_components/Story.svelte';
-    import { Spinner } from '$src/components/atoms/icons/animated';
-    import { Twitter } from '$src/components/atoms/icons/social';
+    import { Spinner } from '$atoms/icons/animated';
+    import { Twitter } from '$atoms/icons/social';
+    import { Select, settingsStore, Story } from '../../_components';
 
     let color = $state('primary');
     let action = $state('href');
@@ -25,7 +23,7 @@
 </script>
 
 {#snippet settings()}
-    <Select label="Color" options={colorList} bind:value={color} />
+    <Select label="Color" options={colorList.filter((x) => x !== 'surface')} bind:value={color} />
     <Select label="Action" options={['click', 'href']} bind:value={action} />
 {/snippet}
 

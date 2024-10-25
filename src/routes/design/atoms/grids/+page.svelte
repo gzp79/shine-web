@@ -1,9 +1,9 @@
 <script lang="ts">
+    import { range } from '$atoms/types';
     import Grid from '$atoms/Grid.svelte';
     import GridItem from '$atoms/GridItem.svelte';
     import Card from '$atoms/Card.svelte';
-    import { range } from '$src/components/types';
-    import Story from '../../_components/Story.svelte';
+    import { Story } from '../../_components';
 </script>
 
 {#snippet item(value: string)}

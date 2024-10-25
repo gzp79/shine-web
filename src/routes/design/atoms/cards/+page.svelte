@@ -1,15 +1,11 @@
 <script lang="ts">
-    import { range } from '$src/components/types';
+    import { range } from '$atoms/types';
     import { Google } from '$atoms/icons/social';
-    import Card, { type Width } from '$atoms/Card.svelte';
     import { Settings } from '$atoms/icons/common';
+    import Card, { type Width } from '$atoms/Card.svelte';
     import Button from '$atoms/Button.svelte';
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
-    import { settingsStore } from '../../_components/currentSettings.svelte';
-    import Select from '../../_components/Select.svelte';
-    import Story from '../../_components/Story.svelte';
-    import { lorem } from '../../_components/lorem';
-    import CheckBox from '../../_components/CheckBox.svelte';
+    import { CheckBox, Select, settingsStore, lorem, Story } from '../../_components';
 
     let showContent = $state(3);
     let showActions = $state(true);

@@ -2,9 +2,9 @@
     import Box from '$atoms/Box.svelte';
     import Button from '$atoms/Button.svelte';
     import Popper from '$atoms/Popper.svelte';
-    import { FlagGB, FlagHU } from '$src/components/atoms/icons/flags';
-    import { logDesigner } from '$src/lib/loggers';
-    import Story from '../../_components/Story.svelte';
+    import { FlagGB, FlagHU } from '$atoms/icons/flags';
+    import InputGroup from '$atoms/InputGroup.svelte';
+    import { Story } from '../../_components';
 
     let open = $state(false);
 </script>
@@ -13,38 +13,59 @@
     <p class="min-h-[1000px]"></p>
 
     <Box border>
-        <Button id="mybutton1">Click</Button>
-        <Button id="mybutton1">Click</Button>
-        <Button id="mybutton1">Click</Button>
-        <Popper trigger="#mybutton1" clickable>This is a popper</Popper>
+        <Button id="myButton1">Click</Button>
+        <Button id="myButton1">Click</Button>
+        <Button id="myButton1">Click</Button>
+        <Popper trigger="#myButton1" clickable>
+            <Box border class="m-0">This is a popper</Box>
+        </Popper>
     </Box>
 
     <Box border>
-        <Button id="mybutton2">Hover</Button>
-        <Button id="mybutton2">Hover</Button>
-        <Button id="mybutton2">Hover</Button>
-        <Popper trigger="#mybutton2" hoverable>This is a popper</Popper>
+        <Button id="myButton2">Hover</Button>
+        <Button id="myButton2">Hover</Button>
+        <Button id="myButton2">Hover</Button>
+        <Popper trigger="#myButton2" hoverable>
+            <Box border class="m-0">This is a popper</Box>
+        </Popper>
     </Box>
 
     <Box border>
-        <Button id="mybutton3">Click | Hover</Button>
-        <Button id="mybutton3">Click | Hover</Button>
-        <Button id="mybutton3">Click | Hover</Button>
-        <Popper trigger="#mybutton3" hoverable clickable>This is a popper</Popper>
+        <Button id="myButton3">Click | Hover</Button>
+        <Button id="myButton3">Click | Hover</Button>
+        <Button id="myButton3">Click | Hover</Button>
+        <Popper trigger="#myButton3" hoverable clickable>
+            <Box border class="m-0">This is a popper</Box>
+        </Popper>
     </Box>
 
     <Box border>
-        <Button startIcon={FlagHU} />
-        <Popper clickable alignWidth display="flex flex-col items-center justify-center rounded-lg border bg-base-100">
-            <Button startIcon={FlagHU} onclick={() => logDesigner('hu')} />
-            <Button startIcon={FlagGB} onclick={() => logDesigner('hu')} />
+        <InputGroup id="dropDown">
+            <Button onclick={() => console.log('act')}>Logout</Button>
+            <Button id="dropDownTrigger" startIcon={FlagHU} />
+        </InputGroup>
+        <Popper
+            clickable
+            alignWidth
+            display="flex flex-col items-center justify-center rounded-lg border bg-base-100"
+            trigger="#dropDownTrigger"
+            reference="#dropDown"
+        >
+            <InputGroup vertical>
+                <Button wide endIcon={FlagHU} onclick={() => console.log('select 1')}>Switch account</Button>
+                <Button wide endIcon={FlagGB} onclick={() => console.log('select 2')}>Logout</Button>
+                <Button wide endIcon={FlagHU} onclick={() => console.log('select 3')}>Logout from all session</Button>
+            </InputGroup>
         </Popper>
     </Box>
 
     <Box border>
         <Button onclick={() => (open = true)}>Open</Button>
-        <Popper display="flex items-center rounded-lg border bg-base-100 p-1" bind:open>
-            <Button onclick={() => (open = false)}>Close</Button>
+        <Popper bind:open>
+            <Box border class="m-0">
+                Click close to close
+                <Button onclick={() => (open = false)}>Close</Button>
+            </Box>
         </Popper>
     </Box>
 

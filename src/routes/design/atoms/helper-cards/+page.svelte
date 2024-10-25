@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { range, sizeList } from '$components/types';
+    import { range, sizeList } from '$atoms/types';
     import Box from '$atoms/Box.svelte';
+    import Button from '$atoms/Button.svelte';
     import LoadingCard from '$atoms/LoadingCard.svelte';
     import ErrorCard from '$atoms/ErrorCard.svelte';
-    import Story from '../../_components/Story.svelte';
-    import Button from '$src/components/atoms/Button.svelte';
+    import { Story } from '../../_components';
 </script>
 
 <Story variant="dense">

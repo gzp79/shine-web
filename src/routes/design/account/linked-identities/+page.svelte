@@ -4,7 +4,7 @@
     import { logDesigner } from '$lib/loggers';
     import type { LinkedIdentity } from '$lib/api/identity-api';
     import LinkedIdentitiesCard from '$components/account/LinkedIdentitiesCard.svelte';
-    import Story from '../../_components/Story.svelte';
+    import Story from '../../_components/_Story.svelte';
 
     // emulate some backend stored list
     let identities: LinkedIdentity[] = $state([

@@ -1,6 +1,5 @@
 <script lang="ts">
-    import type { GlyphProps } from '../types';
-    import GlyphBase from '../GlyphBase.svelte';
+    import GlyphBase, { type GlyphProps } from '../GlyphBase.svelte';
 
     let props: GlyphProps = $props();
 </script>

@@ -1,7 +1,6 @@
 <script lang="ts">
-    import { type Color } from '$components/types';
-    import CompileTailwindClasses from '$src/components/atoms/utils/CompileTailwindClasses.svelte';
     import { onMount } from 'svelte';
+    import { type Color } from '$atoms/types';
 
     interface Props {
         color: Color;
@@ -32,15 +31,6 @@
         }
     });
 </script>
-
-<CompileTailwindClasses
-    classList={[
-        'bg-surface bg-primary bg-info bg-warning bg-danger bg-success',
-        'bg-surface-mute bg-primary-mute bg-info-mute bg-warning-mute bg-danger-mute bg-success-mute',
-        'bg-surface-accent bg-primary-accent bg-info-accent bg-warning-accent bg-danger-accent bg-success-accent',
-        'text-on-surface text-on-primary text-on-info text-on-warning text-on-danger text-on-success'
-    ]}
-/>
 
 <div class="relative mx-2 mt-2 flex h-24 w-24 flex-row">
     <div class="h-full flex-1 rounded-s-lg border-y border-s bg-{color}-mute"></div>
