@@ -39,7 +39,7 @@
             widthVariants[width]
         )
     );
-    let captionClass = $derived(twMerge('sticky left-0 top-0 z-20 justify-self-start px-0 py-1', 'bg-inherit'));
+    let captionClass = $derived(twMerge('sticky left-0 top-0 z-20 justify-self-start w-full px-0 py-1', 'bg-inherit'));
     let actionClass = $derived(
         twMerge('sticky bottom-0 start-0 z-20 flex flex-row justify-end px-2 py-1', 'bg-inherit')
     );
