@@ -1,7 +1,7 @@
 <script lang="ts">
     import { type Component } from 'svelte';
     import { colorList, sizeList, type Color, type Size } from '$atoms/types';
-    import * as common from '$atoms/icons/common';
+    import * as icons from '$atoms/icons/common';
     import * as clients from '$atoms/icons/clients';
     import * as animated from '$atoms/icons/animated';
     import * as social from '$atoms/icons/social';
@@ -36,16 +36,17 @@
 <Story variant="center">
     <Card caption="Common">
         <div class={gridClass}>
-            {@render icon(common.Check, 'Check')}
-            {@render icon(common.Cross, 'Cross')}
-            {@render icon(common.Hamburger, 'Hamburger')}
-            {@render icon(common.Settings, 'Settings')}
-            {@render icon(common.Info, 'Info')}
-            {@render icon(common.Warning, 'Warning')}
-            {@render icon(common.Light, 'Light')}
-            {@render icon(common.Dark, 'Dark')}
-            {@render icon(common.DarkAndLight, 'Dark and Light')}
-            {@render icon(common.Fatal, 'Fatal')}
+            {@render icon(icons.Check, 'Check')}
+            {@render icon(icons.Cross, 'Cross')}
+            {@render icon(icons.Hamburger, 'Hamburger')}
+            {@render icon(icons.Settings, 'Settings')}
+            {@render icon(icons.Info, 'Info')}
+            {@render icon(icons.Warning, 'Warning')}
+            {@render icon(icons.Light, 'Light')}
+            {@render icon(icons.Dark, 'Dark')}
+            {@render icon(icons.DarkAndLight, 'Dark and Light')}
+            {@render icon(icons.Fatal, 'Fatal')}
+            {@render icon(icons.DropDown, 'DropDown')}
         </div>
     </Card>
 

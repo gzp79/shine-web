@@ -5,7 +5,7 @@
 <script lang="ts">
     import type { Snippet } from 'svelte';
     import type { ElementProps } from './types';
-    import * as commonIcons from './icons/common';
+    import * as icons from './icons/common';
     import Card, { type Variant as CardVariant } from './Card.svelte';
 
     interface Props extends ElementProps {
@@ -21,13 +21,13 @@
     const Icon = $derived.by(() => {
         switch (variant) {
             case 'info':
-                return commonIcons.Info;
+                return icons.Info;
             case 'success':
-                return commonIcons.Check;
+                return icons.Check;
             case 'warning':
-                return commonIcons.Warning;
+                return icons.Warning;
             case 'error':
-                return commonIcons.Cross;
+                return icons.Fatal;
         }
     });
 

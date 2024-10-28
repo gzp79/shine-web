@@ -27,7 +27,7 @@
         endIcon: EndIcon,
         color: baseColor = 'primary',
         size: baseSize = 'md',
-        wide,
+        wide: baseWide,
         outline = false,
         highlight = false,
         disabled = false,
@@ -44,6 +44,7 @@
     let group: GroupInfo = getContext('InputGroup_props');
     let color = $derived(group?.color ?? baseColor);
     let size = $derived(group?.size ?? baseSize);
+    let wide = $derived(group ? (baseWide === undefined ? group.wide : baseWide) : baseWide);
 
     const sizeMods: Record<Size, string> = {
         xs: 'text-sm leading-none px-2 py-1.5',
@@ -92,7 +93,9 @@
         twMerge(
             'inline-flex items-center justify-center text-center whitespace-nowrap',
             !group && 'm-1',
-            group && (group.vertical ? 'self-stretch' : 'w-fit self-stretch'),
+            group && 'self-stretch',
+            group && group.vertical && 'w-full',
+            group && !group.vertical && (wide ? 'w-full' : 'w-fit'),
             !group && (wide ? 'min-w-full justify-between' : 'w-fit h-fit'),
             group &&
                 (group.vertical

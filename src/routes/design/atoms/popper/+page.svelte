@@ -2,8 +2,9 @@
     import Box from '$atoms/Box.svelte';
     import Button from '$atoms/Button.svelte';
     import Popper from '$atoms/Popper.svelte';
-    import { FlagGB, FlagHU } from '$atoms/icons/flags';
     import InputGroup from '$atoms/InputGroup.svelte';
+    import * as flags from '$atoms/icons/flags';
+    import * as icons from '$atoms/icons/common';
     import { Story } from '../../_components';
 
     let open = $state(false);
@@ -42,7 +43,7 @@
     <Box border>
         <InputGroup id="dropDown">
             <Button onclick={() => console.log('act')}>Logout</Button>
-            <Button id="dropDownTrigger" startIcon={FlagHU} />
+            <Button id="dropDownTrigger" startIcon={icons.DropDown} />
         </InputGroup>
         <Popper
             clickable
@@ -52,9 +53,11 @@
             reference="#dropDown"
         >
             <InputGroup vertical>
-                <Button wide endIcon={FlagHU} onclick={() => console.log('select 1')}>Switch account</Button>
-                <Button wide endIcon={FlagGB} onclick={() => console.log('select 2')}>Logout</Button>
-                <Button wide endIcon={FlagHU} onclick={() => console.log('select 3')}>Logout from all session</Button>
+                <Button wide endIcon={flags.FlagHU} onclick={() => console.log('select 1')}>Switch account</Button>
+                <Button wide endIcon={flags.FlagGB} onclick={() => console.log('select 2')}>Logout</Button>
+                <Button wide endIcon={flags.FlagHU} onclick={() => console.log('select 3')}>
+                    Logout from all session
+                </Button>
             </InputGroup>
         </Popper>
     </Box>

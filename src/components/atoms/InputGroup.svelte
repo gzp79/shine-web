@@ -2,6 +2,7 @@
     export interface GroupInfo {
         size: Size;
         color?: Color;
+        wide?: boolean;
         vertical: boolean;
     }
 </script>
@@ -15,20 +16,29 @@
         size?: Size;
         color?: Color;
         vertical?: boolean;
+        wide?: boolean;
         class?: string;
         children: Snippet;
     }
 
-    let { size = 'md', color, vertical = false, children, class: className, ...rest }: Props = $props();
+    let { size = 'md', color, vertical = false, children, wide, class: className, ...rest }: Props = $props();
 
-    let divClass = $derived(twMerge('inline-flex', vertical && 'flex-col', className));
+    let divClass = $derived(
+        twMerge(
+            'inline-flex', //
+            vertical && 'flex-col',
+            wide && 'w-full',
+            className
+        )
+    );
 
     // convert props into state, so it can be updated and children reactively
-    let context = $state({ size, color, vertical });
+    let context = $state({ size, color, vertical, wide });
     $effect(() => {
         context.size = size;
         context.color = color;
         context.vertical = vertical;
+        context.wide = wide;
     });
     setContext('InputGroup_props', context);
 </script>

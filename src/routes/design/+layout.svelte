@@ -20,16 +20,17 @@
                 { title: 'Colors', href: 'atoms/colors' },
                 { title: 'Typography', href: 'atoms/typography' },
                 { title: 'Icons', href: 'atoms/icons' },
+                { title: 'Boxes', href: 'atoms/boxes' },
+                { title: 'Grids', href: 'atoms/grids' },
+                { title: 'Popper', href: 'atoms/popper' },
+                { title: 'Key-Value Table', href: 'atoms/key-value-tables' },
+                { title: 'Cards', href: 'atoms/cards' },
+                { title: 'Alerts', href: 'atoms/alerts' },
+                { title: 'Helper Cards', href: 'atoms/helper-cards' },
+                { title: 'Input Groups', href: 'atoms/input-groups' },
                 { title: 'Buttons', href: 'atoms/buttons' },
                 //{ title: '*Toggle', href: 'atoms/toggles' },
-                { title: 'Input Groups', href: 'atoms/input-groups' },
-                { title: 'Grids', href: 'atoms/grids' },
-                { title: 'Boxes', href: 'atoms/boxes' },
-                { title: 'Alerts', href: 'atoms/alerts' },
-                { title: 'Popper', href: 'atoms/popper' },
-                { title: 'Cards', href: 'atoms/cards' },
-                { title: 'Helper Cards', href: 'atoms/helper-cards' },
-                { title: 'Key-Value Table', href: 'atoms/key-value-tables' }
+                { title: 'ComboButtons', href: 'atoms/combo-buttons' }
             ]
         },
         {
