@@ -1,6 +1,6 @@
-import { type CurrentUser, identityApi } from '../api/identity-api';
-import { logUser } from '../loggers';
-import { type AppError, type Fetch } from '../utils';
+import { type CurrentUser, identityApi } from '$lib/api/identity-api';
+import { logUser } from '$lib/loggers';
+import { type AppError, type Fetch } from '$lib/utils';
 
 type UserState = CurrentUser | AppError | null | { isLoading: number };
 

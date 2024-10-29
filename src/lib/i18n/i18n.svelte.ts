@@ -1,8 +1,7 @@
 /* cspell: disable */
 import type { Cookies } from '@sveltejs/kit';
 import { browser } from '$app/environment';
-import { type Nullable, getCookie } from '$lib/utils';
-import { onMount } from 'svelte';
+import { type Nullable, getCookie, setCookie } from '$lib/utils';
 import { i18n } from '../../translations/i18n';
 
 /* cspell: enable */
@@ -18,6 +17,7 @@ function getSupportedLocale(candidate: string) {
 
 /// return the preferred language set in the browser
 function defaultBrowserLanguage() {
+    //console.log(`Finding default browser language (${navigator.language}) ...`);
     return `${navigator.language}`.toLowerCase();
 }
 
@@ -31,8 +31,10 @@ export async function loadLanguageServerSide(url: URL, cookies: Cookies, headers
 
     let locale = (cookies.get('lang') || '').toLowerCase();
     if (!locale) {
+        //console.log('Checking accept-language ...');
         locale = `${`${headers.get('accept-language')}`.match(/[a-zA-Z]+?(?=-|_|,|;)/)}`.toLowerCase();
     }
+    //console.log(`Selected language, server side: ${locale}`);
 
     locale = getSupportedLocale(locale);
     await loadTranslations(locale, pathname);
@@ -69,10 +71,10 @@ export function languageStore() {
     let rune = $state(locale.get());
     locale.subscribe((value) => {
         rune = value;
-    });
-
-    onMount(() => {
-        document.cookie = `lang=${rune}; max-age=31536000; path=/`;
+        if (browser) {
+            //console.log(`Setting lang cookie to ${rune}`);
+            setCookie('lang', rune);
+        }
     });
 
     return {

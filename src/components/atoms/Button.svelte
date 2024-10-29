@@ -1,7 +1,6 @@
 <script lang="ts">
     import { getContext, type Component, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import type { Nullable } from '$src/lib/utils';
     import { type Color, type ElementProps, type Size } from './types';
     import type { GroupInfo } from './InputGroup.svelte';
 
@@ -17,7 +16,7 @@
         startIcon?: Component;
         endIcon?: Component;
 
-        onclick?: Nullable<() => void>;
+        onclick?: () => void;
         href?: string;
 
         children?: Snippet;
@@ -122,19 +121,22 @@
 
             highlight && 'brightness-125',
             !disabled && !outline && 'active:scale-95 hover:brightness-125',
-            !disabled && outline && `active:scale-95 hover:bg-${color}-mute hover:text-${color}-accent`,
+            !disabled && outline && `active:scale-95`,
+            !disabled && outline && `hover:bg-${color}-mute hover:text-${color}-accent`,
             disabled && '!opacity-30 !cursor-not-allowed',
 
-            //disabled && 'grayscale !cursor-not-allowed',
             className
         )
     );
 
     const startIconClass = $derived(twMerge(children && startIconMargin[size], iconSize[size]));
     const endIconClass = $derived(twMerge(children && endIconMargin[size], iconSize[size]));
+
+    let el = $derived(href ? 'a' : 'button');
+    let elProps = $derived({ href, onclick, ...rest });
 </script>
 
-{#snippet content()}
+<svelte:element this={el} class={btnClass} {...elProps}>
     {#if StartIcon}
         <StartIcon class={startIconClass} />
     {/if}
@@ -144,14 +146,4 @@
     {#if EndIcon}
         <EndIcon class={endIconClass} />
     {/if}
-{/snippet}
-
-{#if href}
-    <a class={btnClass} {href} {onclick} {...rest}>
-        {@render content()}
-    </a>
-{:else}
-    <button class={btnClass} {disabled} {onclick} {...rest}>
-        {@render content()}
-    </button>
-{/if}
+</svelte:element>

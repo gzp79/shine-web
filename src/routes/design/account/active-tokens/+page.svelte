@@ -1,9 +1,9 @@
 <script lang="ts">
     import { v4 as uuid } from 'uuid';
     import { async } from '$lib/utils';
-    import { logDesigner } from '$src/lib/loggers';
-    import type { ActiveToken } from '$src/lib/api/identity-api';
-    import ActiveTokensCard from '$components/account/ActiveTokensCard.svelte';
+    import { logDesigner } from '$lib/loggers';
+    import type { ActiveToken } from '$lib/api/identity-api';
+    import ActiveTokensCard from '$lib/account/ActiveTokensCard.svelte';
     import Story from '../../_components/_Story.svelte';
 
     // emulate some backend stored list

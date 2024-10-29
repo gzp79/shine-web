@@ -1,22 +1,39 @@
 <script lang="ts">
-    import Popper from '$atoms/Popper.svelte';
-    import { FlagGB, FlagHU } from '$atoms/icons/flags';
-    import type { Component } from 'svelte';
-    import { languageStore } from './i18n.svelte';
+    import ComboButton from '$atoms/ComboButton.svelte';
+    import * as flags from '$atoms/icons/flags';
+    import * as icons from '$atoms/icons/common';
+    import Button from '$src/components/atoms/Button.svelte';
+    import InputGroup from '$src/components/atoms/InputGroup.svelte';
+    import Popper from '$src/components/atoms/Popper.svelte';
+    import { t, languageStore } from './i18n.svelte';
+
+    const items = [
+        { data: 'hu', caption: $t('lang.hu'), icon: flags.FlagHU },
+        { data: 'en', caption: $t('lang.en'), icon: flags.FlagGB }
+    ];
 
     let language = languageStore();
-    let size = 'sm';
+    let current = $state(items.findIndex((x) => x.data === language.current));
 
-    const langs: Record<string, Component> = {
-        hu: FlagHU,
-        en: FlagGB
-    };
+    $effect(() => {
+        language.current = items[current].data;
+    });
 </script>
 
-<button class="btn select m-1 h-fit w-fit">
-    <svelte:component this={langs[language.current]} {size} />
-</button>
-<Popper clickable display="flex flex-col items-center justify-center rounded-lg border bg-base-100">
-    <button class="btn h-fit w-fit" onclick={() => (language.current = 'hu')}><FlagHU {size} /></button>
-    <button class="btn h-fit w-fit" onclick={() => (language.current = 'en')}><FlagGB {size} /></button>
+<InputGroup size="sm">
+    <Button id={`lang-trigger`} endIcon={items[current].icon}>
+        {items[current].caption}
+    </Button>
+</InputGroup>
+<Popper
+    clickable
+    alignWidth
+    display="flex flex-col rounded-lg border max-h-96 overflow-y-auto"
+    trigger={`#lang-trigger`}
+>
+    <InputGroup vertical size="sm">
+        {#each items as item, index}
+            <Button wide endIcon={item.icon} onclick={() => (current = index)}>{item.caption}</Button>
+        {/each}
+    </InputGroup>
 </Popper>

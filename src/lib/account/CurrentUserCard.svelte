@@ -1,7 +1,7 @@
 <script lang="ts">
     import { t } from '$lib/i18n/i18n.svelte';
-    import type { CurrentUser } from '$src/lib/api/identity-api';
-    import { type AppError } from '$src/lib/utils';
+    import type { CurrentUser } from '$lib/api/identity-api';
+    import { type AppError } from '$lib/utils';
     import { Warning } from '$atoms/icons/common';
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
     import LoadingCard from '$atoms/LoadingCard.svelte';
@@ -9,7 +9,7 @@
     import Card from '$atoms/Card.svelte';
     import ErrorCard from '$atoms/ErrorCard.svelte';
     import Alert from '$atoms/Alert.svelte';
-    import ComboButton from '../atoms/ComboButton.svelte';
+    import ComboButton from '$atoms/ComboButton.svelte';
 
     interface Props {
         user: CurrentUser | Promise<CurrentUser>;
