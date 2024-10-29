@@ -2,7 +2,6 @@
     import { t } from '$lib/i18n/i18n.svelte';
     import type { CurrentUser } from '$src/lib/api/identity-api';
     import { type AppError } from '$src/lib/utils';
-    import Button from '$atoms/Button.svelte';
     import { Warning } from '$atoms/icons/common';
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
     import LoadingCard from '$atoms/LoadingCard.svelte';
@@ -10,6 +9,7 @@
     import Card from '$atoms/Card.svelte';
     import ErrorCard from '$atoms/ErrorCard.svelte';
     import Alert from '$atoms/Alert.svelte';
+    import ComboButton from '../atoms/ComboButton.svelte';
 
     interface Props {
         user: CurrentUser | Promise<CurrentUser>;
@@ -18,6 +18,9 @@
     }
     const { user, onLogout: logout, onLogoutAll: logoutAll }: Props = $props();
     let isLoading = $state(true);
+
+    let logoutAction = $derived(typeof logout === 'string' ? { href: logout } : { onclick: logout });
+    let logoutAllAction = $derived(typeof logoutAll === 'string' ? { href: logoutAll } : { onclick: logoutAll });
 </script>
 
 <Card caption={$t('account.userInfo')}>
@@ -66,24 +69,12 @@
     </ResourceFetch>
 
     {#snippet actions()}
-        {#if typeof logout == 'function'}
-            <Button disabled={isLoading} onclick={logout}>
-                {$t('account.logout')}
-            </Button>
-        {:else if typeof logout == 'string'}
-            <Button disabled={isLoading} href={logout}>
-                {$t('account.logout')}
-            </Button>
-        {/if}
-
-        {#if typeof logoutAll == 'function'}
-            <Button disabled={isLoading} onclick={logoutAll}>
-                {$t('account.logoutAll')}
-            </Button>
-        {:else if typeof logoutAll == 'string'}
-            <Button disabled={isLoading} href={logoutAll}>
-                {$t('account.logoutAll')}
-            </Button>
-        {/if}
+        <ComboButton
+            disabled={isLoading}
+            items={[
+                { caption: $t('account.logout'), ...logoutAction },
+                { caption: $t('account.logoutAll'), ...logoutAllAction }
+            ]}
+        />
     {/snippet}
 </Card>

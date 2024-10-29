@@ -1,16 +1,21 @@
-<script lang="ts">
+<script lang="ts" module>
     import { onMount, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
     import type { Middleware } from '@floating-ui/dom';
     import * as floatingDom from '@floating-ui/dom';
     import type { Nullable } from '$src/lib/utils';
+    import { portal } from './Portal.svelte';
+</script>
 
+<script lang="ts">
     interface Props {
         //#region Mount-time only properties
         // Selector for the trigger element
         trigger?: string;
         // Selector for the reference element, defaults to the first trigger element
         reference?: string;
+        // Selector for the layer element containing the popper, defaults to document.body
+        layer?: string;
         // Whether the popper should be triggered by click
         clickable?: boolean;
         // Whether the popper should be triggered by hover
@@ -35,6 +40,7 @@
     let {
         trigger,
         reference,
+        layer = '#popper',
         clickable = false,
         hoverable = false,
         alignWidth = false,
@@ -115,7 +121,7 @@
             console.error('No reference element found');
         }
 
-        console.log('Popper mounted', { triggerEls, referenceEl });
+        //console.log('Popper mounted', { triggerEls, referenceEl });
 
         // attach event listeners to the trigger elements
         triggerEls.forEach((element: HTMLElement) => {
@@ -154,6 +160,6 @@
     });
 </script>
 
-<div bind:this={contentEl} class={divClass} style={divStyle}>
+<div use:portal={layer} bind:this={contentEl} class={divClass} style={divStyle}>
     {@render children()}
 </div>

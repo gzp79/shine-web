@@ -1,6 +1,7 @@
 <script lang="ts">
     import { getContext, type Component, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
+    import type { Nullable } from '$src/lib/utils';
     import { type Color, type ElementProps, type Size } from './types';
     import type { GroupInfo } from './InputGroup.svelte';
 
@@ -16,7 +17,7 @@
         startIcon?: Component;
         endIcon?: Component;
 
-        onclick?: () => void;
+        onclick?: Nullable<() => void>;
         href?: string;
 
         children?: Snippet;

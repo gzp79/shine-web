@@ -39,17 +39,7 @@
             widthVariants[width]
         )
     );
-    let captionClass = $derived(twMerge('sticky left-0 top-0 z-20 justify-self-start w-full px-0 py-1', 'bg-inherit'));
-    let actionClass = $derived(
-        twMerge('sticky bottom-0 start-0 z-20 flex flex-row justify-end px-2 py-1', 'bg-inherit')
-    );
-    let childClass = $derived(
-        twMerge(
-            'relative z-10 col-start-2 flex w-full flex-col px-1 md:px-2',
-            !actions && 'pb-2',
-            variant?.outline && `text-on-surface`
-        )
-    );
+    let childClass = $derived(twMerge(!actions && 'pb-2', variant?.outline && `text-on-surface`));
 </script>
 
 <Box compact border {variant} {shadow} class={boxClass} {...rest}>
@@ -60,18 +50,26 @@
     {/if}
 
     <div class="relative max-h-96 w-full overflow-y-auto bg-inherit pe-1 md:pe-2 {!icon && 'ps-1 md:ps-2'}">
-        {#if caption}
-            <Typography variant="h4" element="p" weight="emphasis" class={captionClass}>{caption}</Typography>
-        {/if}
-        {#if children}
-            <div class={childClass}>
-                {@render children()}
-            </div>
-        {/if}
-        {#if actions}
-            <div class={actionClass}>
-                {@render actions()}
-            </div>
-        {/if}
+        <div class="flex flex-col bg-inherit">
+            {#if children}
+                <div class="order-2 col-start-2 flex w-full flex-col px-1 md:px-2 {childClass}">
+                    {@render children()}
+                </div>
+            {/if}
+            {#if caption}
+                <Typography
+                    variant="h4"
+                    element="p"
+                    weight="emphasis"
+                    class="sticky left-0 top-0 order-1 w-full justify-self-start bg-inherit px-0 py-1"
+                    >{caption}</Typography
+                >
+            {/if}
+            {#if actions}
+                <div class="sticky bottom-0 start-0 order-3 flex flex-row justify-end bg-inherit px-2 py-1">
+                    {@render actions()}
+                </div>
+            {/if}
+        </div>
     </div>
 </Box>

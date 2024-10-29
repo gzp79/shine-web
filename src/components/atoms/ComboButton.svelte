@@ -13,18 +13,19 @@
         onclick?: () => void;
     }
     interface Props {
-        buttons: Item[];
+        items: Item[];
         current?: number;
+        disabled?: boolean;
         wide?: boolean;
     }
-    let { buttons, current = $bindable(0), wide }: Props = $props();
+    let { items, current = $bindable(0), disabled, wide }: Props = $props();
 
     let id = uniqueId('comboButton');
-    let currentItem = $derived(buttons[current]);
+    let currentItem = $derived(items[current]);
 </script>
 
 <InputGroup {wide} {id}>
-    <Button wide endIcon={currentItem.icon} onclick={currentItem.onclick} href={currentItem.href}>
+    <Button wide endIcon={currentItem.icon} onclick={() => currentItem.onclick?.()} href={currentItem.href} {disabled}>
         {currentItem.caption}
     </Button>
     <Button wide={false} id={`${id}-trigger`} endIcon={icons.DropDown} />
@@ -37,7 +38,7 @@
     reference={`#${id}`}
 >
     <InputGroup vertical>
-        {#each buttons as item, index}
+        {#each items as item, index}
             <Button wide endIcon={item.icon} onclick={() => (current = index)}>{item.caption}</Button>
         {/each}
     </InputGroup>
