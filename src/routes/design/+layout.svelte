@@ -6,12 +6,6 @@
     import Typography from '$atoms/Typography.svelte';
     import { Hamburger } from '$atoms/icons/common';
     import { Section, settingsStore } from './_components';
-    
-    
-    import { onMount } from 'svelte';
-    onMount(() => {
-        console.log('Design layout mounted');
-    });
 
     const { children } = $props();
 
