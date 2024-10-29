@@ -1,7 +1,5 @@
 <script lang="ts">
-    import ComboButton from '$atoms/ComboButton.svelte';
     import * as flags from '$atoms/icons/flags';
-    import * as icons from '$atoms/icons/common';
     import Button from '$src/components/atoms/Button.svelte';
     import InputGroup from '$src/components/atoms/InputGroup.svelte';
     import Popper from '$src/components/atoms/Popper.svelte';
