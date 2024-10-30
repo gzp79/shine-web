@@ -4,7 +4,7 @@ export interface ElementProps {
     role?: string;
 }
 
-export const colorList = ['surface', 'primary', 'info', 'warning', 'danger', 'success'];
+export const colorList = ['surface', 'passive', 'primary', 'info', 'warning', 'danger', 'success'];
 export type Color = (typeof colorList)[number];
 
 export const sizeList = ['xs', 'sm', 'md', 'lg'];

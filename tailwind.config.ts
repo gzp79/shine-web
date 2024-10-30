@@ -1,6 +1,6 @@
 import twForm from '@tailwindcss/forms';
 
-const colorNames = ['surface', 'primary', 'info', 'warning', 'danger', 'success'];
+const colorNames = ['surface', 'passive', 'primary', 'info', 'warning', 'danger', 'success'];
 const extendedColorNames = [
     ...colorNames,
     ...colorNames.map((color) => `${color}-mute`),
@@ -12,6 +12,9 @@ const colorVariants = {
     surface: 'rgb(var(--color-surface))',
     'surface-mute': 'rgb(var(--color-surface-mute))',
     'surface-accent': 'rgb(var(--color-surface-accent))',
+    passive: 'rgb(var(--color-passive))',
+    'passive-mute': 'rgb(var(--color-passive-mute))',
+    'passive-accent': 'rgb(var(--color-passive-accent))',
     primary: 'rgb(var(--color-primary))',
     'primary-mute': 'rgb(var(--color-primary-mute))',
     'primary-accent': 'rgb(var(--color-primary-accent))',
@@ -31,6 +34,7 @@ const colorVariants = {
 
 const colorOnVariants = {
     'on-surface': 'rgb(var(--color-on-surface))',
+    'on-passive': 'rgb(var(--color-on-passive))',
     'on-primary': 'rgb(var(--color-on-primary))',
     'on-info': 'rgb(var(--color-on-info))',
     'on-warning': 'rgb(var(--color-on-warning))',

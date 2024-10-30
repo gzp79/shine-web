@@ -29,7 +29,7 @@
                 { title: 'Helper Cards', href: 'atoms/helper-cards' },
                 { title: 'Input Groups', href: 'atoms/input-groups' },
                 { title: 'Buttons', href: 'atoms/buttons' },
-                //{ title: '*Toggle', href: 'atoms/toggles' },
+                { title: 'Toggle', href: 'atoms/toggles' },
                 { title: 'ComboButtons', href: 'atoms/combo-buttons' }
             ]
         },
