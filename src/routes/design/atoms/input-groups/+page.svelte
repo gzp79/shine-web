@@ -8,7 +8,7 @@
 
     let color = $state('primary');
     let size = $state('md');
-    let wide = $state(true);
+    let wide = $state(false);
 
     settingsStore().set(settings);
 </script>

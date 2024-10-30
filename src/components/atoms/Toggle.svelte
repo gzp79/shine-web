@@ -26,7 +26,7 @@
 
     let id = uniqueId('toggle');
 
-    const transition = 'transition-all duration-200 easy-in-out';
+    const transition = 'transition-all duration-100 easy-in-out';
 
     const toggleSize: Record<Size, string> = {
         xs: 'text-sm leading-none my-1',

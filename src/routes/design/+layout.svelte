@@ -10,12 +10,13 @@
     const { children } = $props();
 
     let currentSettings = settingsStore();
-    let showSidebar = $state(false);
+    let showSidebar = $state(true);
+    let showSelection = $state(true);
     let showSettings = $state(true);
 
     const menu = [
         {
-            title: 'Atoms',
+            title: 'Utils',
             items: [
                 { title: 'Colors', href: 'atoms/colors' },
                 { title: 'Typography', href: 'atoms/typography' },
@@ -26,11 +27,16 @@
                 { title: 'Key-Value Table', href: 'atoms/key-value-tables' },
                 { title: 'Cards', href: 'atoms/cards' },
                 { title: 'Alerts', href: 'atoms/alerts' },
-                { title: 'Helper Cards', href: 'atoms/helper-cards' },
-                { title: 'Input Groups', href: 'atoms/input-groups' },
+                { title: 'Helper Cards', href: 'atoms/helper-cards' }
+            ]
+        },
+        {
+            title: 'Inputs',
+            items: [
                 { title: 'Buttons', href: 'atoms/buttons' },
                 { title: 'Toggle', href: 'atoms/toggles' },
-                { title: 'ComboButtons', href: 'atoms/combo-buttons' }
+                { title: 'ComboButtons', href: 'atoms/combo-buttons' },
+                { title: 'Input Groups', href: 'atoms/input-groups' }
             ]
         },
         {
@@ -65,18 +71,35 @@
                 ? 'absolute left-0 top-0 z-20 opacity-90 md:static'
                 : 'hidden'}"
         >
-            {#each menu as group}
-                <Typography variant="h3" element="h2">{group.title}</Typography>
-                <ul class="mx-4 w-max">
-                    {#each group.items as item}
-                        <li class="hover:bg-surface-accent">
-                            <a href={`/design/${item.href}`}>
-                                <Typography variant="h6" element="h3">{item.title}</Typography>
-                            </a>
-                        </li>
-                    {/each}
-                </ul>
-            {/each}
+            <button
+                onclick={() => (showSelection = !showSelection)}
+                class="flex w-full flex-row items-center justify-between hover:bg-surface-accent"
+            >
+                <Typography variant="h3" class="flex-start">Stories</Typography>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 448 512"
+                    class="flex-end h-4 w-4 fill-on-surface {showSelection && 'rotate-180'}"
+                >
+                    <path
+                        d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                    ></path>
+                </svg>
+            </button>
+            {#if showSelection}
+                {#each menu as group}
+                    <Typography variant="h4" element="h2" class="mx-2">{group.title}</Typography>
+                    <ul class="mx-4 w-max">
+                        {#each group.items as item}
+                            <li class="hover:bg-surface-accent">
+                                <a href={`/design/${item.href}`}>
+                                    <Typography variant="h6" element="h3">{item.title}</Typography>
+                                </a>
+                            </li>
+                        {/each}
+                    </ul>
+                {/each}
+            {/if}
             <button
                 onclick={() => (showSettings = !showSettings)}
                 class="flex w-full flex-row items-center justify-between hover:bg-surface-accent"

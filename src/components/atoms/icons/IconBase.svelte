@@ -24,8 +24,9 @@
             color ? `stroke-${color}` : 'stroke-current',
             color ? `fill-${color}` : 'fill-current',
             size ? `icon-${size}` : 'w-full h-full',
-            className,
-            disabled ? 'grayscale' : ''
+            disabled && '!opacity-30',
+            //disabled && 'grayscale'
+            className
         )
     );
 </script>

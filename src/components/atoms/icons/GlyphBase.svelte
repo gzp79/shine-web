@@ -18,7 +18,14 @@
     }
 
     let { size, disabled = false, class: className, viewBox, children }: Props = $props();
-    let svgClass = $derived(twMerge(size ? `icon-${size}` : 'w-auto h-full', className, disabled ? 'grayscale' : ''));
+    let svgClass = $derived(
+        twMerge(
+            size ? `icon-${size}` : 'w-auto h-full',
+            className,
+            disabled && '!opacity-30'
+            //disabled && 'grayscale'
+        )
+    );
 </script>
 
 <CompileTailwindClasses classList={['icon-xs icon-sm icon-md icon-lg']} />
