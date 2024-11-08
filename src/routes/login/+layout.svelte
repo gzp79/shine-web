@@ -1,7 +1,8 @@
 <script lang="ts">
+    import type { Snippet } from 'svelte';
     import { goto } from '$app/navigation';
     import { currentUserStore } from '$lib/account/currentUser.svelte';
-    import type { Snippet } from 'svelte';
+    import App from '$lib/app/App.svelte';
 
     interface Props {
         children: Snippet;
@@ -16,4 +17,6 @@
     });
 </script>
 
-{@render children()}
+<App>
+    {@render children()}
+</App>

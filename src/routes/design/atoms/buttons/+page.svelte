@@ -49,7 +49,8 @@
         {#each sizeList as size}
             <div>
                 <Button {size} {color} startIcon={Settings} {...btnAction} />
-                <Button outline {size} {color} startIcon={Settings} {...btnAction} />
+                <Button variant="outline" {size} {color} startIcon={Settings} {...btnAction} />
+                <Button variant="ghost" {size} {color} startIcon={Settings} {...btnAction} />
             </div>
         {/each}
     </Box>
@@ -99,8 +100,12 @@
             <Button {color} disabled {...btnAction}>Button</Button>
         </div>
         <div class="flex flex-col justify-center">
-            <Button {color} outline {...btnAction}>Button</Button>
-            <Button {color} outline disabled {...btnAction}>Button</Button>
+            <Button {color} variant="outline" {...btnAction}>Button</Button>
+            <Button {color} variant="outline" disabled {...btnAction}>Button</Button>
+        </div>
+        <div class="flex flex-col justify-center">
+            <Button {color} variant="ghost" {...btnAction}>Button</Button>
+            <Button {color} variant="ghost" disabled {...btnAction}>Button</Button>
         </div>
     </Box>
 
@@ -110,16 +115,26 @@
             <Button {color} disabled {...btnAction} startIcon={Firefox}>Button</Button>
         </div>
         <div class="flex flex-col justify-center">
-            <Button {color} outline {...btnAction} startIcon={Firefox}>Button</Button>
-            <Button {color} outline disabled {...btnAction} startIcon={Firefox}>Button</Button>
+            <Button {color} variant="outline" {...btnAction} startIcon={Firefox}>Button</Button>
+            <Button {color} variant="outline" disabled {...btnAction} startIcon={Firefox}>Button</Button>
         </div>
+        <div class="flex flex-col justify-center">
+            <Button {color} variant="ghost" {...btnAction} startIcon={Firefox}>Button</Button>
+            <Button {color} variant="ghost" disabled {...btnAction} startIcon={Firefox}>Button</Button>
+        </div>
+    </Box>
+    <Box border class="flex h-max flex-wrap">
         <div class="flex flex-col justify-center">
             <Button {color} {...btnAction} startIcon={Warning}>Button</Button>
             <Button {color} disabled {...btnAction} startIcon={Warning}>Button</Button>
         </div>
         <div class="flex flex-col justify-center">
-            <Button {color} outline {...btnAction} startIcon={Warning}>Button</Button>
-            <Button {color} outline disabled {...btnAction} startIcon={Warning}>Button</Button>
+            <Button {color} variant="outline" {...btnAction} startIcon={Warning}>Button</Button>
+            <Button {color} variant="outline" disabled {...btnAction} startIcon={Warning}>Button</Button>
+        </div>
+        <div class="flex flex-col justify-center">
+            <Button {color} variant="ghost" {...btnAction} startIcon={Warning}>Button</Button>
+            <Button {color} variant="ghost" disabled {...btnAction} startIcon={Warning}>Button</Button>
         </div>
     </Box>
 </Story>

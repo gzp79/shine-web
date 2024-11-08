@@ -5,6 +5,8 @@
     import * as floatingDom from '@floating-ui/dom';
     import type { Nullable } from '$src/lib/utils';
     import { portal } from './Portal.svelte';
+
+    export type Behavior = 'click' | 'clickWithSelf' | 'toggle' | 'hover' | 'manual';
 </script>
 
 <script lang="ts">
@@ -16,11 +18,8 @@
         reference?: string;
         // Selector for the layer element containing the popper, defaults to document.body
         layer?: string;
-        // Whether the popper should be triggered by click
-        clickable?: boolean;
-        // Whether the popper should be triggered by hover
-        hoverable?: boolean;
-        //#endregion
+        // What should trigger the popper to open
+        behavior?: Behavior;
 
         //#region Reactive properties
         // align the width of the popper to the reference element
@@ -41,17 +40,24 @@
         trigger,
         reference,
         layer = '#popper',
-        clickable = false,
-        hoverable = false,
+        behavior = 'click',
         alignWidth = false,
         display = 'block',
         open: isOpen = $bindable(),
         children
     }: Props = $props();
 
+    let isClick = behavior === 'click' || behavior === 'clickWithSelf';
+    let isSelfAware = behavior === 'clickWithSelf';
+    let isToggle = behavior === 'toggle';
+    let isHover = behavior === 'hover';
+    //let isManual = behavior === 'manual';
+
     let triggerEls: HTMLElement[] = [];
     let referenceEl: Nullable<HTMLElement> = null;
     let contentEl: HTMLElement = null!;
+    // an invisible element to find the popper's location in the DOM
+    let popperLocator: HTMLElement = null!;
 
     let autoUpdateCleanup: null | (() => void) = null;
 
@@ -76,7 +82,9 @@
         }
     };
     const handleClickOutside = (event: MouseEvent) => {
-        if (!triggerEls.some((el) => el.contains(event.target as Node))) {
+        const isTriggerChildren = triggerEls.some((el) => el.contains(event.target as Node));
+        const isContentChildren = isSelfAware && contentEl.contains(event.target as Node);
+        if (!isTriggerChildren && !isContentChildren) {
             hide();
         }
     };
@@ -102,15 +110,18 @@
     onMount(() => {
         /* eslint-disable @typescript-eslint/no-explicit-any */
         const events: [boolean, string, any][] = [
-            [clickable, 'click', toggle],
-            [clickable, 'keydown', cancelOnEscape],
-            [hoverable, 'mouseenter', show],
-            [hoverable, 'mouseleave', hide]
+            [isClick || isToggle, 'click', toggle],
+            [isClick, 'keydown', cancelOnEscape],
+            [isHover, 'mouseenter', show],
+            [isHover, 'mouseleave', hide]
         ];
         /* eslint-enable @typescript-eslint/no-explicit-any */
 
         if (trigger) triggerEls = [...document.querySelectorAll<HTMLElement>(trigger)];
-        else triggerEls = contentEl?.previousElementSibling ? [contentEl.previousElementSibling as HTMLElement] : [];
+        else
+            triggerEls = popperLocator?.previousElementSibling
+                ? [popperLocator.previousElementSibling as HTMLElement]
+                : [];
         if (!triggerEls.length) {
             console.error('No triggers found.');
         }
@@ -149,7 +160,7 @@
 
     $effect(() => {
         if (isOpen) {
-            if (clickable) window.addEventListener('click', handleClickOutside);
+            if (isClick) window.addEventListener('click', handleClickOutside);
             autoUpdateCleanup?.(); // just in case
             autoUpdateCleanup = floatingDom.autoUpdate(referenceEl!, contentEl, updatePosition);
         } else {
@@ -160,6 +171,7 @@
     });
 </script>
 
+<div class="hidden" bind:this={popperLocator}></div>
 <div use:portal={layer} bind:this={contentEl} class={divClass} style={divStyle}>
     {@render children()}
 </div>

@@ -1,14 +1,18 @@
-<script lang="ts">
+<script lang="ts" module>
     import { getContext, type Component, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
     import { type Color, type ElementProps, type Size } from './types';
     import type { GroupInfo } from './InputGroup.svelte';
 
+    export type Variant = 'filled' | 'outline' | 'ghost';
+</script>
+
+<script lang="ts">
     interface Props extends ElementProps {
         color?: Color;
         size?: Size;
         wide?: boolean;
-        outline?: boolean;
+        variant?: Variant;
         disabled?: boolean;
         highlight?: boolean;
         class?: string;
@@ -28,7 +32,7 @@
         color: baseColor = 'primary',
         size: baseSize = 'md',
         wide: baseWide,
-        outline = false,
+        variant: baseVariant = 'filled',
         highlight = false,
         disabled = false,
         class: className,
@@ -44,6 +48,7 @@
     let group: GroupInfo = getContext('InputGroup_props');
     let color = $derived(group?.color ?? baseColor);
     let size = $derived(group?.size ?? baseSize);
+    let variant = $derived(group?.variant ?? baseVariant);
     let wide = $derived(group ? (baseWide === undefined ? group.wide : baseWide) : baseWide);
 
     const sizeMods: Record<Size, string> = {
@@ -92,37 +97,46 @@
     const btnClass = $derived(
         twMerge(
             'inline-flex items-center justify-center text-center whitespace-nowrap',
-            !group && 'm-1',
-            group && 'self-stretch',
-            group && group.vertical && 'w-full',
-            group && !group.vertical && (wide ? 'w-full' : 'w-fit'),
-            !group && (wide ? 'min-w-full justify-between' : 'w-fit h-fit'),
-            group &&
-                (group.vertical
-                    ? `first:rounded-t-lg last:rounded-b-lg ${wide && 'justify-between'}`
-                    : 'first:rounded-s-lg last:rounded-e-lg'),
-            !group && 'rounded-full',
-            !outline ? `bg-${color} text-on-${color}` : `text-${color}`,
-            !group && outline && `border-2 border-${color}`,
-            group &&
-                outline &&
-                (group.vertical
-                    ? 'first:border-t-2 last:border-b-2 border-x-2'
-                    : 'first:border-s-2 last:border-e-2 border-y-2'),
-            group &&
-                (group.vertical
-                    ? `not-first:border-t border-${color}-mute`
-                    : `not-first:border-s border-${color}-mute`),
 
-            children && sizeMods[size],
-            children && StartIcon && startIconPadding[size],
-            children && EndIcon && endIconPadding[size],
+            variant === 'filled' && [
+                `bg-${color} text-on-${color}`,
+                group &&
+                    (group.vertical
+                        ? `not-first:border-t border-${color}-mute`
+                        : `not-first:border-s border-${color}-mute`),
+                !disabled && 'active:scale-95 hover:brightness-125'
+            ],
+            variant === 'outline' && [
+                `text-${color} border-${color}`,
+                !group && 'border-2',
+                group &&
+                    (group.vertical
+                        ? 'first:border-t-2 last:border-b-2 border-x-2 border-t-2'
+                        : 'first:border-s-2 last:border-e-2 border-y-2 border-s-2'),
+                !disabled && `active:scale-95`,
+                !disabled && `hover:bg-${color}-mute hover:text-${color}-accent`
+            ],
+            variant === 'ghost' && [
+                `text-${color}`,
+                !disabled && `active:scale-95`,
+                !disabled && `hover:bg-${color}-mute hover:text-${color}-accent`
+            ],
+
+            !group && ['m-1', wide ? 'min-w-full justify-between' : 'w-fit h-fit', 'rounded-full'],
+            group && [
+                'self-stretch',
+                group.vertical && 'w-full',
+                !group.vertical && (wide ? 'w-full' : 'w-fit'),
+
+                group.vertical
+                    ? `first:rounded-t-lg last:rounded-b-lg ${wide && 'justify-between'}`
+                    : 'first:rounded-s-lg last:rounded-e-lg'
+            ],
+
+            children && [sizeMods[size], StartIcon && startIconPadding[size], EndIcon && endIconPadding[size]],
             !children && sizeModsIconOnly[size],
 
             highlight && 'brightness-125',
-            !disabled && !outline && 'active:scale-95 hover:brightness-125',
-            !disabled && outline && `active:scale-95`,
-            !disabled && outline && `hover:bg-${color}-mute hover:text-${color}-accent`,
             disabled && '!opacity-30 !cursor-not-allowed',
 
             className

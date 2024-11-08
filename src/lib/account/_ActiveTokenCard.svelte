@@ -27,18 +27,39 @@
     <KeyValueTable
         size="xs"
         items={[
-            [$t('account.tokenFingerprint'), token.tokenFingerprint],
-            [$t('account.tokenKind'), token.kind],
-            [$t('account.activeStatus'), token.isExpired ? $t('account.active') : $t('account.expired')],
-            [
-                $t('account.creationDate'),
-                $t('common.dateTime', { value: token.createdAt }, { date: { dateStyle: 'long', timeStyle: 'medium' } })
-            ],
-            [
-                $t('account.expirationDate'),
-                $t('common.dateTime', { value: token.expireAt }, { date: { dateStyle: 'long', timeStyle: 'medium' } })
-            ],
-            [$t('account.location'), location]
+            {
+                key: $t('account.tokenFingerprint'),
+                value: token.tokenFingerprint,
+                class: 'break-all'
+            },
+            {
+                key: $t('account.tokenKind'),
+                value: token.kind
+            },
+            {
+                key: $t('account.activeStatus'),
+                value: token.isExpired ? $t('account.active') : $t('account.expired')
+            },
+            {
+                key: $t('account.creationDate'),
+                value: $t(
+                    'common.dateTime',
+                    { value: token.createdAt },
+                    { date: { dateStyle: 'long', timeStyle: 'medium' } }
+                )
+            },
+            {
+                key: $t('account.expirationDate'),
+                value: $t(
+                    'common.dateTime',
+                    { value: token.expireAt },
+                    { date: { dateStyle: 'long', timeStyle: 'medium' } }
+                )
+            },
+            {
+                key: $t('account.location'),
+                value: location
+            }
         ]}
     />
 

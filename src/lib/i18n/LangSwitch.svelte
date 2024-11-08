@@ -18,13 +18,9 @@
     });
 </script>
 
-<InputGroup size="sm">
-    <Button id={`lang-trigger`} endIcon={items[current].icon}>
-        {items[current].caption}
-    </Button>
-</InputGroup>
+<Button variant="ghost" id={`lang-trigger`} endIcon={items[current].icon} />
 <Popper
-    clickable
+    behavior="click"
     alignWidth
     display="flex flex-col rounded-lg border max-h-96 overflow-y-auto"
     trigger={`#lang-trigger`}

@@ -54,7 +54,7 @@
             'relative h-4 w-11 rounded-full border',
             barSize[size],
             transition,
-            value ? 'bg-passive border-passive-accent' : 'bg-passive border-passive-mute'
+            value ? 'bg-passive-accent border-passive-mute' : `border-passive bg-passive-mute`
         )
     );
 
@@ -75,7 +75,7 @@
             'absolute rounded-full border left-0 top-0',
             knobSize[size],
             transition,
-            value ? `border-${color}-mute bg-${color}` : `border-${color} bg-${color}-mute`,
+            value ? `border-${color}-mute bg-${color}` : 'bg-passive border-passive-mute',
             value && knobTranslate[size]
         )
     );

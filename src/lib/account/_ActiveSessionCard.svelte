@@ -58,17 +58,27 @@
     <KeyValueTable
         size="xs"
         items={[
-            [$t('account.sessionFingerprint'), session.fingerprint],
-            [$t('account.userAgent'), session.agent],
-            [
-                $t('account.loginDate'),
-                $t(
+            {
+                key: $t('account.sessionFingerprint'),
+                value: session.fingerprint,
+                class: 'break-all'
+            },
+            {
+                key: $t('account.userAgent'),
+                value: session.agent
+            },
+            {
+                key: $t('account.loginDate'),
+                value: $t(
                     'common.dateTime',
                     { value: session.createdAt },
                     { date: { dateStyle: 'long', timeStyle: 'medium' } }
                 )
-            ],
-            [$t('account.location'), location]
+            },
+            {
+                key: $t('account.location'),
+                value: location
+            }
         ]}
     />
 </Card>

@@ -4,8 +4,13 @@
     import { type Size } from './types';
     import CompileTailwindClasses from './CompileTailwindClasses.svelte';
 
+    interface Item {
+        key: string;
+        value: Snippet | string;
+        class?: string;
+    }
     interface Props {
-        items: ([string, Snippet | string] | null)[];
+        items: (Item | null)[];
         size?: Size;
     }
     const { items, size = 'md' }: Props = $props();
@@ -18,14 +23,14 @@
 
 <table class={tableClass}>
     <tbody>
-        {#each filteredItems as [key, value]}
+        {#each filteredItems as item}
             <tr class="border-none">
-                <th class="w-min-content text-nowrap">{key}</th>
-                <td class="w-full text-ellipsis">
-                    {#if typeof value === 'string'}
-                        {value}
+                <th class="w-min-content text-nowrap">{item.key}</th>
+                <td class={twMerge('w-full text-ellipsis', item.class)}>
+                    {#if typeof item.value === 'string'}
+                        {item.value}
                     {:else}
-                        {@render value()}
+                        {@render item.value()}
                     {/if}
                 </td>
             </tr>

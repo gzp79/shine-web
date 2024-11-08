@@ -35,8 +35,8 @@
         <KeyValueTable
             size="xs"
             items={[
-                ['simple text', simpleValue],
-                ['button', buttonValue]
+                { key: 'simple text', value: simpleValue },
+                { key: 'button', value: buttonValue }
             ]}
         />
     </Box>
@@ -57,9 +57,9 @@
         <KeyValueTable
             {size}
             items={[
-                ['key1', 'value'],
-                ['key2', 'value'],
-                ['key', 'value with long string']
+                { key: 'key1', value: 'value' },
+                { key: 'key2', value: 'value' },
+                { key: 'key', value: 'value with long string' }
             ]}
         />
     </Box>
@@ -68,10 +68,10 @@
         <KeyValueTable
             {size}
             items={[
-                ['key with long string', 'value'],
-                ['k', 'with a longer value with some dummy text'],
-                ['key', 'duplicated key 1st'],
-                ['key', 'duplicated key 2nd']
+                { key: 'key with long string', value: 'value' },
+                { key: 'k', value: 'with a longer value with some dummy text' },
+                { key: 'key', value: 'duplicated key 1st' },
+                { key: 'key', value: 'duplicated key 2nd' }
             ]}
         />
     </Box>
@@ -80,11 +80,11 @@
         <KeyValueTable
             {size}
             items={[
-                ['simple', simpleValue],
-                ['counter', count.toString()],
-                ['button', buttonValue],
-                ['nested Table', nestedValue],
-                ['settings', settingsValue]
+                { key: 'simple', value: simpleValue },
+                { key: 'counter', value: count.toString() },
+                { key: 'button', value: buttonValue },
+                { key: 'nested Table', value: nestedValue },
+                { key: 'settings', value: settingsValue }
             ]}
         />
     </Box>

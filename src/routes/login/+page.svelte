@@ -2,10 +2,10 @@
     import { identityApi } from '$src/lib/api/identity-api';
     import { languageStore } from '$lib/i18n/i18n.svelte';
     import { themeStore } from '$lib/theme/theme.svelte';
-    import ThemeSwitch from '$lib/theme/ThemeSwitch.svelte';
     import Turnstile from '$components/Turnstile.svelte';
     import Button from '$atoms/Button.svelte';
     import config from '../../config';
+    import AppContent from '$src/lib/app/AppContent.svelte';
 
     interface Props {
         data: {
@@ -35,14 +35,13 @@
     <h1>{provider}</h1>
 {/each}
 
-<ThemeSwitch />
-<Turnstile
-    siteKey={config.turnstile.siteKey}
-    theme={captchaTheme}
-    size="compact"
-    language={captchaLang}
-    bind:token={captcha}
-/>
-captcha: {captcha}
-<Button label="Guest" disabled={!captcha} href={identityApi.getGuestLoginUrl(captcha, '/game')} />
-<a href="/design">Design</a>
+<AppContent>
+    <Turnstile
+        siteKey={config.turnstile.siteKey}
+        theme={captchaTheme}
+        size="compact"
+        language={captchaLang}
+        bind:token={captcha}
+    />
+    <Button disabled={!captcha} href={identityApi.getGuestLoginUrl(captcha, '/game')}>Guest</Button>
+</AppContent>

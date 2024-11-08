@@ -32,7 +32,7 @@
     <Button wide={false} id={`${id}-trigger`} endIcon={icons.DropDown} />
 </InputGroup>
 <Popper
-    clickable
+    behavior="click"
     alignWidth
     display="flex flex-col rounded-lg border max-h-96 overflow-y-auto"
     trigger={`#${id}-trigger`}

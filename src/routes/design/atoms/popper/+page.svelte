@@ -13,30 +13,40 @@
 <Story variant="center">
     <p class="min-h-[1000px]"></p>
 
-    <Box border>
-        <Button id="myButton1">Click</Button>
-        <Button id="myButton1">Click</Button>
-        <Button id="myButton1">Click</Button>
-        <Popper trigger="#myButton1" clickable>
+    <Box border id="reference1">
+        <Button id="trigger1">Click</Button>
+        <Button id="trigger1">Click</Button>
+        <Button id="trigger1">Click</Button>
+        <Popper trigger="#trigger1" reference="#reference1" behavior="click">
+            <Box border class="m-0">This is a popper</Box>
+        </Popper>
+    </Box>
+
+    <Box border id="reference2">
+        <Button id="trigger2">Hover</Button>
+        <Button id="trigger2">Hover</Button>
+        <Button id="trigger2">Hover</Button>
+        <Popper trigger="#trigger2" reference="#reference2" behavior="hover">
+            <Box border class="m-0">This is a popper</Box>
+        </Popper>
+    </Box>
+
+    <Box border id="reference3">
+        <Button id="trigger3">Toggle</Button>
+        <Button id="trigger3">Toggle</Button>
+        <Button id="trigger3">Toggle</Button>
+        <Popper trigger="#trigger3" reference="#reference3" behavior="toggle">
             <Box border class="m-0">This is a popper</Box>
         </Popper>
     </Box>
 
     <Box border>
-        <Button id="myButton2">Hover</Button>
-        <Button id="myButton2">Hover</Button>
-        <Button id="myButton2">Hover</Button>
-        <Popper trigger="#myButton2" hoverable>
-            <Box border class="m-0">This is a popper</Box>
-        </Popper>
-    </Box>
-
-    <Box border>
-        <Button id="myButton3">Click | Hover</Button>
-        <Button id="myButton3">Click | Hover</Button>
-        <Button id="myButton3">Click | Hover</Button>
-        <Popper trigger="#myButton3" hoverable clickable>
-            <Box border class="m-0">This is a popper</Box>
+        <Button onclick={() => (open = true)}>Manual</Button>
+        <Popper behavior="manual" bind:open>
+            <Box border class="m-0">
+                Click close to close
+                <Button onclick={() => (open = false)}>Close</Button>
+            </Box>
         </Popper>
     </Box>
 
@@ -46,7 +56,7 @@
             <Button id="dropDownTrigger" startIcon={icons.DropDown} />
         </InputGroup>
         <Popper
-            clickable
+            behavior="click"
             alignWidth
             display="flex flex-col items-center justify-center rounded-lg border bg-base-100"
             trigger="#dropDownTrigger"
@@ -59,16 +69,6 @@
                     Logout from all session
                 </Button>
             </InputGroup>
-        </Popper>
-    </Box>
-
-    <Box border>
-        <Button onclick={() => (open = true)}>Open</Button>
-        <Popper bind:open>
-            <Box border class="m-0">
-                Click close to close
-                <Button onclick={() => (open = false)}>Close</Button>
-            </Box>
         </Popper>
     </Box>
 

@@ -53,10 +53,10 @@
             <KeyValueTable
                 size="xs"
                 items={[
-                    [$t('account.userName'), user.name],
-                    [$t('account.userId'), user.userId],
-                    [$t('account.email'), email],
-                    [$t('account.role'), user.roles.join(', ')]
+                    { key: $t('account.userName'), value: user.name },
+                    { key: $t('account.userId'), value: user.userId },
+                    { key: $t('account.email'), value: email },
+                    { key: $t('account.role'), value: user.roles.join(', ') }
                 ]}
             />
         {/snippet}

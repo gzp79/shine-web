@@ -44,18 +44,34 @@
     <KeyValueTable
         size="xs"
         items={[
-            [$t('account.provider'), identity.provider],
-            [$t('account.providerUserId'), identity.providerUserId],
-            identity.name ? [$t('account.userName'), identity.name] : null,
-            identity.email ? [$t('account.email'), identity.email] : null,
-            [
-                $t('account.linkDate'),
-                $t(
+            {
+                key: $t('account.provider'),
+                value: identity.provider
+            },
+            {
+                key: $t('account.providerUserId'),
+                value: identity.providerUserId
+            },
+            identity.name
+                ? {
+                      key: $t('account.userName'),
+                      value: identity.name
+                  }
+                : null,
+            identity.email
+                ? {
+                      key: $t('account.email'),
+                      value: identity.email
+                  }
+                : null,
+            {
+                key: $t('account.linkDate'),
+                value: $t(
                     'common.dateTime',
                     { value: identity.linkedAt },
                     { date: { dateStyle: 'long', timeStyle: 'medium' } }
                 )
-            ]
+            }
         ]}
     />
 

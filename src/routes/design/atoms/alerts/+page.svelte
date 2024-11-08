@@ -26,8 +26,8 @@
             <KeyValueTable
                 size="xs"
                 items={[
-                    ['problem1', 'This is a text'],
-                    ['problem2', 'Just ignore me']
+                    { key: 'problem1', value: 'This is a text' },
+                    { key: 'problem2', value: 'Just ignore me' }
                 ]}
             />
         </Box>

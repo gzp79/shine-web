@@ -1,10 +1,9 @@
 <script lang="ts">
     import { beforeNavigate } from '$app/navigation';
-    import ThemeSwitch from '$lib/theme/ThemeSwitch.svelte';
-    import LangSwitch from '$src/lib/i18n/LangSwitch.svelte';
     import Box from '$atoms/Box.svelte';
     import Typography from '$atoms/Typography.svelte';
     import { Hamburger } from '$atoms/icons/common';
+    import QuickConfig from '$lib/app/QuickConfig.svelte';
     import { Section, settingsStore } from './_components';
 
     const { children } = $props();
@@ -61,8 +60,7 @@
             <Hamburger size="md" class="inline-block" />
         </button>
         <Typography variant="h1" class="flex-1">Design</Typography>
-        <LangSwitch />
-        <ThemeSwitch class="flex-none" />
+        <QuickConfig />
     </header>
 
     <div class="relative flex flex-row overflow-hidden">

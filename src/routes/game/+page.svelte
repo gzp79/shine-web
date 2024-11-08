@@ -1,10 +1,11 @@
 <script lang="ts">
     import { identityApi } from '$src/lib/api/identity-api';
     import { currentUserStore } from '$lib/account/currentUser.svelte';
-    import CurrentUserCard from '$components/account/CurrentUserCard.svelte';
-    import ActiveSessionsCard from '$src/components/account/ActiveSessionsCard.svelte';
-    import LinkedIdentitiesCard from '$src/components/account/LinkedIdentitiesCard.svelte';
-    import ActiveTokensCard from '$src/components/account/ActiveTokensCard.svelte';
+    import CurrentUserCard from '$lib/account/CurrentUserCard.svelte';
+    import ActiveSessionsCard from '$lib/account/ActiveSessionsCard.svelte';
+    import LinkedIdentitiesCard from '$lib/account/LinkedIdentitiesCard.svelte';
+    import ActiveTokensCard from '$lib/account/ActiveTokensCard.svelte';
+    import AppContent from '$lib/app/AppContent.svelte';
 
     let currentUser = currentUserStore();
     let logout = identityApi.getLogoutUrl(false, '/');
@@ -25,9 +26,9 @@
     };
 </script>
 
-<div class="w-max-lg overflow-auto">
+<AppContent class="my-auto flex flex-col items-center overflow-y-auto px-4">
     <CurrentUserCard user={currentUser.user} onLogout={logout} onLogoutAll={logoutAll} />
     <ActiveSessionsCard {sessions} />
     <LinkedIdentitiesCard {identities} onUnlink={unlinkIdentity} />
     <ActiveTokensCard {tokens} onRevoke={revokeToken} />
-</div>
+</AppContent>

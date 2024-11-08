@@ -39,10 +39,10 @@
         <KeyValueTable
             size="xs"
             items={[
-                ['Provider', 'google'],
-                ['User Id', '1234567890'],
-                ['Date', '2021-09-01'],
-                ['Status', 'active']
+                { key: 'Provider', value: 'google' },
+                { key: 'User Id', value: '1234567890' },
+                { key: 'Date', value: '2021-09-01' },
+                { key: 'Status', value: 'active' }
             ]}
         />
     {:else if showContent == 4}

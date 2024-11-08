@@ -6,7 +6,9 @@
     import { t } from '$lib/i18n/i18n.svelte';
     import ErrorCard from '$atoms/ErrorCard.svelte';
     import LoadingCard from '$atoms/LoadingCard.svelte';
-    import Button from '$src/components/atoms/Button.svelte';
+    import Button from '$atoms/Button.svelte';
+    import App from '$lib/app/App.svelte';
+    import AppContent from '$lib/app/AppContent.svelte';
 
     interface Props {
         children: Snippet;
@@ -38,17 +40,23 @@
     });
 </script>
 
-{#if currentUser.error}
-    {#await goto('/error', { state: currentUser.error })}{/await}
-    <ErrorCard caption={$t('account.failedToLoadUserInfo')} error={currentUser.error}>
-        <Button color="error" label={$t('common.retry')} onclick={() => currentUser.refresh()} />
-    </ErrorCard>
-{:else if !currentUser.isLoaded}
-    <div class="flex h-full items-center justify-center">
-        <LoadingCard label={$t('account.login')} />
-    </div>
-{:else if currentUser.isAuthenticated}
-    {@render children()}
-{:else}
-    {#await goto('/login')}{/await}
-{/if}
+<App>
+    {#if currentUser.error}
+        <AppContent>
+            {#await goto('/error', { state: currentUser.error })}{/await}
+            <ErrorCard caption={$t('account.failedToLoadUserInfo')} error={currentUser.error}>
+                <Button color="error" onclick={() => currentUser.refresh()}>$t('common.retry')</Button>
+            </ErrorCard>
+        </AppContent>
+    {:else if !currentUser.isLoaded}
+        <AppContent>
+            <div class="flex h-full items-center justify-center">
+                <LoadingCard label={$t('account.login')} />
+            </div>
+        </AppContent>
+    {:else if currentUser.isAuthenticated}
+        {@render children()}
+    {:else}
+        {#await goto('/login')}{/await}
+    {/if}
+</App>
