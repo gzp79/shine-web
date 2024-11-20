@@ -1,5 +1,3 @@
-// Based on : https://raw.githubusercontent.com/hughsk/svg-path-parser/refs/heads/master/grammar.peg
-
 {
   function merge(first,more){
     if (!more) return [first];

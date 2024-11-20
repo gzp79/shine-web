@@ -6,7 +6,7 @@
         "prepare": "husky",
         "start:local": "cross-env NODE_ENV=local vite dev",
         "start:dev": "cross-env NODE_ENV=dev vite dev",
-        "build:svgParser": "npx peggy -c src/components/atoms/svg/peggy.config.js && echo Add /* @ts-nocheck */ /* eslint-disable */ to the top of the generated file manually",
+        "build:svgParser": "npx peggy -c src/components/atoms/svg/peggy.config.js && node scripts/fix-parser.js",
         "build:local": "cross-env NODE_ENV=local vite build",
         "build:dev": "cross-env NODE_ENV=dev vite build",
         "build": "cross-env NODE_ENV=prod vite build",
