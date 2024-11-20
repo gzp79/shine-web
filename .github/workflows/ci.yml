@@ -30,7 +30,7 @@ jobs:
 
             - name: Pre-build
               run: |
-                  npm ci --legacy-peer-deps
+                  npm ci
                   npm run mkcert
                   npm run lint
                   npm run check
