@@ -26,7 +26,8 @@
                 { title: 'Key-Value Table', href: 'atoms/key-value-tables' },
                 { title: 'Cards', href: 'atoms/cards' },
                 { title: 'Alerts', href: 'atoms/alerts' },
-                { title: 'Helper Cards', href: 'atoms/helper-cards' }
+                { title: 'Helper Cards', href: 'atoms/helper-cards' },
+                { title: 'Extra Menu', href: 'atoms/extra-menu' }
             ]
         },
         {
@@ -34,8 +35,8 @@
             items: [
                 { title: 'Buttons', href: 'atoms/buttons' },
                 { title: 'Toggle', href: 'atoms/toggles' },
-                { title: 'ComboButtons', href: 'atoms/combo-buttons' },
-                { title: 'Input Groups', href: 'atoms/input-groups' }
+                { title: 'Input Groups', href: 'atoms/input-groups' },
+                { title: 'ComboButtons', href: 'atoms/combo-buttons' }
             ]
         },
         {
@@ -114,7 +115,10 @@
                 </svg>
             </button>
             {#if showSettings}
-                <Box class="form-control mx-2 inline-grid w-full auto-cols-min grid-cols-2 items-center gap-4">
+                <Box
+                    level={1}
+                    class="form-control mx-2 inline-grid w-full auto-cols-min grid-cols-2 items-center gap-4"
+                >
                     {@const settings = currentSettings.get()}
                     {#if settings}
                         {@render settings()}

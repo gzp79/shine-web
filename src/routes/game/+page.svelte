@@ -27,8 +27,8 @@
 </script>
 
 <AppContent class="my-auto flex flex-col items-center overflow-y-auto px-4">
-    <CurrentUserCard user={currentUser.user} onLogout={logout} onLogoutAll={logoutAll} />
-    <ActiveSessionsCard {sessions} />
-    <LinkedIdentitiesCard {identities} onUnlink={unlinkIdentity} />
-    <ActiveTokensCard {tokens} onRevoke={revokeToken} />
+    <CurrentUserCard user={() => Promise.resolve(currentUser.user)} onLogout={logout} onLogoutAll={logoutAll} />
+    <ActiveSessionsCard sessions={() => sessions} />
+    <LinkedIdentitiesCard identities={() => identities} onUnlink={unlinkIdentity} />
+    <ActiveTokensCard tokens={() => tokens} onRevoke={revokeToken} />
 </AppContent>

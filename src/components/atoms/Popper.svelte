@@ -13,9 +13,9 @@
     interface Props {
         //#region Mount-time only properties
         // Selector for the trigger element
-        trigger?: string;
+        trigger?: HTMLElement | string;
         // Selector for the reference element, defaults to the first trigger element
-        reference?: string;
+        reference?: HTMLElement | string;
         // Selector for the layer element containing the popper, defaults to document.body
         layer?: string;
         // What should trigger the popper to open
@@ -117,17 +117,22 @@
         ];
         /* eslint-enable @typescript-eslint/no-explicit-any */
 
-        if (trigger) triggerEls = [...document.querySelectorAll<HTMLElement>(trigger)];
-        else
+        if (trigger) {
+            triggerEls = typeof trigger === 'string' ? [...document.querySelectorAll<HTMLElement>(trigger)] : [trigger];
+        } else {
             triggerEls = popperLocator?.previousElementSibling
                 ? [popperLocator.previousElementSibling as HTMLElement]
                 : [];
+        }
         if (!triggerEls.length) {
             console.error('No triggers found.');
         }
 
-        if (reference) referenceEl = document.querySelector<HTMLElement>(reference);
-        else referenceEl = triggerEls[0];
+        if (reference) {
+            referenceEl = typeof reference === 'string' ? document.querySelector<HTMLElement>(reference) : reference;
+        } else {
+            referenceEl = triggerEls[0];
+        }
         if (!referenceEl) {
             console.error('No reference element found');
         }

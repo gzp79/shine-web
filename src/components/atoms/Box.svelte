@@ -16,16 +16,17 @@
         shadow?: boolean;
         ghost?: boolean;
         compact?: boolean;
+        level?: number;
         class?: string;
         children?: Snippet;
     }
 
-    let { border, shadow, variant, compact, ghost, class: className, children, ...rest }: Props = $props();
+    let { border, shadow, variant, compact, ghost, level, class: className, children, ...rest }: Props = $props();
 
     const colorRotation = ['surface', 'surface-accent', 'surface-mute'];
 
     let nestingLevel: number = (getContext<number>('Box_nestingLevel') ?? -1) + 1;
-    let colorIndex: number = ((getContext<number>('Box_colorIndex') ?? -1) + 1) % colorRotation.length;
+    let colorIndex: number = level ?? ((getContext<number>('Box_colorIndex') ?? -1) + 1) % colorRotation.length;
 
     setContext('Box_nestingLevel', nestingLevel);
     setContext('Box_colorIndex', colorIndex);
@@ -67,7 +68,5 @@
 </script>
 
 <div class={boxClass} {...rest}>
-    {#if children}
-        {@render children()}
-    {/if}
+    {@render children?.()}
 </div>

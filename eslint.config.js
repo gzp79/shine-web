@@ -27,10 +27,10 @@ export default [
             }
         },
         rules: {
-            '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }]
+            '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_|_' }]
         }
     },
     {
-        ignores: ['build/', '.svelte-kit/', 'dist/', 'todo/']
+        ignores: ['build/', '.svelte-kit/', 'dist/']
     }
 ];

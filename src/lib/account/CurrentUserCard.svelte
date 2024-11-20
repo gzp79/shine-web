@@ -5,26 +5,28 @@
     import { Warning } from '$atoms/icons/common';
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
     import LoadingCard from '$atoms/LoadingCard.svelte';
-    import ResourceFetch from '$atoms/ResourceFetch.svelte';
+    import ResourceFetch, { type Status } from '$atoms/ResourceFetch.svelte';
     import Card from '$atoms/Card.svelte';
     import ErrorCard from '$atoms/ErrorCard.svelte';
     import Alert from '$atoms/Alert.svelte';
     import ComboButton from '$atoms/ComboButton.svelte';
 
     interface Props {
-        user: CurrentUser | Promise<CurrentUser>;
+        user: () => Promise<CurrentUser>;
         onLogout?: string | (() => void);
         onLogoutAll?: string | (() => void);
     }
     const { user, onLogout: logout, onLogoutAll: logoutAll }: Props = $props();
-    let isLoading = $state(true);
+
+    let fetchLoading = $state<Status>('loading');
+    let disableActions = $derived(fetchLoading !== 'completed');
 
     let logoutAction = $derived(typeof logout === 'string' ? { href: logout } : { onclick: logout });
     let logoutAllAction = $derived(typeof logoutAll === 'string' ? { href: logoutAll } : { onclick: logoutAll });
 </script>
 
 <Card caption={$t('account.userInfo')}>
-    <ResourceFetch fetch={user} onState={(state) => (isLoading = state !== 'completed')}>
+    <ResourceFetch fetch={user} bind:status={fetchLoading}>
         {#snippet loading()}
             <LoadingCard />
         {/snippet}
@@ -70,7 +72,7 @@
 
     {#snippet actions()}
         <ComboButton
-            disabled={isLoading}
+            disabled={disableActions}
             items={[
                 { caption: $t('account.logout'), ...logoutAction },
                 { caption: $t('account.logoutAll'), ...logoutAllAction }

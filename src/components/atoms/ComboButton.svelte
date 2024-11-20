@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Component } from 'svelte';
-    import { uniqueId, type Size } from './types';
+    import { type Size } from './types';
     import Button from './Button.svelte';
     import InputGroup from './InputGroup.svelte';
     import Popper from './Popper.svelte';
@@ -21,22 +21,23 @@
     }
     let { items, current = $bindable(0), disabled, size, wide }: Props = $props();
 
-    let id = uniqueId('comboButton');
+    let reference = $state<HTMLElement>();
+    let trigger = $state<HTMLElement>();
     let currentItem = $derived(items[current]);
 </script>
 
-<InputGroup {wide} {size} {id}>
+<InputGroup {wide} {size} bind:div={reference}>
     <Button wide endIcon={currentItem.icon} onclick={() => currentItem.onclick?.()} href={currentItem.href} {disabled}>
         {currentItem.caption}
     </Button>
-    <Button wide={false} id={`${id}-trigger`} endIcon={icons.DropDown} />
+    <Button wide={false} bind:button={trigger} endIcon={icons.DropDown} />
 </InputGroup>
 <Popper
     behavior="click"
     alignWidth
     display="flex flex-col rounded-lg border max-h-96 overflow-y-auto"
-    trigger={`#${id}-trigger`}
-    reference={`#${id}`}
+    {trigger}
+    {reference}
 >
     <InputGroup vertical {size}>
         {#each items as item, index}

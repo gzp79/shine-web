@@ -22,6 +22,7 @@
         variant?: Variant;
         class?: string;
         children: Snippet;
+        div?: HTMLElement;
     }
 
     let {
@@ -29,9 +30,10 @@
         color,
         vertical = false,
         variant = 'filled',
-        children,
         wide,
         class: className,
+        children,
+        div = $bindable(),
         ...rest
     }: Props = $props();
 
@@ -56,6 +58,6 @@
     setContext('InputGroup_props', context);
 </script>
 
-<div class={divClass} {...rest}>
+<div class={divClass} bind:this={div} {...rest}>
     {@render children()}
 </div>

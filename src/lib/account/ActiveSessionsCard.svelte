@@ -9,7 +9,7 @@
     import ActiveSessionCard from './_ActiveSessionCard.svelte';
 
     interface Props {
-        sessions: ActiveSession[] | Promise<ActiveSession[]>;
+        sessions: () => Promise<ActiveSession[]>;
     }
     const { sessions }: Props = $props();
 </script>

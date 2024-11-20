@@ -88,13 +88,11 @@ module.exports = {
             },
             stroke: {
                 ...colorVariants,
-                ...colorOnVariants,
-                highlight: 'hsl(var(--hc))'
+                ...colorOnVariants
             },
             fill: {
                 ...colorVariants,
-                ...colorOnVariants,
-                highlight: 'hsl(var(--hc))'
+                ...colorOnVariants
             },
             width: {
                 'min-content': 'min-content'

@@ -1,51 +1,73 @@
 <script lang="ts" module>
-    export type State = 'loading' | 'completed' | 'error';
+    export type Status = 'loading' | 'completed' | 'error';
 </script>
 
 <script lang="ts" generics="T">
     import type { Snippet } from 'svelte';
-    import type { AppError } from '$lib/utils';
+    import type { AppError, Nullable } from '$lib/utils';
 
     // generics="T" is not respected by the eslint
     /* eslint no-undef: "off" */
 
     interface Props<T> {
         initial?: T;
-        fetch: T | Promise<T>;
+        fetch: () => Promise<T>;
         loading: Snippet;
         content: Snippet<[data: T, isDirty: boolean]>;
         error: Snippet<[error: AppError]>;
-        onState?: (state: State) => void;
+
+        // read only bindable props indicating the current state
+        status?: Status;
+        // read only bindable props updated on each successful fetch
+        dataVersion?: number;
     }
-    let { initial, fetch, loading, content, error, onState }: Props<T> = $props();
+    let {
+        initial,
+        fetch,
+        loading,
+        content,
+        error,
+        status = $bindable('loading'),
+        dataVersion = $bindable(0)
+    }: Props<T> = $props();
 
     let loadingState = $state(false);
-    let resourceState = $state((initial ?? null) as T | null);
+    let resourceState = $state<Nullable<T>>(initial ?? null);
+    let errorState = $state<Nullable<AppError>>(null);
 
-    const fetchResource = async (): Promise<void> => {
-        onState?.('loading');
-        loadingState = true;
+    type FetchError = { __fetch_error: AppError };
+    const fetchResource = async (): Promise<T | null | FetchError> => {
+        let result;
         try {
-            resourceState = await fetch;
-            onState?.('completed');
+            result = await fetch();
         } catch (err) {
-            resourceState = null;
-            onState?.('error');
-            throw err;
-        } finally {
-            loadingState = false;
+            result = { __fetch_error: err as AppError };
         }
+        return result;
     };
+
+    $effect(() => {
+        loadingState = true;
+        status = 'loading';
+        fetchResource().then((data) => {
+            if (data instanceof Object && '__fetch_error' in data) {
+                resourceState = null;
+                status = 'error';
+                errorState = data.__fetch_error;
+            } else {
+                resourceState = data;
+                status = 'completed';
+            }
+            dataVersion += 1;
+            loadingState = false;
+        });
+    });
 </script>
 
-{#await fetchResource()}
-    {#if !resourceState}
-        {@render loading()}
-    {/if}
-{:catch err}
-    {@render error(err)}
-{/await}
-
-{#if resourceState !== null}
+{#if errorState}
+    {@render error(errorState)}
+{:else if resourceState}
     {@render content(resourceState, loadingState)}
+{:else}
+    {@render loading()}
 {/if}

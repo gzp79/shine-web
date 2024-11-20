@@ -1,6 +1,6 @@
 <script lang="ts">
     import { twMerge } from 'tailwind-merge';
-    import { uniqueId, type Color, type Size } from './types';
+    import { type Color, type Size } from './types';
 
     interface Props {
         offLabel?: string;
@@ -11,7 +11,7 @@
         class?: string;
 
         /// bindable value
-        value: boolean;
+        value?: boolean;
     }
 
     let {
@@ -23,8 +23,6 @@
         class: className,
         value = $bindable()
     }: Props = $props();
-
-    let id = uniqueId('toggle');
 
     const transition = 'transition-all duration-100 easy-in-out';
 
@@ -82,7 +80,7 @@
 </script>
 
 <label class={toggleClass}>
-    <input {id} type="checkbox" class="sr-only" bind:checked={value} />
+    <input type="checkbox" class="sr-only" bind:checked={value} />
     {#if offLabel}
         <span class="mx-2 whitespace-nowrap align-middle">{offLabel}</span>
     {/if}

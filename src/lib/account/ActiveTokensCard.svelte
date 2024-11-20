@@ -9,7 +9,7 @@
     import ActiveTokenCard from './_ActiveTokenCard.svelte';
 
     interface Props {
-        tokens: ActiveToken[] | Promise<ActiveToken[]>;
+        tokens: () => Promise<ActiveToken[]>;
         onRevoke: (tokenFingerprint: string) => Promise<void>;
     }
     const { tokens, onRevoke }: Props = $props();
@@ -18,7 +18,7 @@
 </script>
 
 <Card caption={$t('account.activeTokens')}>
-    <ResourceFetch fetch={tokens} onState={(st) => st === 'completed' && (dataVersion += 1)}>
+    <ResourceFetch fetch={tokens} bind:dataVersion>
         {#snippet loading()}
             <LoadingCard />
         {/snippet}

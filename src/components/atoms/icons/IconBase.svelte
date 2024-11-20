@@ -1,4 +1,6 @@
 <script lang="ts" module>
+    export const TRANSPARENCY = 0.3;
+
     export interface IconProps {
         color?: Color;
         size?: Size;

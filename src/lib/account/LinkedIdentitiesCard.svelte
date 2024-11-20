@@ -9,7 +9,7 @@
     import LinkedIdentityCard from './_LinkedIdentityCard.svelte';
 
     interface Props {
-        identities: LinkedIdentity[] | Promise<LinkedIdentity[]>;
+        identities: () => Promise<LinkedIdentity[]>;
         onUnlink: (provider: string, providerUserId: string) => Promise<void>;
     }
     const { identities, onUnlink }: Props = $props();
@@ -18,7 +18,7 @@
 </script>
 
 <Card caption={$t('account.linkedIdentities')}>
-    <ResourceFetch fetch={identities} onState={(st) => st === 'completed' && (dataVersion += 1)}>
+    <ResourceFetch fetch={identities} bind:dataVersion>
         {#snippet loading()}
             <LoadingCard />
         {/snippet}

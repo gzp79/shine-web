@@ -1,5 +1,5 @@
 <script lang="ts" generics="T extends { toString(): string }">
-    import { uniqueId } from '$src/components/atoms/types';
+    import Typography from '$src/components/atoms/Typography.svelte';
 
     // generics="T" is not respected by the eslint
     /* eslint no-undef: "off" */
@@ -18,14 +18,12 @@
     const optionList: [string, T][] = $derived(
         isTuple(options[1]) ? (options as [string, T][]) : (options as T[]).map((option) => [option.toString(), option])
     );
-
-    const id = uniqueId('input-option');
 </script>
 
-<label for={id} class="max-w-xs">
+<Typography variant="text" class="max-w-xs">
     {label}
-</label>
-<select {id} class="w-full max-w-xs rounded bg-surface-mute text-on-surface" bind:value>
+</Typography>
+<select class="w-full max-w-xs rounded bg-surface-mute text-on-surface" bind:value>
     {#each optionList as [display, val] (val)}
         <option value={val} selected={val === value}>
             {display}

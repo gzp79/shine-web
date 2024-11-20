@@ -24,6 +24,7 @@
         href?: string;
 
         children?: Snippet;
+        button?: HTMLElement;
     }
 
     let {
@@ -39,6 +40,7 @@
         onclick,
         href,
         children,
+        button = $bindable(),
         ...rest
     }: Props = $props();
 
@@ -150,13 +152,11 @@
     let elProps = $derived({ href, onclick, ...rest });
 </script>
 
-<svelte:element this={el} class={btnClass} {...elProps}>
+<svelte:element this={el} class={btnClass} bind:this={button} {...elProps}>
     {#if StartIcon}
         <StartIcon class={startIconClass} />
     {/if}
-    {#if children}
-        {@render children()}
-    {/if}
+    {@render children?.()}
     {#if EndIcon}
         <EndIcon class={endIconClass} />
     {/if}

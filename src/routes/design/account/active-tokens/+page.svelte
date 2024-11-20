@@ -102,7 +102,7 @@
 </script>
 
 <Story variant="center">
-    <ActiveTokensCard tokens={fetchTokens(tokens)} onRevoke={revoke} />
-    <ActiveTokensCard tokens={async.never()} onRevoke={revoke} />
-    <ActiveTokensCard tokens={async.error(new Error('Test error'))} onRevoke={revoke} />
+    <ActiveTokensCard tokens={() => fetchTokens(tokens)} onRevoke={revoke} />
+    <ActiveTokensCard tokens={async.never} onRevoke={revoke} />
+    <ActiveTokensCard tokens={() => async.error(new Error('Test error'))} onRevoke={revoke} />
 </Story>

@@ -4,18 +4,26 @@ export interface ElementProps {
     role?: string;
 }
 
+/* eslint-disable-next-line @typescript-eslint/no-unused-vars */
+export function dependsOn(a: unknown) {}
+
 export const colorList = ['surface', 'passive', 'primary', 'info', 'warning', 'danger', 'success'];
 export type Color = (typeof colorList)[number];
 
 export const sizeList = ['xs', 'sm', 'md', 'lg'];
 export type Size = (typeof sizeList)[number];
 
-export function uniqueId(scope: string): string {
-    return `${scope}-${Math.random().toString(36).slice(2, 9)}`;
-}
-
 export function range(start: number, end: number): number[] {
     return Array.from({ length: end - start }, (_, i) => start + i);
 }
 
+export function simpleHash(str: string): string {
+    let hash = 5381;
+    for (let i = 0; i < str.length; i++) {
+        hash = (hash * 33) ^ str.charCodeAt(i);
+    }
+    return (hash >>> 0).toString(16);
+}
+
 export * from './_responsive-prop';
+export * from './_math';

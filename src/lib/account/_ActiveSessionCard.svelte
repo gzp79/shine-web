@@ -1,5 +1,5 @@
 <script lang="ts">
-    import UAParser from 'ua-parser-js';
+    import { UAParser } from 'ua-parser-js';
     import { t } from '$lib/i18n/i18n.svelte';
     import type { ActiveSession } from '$lib/api/identity-api';
     import { formatLocation } from '$lib/i18n/utils';
