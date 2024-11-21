@@ -1,5 +1,9 @@
 # Useful links
 
+## Recipes
+
+-   using local http for msw: <https://mswjs.io/docs/recipes/using-local-https>
+
 ## Art links
 
 -   login background ideas

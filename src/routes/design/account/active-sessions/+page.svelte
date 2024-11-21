@@ -1,6 +1,6 @@
 <script lang="ts">
     import { v4 as uuid } from 'uuid';
-    import { async } from '$src/lib/utils';
+    import { async } from '$lib/utils';
     import ActiveSessionsCard from '$lib/account/ActiveSessionsCard.svelte';
     import Story from '../../_components/_Story.svelte';
 </script>

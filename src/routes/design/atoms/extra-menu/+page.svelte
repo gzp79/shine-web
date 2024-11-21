@@ -1,10 +1,10 @@
 <script lang="ts">
     import ExtraMenu from '$atoms/ExtraMenu.svelte';
+    import ExtraMenuItem from '$atoms/ExtraMenuItem.svelte';
     import Box from '$atoms/Box.svelte';
     import Button from '$atoms/Button.svelte';
     import { range } from '$atoms/types';
     import { Story } from '../../_components';
-    import ExtraMenuItem from '$src/components/atoms/ExtraMenuItem.svelte';
 </script>
 
 <Story variant="dense">

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { identityApi } from '$src/lib/api/identity-api';
+    import { identityApi } from '$lib/api/identity-api';
     import { currentUserStore } from '$lib/account/currentUser.svelte';
     import CurrentUserCard from '$lib/account/CurrentUserCard.svelte';
     import ActiveSessionsCard from '$lib/account/ActiveSessionsCard.svelte';

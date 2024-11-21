@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { logDesigner } from '$src/lib/loggers';
+    import { logDesigner } from '$lib/loggers';
     import { range } from '$atoms/types';
     import ComboButton from '$atoms/ComboButton.svelte';
     import Box from '$atoms/Box.svelte';

@@ -3,7 +3,7 @@
     import { twMerge } from 'tailwind-merge';
     import type { Middleware } from '@floating-ui/dom';
     import * as floatingDom from '@floating-ui/dom';
-    import type { Nullable } from '$src/lib/utils';
+    import type { Nullable } from '$lib/utils';
     import { portal } from './Portal.svelte';
 
     export type Behavior = 'click' | 'clickWithSelf' | 'toggle' | 'hover' | 'manual';

@@ -13,9 +13,13 @@
     let showSelection = $state(true);
     let showSettings = $state(true);
 
+    interface MenuItem {
+        title: string;
+        items: { title: string; href: string }[];
+    }
     const menu = [
         {
-            title: 'Utils',
+            title: 'Atoms',
             items: [
                 { title: 'Colors', href: 'atoms/colors' },
                 { title: 'Typography', href: 'atoms/typography' },
@@ -27,6 +31,7 @@
                 { title: 'Cards', href: 'atoms/cards' },
                 { title: 'Alerts', href: 'atoms/alerts' },
                 { title: 'Helper Cards', href: 'atoms/helper-cards' },
+                { title: 'Simple Menu', href: 'atoms/simple-menu' },
                 { title: 'Extra Menu', href: 'atoms/extra-menu' }
             ]
         },
@@ -39,6 +44,10 @@
                 { title: 'ComboButtons', href: 'atoms/combo-buttons' }
             ]
         },
+        ENABLE_MOCK && {
+            title: 'Utils',
+            items: [{ title: 'Mock test', href: 'utils/mock-test' }]
+        },
         {
             title: 'Account',
             items: [
@@ -48,7 +57,7 @@
                 { title: 'Active Tokens', href: 'account/active-tokens' }
             ]
         }
-    ];
+    ].filter(Boolean) as MenuItem[];
 
     beforeNavigate(() => {
         currentSettings.set(null);

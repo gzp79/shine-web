@@ -14,6 +14,7 @@ export default [
     {
         languageOptions: {
             globals: {
+                ENABLE_MOCK: 'readonly',
                 ...globals.browser,
                 ...globals.node
             }
@@ -31,6 +32,6 @@ export default [
         }
     },
     {
-        ignores: ['build/', '.svelte-kit/', 'dist/']
+        ignores: ['build/', '.svelte-kit/', 'dist/', 'static_generated/']
     }
 ];

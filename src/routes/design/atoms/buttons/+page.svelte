@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { logDesigner } from '$src/lib/loggers';
+    import { logDesigner } from '$lib/loggers';
     import { colorList, sizeList } from '$atoms/types';
     import Box from '$atoms/Box.svelte';
     import Button from '$atoms/Button.svelte';

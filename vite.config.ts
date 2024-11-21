@@ -1,18 +1,31 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import fs from 'fs';
 import path from 'path';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { defineConfig } from 'vitest/config';
 
 // Determine the environment
 const environment = process.env.NODE_ENV || 'dev';
+console.log(`Environment: (${environment})`);
 
 const configPath = path.resolve(__dirname, `./config.${environment}.json`);
-console.log(`Using config ${configPath}`);
+console.log(`  Using config ${configPath}`);
 const config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+
+const additionalAssets = [];
+const enableMock = environment === 'mock';
+console.log(`  MOCK ${enableMock}`);
+
+if (enableMock) {
+    additionalAssets.push({
+        src: 'static_generated/mockServiceWorker.js',
+        dest: ''
+    });
+}
 
 let https;
 if (fs.existsSync('certificates/cert.key')) {
-    console.log('Using https for serving');
+    console.log('  Protocol: https');
     https = {
         key: fs.readFileSync('certificates/cert.key'),
         cert: fs.readFileSync('certificates/cert.crt'),
@@ -23,10 +36,17 @@ if (fs.existsSync('certificates/cert.key')) {
 }
 
 export default defineConfig({
-    plugins: [sveltekit()],
+    plugins: [
+        sveltekit(),
+        viteStaticCopy({
+            targets: [...additionalAssets]
+        })
+    ],
     define: {
-        CONFIG: JSON.stringify(config)
+        CONFIG: JSON.stringify(config),
+        ENABLE_MOCK: enableMock
     },
+
     server: {
         https: https,
         port: 4443,

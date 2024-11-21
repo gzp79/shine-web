@@ -1,7 +1,7 @@
 <script lang="ts" module>
     import { onMount, setContext, untrack, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import type { Nullable } from '$src/lib/utils';
+    import type { Nullable } from '$lib/utils';
     import { dependsOn, range, simpleHash } from './types';
     import * as svg from '$atoms/svg';
 

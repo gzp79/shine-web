@@ -1,5 +1,5 @@
 <script lang="ts" generics="T extends { toString(): string }">
-    import Typography from '$src/components/atoms/Typography.svelte';
+    import Typography from '$atoms/Typography.svelte';
 
     // generics="T" is not respected by the eslint
     /* eslint no-undef: "off" */

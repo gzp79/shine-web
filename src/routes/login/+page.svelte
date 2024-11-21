@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { identityApi } from '$src/lib/api/identity-api';
+    import { identityApi } from '$lib/api/identity-api';
     import { languageStore } from '$lib/i18n/i18n.svelte';
     import { themeStore } from '$lib/theme/theme.svelte';
+    import AppContent from '$lib/app/AppContent.svelte';
     import Turnstile from '$components/Turnstile.svelte';
     import Button from '$atoms/Button.svelte';
     import config from '../../config';
-    import AppContent from '$src/lib/app/AppContent.svelte';
 
     interface Props {
         data: {

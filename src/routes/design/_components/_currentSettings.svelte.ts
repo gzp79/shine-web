@@ -1,4 +1,4 @@
-import type { Nullable } from '$src/lib/utils';
+import type { Nullable } from '$lib/utils';
 import { type Snippet } from 'svelte';
 
 let settings = $state<Nullable<Snippet>>(null);
