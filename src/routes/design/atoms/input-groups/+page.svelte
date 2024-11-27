@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { colorList, sizeList } from '$atoms/types';
+    import { actionColorList, sizeList } from '$atoms/types';
     import Button, { type Variant } from '$atoms/Button.svelte';
     import InputGroup from '$atoms/InputGroup.svelte';
     import Box from '$atoms/Box.svelte';
@@ -15,7 +15,7 @@
 </script>
 
 {#snippet settings()}
-    <Select label="Color" options={colorList} bind:value={color} />
+    <Select label="Color" options={actionColorList} bind:value={color} />
     <Select label="Size" options={sizeList} bind:value={size} />
     <Select label="Variant" options={['filled', 'outline', 'ghost']} bind:value={variant} />
     <CheckBox label="Wide" bind:value={wide} />

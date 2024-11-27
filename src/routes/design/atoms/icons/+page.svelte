@@ -1,6 +1,6 @@
 <script lang="ts">
     import { type Component } from 'svelte';
-    import { colorList, sizeList, type Color, type Size } from '$atoms/types';
+    import { actionColorList, sizeList, type ActionColor, type Size } from '$atoms/types';
     import * as icons from '$atoms/icons/common';
     import * as clients from '$atoms/icons/clients';
     import * as animated from '$atoms/icons/animated';
@@ -12,7 +12,7 @@
     import { CheckBox, Select, settingsStore, Story } from '../../_components';
 
     let size = $state<Size>('md');
-    let color = $state<Color>('primary');
+    let color = $state<ActionColor>('primary');
     let disabled = $state(false);
 
     const gridClass = 'flex flex-wrap justify-center gap-2';
@@ -22,12 +22,12 @@
 
 {#snippet settings()}
     <Select label="Size" options={sizeList} bind:value={size} />
-    <Select label="Color" options={colorList} bind:value={color} />
+    <Select label="Color" options={actionColorList} bind:value={color} />
     <CheckBox label="Disabled" bind:value={disabled} />
 {/snippet}
 
 {#snippet icon(Shape: Component, name: string)}
-    <Box ghost class="flex flex-col items-center justify-center border">
+    <Box ghost class="flex flex-col items-center justify-center border bg-{color} text-on-{color}">
         <Shape {disabled} {size} {color} />
         <Typography variant="h6">{name}</Typography>
     </Box>

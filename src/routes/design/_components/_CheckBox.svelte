@@ -11,4 +11,4 @@
 <Typography variant="text" class="max-w-xs">
     {label}
 </Typography>
-<input type="checkbox" class="justify-self-center accent-surface-mute" bind:checked={value} />
+<input type="checkbox" class="justify-self-center accent-primary" bind:checked={value} />

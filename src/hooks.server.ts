@@ -1,11 +1,25 @@
 // hooks.server.ts
 import type { Handle } from '@sveltejs/kit';
+import { enabledMocks } from '$config';
 import { loadThemeServerSide } from '$lib/theme/theme.svelte';
 
-if (ENABLE_MOCK) {
+if (enabledMocks) {
     console.log('starting server mock worker');
     const { server } = await import('$mocks/node');
-    server.listen();
+    server.listen({
+        onUnhandledRequest(request, print) {
+            const url = new URL(request.url);
+
+            const passThrough: [string, RegExp][] = [];
+            if (passThrough.some(([host, path]) => request.url.startsWith(host) && path.test(url.pathname))) {
+                console.debug(`Passing through ${request.url}`);
+                return;
+            }
+
+            print.warning();
+            throw new Error(`No handler for ${request.url}`);
+        }
+    });
 }
 
 export const handle: Handle = async ({ event, resolve }) => {

@@ -8,14 +8,14 @@
 
 {#snippet item(value: string)}
     <div
-        class="rounded-4 flex h-full w-full items-center justify-center overflow-hidden text-nowrap border p-1 text-center"
+        class="rounded-4 flex h-full w-full items-center justify-center overflow-hidden text-nowrap border border-primary p-1 text-center text-primary"
     >
         {value}
     </div>
 {/snippet}
 
 <Story variant="center">
-    <div class="bg-base-200 sticky top-0 flex justify-center p-1">
+    <div class="sticky top-0 z-10 flex justify-center bg-primary p-1 text-on-primary">
         <div class="inline-block">
             Size:
             <span class="inline-block">XS</span>

@@ -7,8 +7,11 @@ export interface ElementProps {
 /* eslint-disable-next-line @typescript-eslint/no-unused-vars */
 export function dependsOn(a: unknown) {}
 
-export const colorList = ['surface', 'passive', 'primary', 'info', 'warning', 'danger', 'success'];
-export type Color = (typeof colorList)[number];
+export const containerColorList = ['surface', 'container', 'sub-container'];
+export type ContainerColor = (typeof containerColorList)[number];
+
+export const actionColorList = ['primary', 'secondary', 'info', 'warning', 'danger', 'success'];
+export type ActionColor = (typeof actionColorList)[number];
 
 export const sizeList = ['xs', 'sm', 'md', 'lg'];
 export type Size = (typeof sizeList)[number];

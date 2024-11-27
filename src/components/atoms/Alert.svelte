@@ -32,10 +32,10 @@
     });
 
     const variants: Record<Variant, CardVariant> = {
-        info: { color: 'info', outline: true },
-        success: { color: 'success', outline: false },
-        warning: { color: 'warning', outline: true },
-        error: { color: 'danger', outline: false }
+        info: { color: 'info' },
+        success: { color: 'success' },
+        warning: { color: 'warning' },
+        error: { color: 'danger' }
     };
 </script>
 

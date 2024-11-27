@@ -1,6 +1,6 @@
+import { config } from '$config';
 import { logAPI } from '$lib/loggers';
 import { type Fetch, fetchCacheOption, fetchError } from '$lib/utils';
-import config from '../../config';
 
 export const GUEST_PROVIDER_ID = 'guest';
 

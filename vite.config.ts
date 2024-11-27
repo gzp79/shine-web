@@ -4,6 +4,8 @@ import path from 'path';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { defineConfig } from 'vitest/config';
 
+const mocks = (process.env.MOCKS || '').split(',').map((x) => x.trim());
+
 // Determine the environment
 const environment = process.env.NODE_ENV || 'dev';
 console.log(`Environment: (${environment})`);
@@ -21,6 +23,8 @@ if (enableMock) {
         src: 'static_generated/mockServiceWorker.js',
         dest: ''
     });
+
+    console.log(`  Mocks: ${mocks}`);
 }
 
 let https;
@@ -43,8 +47,9 @@ export default defineConfig({
         })
     ],
     define: {
-        CONFIG: JSON.stringify(config),
-        ENABLE_MOCK: enableMock
+        VITE_CONFIG: JSON.stringify(config),
+        VITE_ENABLE_MOCK: enableMock,
+        ...(enableMock ? { VITE_MOCKS: JSON.stringify(mocks) } : {})
     },
 
     server: {

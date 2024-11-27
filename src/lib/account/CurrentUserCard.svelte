@@ -48,7 +48,7 @@
                         <Warning color="warning" size="sm" class="inline-block" />
                     {/if}
                 {:else}
-                    <i class="text-warning">{$t('account.noEmail')}</i>
+                    <i class="bg-warning text-on-warning">{$t('account.noEmail')}</i>
                 {/if}
             {/snippet}
 

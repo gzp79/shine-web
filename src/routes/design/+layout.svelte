@@ -3,6 +3,7 @@
     import Box from '$atoms/Box.svelte';
     import Typography from '$atoms/Typography.svelte';
     import { Hamburger } from '$atoms/icons/common';
+    import { enabledMocks } from '$config';
     import QuickConfig from '$lib/app/QuickConfig.svelte';
     import { Section, settingsStore } from './_components';
 
@@ -44,7 +45,7 @@
                 { title: 'ComboButtons', href: 'atoms/combo-buttons' }
             ]
         },
-        ENABLE_MOCK && {
+        enabledMocks && {
             title: 'Utils',
             items: [{ title: 'Mock test', href: 'utils/mock-test' }]
         },
@@ -65,7 +66,7 @@
 </script>
 
 <div class="grid h-full grid-rows-[auto_1fr_auto]">
-    <header class="flex items-center bg-surface-mute px-4 py-1">
+    <header class="bg-surface-mute flex items-center px-4 py-1">
         <button aria-label="open sidebar" class="flex-none" onclick={() => (showSidebar = !showSidebar)}>
             <Hamburger size="md" class="inline-block" />
         </button>
@@ -81,7 +82,7 @@
         >
             <button
                 onclick={() => (showSelection = !showSelection)}
-                class="flex w-full flex-row items-center justify-between hover:bg-surface-accent"
+                class="hover:bg-surface-accent flex w-full flex-row items-center justify-between"
             >
                 <Typography variant="h3" class="flex-start">Stories</Typography>
                 <svg
@@ -110,7 +111,7 @@
             {/if}
             <button
                 onclick={() => (showSettings = !showSettings)}
-                class="flex w-full flex-row items-center justify-between hover:bg-surface-accent"
+                class="hover:bg-surface-accent flex w-full flex-row items-center justify-between"
             >
                 <Typography variant="h3" class="flex-start">Settings</Typography>
                 <svg
@@ -142,7 +143,7 @@
         </main>
     </div>
 
-    <footer class="flex items-center justify-between bg-surface-mute p-1">
+    <footer class="bg-surface-mute flex items-center justify-between p-1">
         <div class="flex-start"></div>
         <Typography variant="text" class="self-end">© 2024</Typography>
     </footer>

@@ -43,10 +43,13 @@
 <App>
     {#if currentUser.error}
         <AppContent>
-            {#await goto('/error', { state: currentUser.error })}{/await}
-            <ErrorCard caption={$t('account.failedToLoadUserInfo')} error={currentUser.error}>
-                <Button color="error" onclick={() => currentUser.refresh()}>$t('common.retry')</Button>
-            </ErrorCard>
+            <div class="flex h-full items-center justify-center">
+                <ErrorCard caption={$t('account.failedToLoadUserInfo')} error={currentUser.error}>
+                    {#snippet actions()}
+                        <Button onclick={() => currentUser.refresh()}>{$t('common.retry')}</Button>
+                    {/snippet}
+                </ErrorCard>
+            </div>
         </AppContent>
     {:else if !currentUser.isLoaded}
         <AppContent>

@@ -1,11 +1,11 @@
 <script lang="ts">
     import { twMerge } from 'tailwind-merge';
-    import { type Color, type Size } from './types';
+    import { type ActionColor, type Size } from './types';
 
     interface Props {
         offLabel?: string;
         onLabel?: string;
-        color?: Color;
+        color?: ActionColor;
         size?: Size;
         disabled?: boolean;
         class?: string;
@@ -52,7 +52,7 @@
             'relative h-4 w-11 rounded-full border',
             barSize[size],
             transition,
-            value ? 'bg-passive-accent border-passive-mute' : `border-passive bg-passive-mute`
+            value ? 'bg-surface border-on-surface' : 'bg-on-surface border-surface'
         )
     );
 
@@ -63,17 +63,17 @@
         lg: 'w-8 h-8 -translate-y-[6.75px]'
     };
     const knobTranslate: Record<Size, string> = {
-        xs: 'translate-x-[14.75px]',
-        sm: 'translate-x-[14.75px]',
-        md: 'translate-x-[18.75px]',
-        lg: 'translate-x-[22.75px]'
+        xs: 'translate-x-[15.25px]',
+        sm: 'translate-x-[15.25px]',
+        md: 'translate-x-[19.25px]',
+        lg: 'translate-x-[24.25px]'
     };
     let knobClass = $derived(
         twMerge(
-            'absolute rounded-full border left-0 top-0',
+            'absolute rounded-full border-2 left-0 top-0',
             knobSize[size],
             transition,
-            value ? `border-${color}-mute bg-${color}` : 'bg-passive border-passive-mute',
+            value ? `border-on-${color} bg-${color}` : `bg-on-${color} border-${color}`,
             value && knobTranslate[size]
         )
     );

@@ -12,7 +12,8 @@ const config = {
             $components: './src/components',
             $atoms: './src/components/atoms',
             $lib: './src/lib',
-            $mocks: './src/mocks'
+            $mocks: './src/mocks',
+            $config: './src/config'
         }
     }
 };

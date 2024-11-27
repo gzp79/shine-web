@@ -1,9 +1,9 @@
 <script lang="ts">
     import { onMount } from 'svelte';
-    import { type Color } from '$atoms/types';
+    import { type ActionColor, type ContainerColor } from '$atoms/types';
 
     interface Props {
-        color: Color;
+        color: ActionColor | ContainerColor;
     }
     let { color }: Props = $props();
 
@@ -32,13 +32,11 @@
     });
 </script>
 
-<div class="relative mx-2 mt-2 flex h-24 w-24 flex-row">
-    <div class="h-full flex-1 rounded-s-lg border-y border-s bg-{color}-mute"></div>
-    <div bind:this={divRef} class="h-full flex-[1.5] border-y bg-{color}"></div>
-    <div class="h-full flex-1 rounded-e-lg border-y border-e bg-{color}-accent"></div>
-    <p class="absolute left-0 top-0 flex h-full w-full items-center justify-center text-center text-xl text-on-{color}">
-        Content
-    </p>
+<div
+    bind:this={divRef}
+    class="bg-{color} text-on-{color} mx-2 mt-2 flex h-24 w-24 items-center justify-center border-2 border-on-{color} text-center text-xl"
+>
+    Content
 </div>
 <p class="text-center">{color}</p>
 <p class="text-center">{colorValue}</p>

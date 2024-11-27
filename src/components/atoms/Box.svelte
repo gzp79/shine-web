@@ -1,15 +1,14 @@
 <script lang="ts" module>
-    export interface Variant {
-        color?: Color;
-        outline?: boolean;
-    }
+    import { setContext, getContext, type Snippet } from 'svelte';
+    import { twMerge } from 'tailwind-merge';
+    import type { ActionColor, ElementProps } from './types';
+
+    export type Variant = {
+        color: ActionColor;
+    };
 </script>
 
 <script lang="ts">
-    import { setContext, getContext, type Snippet } from 'svelte';
-    import { twMerge } from 'tailwind-merge';
-    import type { Color, ElementProps } from './types';
-
     interface Props extends ElementProps {
         variant?: Variant;
         border?: boolean;
@@ -23,7 +22,7 @@
 
     let { border, shadow, variant, compact, ghost, level, class: className, children, ...rest }: Props = $props();
 
-    const colorRotation = ['surface', 'surface-accent', 'surface-mute'];
+    const colorRotation = ['container', 'sub-container', 'surface'];
 
     let nestingLevel: number = (getContext<number>('Box_nestingLevel') ?? -1) + 1;
     let colorIndex: number = level ?? ((getContext<number>('Box_colorIndex') ?? -1) + 1) % colorRotation.length;
@@ -35,21 +34,16 @@
 
     let colors = $derived.by(() => {
         if (variant) {
-            if (variant?.outline) {
-                return {
-                    fgColor: variant?.color,
-                    bgColor: colorRotation[(colorIndex + colorRotation.length - 1) % colorRotation.length]
-                };
-            } else {
-                return {
-                    fgColor: 'on-' + variant.color,
-                    bgColor: variant.color
-                };
-            }
+            return {
+                fgColor: 'on-' + variant.color,
+                bgColor: variant.color,
+                border: 'on-' + variant.color
+            };
         } else {
             return {
                 fgColor: 'on-' + colorRotation[colorIndex],
-                bgColor: colorRotation[colorIndex]
+                bgColor: colorRotation[colorIndex],
+                border: 'on-' + colorRotation[(colorIndex + colorRotation.length - 1) % colorRotation.length]
             };
         }
     });
@@ -60,7 +54,7 @@
             !compact && `p-4 ${currentMargin}`,
             !ghost && `bg-${colors.bgColor}`,
             `text-${colors.fgColor}`,
-            border && `border border-${colors.fgColor}`,
+            border && `border border-${colors.border}`,
             shadow && `shadow-md shadow-${colors.fgColor}`,
             className
         )

@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Component } from 'svelte';
-    import { type Size } from './types';
+    import { type ActionColor, type Size } from './types';
     import Button from './Button.svelte';
     import InputGroup from './InputGroup.svelte';
     import Popper from './Popper.svelte';
@@ -14,19 +14,20 @@
     }
     interface Props {
         items: Item[];
+        color?: ActionColor;
         current?: number;
         disabled?: boolean;
         size?: Size;
         wide?: boolean;
     }
-    let { items, current = $bindable(0), disabled, size, wide }: Props = $props();
+    let { items, current = $bindable(0), color = 'secondary', disabled, size, wide }: Props = $props();
 
     let reference = $state<HTMLElement>();
     let trigger = $state<HTMLElement>();
     let currentItem = $derived(items[current]);
 </script>
 
-<InputGroup {wide} {size} bind:div={reference}>
+<InputGroup {color} {wide} {size} bind:div={reference}>
     <Button wide endIcon={currentItem.icon} onclick={() => currentItem.onclick?.()} href={currentItem.href} {disabled}>
         {currentItem.caption}
     </Button>
@@ -39,7 +40,7 @@
     {trigger}
     {reference}
 >
-    <InputGroup vertical {size}>
+    <InputGroup {color} vertical {size}>
         {#each items as item, index}
             <Button wide endIcon={item.icon} onclick={() => (current = index)}>{item.caption}</Button>
         {/each}

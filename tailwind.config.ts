@@ -1,46 +1,44 @@
 import twForm from '@tailwindcss/forms';
 
-const colorNames = ['surface', 'passive', 'primary', 'info', 'warning', 'danger', 'success'];
-const extendedColorNames = [
-    ...colorNames,
-    ...colorNames.map((color) => `${color}-mute`),
-    ...colorNames.map((color) => `${color}-accent`),
-    ...colorNames.map((color) => `on-${color}`)
-];
-
-const colorVariants = {
+const containerColors = {
     surface: 'rgb(var(--color-surface))',
-    'surface-mute': 'rgb(var(--color-surface-mute))',
-    'surface-accent': 'rgb(var(--color-surface-accent))',
-    passive: 'rgb(var(--color-passive))',
-    'passive-mute': 'rgb(var(--color-passive-mute))',
-    'passive-accent': 'rgb(var(--color-passive-accent))',
-    primary: 'rgb(var(--color-primary))',
-    'primary-mute': 'rgb(var(--color-primary-mute))',
-    'primary-accent': 'rgb(var(--color-primary-accent))',
-    info: 'rgb(var(--color-info))',
-    'info-mute': 'rgb(var(--color-info-mute))',
-    'info-accent': 'rgb(var(--color-info-accent))',
-    warning: 'rgb(var(--color-warning))',
-    'warning-mute': 'rgb(var(--color-warning-mute))',
-    'warning-accent': 'rgb(var(--color-warning-accent))',
-    danger: 'rgb(var(--color-danger))',
-    'danger-mute': 'rgb(var(--color-danger-mute))',
-    'danger-accent': 'rgb(var(--color-danger-accent))',
-    success: 'rgb(var(--color-success))',
-    'success-mute': 'rgb(var(--color-success-mute))',
-    'success-accent': 'rgb(var(--color-success-accent))'
+    container: 'rgb(var(--color-container))',
+    'sub-container': 'rgb(var(--color-sub-container))'
+};
+const containerOnColors = {
+    'on-surface': 'rgb(var(--color-on-surface))',
+    'on-container': 'rgb(var(--color-on-container))',
+    'on-sub-container': 'rgb(var(--color-on-sub-container))'
 };
 
-const colorOnVariants = {
-    'on-surface': 'rgb(var(--color-on-surface))',
-    'on-passive': 'rgb(var(--color-on-passive))',
+const actionColors = {
+    primary: 'rgb(var(--color-primary))',
+    secondary: 'rgb(var(--color-secondary))',
+    info: 'rgb(var(--color-info))',
+    warning: 'rgb(var(--color-warning))',
+    danger: 'rgb(var(--color-danger))',
+    success: 'rgb(var(--color-success))'
+};
+const actionOnColors = {
     'on-primary': 'rgb(var(--color-on-primary))',
+    'on-secondary': 'rgb(var(--color-on-secondary))',
     'on-info': 'rgb(var(--color-on-info))',
     'on-warning': 'rgb(var(--color-on-warning))',
     'on-danger': 'rgb(var(--color-on-danger))',
     'on-success': 'rgb(var(--color-on-success))'
 };
+const actionAccentColors = {
+    'accent-primary': 'rgb(var(--color-accent-primary))',
+    'accent-secondary': 'rgb(var(--color-accent-secondary))',
+    'accent-info': 'rgb(var(--color-accent-info))',
+    'accent-warning': 'rgb(var(--color-accent-warning))',
+    'accent-danger': 'rgb(var(--color-accent-danger))',
+    'accent-success': 'rgb(var(--color-accent-success))'
+};
+
+function safeList(names: string[], variants: string[]): string[] {
+    return names.map((name) => variants.map((variant) => `${variant}${name}`)).flat();
+}
 
 module.exports = {
     darkMode: 'class',
@@ -55,44 +53,57 @@ module.exports = {
         }
     ],
     safelist: [
-        ...extendedColorNames.map((color) => `bg-${color}`),
-        ...extendedColorNames.map((color) => `text-on-${color}`),
-        ...extendedColorNames.map((color) => `text-${color}`),
-        ...extendedColorNames.map((color) => `border-${color}`),
-        ...extendedColorNames.map((color) => `shadow-${color}`),
-        ...extendedColorNames.map((color) => `fill-${color}`),
-        ...extendedColorNames.map((color) => `stroke-${color}`),
-        ...extendedColorNames.map((color) => `hover:bg-${color}`),
-        ...extendedColorNames.map((color) => `hover:text-on-${color}`),
-        ...extendedColorNames.map((color) => `hover:text-${color}`),
-        ...extendedColorNames.map((color) => `hover:border-${color}`),
+        ...safeList(Object.keys(containerColors), ['bg-', 'text-', 'border-']),
+        ...safeList(Object.keys(containerOnColors), ['bg-', 'text-', 'border-']),
+        ...safeList(Object.keys(actionColors), ['bg-', 'hover:bg-', 'text-', 'hover:text-', 'border-']),
+        ...safeList(Object.keys(actionOnColors), ['bg-', 'text-', 'hover:text-', 'border-', 'fill-', 'stroke-']),
+        ...safeList(Object.keys(actionAccentColors), ['text-', 'hover:text-', 'border-', 'fill-', 'stroke-']),
         ...['icon-xs', 'icon-sm', 'icon-md', 'icon-lg']
     ],
 
     theme: {
         extend: {
             colors: {
-                ...colorVariants,
-                ...colorOnVariants
+                ...containerColors,
+                ...containerOnColors,
+                ...actionColors,
+                ...actionOnColors,
+                ...actionAccentColors
             },
             backgroundColor: {
-                ...colorVariants
+                ...containerColors,
+                ...containerColors
             },
             textColor: {
-                ...colorVariants,
-                ...colorOnVariants
+                ...containerColors,
+                ...containerOnColors,
+                ...actionColors,
+                ...actionOnColors,
+                ...actionAccentColors
             },
             shadowColor: {
-                ...colorVariants,
-                ...colorOnVariants
+                ...containerColors,
+                ...actionColors
             },
             stroke: {
-                ...colorVariants,
-                ...colorOnVariants
+                ...containerColors,
+                ...containerOnColors,
+                ...actionColors,
+                ...actionOnColors,
+                ...actionAccentColors
             },
             fill: {
-                ...colorVariants,
-                ...colorOnVariants
+                ...containerColors,
+                ...containerOnColors,
+                ...actionColors,
+                ...actionOnColors,
+                ...actionAccentColors
+            },
+            borderColor: {
+                ...containerColors,
+                ...containerOnColors,
+                ...actionColors,
+                ...actionOnColors
             },
             width: {
                 'min-content': 'min-content'

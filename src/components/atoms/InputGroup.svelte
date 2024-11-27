@@ -1,12 +1,12 @@
 <script lang="ts" module>
     import { twMerge } from 'tailwind-merge';
     import { setContext, type Snippet } from 'svelte';
-    import type { ElementProps, Color, Size } from './types';
+    import type { ElementProps, ActionColor, Size } from './types';
     import type { Variant } from './Button.svelte';
 
     export interface GroupInfo {
         size: Size;
-        color?: Color;
+        color?: ActionColor;
         wide?: boolean;
         vertical: boolean;
         variant: Variant;
@@ -16,7 +16,7 @@
 <script lang="ts">
     interface Props extends ElementProps {
         size?: Size;
-        color?: Color;
+        color?: ActionColor;
         vertical?: boolean;
         wide?: boolean;
         variant?: Variant;
@@ -37,14 +37,7 @@
         ...rest
     }: Props = $props();
 
-    let divClass = $derived(
-        twMerge(
-            'inline-flex', //
-            vertical && 'flex-col',
-            wide && 'w-full',
-            className
-        )
-    );
+    let divClass = $derived(twMerge('inline-flex', vertical && 'flex-col', wide && 'w-full', className));
 
     // convert props into state, so it can be updated and children reactively
     let context = $state<GroupInfo>({ size, color, vertical, variant, wide });

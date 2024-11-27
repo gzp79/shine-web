@@ -1,8 +1,13 @@
 <script lang="ts" module>
+    import { twMerge } from 'tailwind-merge';
+    import type { Snippet } from 'svelte';
+    import CompileTailwindClasses from '../CompileTailwindClasses.svelte';
+    import type { ActionColor, Size } from '../types';
+
     export const TRANSPARENCY = 0.3;
 
     export interface IconProps {
-        color?: Color;
+        color?: ActionColor;
         size?: Size;
         disabled?: boolean;
         class?: string;
@@ -10,11 +15,6 @@
 </script>
 
 <script lang="ts">
-    import { twMerge } from 'tailwind-merge';
-    import type { Snippet } from 'svelte';
-    import CompileTailwindClasses from '../CompileTailwindClasses.svelte';
-    import type { Color, Size } from '../types';
-
     interface Props extends IconProps {
         viewBox: number[];
         children: Snippet;
@@ -23,8 +23,8 @@
     let { color, size, disabled = false, class: className, viewBox, children }: Props = $props();
     let svgClass = $derived(
         twMerge(
-            color ? `stroke-${color}` : 'stroke-current',
-            color ? `fill-${color}` : 'fill-current',
+            color ? `stroke-on-${color}` : 'stroke-current',
+            color ? `fill-on-${color}` : 'fill-current',
             size ? `icon-${size}` : 'w-full h-full',
             disabled && '!opacity-30',
             //disabled && 'grayscale'

@@ -1,15 +1,16 @@
 <script lang="ts" module>
     import { getContext, type Component, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import { type Color, type ElementProps, type Size } from './types';
+    import { type ActionColor, type ElementProps, type Size } from './types';
     import type { GroupInfo } from './InputGroup.svelte';
+    import type { HTMLAttributes } from 'svelte/elements';
 
     export type Variant = 'filled' | 'outline' | 'ghost';
 </script>
 
 <script lang="ts">
     interface Props extends ElementProps {
-        color?: Color;
+        color?: ActionColor;
         size?: Size;
         wide?: boolean;
         variant?: Variant;
@@ -22,6 +23,7 @@
 
         onclick?: () => void;
         href?: string;
+        preload?: 'disable' | 'code' | 'hover' | 'eager';
 
         children?: Snippet;
         button?: HTMLElement;
@@ -39,6 +41,7 @@
         class: className,
         onclick,
         href,
+        preload,
         children,
         button = $bindable(),
         ...rest
@@ -102,26 +105,28 @@
 
             variant === 'filled' && [
                 `bg-${color} text-on-${color}`,
+                !group && `border-2 border-on-${color}`,
                 group &&
                     (group.vertical
-                        ? `not-first:border-t border-${color}-mute`
-                        : `not-first:border-s border-${color}-mute`),
-                !disabled && 'active:scale-95 hover:brightness-125'
+                        ? `not-first:border-t border-on-${color}`
+                        : `not-first:border-s border-on-${color}`),
+                !disabled && 'active:scale-95 hover:highlight'
             ],
             variant === 'outline' && [
-                `text-${color} border-${color}`,
+                `text-accent-${color} border-accent-${color}`,
                 !group && 'border-2',
                 group &&
                     (group.vertical
                         ? 'first:border-t-2 last:border-b-2 border-x-2 border-t-2'
                         : 'first:border-s-2 last:border-e-2 border-y-2 border-s-2'),
-                !disabled && `active:scale-95`,
-                !disabled && `hover:bg-${color}-mute hover:text-${color}-accent`
+                !disabled && group && 'active:scale-105',
+                !disabled && !group && 'active:scale-95',
+                !disabled && `hover:bg-${color} hover:text-on-${color} hover:highlight`
             ],
             variant === 'ghost' && [
-                `text-${color}`,
-                !disabled && `active:scale-95`,
-                !disabled && `hover:bg-${color}-mute hover:text-${color}-accent`
+                `text-accent-${color}`,
+                !group && 'border-2 border-transparent',
+                !disabled && `active:scale-95 hover:bg-${color} hover:text-on-${color} hover:highlight`
             ],
 
             !group && ['m-1', wide ? 'min-w-full justify-between' : 'w-fit h-fit', 'rounded-full'],
@@ -138,7 +143,7 @@
             children && [sizeMods[size], StartIcon && startIconPadding[size], EndIcon && endIconPadding[size]],
             !children && sizeModsIconOnly[size],
 
-            highlight && 'brightness-125',
+            highlight && 'highlight',
             disabled && '!opacity-30 !cursor-not-allowed',
 
             className
@@ -149,7 +154,35 @@
     const endIconClass = $derived(twMerge(children && endIconMargin[size], iconSize[size]));
 
     let el = $derived(href ? 'a' : 'button');
-    let elProps = $derived({ href, onclick, ...rest });
+    let linkOptions: HTMLAttributes<HTMLElement> = $derived.by(() => {
+        if (preload === 'disable')
+            return {
+                'data-sveltekit-preload-data': 'off',
+                'data-sveltekit-preload-code': 'off'
+            };
+        else if (preload === 'code')
+            return {
+                'data-sveltekit-preload-data': 'off',
+                'data-sveltekit-preload-code': 'hover'
+            };
+        else if (preload === 'hover')
+            return {
+                'data-sveltekit-preload-data': 'hover',
+                'data-sveltekit-preload-code': 'hover'
+            };
+        else if (preload === 'eager')
+            return {
+                'data-sveltekit-preload-data': 'hover',
+                'data-sveltekit-preload-code': 'eager'
+            };
+        else return {};
+    });
+    let elProps = $derived({
+        href,
+        onclick,
+        ...(href ? linkOptions : {}),
+        ...rest
+    });
 </script>
 
 <svelte:element this={el} class={btnClass} bind:this={button} {...elProps}>

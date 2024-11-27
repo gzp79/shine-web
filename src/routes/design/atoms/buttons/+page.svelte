@@ -1,6 +1,6 @@
 <script lang="ts">
     import { logDesigner } from '$lib/loggers';
-    import { colorList, sizeList } from '$atoms/types';
+    import { actionColorList, sizeList, type ActionColor } from '$atoms/types';
     import Box from '$atoms/Box.svelte';
     import Button from '$atoms/Button.svelte';
     import { Firefox } from '$atoms/icons/clients';
@@ -9,7 +9,7 @@
     import { Twitter } from '$atoms/icons/social';
     import { Select, settingsStore, Story } from '../../_components';
 
-    let color = $state('primary');
+    let color = $state<ActionColor>('primary');
     let action = $state('click');
     let href = '#top';
 
@@ -32,7 +32,7 @@
 </script>
 
 {#snippet settings()}
-    <Select label="Color" options={colorList.filter((x) => x !== 'surface')} bind:value={color} />
+    <Select label="Color" options={actionColorList} bind:value={color} />
     <Select label="Action" options={['click', 'href', 'none']} bind:value={action} />
 {/snippet}
 
