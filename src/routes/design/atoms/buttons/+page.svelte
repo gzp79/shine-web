@@ -9,7 +9,7 @@
     import { Twitter } from '$atoms/icons/social';
     import { Select, settingsStore, Story } from '../../_components';
 
-    let color = $state<ActionColor>('primary');
+    let color = $state<ActionColor>('secondary');
     let action = $state('click');
     let href = '#top';
 

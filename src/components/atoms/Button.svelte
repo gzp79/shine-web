@@ -104,13 +104,14 @@
             'inline-flex items-center justify-center text-center whitespace-nowrap',
 
             variant === 'filled' && [
-                `bg-${color} text-on-${color}`,
-                !group && `border-2 border-on-${color}`,
+                `bg-${color} text-on-${color} border-on-${color}`,
+                !group && 'border-2',
                 group &&
                     (group.vertical
-                        ? `not-first:border-t border-on-${color}`
-                        : `not-first:border-s border-on-${color}`),
-                !disabled && 'active:scale-95 hover:highlight'
+                        ? 'first:border-t-2 last:border-b-2 border-x-2 border-t-2'
+                        : 'first:border-s-2 last:border-e-2 border-y-2 border-s-2'),
+                !disabled && !group && 'active:scale-95',
+                !disabled && 'hover:highlight'
             ],
             variant === 'outline' && [
                 `text-accent-${color} border-accent-${color}`,
@@ -119,14 +120,14 @@
                     (group.vertical
                         ? 'first:border-t-2 last:border-b-2 border-x-2 border-t-2'
                         : 'first:border-s-2 last:border-e-2 border-y-2 border-s-2'),
-                !disabled && group && 'active:scale-105',
                 !disabled && !group && 'active:scale-95',
-                !disabled && `hover:bg-${color} hover:text-on-${color} hover:highlight`
+                !disabled && `hover:highlight-backdrop`
             ],
             variant === 'ghost' && [
                 `text-accent-${color}`,
                 !group && 'border-2 border-transparent',
-                !disabled && `active:scale-95 hover:bg-${color} hover:text-on-${color} hover:highlight`
+                !disabled && !group && 'active:scale-95',
+                !disabled && `hover:highlight-backdrop`
             ],
 
             !group && ['m-1', wide ? 'min-w-full justify-between' : 'w-fit h-fit', 'rounded-full'],

@@ -65,8 +65,8 @@
     });
 </script>
 
-<div class="grid h-full grid-rows-[auto_1fr_auto]">
-    <header class="bg-surface-mute flex items-center px-4 py-1">
+<div class="grid h-full grid-rows-[auto_1fr_auto] overflow-hidden">
+    <header class="flex items-center bg-container px-4 py-1">
         <button aria-label="open sidebar" class="flex-none" onclick={() => (showSidebar = !showSidebar)}>
             <Hamburger size="md" class="inline-block" />
         </button>
@@ -76,13 +76,13 @@
 
     <div class="relative flex flex-row overflow-hidden">
         <aside
-            class="flexh-full h-full w-[30dvw] min-w-max overflow-y-auto bg-surface p-4 {showSidebar
+            class="flexh-full h-full w-[30dvw] min-w-max overflow-y-auto bg-sub-container p-4 {showSidebar
                 ? 'absolute left-0 top-0 z-20 opacity-90 md:static'
                 : 'hidden'}"
         >
             <button
                 onclick={() => (showSelection = !showSelection)}
-                class="hover:bg-surface-accent flex w-full flex-row items-center justify-between"
+                class="hover:highlight-backdrop flex w-full flex-row items-center justify-between"
             >
                 <Typography variant="h3" class="flex-start">Stories</Typography>
                 <svg
@@ -100,7 +100,7 @@
                     <Typography variant="h4" element="h2" class="mx-2">{group.title}</Typography>
                     <ul class="mx-4 w-max">
                         {#each group.items as item}
-                            <li class="hover:bg-surface-accent">
+                            <li class="hover:highlight-backdrop">
                                 <a href={`/design/${item.href}`}>
                                     <Typography variant="h6" element="h3">{item.title}</Typography>
                                 </a>
@@ -111,7 +111,7 @@
             {/if}
             <button
                 onclick={() => (showSettings = !showSettings)}
-                class="hover:bg-surface-accent flex w-full flex-row items-center justify-between"
+                class="hover:highlight-backdrop flex w-full flex-row items-center justify-between"
             >
                 <Typography variant="h3" class="flex-start">Settings</Typography>
                 <svg
@@ -127,7 +127,7 @@
             {#if showSettings}
                 <Box
                     level={1}
-                    class="form-control mx-2 inline-grid w-full auto-cols-min grid-cols-2 items-center gap-4"
+                    class="form-control mx-2 inline-grid w-full auto-cols-min grid-cols-2 items-center gap-4 border border-on-container bg-container"
                 >
                     {@const settings = currentSettings.get()}
                     {#if settings}
@@ -138,12 +138,12 @@
                 </Box>
             {/if}
         </aside>
-        <main class="z-10 max-h-full w-full overflow-auto">
+        <main class="z-10 h-full w-full overflow-y-auto">
             {@render children()}
         </main>
     </div>
 
-    <footer class="bg-surface-mute flex items-center justify-between p-1">
+    <footer class="flex items-center justify-between bg-container p-1">
         <div class="flex-start"></div>
         <Typography variant="text" class="self-end">© 2024</Typography>
     </footer>

@@ -23,7 +23,7 @@
 <Typography variant="text" class="max-w-xs">
     {label}
 </Typography>
-<select class="w-full max-w-xs rounded bg-surface text-on-surface" bind:value>
+<select class="w-full max-w-xs rounded border border-on-surface bg-surface text-on-surface" bind:value>
     {#each optionList as [display, val] (val)}
         <option value={val} selected={val === value}>
             {display}

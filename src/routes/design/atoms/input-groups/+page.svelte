@@ -6,7 +6,7 @@
     import * as icons from '$atoms/icons/common';
     import { CheckBox, Select, settingsStore, Story } from '../../_components';
 
-    let color = $state('primary');
+    let color = $state('secondary');
     let size = $state('md');
     let variant = $state<Variant>('filled');
     let wide = $state(false);

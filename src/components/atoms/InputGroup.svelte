@@ -22,16 +22,18 @@
         variant?: Variant;
         class?: string;
         children: Snippet;
+        element?: string;
         div?: HTMLElement;
     }
 
     let {
         size = 'md',
-        color,
+        color = 'secondary',
         vertical = false,
         variant = 'filled',
         wide,
         class: className,
+        element = 'div',
         children,
         div = $bindable(),
         ...rest
@@ -51,6 +53,6 @@
     setContext('InputGroup_props', context);
 </script>
 
-<div class={divClass} bind:this={div} {...rest}>
+<svelte:element this={element} class={divClass} bind:this={div} {...rest}>
     {@render children()}
-</div>
+</svelte:element>

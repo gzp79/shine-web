@@ -53,7 +53,7 @@ module.exports = {
         }
     ],
     safelist: [
-        ...safeList(Object.keys(containerColors), ['bg-', 'text-', 'border-']),
+        ...safeList(Object.keys(containerColors), ['bg-', 'hover:bg-', 'text-', 'border-']),
         ...safeList(Object.keys(containerOnColors), ['bg-', 'text-', 'border-']),
         ...safeList(Object.keys(actionColors), ['bg-', 'hover:bg-', 'text-', 'hover:text-', 'border-']),
         ...safeList(Object.keys(actionOnColors), ['bg-', 'text-', 'hover:text-', 'border-', 'fill-', 'stroke-']),
