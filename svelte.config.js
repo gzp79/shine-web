@@ -9,6 +9,7 @@ const config = {
     kit: {
         adapter: adapter(),
         alias: {
+            $generated: './src/generated',
             $components: './src/components',
             $atoms: './src/components/atoms',
             $lib: './src/lib',

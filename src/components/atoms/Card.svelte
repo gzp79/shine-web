@@ -43,7 +43,7 @@
 
 <Box compact border {variant} {shadow} class={boxClass} {...rest}>
     {#if icon}
-        <div class="m-1 max-h-12 w-fit md:m-2">
+        <div class="m-2 flex h-12 w-12 items-center justify-center">
             {@render icon()}
         </div>
     {/if}
@@ -54,7 +54,7 @@
                 variant="h4"
                 element="p"
                 weight="emphasis"
-                class="h-fit w-full px-1 py-1 {!icon && 'text-center'}"
+                class="h-fit w-full py-1 pe-2 {!icon && 'text-center'}"
             >
                 {caption}
             </Typography>

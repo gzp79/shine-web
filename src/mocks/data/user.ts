@@ -8,5 +8,22 @@ export const noUserInfo = http.get('https://mocked.com/identity/api/auth/user/in
 });
 
 export const defaultLoginProvider = http.get('https://mocked.com/identity/api/auth/providers', async () => {
-    return HttpResponse.json({ providers: ['google', 'gitlab', 'github', 'discord'] }, { status: 200 });
+    return HttpResponse.json(
+        {
+            providers: [
+                'google',
+                'gitlab',
+                'github',
+                'discord',
+                'aaa',
+
+                //duplicates
+                'google',
+                'gitlab',
+                'github',
+                'discord'
+            ]
+        },
+        { status: 200 }
+    );
 });

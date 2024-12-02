@@ -30,7 +30,8 @@
         "tailwind-merge": "^2.5.4",
         "turnstile-types": "^1.2.3",
         "ua-parser-js": "^2.0.0",
-        "uuid": "^11.0.3"
+        "uuid": "^11.0.3",
+        "zod": "^3.23.8"
     },
     "devDependencies": {
         "@playwright/test": "^1.49.0",

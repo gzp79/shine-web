@@ -28,9 +28,9 @@
 
     const toggleSize: Record<Size, string> = {
         xs: 'text-sm leading-none my-1',
-        sm: 'text-base leading-none my-1.5',
-        md: 'text-base leading-none my-2',
-        lg: 'text-lg leading-none my-2'
+        sm: 'text-base leading-none my-1',
+        md: 'text-base leading-none my-1',
+        lg: 'text-lg leading-none my-1'
     };
     let toggleClass = $derived(
         twMerge(
@@ -42,38 +42,46 @@
     );
 
     const barSize: Record<Size, string> = {
-        xs: 'w-8 h-3',
-        sm: 'w-9 h-3',
-        md: 'w-11 h-4',
-        lg: 'w-14 h-5'
+        xs: 'w-6 h-3',
+        sm: 'w-8 h-3.5',
+        md: 'w-10 h-4',
+        lg: 'w-12 h-5'
     };
     let barClass = $derived(
         twMerge(
-            'relative h-4 w-11 rounded-full border',
+            'relative box-border h-4 w-11 rounded-full border border-on-surface',
+            `bg-${color}`,
             barSize[size],
-            transition,
-            value ? 'bg-surface border-on-surface' : 'bg-on-surface border-surface'
+            transition
+            //value && 'brightness-150'
         )
     );
 
+    /*const knobSize: Record<Size, string> = {
+        xs: 'w-4 h-4 -translate-x-[1px] -translate-y-[2.75px]',
+        sm: 'w-5 h-5 -translate-x-[1px] -translate-y-[4.75px]',
+        md: 'w-6 h-6 -translate-x-[1px] -translate-y-[4.75px]',
+        lg: 'w-8 h-8 -translate-x-[1px] -translate-y-[6.75px]'
+    };*/
     const knobSize: Record<Size, string> = {
-        xs: 'w-4 h-4 -translate-y-[2.75px]',
-        sm: 'w-5 h-5 -translate-y-[4.75px]',
-        md: 'w-6 h-6 -translate-y-[4.75px]',
-        lg: 'w-8 h-8 -translate-y-[6.75px]'
+        xs: 'w-2 h-2 translate-x-[1px] translate-y-[1px]',
+        sm: 'w-2.5 h-2.5 translate-x-[2px] translate-y-[1px]',
+        md: 'w-3 h-3 translate-x-[2.5px] translate-y-[1.25px]',
+        lg: 'w-4 h-4 translate-x-[3px] translate-y-[1.125px]'
     };
     const knobTranslate: Record<Size, string> = {
-        xs: 'translate-x-[15.25px]',
-        sm: 'translate-x-[15.25px]',
-        md: 'translate-x-[19.25px]',
-        lg: 'translate-x-[24.25px]'
+        xs: 'translate-x-[12px]',
+        sm: 'translate-x-[18px]',
+        md: 'translate-x-[24px]',
+        lg: 'translate-x-[27px]'
     };
     let knobClass = $derived(
         twMerge(
-            'absolute rounded-full border-2 left-0 top-0',
+            `absolute rounded-full border border-on-${color} left-0 top-0`,
             knobSize[size],
             transition,
-            value ? `border-on-${color} bg-${color}` : `bg-on-${color} border-${color}`,
+            value ? 'bg-data-gray2' : 'bg-data-gray6',
+            //value ? `bg-${color}` : 'bg-data-gray6',
             value && knobTranslate[size]
         )
     );

@@ -27,13 +27,23 @@ const actionOnColors = {
     'on-danger': 'rgb(var(--color-on-danger))',
     'on-success': 'rgb(var(--color-on-success))'
 };
-const actionAccentColors = {
+const actionToneColors = {
     'accent-primary': 'rgb(var(--color-accent-primary))',
     'accent-secondary': 'rgb(var(--color-accent-secondary))',
     'accent-info': 'rgb(var(--color-accent-info))',
     'accent-warning': 'rgb(var(--color-accent-warning))',
     'accent-danger': 'rgb(var(--color-accent-danger))',
     'accent-success': 'rgb(var(--color-accent-success))'
+};
+
+const dataColors = {
+    'data-gray1': 'rgb(var(--color-data-gray-1))',
+    'data-gray2': 'rgb(var(--color-data-gray-2))',
+    'data-gray3': 'rgb(var(--color-data-gray-3))',
+    'data-gray4': 'rgb(var(--color-data-gray-4))',
+    'data-gray5': 'rgb(var(--color-data-gray-5))',
+    'data-gray6': 'rgb(var(--color-data-gray-6))',
+    'data-gray7': 'rgb(var(--color-data-gray-7))'
 };
 
 function safeList(names: string[], variants: string[]): string[] {
@@ -57,7 +67,8 @@ module.exports = {
         ...safeList(Object.keys(containerOnColors), ['bg-', 'text-', 'border-']),
         ...safeList(Object.keys(actionColors), ['bg-', 'hover:bg-', 'text-', 'hover:text-', 'border-']),
         ...safeList(Object.keys(actionOnColors), ['bg-', 'text-', 'hover:text-', 'border-', 'fill-', 'stroke-']),
-        ...safeList(Object.keys(actionAccentColors), ['text-', 'hover:text-', 'border-', 'fill-', 'stroke-']),
+        ...safeList(Object.keys(actionToneColors), ['bg-', 'text-', 'hover:text-', 'border-', 'fill-', 'stroke-']),
+        ...safeList(Object.keys(dataColors), ['bg-', 'text-', 'fill-', 'stroke-']),
         ...['icon-xs', 'icon-sm', 'icon-md', 'icon-lg']
     ],
 
@@ -68,18 +79,20 @@ module.exports = {
                 ...containerOnColors,
                 ...actionColors,
                 ...actionOnColors,
-                ...actionAccentColors
+                ...actionToneColors,
+                ...dataColors
             },
             backgroundColor: {
                 ...containerColors,
-                ...containerColors
+                ...containerColors,
+                ...dataColors
             },
             textColor: {
                 ...containerColors,
                 ...containerOnColors,
                 ...actionColors,
                 ...actionOnColors,
-                ...actionAccentColors
+                ...actionToneColors
             },
             shadowColor: {
                 ...containerColors,
@@ -90,14 +103,16 @@ module.exports = {
                 ...containerOnColors,
                 ...actionColors,
                 ...actionOnColors,
-                ...actionAccentColors
+                ...actionToneColors,
+                ...dataColors
             },
             fill: {
                 ...containerColors,
                 ...containerOnColors,
                 ...actionColors,
                 ...actionOnColors,
-                ...actionAccentColors
+                ...actionToneColors,
+                ...dataColors
             },
             borderColor: {
                 ...containerColors,

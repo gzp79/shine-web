@@ -14,3 +14,9 @@ export function settingsStore() {
         }
     };
 }
+
+export const STYLE = {
+    border: 'on-container',
+    background: 'sub-container',
+    foreground: 'on-sub-container'
+};

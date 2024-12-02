@@ -130,7 +130,7 @@
                 !disabled && `hover:highlight-backdrop`
             ],
 
-            !group && ['m-1', wide ? 'min-w-full justify-between' : 'w-fit h-fit', 'rounded-full'],
+            !group && ['m-1', wide ? 'min-w-full justify-center' : 'w-fit h-fit', 'rounded-full'],
             group && [
                 'self-stretch',
                 group.vertical && 'w-full',

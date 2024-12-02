@@ -26,13 +26,15 @@
         {#each filteredItems as item}
             <tr class="border-none">
                 <th class="w-min-content text-nowrap">{item.key}</th>
-                <td class={twMerge('w-full text-ellipsis', item.class)}>
-                    {#if typeof item.value === 'string'}
-                        {item.value}
-                    {:else}
+                {#if typeof item.value === 'string'}
+                    <td class="w-full text-ellipsis">
+                        <span class={item.class}>{item.value}</span>
+                    </td>
+                {:else}
+                    <td class={twMerge('w-full text-ellipsis', item.class)}>
                         {@render item.value()}
-                    {/if}
-                </td>
+                    </td>
+                {/if}
             </tr>
         {/each}
     </tbody>

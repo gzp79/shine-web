@@ -1,14 +1,14 @@
 <script lang="ts">
     import { identityApi } from '$lib/api/identity-api';
     import { languageStore } from '$lib/i18n/i18n.svelte';
-    import { themeStore } from '$lib/theme/theme.svelte';
-    import AppContent from '$lib/app/AppContent.svelte';
+    import { config } from '$config';
     import Turnstile from '$components/Turnstile.svelte';
     import Button from '$atoms/Button.svelte';
-    import Menu from '$atoms/SimpleMenu.svelte';
-    import MenuItem from '$atoms/SimpleMenuItem.svelte';
-    import { config } from '$config';
-    import Toggle from '$components/atoms/Toggle.svelte';
+    import Box from '$atoms/Box.svelte';
+    import Toggle from '$atoms/Toggle.svelte';
+    import Logo from '$atoms/icons/Logo.svelte';
+    import * as icons from '$atoms/icons/social';
+    import type { Component } from 'svelte';
 
     interface Props {
         data: {
@@ -18,46 +18,67 @@
 
     let { data }: Props = $props();
 
-    const theme = themeStore();
     const language = languageStore();
 
     let captcha = $state('');
     let rememberMe = $state(true);
 
-    const captchaTheme = $derived.by(() => {
-        if (theme.current === 'dark') {
-            return 'dark';
-        } else if (theme.current === 'light') {
-            return 'light';
-        } else {
-            return 'auto';
-        }
-    });
     const captchaLang = $derived(language.current);
+
+    const providerIcon = (provider: string): Component | undefined => {
+        switch (provider) {
+            case 'google':
+                return icons.Google;
+            case 'twitter':
+                return icons.Twitter;
+            case 'github':
+                return icons.Github;
+            case 'discord':
+                return icons.Discord;
+            //case 'guest': return icons.Guest;
+            //case 'gitlab': return icons.Gitlab;
+            default:
+                return undefined;
+        }
+    };
 </script>
 
-<AppContent>
-    <div class="flex flex-col items-center justify-center">
-        <Menu>
-            {#each data.providers as provider}
-                <MenuItem
-                    ><Button
-                        disabled={!captcha}
-                        href={identityApi.getExternalLoginUrl(provider, rememberMe, captcha, '/game')}
-                        >{provider}</Button
-                    ></MenuItem
-                >
-            {/each}
-            <Button disabled={!captcha} href={identityApi.getGuestLoginUrl(captcha, '/game')}>Guest</Button>
-        </Menu>
-        <Toggle bind:value={rememberMe} onLabel="Remember me"></Toggle>
+<div class="flex h-full flex-col items-center justify-center">
+    <Logo class="h-[30%] w-full bg-surface fill-current p-4 text-on-surface" />
+    <div class="justify-cetner mb-4 flex h-[70%] flex-row items-center overflow-hidden">
+        <div class="me-8 h-full lg:w-[50vw]"></div>
+        <div class="flex h-full flex-col items-center overflow-hidden">
+            <Box border class="mx-0 h-full w-full overflow-y-auto px-8 py-2">
+                <div class="flex flex-col items-center justify-center">
+                    {#each data.providers as provider}
+                        <Button
+                            variant="outline"
+                            wide
+                            disabled={!captcha}
+                            href={identityApi.getExternalLoginUrl(provider, rememberMe, captcha, '/game')}
+                            startIcon={providerIcon(provider)}
+                            class="m-2"
+                        >
+                            {provider}
+                        </Button>
+                    {/each}
+                </div>
+            </Box>
+            <Toggle bind:value={rememberMe} onLabel="Remember me" />
+        </div>
 
-        <Turnstile
-            siteKey={config.turnstile.siteKey}
-            theme={captchaTheme}
-            size="compact"
-            language={captchaLang}
-            bind:token={captcha}
-        />
+        <div class="mx-8 h-full border-l border-on-surface"></div>
+
+        <Button
+            color="primary"
+            disabled={!captcha}
+            href={identityApi.getGuestLoginUrl(captcha, '/game')}
+            startIcon={providerIcon('guest')}
+            class="m-0"
+        >
+            Guest
+        </Button>
     </div>
-</AppContent>
+
+    <Turnstile siteKey={config.turnstile.siteKey} size="compact" language={captchaLang} bind:token={captcha} />
+</div>

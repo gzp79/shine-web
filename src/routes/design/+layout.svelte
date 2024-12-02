@@ -6,6 +6,7 @@
     import { enabledMocks } from '$config';
     import QuickConfig from '$lib/app/QuickConfig.svelte';
     import { Section, settingsStore } from './_components';
+    import { STYLE } from './_components/_currentSettings.svelte';
 
     const { children } = $props();
 
@@ -127,7 +128,7 @@
             {#if showSettings}
                 <Box
                     level={1}
-                    class="form-control mx-2 inline-grid w-full auto-cols-min grid-cols-2 items-center gap-4 border border-on-container bg-container"
+                    class="form-control mx-2 inline-grid w-full auto-cols-min grid-cols-2 items-center gap-4 border border-on-container bg-container text-{STYLE.foreground}"
                 >
                     {@const settings = currentSettings.get()}
                     {#if settings}

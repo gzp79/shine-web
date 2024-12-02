@@ -17,20 +17,22 @@
     let { caption, error, children, actions, ...rest }: Props = $props();
 </script>
 
-<Alert variant="error" caption={caption ?? $t('common.somethingWentWrong')} {actions} {...rest}>
-    <Typography variant="text">
-        {error.message}
-    </Typography>
-    {#if error.detail}
-        <Box border class="min-h-max">
-            <Typography variant="code">
-                <pre>{JSON.stringify(error.detail, null, 2)}</pre>
-            </Typography>
-        </Box>
-    {/if}
-    {#if children}
-        <div class="m-3">
-            {@render children()}
-        </div>
-    {/if}
-</Alert>
+<div class="flex h-full w-full flex-col items-center justify-center">
+    <Alert variant="error" caption={caption ?? $t('common.somethingWentWrong')} {actions} {...rest}>
+        <Typography variant="text">
+            {error.message}
+        </Typography>
+        {#if error.detail}
+            <Box border class="min-h-max">
+                <Typography variant="code">
+                    <pre>{JSON.stringify(error.detail, null, 2)}</pre>
+                </Typography>
+            </Box>
+        {/if}
+        {#if children}
+            <div class="m-3">
+                {@render children()}
+            </div>
+        {/if}
+    </Alert>
+</div>

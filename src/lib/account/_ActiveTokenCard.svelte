@@ -38,7 +38,8 @@
             },
             {
                 key: $t('account.activeStatus'),
-                value: token.isExpired ? $t('account.active') : $t('account.expired')
+                value: token.isExpired ? $t('account.expired') : $t('account.active'),
+                class: token.isExpired ? 'bg-warning text-on-warning px-1' : ''
             },
             {
                 key: $t('account.creationDate'),

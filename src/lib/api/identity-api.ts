@@ -1,65 +1,90 @@
 import { config } from '$config';
 import { logAPI } from '$lib/loggers';
-import { type Fetch, fetchCacheOption, fetchError } from '$lib/utils';
+import { type Fetch, SchemaError, fetchCacheOption, fetchError } from '$lib/utils';
+import { z } from 'zod';
+import { DateStringSchema, OptionalSchema } from './schema-helpers';
 
 export const GUEST_PROVIDER_ID = 'guest';
 
-export type CurrentUser = {
-    isAuthenticated: boolean;
-    isLinked: boolean;
-    userId: string;
-    name: string;
-    email?: string;
-    isEmailConfirmed: boolean;
-    roles: string[];
-    sessionLength: number;
-};
+const ProviderSchema = z.object({
+    providers: z.array(z.string())
+});
+export type Provider = z.infer<typeof ProviderSchema>;
 
-export type LinkedIdentity = {
+const CurrentUserSchema = z.object({
+    isLinked: z.boolean(),
+    userId: z.string(),
+    name: z.string(),
+    email: OptionalSchema(z.string()),
+    isEmailConfirmed: z.boolean(),
+    roles: z.array(z.string()),
+    sessionLength: z.number()
+});
+export type CurrentUser = z.infer<typeof CurrentUserSchema> & { isAuthenticated: boolean };
+
+const LinkedIdentitySchema = z.object({
     //userId: string,
-    provider: string;
-    providerUserId: string;
-    linkedAt: Date;
-    name?: string;
-    email?: string;
-};
+    provider: z.string(),
+    providerUserId: z.string(),
+    linkedAt: z.string().transform((str) => new Date(str)),
+    name: OptionalSchema(z.string()),
+    email: OptionalSchema(z.string())
+});
+export type LinkedIdentity = z.infer<typeof LinkedIdentitySchema>;
 
-export type LinkedIdentities = {
-    links: LinkedIdentity[];
-};
+const LinkedIdentitiesSchema = z.object({
+    links: z.array(LinkedIdentitySchema)
+});
+export type LinkedIdentities = z.infer<typeof LinkedIdentitiesSchema>;
 
-export type ActiveSession = {
+const ActiveSessionSchema = z.object({
     //userId: string,
-    fingerprint: string;
-    createdAt: Date;
-    agent: string;
-    country?: string;
-    region?: string;
-    city?: string;
-};
+    fingerprint: z.string(),
+    createdAt: DateStringSchema,
+    agent: z.string(),
+    country: OptionalSchema(z.string()),
+    region: OptionalSchema(z.string()),
+    city: OptionalSchema(z.string())
+});
+export type ActiveSession = z.infer<typeof ActiveSessionSchema>;
 
-export type TokenKind = 'singleAccess' | 'persistent' | 'access';
+const ActiveSessionsSchema = z.object({
+    sessions: z.array(ActiveSessionSchema)
+});
+export type ActiveSessions = z.infer<typeof ActiveSessionsSchema>;
 
-export type ActiveSessions = {
-    sessions: ActiveSession[];
-};
+const TokenKindSchema = z.enum(['singleAccess', 'persistent', 'access']);
+export type TokenKind = z.infer<typeof TokenKindSchema>;
 
-export type ActiveToken = {
+const ActiveTokenSchema = z.object({
     //userId: string,
-    tokenFingerprint: string;
-    kind: TokenKind;
-    createdAt: Date;
-    expireAt: Date;
-    isExpired: boolean;
-    agent: string;
-    country?: string;
-    region?: string;
-    city?: string;
-};
+    tokenFingerprint: z.string(),
+    kind: TokenKindSchema,
+    createdAt: DateStringSchema,
+    expireAt: DateStringSchema,
+    isExpired: z.boolean(),
+    agent: z.string(),
+    country: OptionalSchema(z.string()),
+    region: OptionalSchema(z.string()),
+    city: OptionalSchema(z.string())
+});
+export type ActiveToken = z.infer<typeof ActiveTokenSchema>;
 
-export type ActiveTokens = {
-    tokens: ActiveToken[];
-};
+const ActiveTokensSchema = z.object({
+    tokens: z.array(ActiveTokenSchema)
+});
+export type ActiveTokens = z.infer<typeof ActiveTokensSchema>;
+
+async function parseResponse<T extends z.AnyZodObject>(schema: T, response: Response): Promise<z.infer<T>> {
+    const data = await response.json();
+    try {
+        return schema.parse(data);
+    } catch (err) {
+        console.error('Failed to parse response', data, 'with error', err);
+        const error = err as z.ZodError;
+        throw new SchemaError(error.message);
+    }
+}
 
 class IdentityApi {
     constructor(
@@ -76,7 +101,7 @@ class IdentityApi {
             ...fetchCacheOption('no-store')
         });
         if (response.ok) {
-            const user = await response.json();
+            const user = (await parseResponse(CurrentUserSchema, response)) as CurrentUser;
             logAPI('getCurrentUser completed,', user);
             user.isAuthenticated = true;
             return user;
@@ -126,7 +151,7 @@ class IdentityApi {
             throw error;
         }
 
-        const providers = await response.json();
+        const providers = await parseResponse(ProviderSchema, response);
         logAPI('getExternalLoginProviders completed,', providers);
 
         return providers.providers;
@@ -159,7 +184,7 @@ class IdentityApi {
             throw error;
         }
 
-        const identities: LinkedIdentities = await response.json();
+        const identities = await parseResponse(LinkedIdentitiesSchema, response);
         logAPI('getLinkedIdentities completed,', identities);
         return identities.links;
     }
@@ -197,7 +222,7 @@ class IdentityApi {
             throw error;
         }
 
-        const sessions: ActiveSessions = await response.json();
+        const sessions = await parseResponse(ActiveSessionsSchema, response);
         logAPI('getActiveSessions completed,', sessions);
         return sessions.sessions;
     }
@@ -217,7 +242,7 @@ class IdentityApi {
             throw error;
         }
 
-        const tokens: ActiveTokens = await response.json();
+        const tokens = await parseResponse(ActiveTokensSchema, response);
         logAPI('getActiveTokens completed,', tokens);
         return tokens.tokens;
     }

@@ -1,4 +1,5 @@
 /// Client side configuration, don't put any sensitive information here
+import { VITE_CONFIG, VITE_ENABLE_MOCK, VITE_MOCKS } from '$generated/vite-config';
 
 export interface Config {
     serviceUrl: string;

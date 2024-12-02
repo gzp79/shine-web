@@ -1,5 +1,6 @@
 <script lang="ts" module>
     import { setContext, type Snippet } from 'svelte';
+    import Box from './Box.svelte';
 
     export interface SimpleMenuContext {
         get value(): SimpleMenuInfo;
@@ -33,8 +34,8 @@
     setContext('SimpleMenu_props', context);
 </script>
 
-<div class="h-full w-full select-none overflow-clip">
-    <div class="flex h-full w-full flex-col overflow-y-auto overflow-x-clip">
+<Box border class="max-h-sm w-fit overflow-y-auto py-2">
+    <div class="flex h-full w-fit flex-col items-center justify-center">
         {@render children()}
     </div>
-</div>
+</Box>

@@ -1,5 +1,6 @@
 <script lang="ts" generics="T extends { toString(): string }">
     import Typography from '$atoms/Typography.svelte';
+    import { STYLE } from './_currentSettings.svelte';
 
     // generics="T" is not respected by the eslint
     /* eslint no-undef: "off" */
@@ -23,7 +24,7 @@
 <Typography variant="text" class="max-w-xs">
     {label}
 </Typography>
-<select class="w-full max-w-xs rounded border border-on-surface bg-surface text-on-surface" bind:value>
+<select class="w-full max-w-xs rounded border border-{STYLE.border} bg-{STYLE.background}" bind:value>
     {#each optionList as [display, val] (val)}
         <option value={val} selected={val === value}>
             {display}

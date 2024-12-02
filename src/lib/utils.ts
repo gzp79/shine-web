@@ -5,7 +5,7 @@ export function maybeNull<T>(): Nullable<T> {
     return null;
 }
 
-type ErrorKind = 'fetch' | 'other';
+type ErrorKind = 'fetch' | 'other' | 'schema';
 
 // A interface for any ssr error that is captured and delegated to the client
 export interface AppError {
@@ -23,6 +23,12 @@ export class FetchError implements AppError {
         public message: string,
         public detail: { status: number; body: string }
     ) {}
+}
+
+export class SchemaError implements AppError {
+    errorKind: ErrorKind = 'schema';
+
+    constructor(public message: string) {}
 }
 
 // When building for CF, the cache is disabled and should not be set in the fetch options

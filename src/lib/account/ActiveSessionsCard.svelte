@@ -29,9 +29,7 @@
         {/snippet}
 
         {#snippet error(err: AppError)}
-            <div class="self-center">
-                <ErrorCard error={err} />
-            </div>
+            <ErrorCard error={err} />
         {/snippet}
     </ResourceFetch>
 </Card>
