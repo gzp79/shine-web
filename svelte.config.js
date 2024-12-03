@@ -15,7 +15,7 @@ const config = {
             $lib: './src/lib',
             $mocks: './src/mocks',
             $config: './src/config',
-            $assets: './src/assets'
+            $assets: './src/generated/assets'
         }
     }
 };

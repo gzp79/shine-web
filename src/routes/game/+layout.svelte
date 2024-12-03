@@ -54,7 +54,7 @@
     {:else if !currentUser.isLoaded}
         <AppContent>
             <div class="flex h-full items-center justify-center">
-                <LoadingCard label={$t('account.login')} />
+                <LoadingCard label={$t('account.loading')} />
             </div>
         </AppContent>
     {:else if currentUser.isAuthenticated}

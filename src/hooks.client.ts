@@ -15,6 +15,7 @@ if (config.environment === 'mock') {
                 ['https://local-web.scytta.com:4443', /^\/@id\/.*/],
                 ['https://local-web.scytta.com:4443', /.*\/__data.json.*/],
                 ['https://local-web.scytta.com:4443', /^\/favicon.*/],
+                ['https://local-web.scytta.com:4443', /^\/assets\//],
 
                 ['https://challenges.cloudflare.com/', /.*/]
             ];

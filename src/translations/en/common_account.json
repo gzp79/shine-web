@@ -28,5 +28,5 @@
     "active": "active",
     "revoke": "Revoke",
     "failedToLoadUserInfo": "Failed to load user info",
-    "login": "Logging in ..."
+    "loading": "Loading ..."
 }

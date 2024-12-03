@@ -28,5 +28,5 @@
     "active": "aktív",
     "revoke": "Visszavonás",
     "failedToLoadUserInfo": "Nem sikerült betölteni a felhasználói adatokat",
-    "login": "Bejelentkezés ..."
+    "loading": "Betöltés ..."
 }

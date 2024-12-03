@@ -9,6 +9,10 @@ import { config } from './src/generated/config';
 console.log(`Environment: (${config.environment})`);
 
 const additionalAssets = [];
+additionalAssets.push({
+    src: 'static-generated/assets/*',
+    dest: 'assets/'
+});
 
 if (config.environment === 'mock') {
     console.log(`  Mocking`);
@@ -52,10 +56,5 @@ export default defineConfig({
     },
     test: {
         include: ['src/**/*.{test,spec}.{js,ts}']
-    },
-    build: {
-        watch: {
-            include: 'script/vite-plugin-*.*'
-        }
     }
 });

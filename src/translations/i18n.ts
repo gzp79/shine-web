@@ -31,6 +31,7 @@ const config: Config<Partial<Params>> = {
     loaders: [
         ...createLoader('common_common', 'common', [/.*/]),
         ...createLoader('common_account', 'account', [/.*/]),
+        ...createLoader('login', 'login'),
         ...createLoader('tools', 'tools')
     ]
 };
