@@ -14,7 +14,8 @@ const config = {
             $atoms: './src/components/atoms',
             $lib: './src/lib',
             $mocks: './src/mocks',
-            $config: './src/config'
+            $config: './src/config',
+            $assets: './src/assets'
         }
     }
 };

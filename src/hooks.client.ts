@@ -1,6 +1,6 @@
-import { enabledMocks } from '$config';
+import { config } from '$config';
 
-if (enabledMocks) {
+if (config.environment === 'mock') {
     console.log('starting browser mock worker');
 
     const { worker } = await import('$mocks/browser');

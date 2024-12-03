@@ -4,4 +4,5 @@ pnpm-lock.yaml
 yarn.lock
 
 src/components/atoms/svg/_parser.js
-static_generated
+src/generated
+static-generated

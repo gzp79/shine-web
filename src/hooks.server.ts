@@ -1,9 +1,9 @@
 // hooks.server.ts
 import type { Handle } from '@sveltejs/kit';
-import { enabledMocks } from '$config';
+import { config } from '$config';
 import { loadThemeServerSide } from '$lib/theme/theme.svelte';
 
-if (enabledMocks) {
+if (config.environment === 'mock') {
     console.log('starting server mock worker');
     const { server } = await import('$mocks/node');
     server.listen({

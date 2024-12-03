@@ -3,7 +3,7 @@
     import Box from '$atoms/Box.svelte';
     import Typography from '$atoms/Typography.svelte';
     import { Hamburger } from '$atoms/icons/common';
-    import { enabledMocks } from '$config';
+    import { config } from '$config';
     import QuickConfig from '$lib/app/QuickConfig.svelte';
     import { Section, settingsStore } from './_components';
     import { STYLE } from './_components/_currentSettings.svelte';
@@ -46,7 +46,7 @@
                 { title: 'ComboButtons', href: 'atoms/combo-buttons' }
             ]
         },
-        enabledMocks && {
+        config.environment === 'mock' && {
             title: 'Utils',
             items: [{ title: 'Mock test', href: 'utils/mock-test' }]
         },

@@ -1,4 +1,4 @@
-import { enabledMocks } from '$config';
+import { config } from '$config';
 import { HttpResponse, RequestHandler, http } from 'msw';
 import { defaultLoginProvider, noUserInfo } from './data/user';
 
@@ -7,7 +7,8 @@ const mocks: Record<string, RequestHandler> = {
     'user.defaultLoginProvider': defaultLoginProvider
 };
 
-const enabledHandlers = enabledMocks?.map((mock) => mocks[mock]).filter((mock) => mock !== undefined) ?? [];
+const enabledMocks = config.environment === 'mock' ? (config.mocks ?? []) : [];
+const enabledHandlers = enabledMocks.map((mock) => mocks[mock]).filter((mock) => mock !== undefined);
 
 export const handlers: Array<RequestHandler> = [
     http.get('https://example.com/user', () => {

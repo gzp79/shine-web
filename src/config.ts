@@ -1,17 +1,21 @@
-/// Client side configuration, don't put any sensitive information here
-import { VITE_CONFIG, VITE_ENABLE_MOCK, VITE_MOCKS } from '$generated/vite-config';
+import { config as baseConfig } from '$generated/config';
 
 export interface Config {
+    environment: 'mock' | 'dev' | 'prod';
+
     serviceUrl: string;
     webUrl: string;
     contentUrl: string;
+
+    // when null, mock is disabled
+    mocks?: string[];
 
     turnstile: {
         siteKey: string;
     };
 }
 
-const config = VITE_CONFIG as Config;
-const enabledMocks: string[] | null = VITE_ENABLE_MOCK ? VITE_MOCKS : null;
-
-export { config, enabledMocks };
+export const config: Config = {
+    ...baseConfig,
+    environment: baseConfig.environment as 'mock' | 'dev' | 'prod'
+};
