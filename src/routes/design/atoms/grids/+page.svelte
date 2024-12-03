@@ -8,7 +8,7 @@
 
 {#snippet item(value: string)}
     <div
-        class="rounded-4 flex h-full w-full items-center justify-center overflow-hidden text-nowrap border border-primary p-1 text-center text-primary"
+        class="rounded-4 flex h-full w-full items-center justify-center text-nowrap border border-primary p-1 text-center text-primary"
     >
         {value}
     </div>

@@ -6,7 +6,7 @@
     import LoadingCard from '$atoms/LoadingCard.svelte';
     import ErrorCard from '$atoms/ErrorCard.svelte';
     import ResourceFetch from '$atoms/ResourceFetch.svelte';
-    import ActiveSessionCard from './_ActiveSessionCard.svelte';
+    import ActiveSessionCard from './ActiveSessionCard.svelte';
 
     interface Props {
         sessions: () => Promise<ActiveSession[]>;

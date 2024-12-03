@@ -75,7 +75,7 @@
         <QuickConfig />
     </header>
 
-    <div class="relative flex flex-row overflow-hidden">
+    <div class="relative flex h-full flex-row overflow-hidden">
         <aside
             class="flexh-full h-full w-[30dvw] min-w-max overflow-y-auto bg-sub-container p-4 {showSidebar
                 ? 'absolute left-0 top-0 z-20 opacity-90 md:static'

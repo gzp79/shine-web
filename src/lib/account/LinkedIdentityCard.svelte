@@ -50,7 +50,8 @@
             },
             {
                 key: $t('account.providerUserId'),
-                value: identity.providerUserId
+                value: identity.providerUserId,
+                class: 'break-all'
             },
             identity.name
                 ? {
@@ -61,7 +62,8 @@
             identity.email
                 ? {
                       key: $t('account.email'),
-                      value: identity.email
+                      value: identity.email,
+                      class: 'break-all'
                   }
                 : null,
             {

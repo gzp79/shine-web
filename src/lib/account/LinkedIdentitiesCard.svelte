@@ -6,7 +6,7 @@
     import LoadingCard from '$atoms/LoadingCard.svelte';
     import ErrorCard from '$atoms/ErrorCard.svelte';
     import ResourceFetch from '$atoms/ResourceFetch.svelte';
-    import LinkedIdentityCard from './_LinkedIdentityCard.svelte';
+    import LinkedIdentityCard from './LinkedIdentityCard.svelte';
 
     interface Props {
         identities: () => Promise<LinkedIdentity[]>;

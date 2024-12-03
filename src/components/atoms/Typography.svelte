@@ -30,7 +30,7 @@
         code: 'code'
     };
 
-    const sharedHClasses = ' overflow-hidden text-ellipsis text-pretty';
+    const sharedHClasses = 'text-ellipsis text-pretty';
     const variantClasses = {
         h1: `text-4xl p-2 ${sharedHClasses}`,
         h2: `text-3xl p-1 ${sharedHClasses} `,

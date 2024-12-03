@@ -56,11 +56,11 @@
     ></div>
 
     <Logo class="h-[20%] w-full fill-current p-4 text-on-surface" />
-    <div class="justify-cetner mb-4 flex h-[70%] flex-row items-center overflow-hidden">
+    <div class="justify-cetner mb-4 flex h-[70%] flex-row items-center">
         <div class="me-8 flex h-full w-0 items-center justify-start overflow-clip lg:w-[50vw]">
             <Typography variant="h1">{$t('login.title')}</Typography>
         </div>
-        <div class="flex h-full flex-col items-center overflow-hidden">
+        <div class="flex h-full flex-col items-center">
             <Box border class="mx-0 h-full w-full overflow-y-auto px-8 py-2">
                 <div class="flex flex-col items-center justify-center">
                     {#each data.providers as provider}

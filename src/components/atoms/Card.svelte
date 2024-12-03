@@ -32,7 +32,7 @@
 
     let boxClass = $derived(
         twMerge(
-            'm-1 overflow-hidden md:m-2',
+            'm-1 md:m-2 p-1 md:p-2',
             'min-h-min',
             'grid',
             icon ? 'grid-cols-[fit-content(10%),auto]' : 'grid-cols-1',
@@ -43,7 +43,7 @@
 
 <Box compact border {variant} {shadow} class={boxClass} {...rest}>
     {#if icon}
-        <div class="m-2 flex h-12 w-12 items-center justify-center">
+        <div class="my-2 ms-2 flex h-10 w-10 items-center justify-center md:h-12 md:w-12">
             {@render icon()}
         </div>
     {/if}
@@ -60,14 +60,14 @@
             </Typography>
         {/if}
 
-        <div class="max-h-md min-h-3 overflow-y-auto overflow-x-hidden bg-inherit px-2">
+        <div class="max-h-md min-h-3 overflow-y-auto overflow-x-hidden bg-inherit md:px-1">
             {#if children}
-                <div class="min-h-min w-full px-2 {icon && caption && 'ps-4'} ">
+                <div class="min-h-min w-full px-1 md:px-4 {icon && caption && 'ps-2'}">
                     {@render children()}
                 </div>
             {/if}
 
-            <div class="sticky flex h-fit w-full flex-row justify-end bg-inherit px-2 py-1">
+            <div class="sticky flex h-fit w-full flex-row justify-end bg-inherit px-1 py-1 md:px-2">
                 {#if actions}
                     {@render actions()}
                 {/if}

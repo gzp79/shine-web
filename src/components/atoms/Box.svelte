@@ -50,7 +50,7 @@
 
     let boxClass = $derived(
         twMerge(
-            'rounded-lg overflow-hidden',
+            'rounded-lg',
             !compact && `p-4 ${currentMargin}`,
             !ghost && `bg-${colors.bgColor}`,
             `text-${colors.fgColor}`,

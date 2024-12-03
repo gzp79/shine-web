@@ -6,7 +6,7 @@
     import LoadingCard from '$atoms/LoadingCard.svelte';
     import ErrorCard from '$atoms/ErrorCard.svelte';
     import ResourceFetch from '$atoms/ResourceFetch.svelte';
-    import ActiveTokenCard from './_ActiveTokenCard.svelte';
+    import ActiveTokenCard from './ActiveTokenCard.svelte';
 
     interface Props {
         tokens: () => Promise<ActiveToken[]>;

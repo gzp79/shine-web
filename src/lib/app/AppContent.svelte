@@ -9,7 +9,7 @@
 
     let { children, class: className }: Props = $props();
 
-    let mainClass = $derived(twMerge('h-full w-full overflow-hidden', className));
+    let mainClass = $derived(twMerge('h-full w-full overflow-y-auto', className));
 </script>
 
 <main class={mainClass}>
