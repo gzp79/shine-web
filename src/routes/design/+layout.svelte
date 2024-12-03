@@ -1,72 +1,151 @@
-<script>
-    import { t } from '$lib/i18n/i18n.svelte';
+<script lang="ts">
+    import { beforeNavigate } from '$app/navigation';
+    import Box from '$atoms/Box.svelte';
+    import Typography from '$atoms/Typography.svelte';
+    import { Hamburger } from '$atoms/icons/common';
+    import { config } from '$config';
+    import QuickConfig from '$lib/app/QuickConfig.svelte';
+    import { Section, settingsStore } from './_components';
+    import { STYLE } from './_components/_currentSettings.svelte';
 
+    const { children } = $props();
+
+    let currentSettings = settingsStore();
+    let showSidebar = $state(true);
+    let showSelection = $state(true);
+    let showSettings = $state(true);
+
+    interface MenuItem {
+        title: string;
+        items: { title: string; href: string }[];
+    }
     const menu = [
         {
             title: 'Atoms',
             items: [
-                { title: 'Cards', href: 'card' },
-                { title: 'Key Value table', href: 'key-value-table' },
-                { title: 'Styled SVG', href: 'svg' },
-                { title: 'Close button', href: 'close_button' },
-                { title: 'Buttons', href: 'buttons' },
-                { title: 'Toggle', href: 'toggle' },
-                { title: 'Tooltip', href: 'tooltip' },
-                { title: 'Circle menu', href: 'circle_menu' }
+                { title: 'Colors', href: 'atoms/colors' },
+                { title: 'Typography', href: 'atoms/typography' },
+                { title: 'Icons', href: 'atoms/icons' },
+                { title: 'Boxes', href: 'atoms/boxes' },
+                { title: 'Grids', href: 'atoms/grids' },
+                { title: 'Popper', href: 'atoms/popper' },
+                { title: 'Key-Value Table', href: 'atoms/key-value-tables' },
+                { title: 'Cards', href: 'atoms/cards' },
+                { title: 'Alerts', href: 'atoms/alerts' },
+                { title: 'Helper Cards', href: 'atoms/helper-cards' },
+                { title: 'Simple Menu', href: 'atoms/simple-menu' },
+                { title: 'Extra Menu', href: 'atoms/extra-menu' }
             ]
         },
         {
-            title: 'Templates',
+            title: 'Inputs',
             items: [
-                { title: 'Colors', href: 'colors' },
-                { title: 'Icons', href: 'icons' },
-                { title: 'Loadings', href: 'loadings' },
-                { title: 'Styled SVG', href: 'svg' },
-                { title: 'Close button', href: 'close_button' },
-                { title: 'Buttons', href: 'buttons' },
-                { title: 'Toggle', href: 'toggle' },
-                { title: 'Tooltip', href: 'tooltip' },
-                { title: 'Circle menu', href: 'circle_menu' }
+                { title: 'Buttons', href: 'atoms/buttons' },
+                { title: 'Toggle', href: 'atoms/toggles' },
+                { title: 'Input Groups', href: 'atoms/input-groups' },
+                { title: 'ComboButtons', href: 'atoms/combo-buttons' }
+            ]
+        },
+        config.environment === 'mock' && {
+            title: 'Utils',
+            items: [{ title: 'Mock test', href: 'utils/mock-test' }]
+        },
+        {
+            title: 'Account',
+            items: [
+                { title: 'Current User Card', href: 'account/current-user' },
+                { title: 'Linked Identities', href: 'account/linked-identities' },
+                { title: 'Active Sessions', href: 'account/active-sessions' },
+                { title: 'Active Tokens', href: 'account/active-tokens' }
             ]
         }
-    ];
+    ].filter(Boolean) as MenuItem[];
+
+    beforeNavigate(() => {
+        currentSettings.set(null);
+    });
 </script>
 
-<div class="navbar bg-base-300">
-    <label for="design-drawer" aria-label="open sidebar" class="btn btn-square btn-ghost flex-none lg:hidden">
-        icon
-        <!-- <Icon shape=IconShape::Hamburger class="inline-block"/> -->
-    </label>
-    <div class="flex-1 overflow-hidden text-ellipsis text-pretty px-2">
-        Design <span class="inline-block text-[0.5rem]">version</span>
-    </div>
-    {$t('common.helloWorld')}
-    <!-- <SwitchTheme class="flex-none"/> -->
-</div>
+<div class="grid h-full grid-rows-[auto_1fr_auto] overflow-hidden">
+    <header class="flex items-center bg-container px-4 py-1">
+        <button aria-label="open sidebar" class="flex-none" onclick={() => (showSidebar = !showSidebar)}>
+            <Hamburger size="md" class="inline-block" />
+        </button>
+        <Typography variant="h1" class="flex-1">Design</Typography>
+        <QuickConfig />
+    </header>
 
-<div class="drawer h-full flex-1 auto-rows-fr lg:drawer-open">
-    <input id="design-drawer" type="checkbox" class="drawer-toggle" />
-
-    <div class="drawer-content flex h-full flex-col items-center overflow-auto">
-        <slot />
+    <div class="relative flex flex-row overflow-hidden">
+        <aside
+            class="flexh-full h-full w-[30dvw] min-w-max overflow-y-auto bg-sub-container p-4 {showSidebar
+                ? 'absolute left-0 top-0 z-20 opacity-90 md:static'
+                : 'hidden'}"
+        >
+            <button
+                onclick={() => (showSelection = !showSelection)}
+                class="hover:highlight-backdrop flex w-full flex-row items-center justify-between"
+            >
+                <Typography variant="h3" class="flex-start">Stories</Typography>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 448 512"
+                    class="flex-end h-4 w-4 fill-on-surface {showSelection && 'rotate-180'}"
+                >
+                    <path
+                        d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                    ></path>
+                </svg>
+            </button>
+            {#if showSelection}
+                {#each menu as group}
+                    <Typography variant="h4" element="h2" class="mx-2">{group.title}</Typography>
+                    <ul class="mx-4 w-max">
+                        {#each group.items as item}
+                            <li class="hover:highlight-backdrop">
+                                <a href={`/design/${item.href}`}>
+                                    <Typography variant="h6" element="h3">{item.title}</Typography>
+                                </a>
+                            </li>
+                        {/each}
+                    </ul>
+                {/each}
+            {/if}
+            <button
+                onclick={() => (showSettings = !showSettings)}
+                class="hover:highlight-backdrop flex w-full flex-row items-center justify-between"
+            >
+                <Typography variant="h3" class="flex-start">Settings</Typography>
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 448 512"
+                    class="flex-end h-4 w-4 fill-on-surface {showSettings && 'rotate-180'}"
+                >
+                    <path
+                        d="M201.4 374.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 306.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"
+                    ></path>
+                </svg>
+            </button>
+            {#if showSettings}
+                <Box
+                    level={1}
+                    class="form-control mx-2 inline-grid w-full auto-cols-min grid-cols-2 items-center gap-4 border border-on-container bg-container text-{STYLE.foreground}"
+                >
+                    {@const settings = currentSettings.get()}
+                    {#if settings}
+                        {@render settings()}
+                    {:else}
+                        <Section>No settings</Section>
+                    {/if}
+                </Box>
+            {/if}
+        </aside>
+        <main class="z-10 h-full w-full overflow-y-auto">
+            {@render children()}
+        </main>
     </div>
 
-    <div class="drawer-side absolute">
-        <label for="design-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-        <div class="bg-base-200">
-            {#each menu as group}
-                <div class="collapse collapse-plus">
-                    <input type="checkbox" name="design-menu" />
-                    <div class="collapse-title text-xl">{group.title}</div>
-                    <div class="collapse-content">
-                        <ul class="menu min-h-full w-full p-4">
-                            {#each group.items as item}
-                                <li><a href={`/design/${item.href}`}>{item.title}</a></li>
-                            {/each}
-                        </ul>
-                    </div>
-                </div>
-            {/each}
-        </div>
-    </div>
+    <footer class="flex items-center justify-between bg-container p-1">
+        <div class="flex-start"></div>
+        <Typography variant="text" class="self-end">© 2024</Typography>
+    </footer>
 </div>

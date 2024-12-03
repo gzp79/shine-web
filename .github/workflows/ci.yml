@@ -30,8 +30,10 @@ jobs:
 
             - name: Pre-build
               run: |
-                  npm ci --legacy-peer-deps
+                  npm ci
                   npm run mkcert
+                  npm run env:prod
+                  npm run build:assets
                   npm run lint
                   npm run check
 
@@ -50,39 +52,45 @@ jobs:
             # Create a preview
             # Consider if this temp site should be used for testing
             - name: Publish website to preview site
+              id: preview_deploy
               if: github.event_name == 'pull_request'
               uses: cloudflare/wrangler-action@v3
               with:
                   apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
                   accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-                  projectName: shine-web
-                  branch: ${{ github.head_ref || github.ref_name }}
-                  directory: .svelte-kit/cloudflare
+                  workingDirectory: .svelte-kit/cloudflare
+                  command: pages deploy --project-name=shine-web --branch=${{ github.head_ref || github.ref_name }} .
 
-            - name: Start web server
-              uses: JarvusInnovations/background-action@v1
-              with:
-                  run: |
-                      npm run preview
-                  log-output: true
-                  wait-on: |
-                      https://localhost:4443
-                  wait-for: 2m
+            - name: Preview Url
+              env:
+                  DEPLOYMENT_URL: ${{ steps.preview_deploy.outputs.deployment-url }}
+              run: |
+                  echo "**Deployment url**: <${DEPLOYMENT_URL}>" >> $GITHUB_STEP_SUMMARY
 
-        # - name: Test
-        #   run: |
-        #     sudo echo "127.0.0.1 local-web.scytta.com" | sudo tee -a /etc/hosts
-        #     npx playwright install --with-deps
-        #     npm run test:setup
-        #     npm run test
-        #     npm run test:report
+            # - name: Start web server
+            # uses: JarvusInnovations/background-action@v1
+            # with:
+            #     run: |
+            #         npm run preview
+            #     log-output: true
+            #     wait-on: |
+            #         https://localhost:4443
+            #     wait-for: 2m
 
-        # - name: Publish test results
-        #   if: github.ref == 'refs/heads/master' || steps.test.conclusion == 'failure'
-        #   uses: actions/upload-artifact@v4
-        #   with:
-        #     name: test-reports
-        #     path: ./reports
+            # - name: Test
+            #   run: |
+            #     sudo echo "127.0.0.1 local-web.scytta.com" | sudo tee -a /etc/hosts
+            #     npx playwright install --with-deps
+            #     npm run test:setup
+            #     npm run test
+            #     npm run test:report
+
+            # - name: Publish test results
+            #   if: github.ref == 'refs/heads/master' || steps.test.conclusion == 'failure'
+            #   uses: actions/upload-artifact@v4
+            #   with:
+            #     name: test-reports
+            #     path: ./reports
 
     deploy:
         needs: build
@@ -104,4 +112,4 @@ jobs:
                   apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
                   accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
                   projectName: shine-web
-                  directory: ./dist
+                  workingDirectory: ./dist

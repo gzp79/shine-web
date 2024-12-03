@@ -2,3 +2,7 @@
 package-lock.json
 pnpm-lock.yaml
 yarn.lock
+
+src/components/atoms/svg/_parser.js
+src/generated
+static-generated

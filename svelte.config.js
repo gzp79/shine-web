@@ -9,9 +9,13 @@ const config = {
     kit: {
         adapter: adapter(),
         alias: {
-            $i18n: './src/i18n',
+            $generated: './src/generated',
             $components: './src/components',
-            $lib: './src/lib'
+            $atoms: './src/components/atoms',
+            $lib: './src/lib',
+            $mocks: './src/mocks',
+            $config: './src/config',
+            $assets: './src/generated/assets'
         }
     }
 };

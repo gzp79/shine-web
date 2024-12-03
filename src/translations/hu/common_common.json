@@ -1,0 +1,7 @@
+{
+    "loading": "Betöltés...",
+    "retry": "Újra",
+    "somethingWentWrong": "Valami hiba történt",
+    "dateTime": "{{value:date}}",
+    "currency": "{{value:currency}}"
+}

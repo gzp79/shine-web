@@ -1,0 +1,7 @@
+{
+    "loading": "Loading...",
+    "retry": "Retry",
+    "somethingWentWrong": "Something went wrong",
+    "dateTime": "{{value:date}}",
+    "currency": "{{value:currency}}"
+}

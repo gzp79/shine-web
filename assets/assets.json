@@ -1,0 +1,9 @@
+{
+    "login": {
+        "converter": "group",
+        "background": {
+            "converter": "convertWebP",
+            "path": "background.jpg"
+        }
+    }
+}

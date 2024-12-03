@@ -1,14 +1,14 @@
 /* cspell: disable */
-import i18n, { type Config } from 'sveltekit-i18n';
-import lang from './lang.json';
-import { browser, dev } from '$app/environment';
 import type { Cookies } from '@sveltejs/kit';
-import { Store } from 'runed';
-import { getCookie, type Maybe } from '$lib/utils';
+import { browser } from '$app/environment';
+import { type Nullable, getCookie, setCookie } from '$lib/utils';
+import { i18n } from '../../translations/i18n';
+
 /* cspell: enable */
 
-export const langList = Object.keys(lang);
-export const defaultLocale = 'en';
+const { langList, defaultLocale, t, loadTranslations, locale, locales, setLocale, setRoute, translations } = i18n;
+
+export { langList, defaultLocale, t };
 
 function getSupportedLocale(candidate: string) {
     const supportedLocales = locales.get().map((l) => l.toLowerCase());
@@ -17,28 +17,9 @@ function getSupportedLocale(candidate: string) {
 
 /// return the preferred language set in the browser
 function defaultBrowserLanguage() {
+    //console.log(`Finding default browser language (${navigator.language}) ...`);
     return `${navigator.language}`.toLowerCase();
 }
-
-function createLoader(key: string, routes?: RegExp[]) {
-    return langList.map((locale) => ({
-        locale: locale,
-        key: key,
-        routes: routes ?? [`/${key}`],
-        loader: async () => (await import(`./${locale}/${key}.json`)).default
-    }));
-}
-
-const config: Config = {
-    log: {
-        level: dev ? 'warn' : 'error'
-    },
-    translations: langList.reduce((r, v) => ({ ...r, ...{ [v]: { lang } } }), {}),
-    loaders: [...createLoader('common', [/.*/]), ...createLoader('tools')]
-};
-
-const { t, locale, locales, translations, loadTranslations, setLocale, setRoute } = new i18n(config);
-export { t };
 
 export interface LanguageProps {
     i18n: { locale: string; route: string };
@@ -50,8 +31,10 @@ export async function loadLanguageServerSide(url: URL, cookies: Cookies, headers
 
     let locale = (cookies.get('lang') || '').toLowerCase();
     if (!locale) {
+        //console.log('Checking accept-language ...');
         locale = `${`${headers.get('accept-language')}`.match(/[a-zA-Z]+?(?=-|_|,|;)/)}`.toLowerCase();
     }
+    //console.log(`Selected language, server side: ${locale}`);
 
     locale = getSupportedLocale(locale);
     await loadTranslations(locale, pathname);
@@ -62,13 +45,12 @@ export async function loadLanguageServerSide(url: URL, cookies: Cookies, headers
     };
 }
 
-export async function loadLanguage(url: URL, languageProps: Maybe<LanguageProps>): Promise<void> {
+export async function loadLanguage(url: URL, languageProps: Nullable<LanguageProps>): Promise<void> {
     let i18n = languageProps?.i18n;
 
     if (!i18n) {
         if (!browser)
             throw new Error('No languageProps provided, loadLanguageServerSide must be called on the server side.');
-        console.log('Loading language from browser...');
         let locale = getCookie('lang') ?? defaultBrowserLanguage();
         locale = getSupportedLocale(locale);
         const route = url.pathname;
@@ -79,12 +61,28 @@ export async function loadLanguage(url: URL, languageProps: Maybe<LanguageProps>
     await setRoute(i18n.route);
 }
 
-export function languageStore() {
-    const rune = new Store(locale);
+export function refreshLanguage() {
+    let loc = getCookie('lang') ?? defaultBrowserLanguage();
+    loc = getSupportedLocale(loc);
+    locale.set(loc);
+}
 
-    $effect(() => {
-        document.cookie = `lang=${rune.current}; max-age=31536000; path=/`;
+export function languageStore() {
+    let rune = $state(locale.get());
+    locale.subscribe((value) => {
+        rune = value;
+        if (browser) {
+            //console.log(`Setting lang cookie to ${rune}`);
+            setCookie('lang', rune);
+        }
     });
 
-    return rune;
+    return {
+        get current() {
+            return rune;
+        },
+        set current(value: string) {
+            locale.set(value);
+        }
+    };
 }

@@ -1,10 +1,30 @@
 import { sveltekit } from '@sveltejs/kit/vite';
-import { defineConfig } from 'vitest/config';
 import fs from 'fs';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
+import { defineConfig } from 'vitest/config';
+import { vitePluginAssetConverter as assetConverter } from './scripts/asset-converter';
+import { config } from './src/generated/config';
+
+// Determine the environment
+console.log(`Environment: (${config.environment})`);
+
+const additionalAssets = [];
+additionalAssets.push({
+    src: 'static-generated/assets/*',
+    dest: 'assets/'
+});
+
+if (config.environment === 'mock') {
+    console.log(`  Mocking`);
+    additionalAssets.push({
+        src: 'static-generated/mockServiceWorker.js',
+        dest: ''
+    });
+}
 
 let https;
 if (fs.existsSync('certificates/cert.key')) {
-    console.log('Using https for serving');
+    console.log('  Protocol: https');
     https = {
         key: fs.readFileSync('certificates/cert.key'),
         cert: fs.readFileSync('certificates/cert.crt'),
@@ -15,7 +35,13 @@ if (fs.existsSync('certificates/cert.key')) {
 }
 
 export default defineConfig({
-    plugins: [sveltekit()],
+    plugins: [
+        assetConverter(),
+        sveltekit(),
+        viteStaticCopy({
+            targets: [...additionalAssets]
+        })
+    ],
     server: {
         https: https,
         port: 4443,

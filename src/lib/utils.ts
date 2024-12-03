@@ -1,25 +1,62 @@
-export type Maybe<T> = T | null;
+import { browser } from '$app/environment';
+
+export type Nullable<T> = T | null;
+export function maybeNull<T>(): Nullable<T> {
+    return null;
+}
+
+type ErrorKind = 'fetch' | 'other' | 'schema';
+
+// A interface for any ssr error that is captured and delegated to the client
+export interface AppError {
+    errorKind: ErrorKind;
+    message: string;
+    detail?: unknown;
+}
 
 export type Fetch = (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>;
 
-export class FetchError extends Error {
+export class FetchError implements AppError {
+    errorKind: ErrorKind = 'fetch';
+
     constructor(
-        message: string,
-        public status: number,
-        public body: string
-    ) {
-        super(message);
+        public message: string,
+        public detail: { status: number; body: string }
+    ) {}
+}
+
+export class SchemaError implements AppError {
+    errorKind: ErrorKind = 'schema';
+
+    constructor(public message: string) {}
+}
+
+// When building for CF, the cache is disabled and should not be set in the fetch options
+export function fetchCacheOption(cache: RequestCache): Partial<RequestInit> {
+    if (browser) {
+        return { cache };
     }
+    return {};
 }
 
-export async function fetchError(message: string, response: Response): Promise<Error> {
+export async function fetchError(message: string, response: Response): Promise<FetchError> {
     const body = await response.text();
-    return new FetchError(message, response.status, body);
+    return new FetchError(message, { status: response.status, body });
 }
 
-export function delay(ms: number): Promise<void> {
-    return new Promise((resolver) => setTimeout(resolver, ms));
-}
+export const async = {
+    delay(ms: number): Promise<void> {
+        return new Promise((resolver) => setTimeout(resolver, ms));
+    },
+
+    never(): Promise<never> {
+        return new Promise(() => {});
+    },
+
+    async error(error: Error): Promise<never> {
+        throw error;
+    }
+};
 
 export function getCookie(key: string): string | undefined {
     const value = document.cookie.split('; ').reduce((r, v) => {

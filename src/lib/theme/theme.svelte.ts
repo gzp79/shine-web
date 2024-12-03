@@ -1,5 +1,5 @@
-import { setCookie, type Maybe } from '$lib/utils';
 import type { Cookies } from '@sveltejs/kit';
+import { type Nullable, getCookie, setCookie } from '$lib/utils';
 
 export type Theme = 'light' | 'dark' | 'system';
 export const themeList: Theme[] = ['light', 'dark', 'system'];
@@ -22,16 +22,19 @@ export async function loadThemeServerSide(cookies: Cookies): Promise<ThemeProps>
     };
 }
 
-export async function loadTheme(themeProps: Maybe<ThemeProps>): Promise<void> {
+export async function loadTheme(themeProps: Nullable<ThemeProps>): Promise<void> {
     rune = themeProps?.theme ?? defaultTheme;
+}
+
+export function refreshTheme() {
+    rune = (getCookie('theme') as Theme) ?? defaultTheme;
 }
 
 export function themeStore() {
     $effect(() => {
-        console.log('Setting theme:', rune);
         setCookie('theme', rune);
-        if (rune === 'system') document.body.removeAttribute('data-theme');
-        else document.body.setAttribute('data-theme', rune);
+        if (rune === 'system') document.documentElement.removeAttribute('data-theme');
+        else document.documentElement.setAttribute('data-theme', rune);
     });
 
     return {
