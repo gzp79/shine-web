@@ -33,6 +33,7 @@ jobs:
                   npm ci
                   npm run mkcert
                   npm run env:prod
+                  npm run build:assets
                   npm run lint
                   npm run check
 
