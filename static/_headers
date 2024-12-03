@@ -16,7 +16,7 @@
   ! Permissions-Policy
 
 # to be removed into some large file storage
-/content/*
+/assets/*
   Cache-Control: public, immutable, max-age=31536000
   ! Content-Security-Policy
   ! Permissions-Policy  
