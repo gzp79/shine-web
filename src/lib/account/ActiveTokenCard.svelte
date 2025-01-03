@@ -9,7 +9,7 @@
     interface Props {
         token: ActiveToken;
         dataVersion: number;
-        onRevoke: (tokenFingerprint: string) => Promise<void>;
+        onRevoke: (tokenHash: string) => Promise<void>;
     }
     const { token, dataVersion, onRevoke }: Props = $props();
 
@@ -17,7 +17,7 @@
     const revoke = async () => {
         // memorize the current dataVersion to prevent multiple revoke requests
         revokeVersion = dataVersion;
-        await onRevoke(token.tokenFingerprint);
+        await onRevoke(token.tokenHash);
     };
 
     const location = $derived(formatLocation(token));
@@ -28,8 +28,8 @@
         size="xs"
         items={[
             {
-                key: $t('account.tokenFingerprint'),
-                value: token.tokenFingerprint,
+                key: $t('account.tokenHash'),
+                value: token.tokenHash,
                 class: 'break-all'
             },
             {

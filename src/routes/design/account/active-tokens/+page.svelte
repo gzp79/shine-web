@@ -9,7 +9,7 @@
     // emulate some backend stored list
     let tokens: ActiveToken[] = $state([
         {
-            tokenFingerprint: `3 - remove - ${uuid()}`,
+            tokenHash: `3 - remove - ${uuid()}`,
             kind: 'singleAccess',
             createdAt: new Date('2021-08-01T12:00:00Z'),
             expireAt: new Date('2022-08-01T12:00:00Z'),
@@ -17,7 +17,7 @@
             agent: 'agent'
         },
         {
-            tokenFingerprint: '1 - updated properties',
+            tokenHash: '1 - updated properties',
             kind: 'persistent',
             createdAt: new Date('2021-08-01T12:00:00Z'),
             expireAt: new Date('2032-08-01T12:00:00Z'),
@@ -25,7 +25,7 @@
             agent: 'agent'
         },
         {
-            tokenFingerprint: `2 - fail - ${uuid()}`,
+            tokenHash: `2 - fail - ${uuid()}`,
             kind: 'access',
             createdAt: new Date('2021-08-01T12:00:00Z'),
             expireAt: new Date('2022-08-01T12:00:00Z'),
@@ -33,7 +33,7 @@
             agent: 'agent'
         },
         {
-            tokenFingerprint: `3 - remove - ${uuid()}`,
+            tokenHash: `3 - remove - ${uuid()}`,
             kind: 'access',
             createdAt: new Date('2021-08-01T12:00:00Z'),
             expireAt: new Date('2022-08-01T12:00:00Z'),
@@ -44,7 +44,7 @@
             city: 'Vác'
         },
         {
-            tokenFingerprint: `3 - remove - ${uuid()}`,
+            tokenHash: `3 - remove - ${uuid()}`,
             kind: 'access',
             createdAt: new Date('2021-08-01T12:00:00Z'),
             expireAt: new Date('2022-08-01T12:00:00Z'),
@@ -54,7 +54,7 @@
             city: 'Budapest'
         },
         {
-            tokenFingerprint: `3 - remove - ${uuid()}`,
+            tokenHash: `3 - remove - ${uuid()}`,
             kind: 'access',
             createdAt: new Date('2021-08-01T12:00:00Z'),
             expireAt: new Date('2022-08-01T12:00:00Z'),
@@ -69,34 +69,34 @@
         return tokens;
     };
 
-    const revoke = async (tokenFingerprint: string): Promise<void> => {
-        logDesigner(`Revoking token: ${tokenFingerprint}`);
+    const revoke = async (tokenHash: string): Promise<void> => {
+        logDesigner(`Revoking token: ${tokenHash}`);
 
         logDesigner('Emulating a longer backend call');
         await async.delay(2000);
 
-        const token = tokens.find((i) => i.tokenFingerprint === tokenFingerprint);
+        const token = tokens.find((i) => i.tokenHash === tokenHash);
         if (!token) {
             logDesigner('Element not found, no change');
             return;
         }
 
-        if (tokenFingerprint.startsWith('1')) {
+        if (tokenHash.startsWith('1')) {
             logDesigner('Emulate a change in the tokens');
 
             tokens = [
                 {
                     ...token,
-                    tokenFingerprint: `1 - ${uuid()}`
+                    tokenHash: `1 - ${uuid()}`
                 },
-                ...tokens.filter((i) => i.tokenFingerprint !== tokenFingerprint)
+                ...tokens.filter((i) => i.tokenHash !== tokenHash)
             ];
-        } else if (tokenFingerprint.startsWith('2')) {
+        } else if (tokenHash.startsWith('2')) {
             logDesigner('Emulate a failed revoke');
             tokens = [...tokens];
-        } else if (tokenFingerprint.startsWith('3')) {
+        } else if (tokenHash.startsWith('3')) {
             logDesigner('Emulate a successful revoke');
-            tokens = tokens.filter((i) => i.tokenFingerprint !== tokenFingerprint);
+            tokens = tokens.filter((i) => i.tokenHash !== tokenHash);
         }
     };
 </script>

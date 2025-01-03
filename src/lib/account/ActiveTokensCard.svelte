@@ -10,7 +10,7 @@
 
     interface Props {
         tokens: () => Promise<ActiveToken[]>;
-        onRevoke: (tokenFingerprint: string) => Promise<void>;
+        onRevoke: (tokenHash: string) => Promise<void>;
     }
     const { tokens, onRevoke }: Props = $props();
 
@@ -26,7 +26,7 @@
         <!-- todo: generic fails on svelte-check -->
         <!-- eslint-disable @typescript-eslint/no-explicit-any -->
         {#snippet content(tokens: /*ActiveToken[]*/ any, _isDirty: boolean)}
-            {#each tokens as token (token.tokenFingerprint)}
+            {#each tokens as token (token.tokenHash)}
                 <ActiveTokenCard {token} {onRevoke} {dataVersion} />
             {/each}
         {/snippet}

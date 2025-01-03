@@ -58,7 +58,7 @@ export type TokenKind = z.infer<typeof TokenKindSchema>;
 
 const ActiveTokenSchema = z.object({
     //userId: string,
-    tokenFingerprint: z.string(),
+    tokenHash: z.string(),
     kind: TokenKindSchema,
     createdAt: DateStringSchema,
     expireAt: DateStringSchema,

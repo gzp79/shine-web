@@ -19,7 +19,7 @@
     "loginDate": "Login date",
     "location": "Location",
     "activeTokens": "Active tokens",
-    "tokenFingerprint": "Id",
+    "tokenHash": "Id",
     "creationDate": "Creation date",
     "expirationDate": "Expiration date",
     "tokenKind": "Kind",
