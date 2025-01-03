@@ -20,8 +20,8 @@
     };
 
     let tokens = $state(identityApi.getActiveTokens());
-    let revokeToken = async (tokenFingerprint: string) => {
-        await identityApi.revokeToken(tokenFingerprint);
+    let revokeToken = async (tokenHash: string) => {
+        await identityApi.revokeToken(tokenHash);
         tokens = identityApi.getActiveTokens();
     };
 </script>

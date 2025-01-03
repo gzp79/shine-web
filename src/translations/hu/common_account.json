@@ -19,7 +19,7 @@
     "loginDate": "Bejelentkezés dátuma",
     "location": "Helyszín",
     "activeTokens": "Aktív tokenek",
-    "tokenFingerprint": "Azonosító",
+    "tokenHash": "Azonosító",
     "creationDate": "Létrehozás dátuma",
     "expirationDate": "Lejárati dátum",
     "tokenKind": "Típus",
