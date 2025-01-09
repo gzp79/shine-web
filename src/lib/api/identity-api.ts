@@ -154,7 +154,7 @@ class IdentityApi {
         const providers = await parseResponse(ProviderSchema, response);
         logAPI('getExternalLoginProviders completed,', providers);
 
-        return providers.providers;
+        return providers.providers.sort();
     }
 
     getExternalLoginUrl(provider: string, rememberMe: boolean, captcha: string, redirect: string): string {
