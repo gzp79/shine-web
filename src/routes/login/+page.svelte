@@ -26,9 +26,18 @@
     let rememberMe = $state(true);
 
     onMount(() => {
-        setTimeout(() => {
-            showLoading = false;
-        }, 5000); // 5 seconds
+        const params = new URLSearchParams(window.location.search);
+        const prompt = params.get('prompt');
+
+        if (!prompt) {
+            window.location.href = identityApi.getTokenLoginUrl('/game', '/login?prompt=true');
+            console.log('Trying the remember me path');
+        } else {
+            console.log('Prompt for login');
+            setTimeout(() => {
+                showLoading = false;
+            }, 5000); // 5 seconds
+        }
     });
 
     const providerIcon = (provider: string): Component | undefined => {
