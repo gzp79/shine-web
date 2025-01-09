@@ -50,8 +50,8 @@
                 return icons.Github;
             case 'discord':
                 return icons.Discord;
-            //case 'guest': return icons.Guest;
-            //case 'gitlab': return icons.Gitlab;
+            case 'gitlab':
+                return icons.Gitlab;
             default:
                 return undefined;
         }
@@ -60,7 +60,7 @@
 
 <div class="relative flex h-full flex-col items-center justify-center">
     <div
-        class="pointer-events-none absolute left-0 top-0 size-full bg-cover bg-center bg-no-repeat opacity-[0.1] grayscale"
+        class="pointer-events-none absolute left-0 top-0 size-full bg-cover bg-center bg-no-repeat opacity-[0.25]"
         style="background-image: url('{assets.loginBackground}'), url('{assets.loginBackground_alt}');"
     ></div>
 

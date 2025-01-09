@@ -75,6 +75,7 @@
         <div class={gridClass}>
             {@render icon(social.Discord, 'Discord')}
             {@render icon(social.Github, 'Github')}
+            {@render icon(social.Gitlab, 'Gitlab')}
             {@render icon(social.Google, 'Google')}
             {@render icon(social.Twitter, 'Twitter')}
         </div>
