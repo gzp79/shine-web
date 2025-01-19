@@ -266,4 +266,4 @@ class IdentityApi {
     }
 }
 
-export const identityApi = new IdentityApi(config.serviceUrl, config.webUrl);
+export const identityApi = new IdentityApi(config.identityUrl, config.webUrl);

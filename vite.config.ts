@@ -25,6 +25,8 @@ if (config.environment === 'mock') {
 let https;
 if (fs.existsSync('certificates/cert.key')) {
     console.log('  Protocol: https');
+    // Accept self-signed certificates
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
     https = {
         key: fs.readFileSync('certificates/cert.key'),
         cert: fs.readFileSync('certificates/cert.crt'),
@@ -45,13 +47,13 @@ export default defineConfig({
     server: {
         https: https,
         port: 4443,
-        host: 'local-web.scytta.com',
+        host: 'local-scytta.com',
         proxy: {}
     },
     preview: {
         https: https,
         port: 4443,
-        host: 'local-web.scytta.com',
+        host: 'local-scytta.com',
         proxy: {}
     },
     test: {

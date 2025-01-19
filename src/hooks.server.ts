@@ -10,9 +10,16 @@ if (config.environment === 'mock') {
         onUnhandledRequest(request, print) {
             const url = new URL(request.url);
 
-            const passThrough: [string, RegExp][] = [['https://local-web.scytta.com:4443', /^\/assets\//]];
+            const passThrough: [string, RegExp][] = [];
             if (passThrough.some(([host, path]) => request.url.startsWith(host) && path.test(url.pathname))) {
                 console.debug(`Passing through ${request.url}`);
+                return;
+            }
+
+            const proxyToLocal: [string, RegExp][] = [['https://scytta.com:4443', /^\/assets\//]];
+            if (proxyToLocal.some(([host, path]) => request.url.startsWith(host) && path.test(url.pathname))) {
+                console.debug(`Proxy to local ${request.url}`);
+                throw new Error('Proxy to local is not implemented');
                 return;
             }
 

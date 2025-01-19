@@ -1,7 +1,8 @@
 export const config = {
     environment: 'prod',
 
-    serviceUrl: 'https://cloud.scytta.com',
+    identityUrl: 'https://cloud.scytta.com',
+    builderUrl: 'https://cloud.scytta.com',
     webUrl: 'https://www.scytta.com',
     contentUrl: 'https://www.scytta.com',
 

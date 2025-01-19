@@ -1,11 +1,13 @@
 export const config = {
     environment: 'dev',
 
-    serviceUrl: 'https://cloud.scytta.com',
-    webUrl: 'https://local-web.scytta.com:4443',
-    contentUrl: 'https://local-web.scytta.com:4443',
+    identityUrl: 'https://cloud.local-scytta.com:8443',
+    builderUrl: 'https://cloud.local-scytta.com:8444',
+    webUrl: 'https://local-scytta.com:4443',
+    contentUrl: 'https://local-scytta.com:4443',
 
     turnstile: {
-        siteKey: '3x00000000000000000000FF'
+        disable: true,
+        siteKey: '1x00000000000000000000AA'
     }
 };
