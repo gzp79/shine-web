@@ -3,7 +3,8 @@ import { config as baseConfig } from '$generated/config';
 export interface Config {
     environment: 'mock' | 'dev' | 'prod';
 
-    serviceUrl: string;
+    identityUrl: string;
+    builderUrl: string;
     webUrl: string;
     contentUrl: string;
 
@@ -11,6 +12,7 @@ export interface Config {
     mocks?: string[];
 
     turnstile: {
+        disable?: boolean;
         siteKey: string;
     };
 }

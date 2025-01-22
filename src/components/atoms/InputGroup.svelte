@@ -1,15 +1,14 @@
 <script lang="ts" module>
     import { twMerge } from 'tailwind-merge';
     import { setContext, type Snippet } from 'svelte';
-    import type { ElementProps, ActionColor, Size } from './types';
-    import type { Variant } from './Button.svelte';
+    import type { ElementProps, ActionColor, Size, InputVariant } from './types';
 
     export interface GroupInfo {
         size: Size;
         color?: ActionColor;
         wide?: boolean;
         vertical: boolean;
-        variant: Variant;
+        variant: InputVariant;
     }
 </script>
 
@@ -19,7 +18,7 @@
         color?: ActionColor;
         vertical?: boolean;
         wide?: boolean;
-        variant?: Variant;
+        variant?: InputVariant;
         class?: string;
         children: Snippet;
         element?: string;

@@ -1,7 +1,7 @@
 import Ball from './_ball.svelte';
 import Dots from './_dots.svelte';
-import Infinity from './_infinity.svelte';
+import Infinite from './_infinite.svelte';
 import Ring from './_ring.svelte';
 import Spinner from './_spinner.svelte';
 
-export { Infinity, Spinner, Ball, Dots, Ring };
+export { Infinite, Spinner, Ball, Dots, Ring };

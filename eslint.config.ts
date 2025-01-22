@@ -4,7 +4,6 @@ import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
 import ts from 'typescript-eslint';
 
-/** @type {import('eslint').Linter.Config[]} */
 export default [
     js.configs.recommended,
     ...ts.configs.recommended,
@@ -18,6 +17,20 @@ export default [
                 ...globals.browser,
                 ...globals.node
             }
+        },
+        rules: {
+            '@typescript-eslint/no-unused-vars': [
+                'error',
+                {
+                    args: 'all',
+                    argsIgnorePattern: '^_',
+                    caughtErrors: 'all',
+                    caughtErrorsIgnorePattern: '^_',
+                    destructuredArrayIgnorePattern: '^_',
+                    varsIgnorePattern: '^_',
+                    ignoreRestSiblings: true
+                }
+            ]
         }
     },
     {
@@ -26,9 +39,6 @@ export default [
             parserOptions: {
                 parser: ts.parser
             }
-        },
-        rules: {
-            '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_|_' }]
         }
     },
     {

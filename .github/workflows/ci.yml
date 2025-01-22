@@ -79,7 +79,7 @@ jobs:
 
             # - name: Test
             #   run: |
-            #     sudo echo "127.0.0.1 local-web.scytta.com" | sudo tee -a /etc/hosts
+            #     sudo echo "127.0.0.1 local-scytta.com" | sudo tee -a /etc/hosts
             #     npx playwright install --with-deps
             #     npm run test:setup
             #     npm run test

@@ -87,7 +87,7 @@
             {@render icon(animated.Ball, 'Ball')}
             {@render icon(animated.Dots, 'Dots')}
             {@render icon(animated.Ring, 'Ring')}
-            {@render icon(animated.Infinity, 'Infinity')}
+            {@render icon(animated.Infinite, 'Infinite')}
         </div>
     </Card>
 </Story>

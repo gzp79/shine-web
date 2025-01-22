@@ -21,7 +21,13 @@
 
     let { data }: Props = $props();
 
-    let captcha = $state('');
+    let hasCaptcha = !config.turnstile.disable;
+    if (!hasCaptcha) {
+        console.warn('Captcha is disabled');
+    }
+
+    // when captcha is disabled use a test (site) key that always passes the server side validation
+    let captcha = $state(hasCaptcha ? '' : '1x00000000000000000000AA');
     let showLoading = $state(true);
     let rememberMe = $state(true);
 
@@ -34,9 +40,12 @@
             console.log('Trying the remember me path');
         } else {
             console.log('Prompt for login');
-            setTimeout(() => {
-                showLoading = false;
-            }, 5000); // 5 seconds
+            setTimeout(
+                () => {
+                    showLoading = false;
+                },
+                hasCaptcha ? 5000 : 1000
+            );
         }
     });
 
@@ -113,6 +122,8 @@
     {/if}
 
     <div class="hidden">
-        <Turnstile siteKey={config.turnstile.siteKey} size="compact" bind:token={captcha} />
+        {#if hasCaptcha}
+            <Turnstile siteKey={config.turnstile.siteKey} size="compact" bind:token={captcha} />
+        {/if}
     </div>
 </div>

@@ -8,19 +8,24 @@ if (config.environment === 'mock') {
         onUnhandledRequest(request, print) {
             const url = new URL(request.url);
 
-            const passThrough: [string, RegExp][] = [
-                ['https://local-web.scytta.com:4443', /^\/node_modules\//],
-                ['https://local-web.scytta.com:4443', /^\/.svelte-kit\//],
-                ['https://local-web.scytta.com:4443', /^\/src\//],
-                ['https://local-web.scytta.com:4443', /^\/@id\/.*/],
-                ['https://local-web.scytta.com:4443', /.*\/__data.json.*/],
-                ['https://local-web.scytta.com:4443', /^\/favicon.*/],
-                ['https://local-web.scytta.com:4443', /^\/assets\//],
-
-                ['https://challenges.cloudflare.com/', /.*/]
-            ];
+            const passThrough: [string, RegExp][] = [['https://challenges.cloudflare.com/', /.*/]];
             if (passThrough.some(([host, path]) => request.url.startsWith(host) && path.test(url.pathname))) {
                 console.debug(`Passing through ${request.url}`);
+                return;
+            }
+
+            const proxyToLocal: [string, RegExp][] = [
+                ['https://scytta.com:4443', /^\/node_modules\//],
+                ['https://scytta.com:4443', /^\/.svelte-kit\//],
+                ['https://scytta.com:4443', /^\/src\//],
+                ['https://scytta.com:4443', /^\/@id\/.*/],
+                ['https://scytta.com:4443', /.*\/__data.json.*/],
+                ['https://scytta.com:4443', /^\/favicon.*/],
+                ['https://scytta.com:4443', /^\/assets\//]
+            ];
+            if (proxyToLocal.some(([host, path]) => request.url.startsWith(host) && path.test(url.pathname))) {
+                console.debug(`Proxy to local ${request.url}`);
+                throw new Error('Proxy to local is not implemented');
                 return;
             }
 

@@ -16,6 +16,9 @@ export type ActionColor = (typeof actionColorList)[number];
 export const sizeList = ['xs', 'sm', 'md', 'lg'];
 export type Size = (typeof sizeList)[number];
 
+export const inputVariantList = ['filled', 'outline', 'ghost'];
+export type InputVariant = (typeof inputVariantList)[number];
+
 export function range(start: number, end: number): number[] {
     return Array.from({ length: end - start }, (_, i) => start + i);
 }
