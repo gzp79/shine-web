@@ -1,19 +1,15 @@
-<script lang="ts" module>
+<script lang="ts">
     import { getContext, type Component, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import { type ActionColor, type ElementProps, type Size } from './types';
+    import { type ActionColor, type ElementProps, type InputVariant, type Size } from './types';
     import type { GroupInfo } from './InputGroup.svelte';
     import type { HTMLAttributes } from 'svelte/elements';
 
-    export type Variant = 'filled' | 'outline' | 'ghost';
-</script>
-
-<script lang="ts">
     interface Props extends ElementProps {
         color?: ActionColor;
         size?: Size;
         wide?: boolean;
-        variant?: Variant;
+        variant?: InputVariant;
         disabled?: boolean;
         highlight?: boolean;
         class?: string;
@@ -108,8 +104,8 @@
                 !group && 'border-2',
                 group &&
                     (group.vertical
-                        ? 'first:border-t-2 last:border-b-2 border-x-2 border-t-2'
-                        : 'first:border-s-2 last:border-e-2 border-y-2 border-s-2'),
+                        ? 'first:border-t-2 last:border-b-2 border-x-2 border-t-2 first:rounded-t-lg last:rounded-b-lg '
+                        : 'first:border-s-2 last:border-e-2 border-y-2 border-s-2 first:rounded-s-lg last:rounded-e-lg'),
                 !disabled && !group && 'active:scale-95',
                 !disabled && 'hover:highlight'
             ],
@@ -118,14 +114,18 @@
                 !group && 'border-2',
                 group &&
                     (group.vertical
-                        ? 'first:border-t-2 last:border-b-2 border-x-2 border-t-2'
-                        : 'first:border-s-2 last:border-e-2 border-y-2 border-s-2'),
+                        ? 'first:border-t-2 last:border-b-2 border-x-2 border-t-2 first:rounded-t-lg last:rounded-b-lg '
+                        : 'first:border-s-2 last:border-e-2 border-y-2 border-s-2 first:rounded-s-lg last:rounded-e-lg'),
                 !disabled && !group && 'active:scale-95',
                 !disabled && `hover:highlight-backdrop`
             ],
             variant === 'ghost' && [
                 `text-accent-${color}`,
                 !group && 'border-2 border-transparent',
+                group &&
+                    (group.vertical
+                        ? 'border-2 border-transparent first:rounded-t-lg last:rounded-b-lg '
+                        : 'border-2 border-transparent first:rounded-s-lg last:rounded-e-lg'),
                 !disabled && !group && 'active:scale-95',
                 !disabled && `hover:highlight-backdrop`
             ],
@@ -133,12 +133,8 @@
             !group && ['m-1', wide ? 'min-w-full justify-center' : 'w-fit h-fit', 'rounded-full'],
             group && [
                 'self-stretch',
-                group.vertical && 'w-full',
-                !group.vertical && (wide ? 'w-full' : 'w-fit'),
-
-                group.vertical
-                    ? `first:rounded-t-lg last:rounded-b-lg ${wide && 'justify-between'}`
-                    : 'first:rounded-s-lg last:rounded-e-lg'
+                group.vertical && ['w-full', wide && 'justify-between'],
+                !group.vertical && (wide ? 'w-full' : 'w-fit')
             ],
 
             children && [sizeMods[size], StartIcon && startIconPadding[size], EndIcon && endIconPadding[size]],

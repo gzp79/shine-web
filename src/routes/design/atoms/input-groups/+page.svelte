@@ -1,14 +1,15 @@
 <script lang="ts">
-    import { actionColorList, sizeList } from '$atoms/types';
-    import Button, { type Variant } from '$atoms/Button.svelte';
+    import { actionColorList, sizeList, type InputVariant } from '$atoms/types';
+    import Button from '$atoms/Button.svelte';
     import InputGroup from '$atoms/InputGroup.svelte';
     import Box from '$atoms/Box.svelte';
     import * as icons from '$atoms/icons/common';
     import { CheckBox, Select, settingsStore, Story } from '../../_components';
+    import TextArea from '$components/atoms/TextArea.svelte';
 
     let color = $state('secondary');
     let size = $state('md');
-    let variant = $state<Variant>('filled');
+    let variant = $state<InputVariant>('filled');
     let wide = $state(false);
 
     settingsStore().set(settings);
@@ -42,6 +43,24 @@
         <InputGroup {variant} {wide} {size} {color}>
             <Button>Merge</Button>
             <Button wide={false} startIcon={icons.DropDown} />
+        </InputGroup>
+    </Box>
+
+    <Box border compact class="p-1 {wide && 'w-full'}">
+        <InputGroup {variant} {wide} {size} {color}>
+            <Button>Profile</Button>
+            <TextArea placeholder="Enter text..." rows="single" />
+            <TextArea placeholder={'Enter\n multiline\n text...'} rows={3} />
+            <Button>Config</Button>
+        </InputGroup>
+    </Box>
+
+    <Box border compact class="p-1 {wide && 'w-full'}">
+        <InputGroup vertical {variant} {wide} {size} {color}>
+            <Button>Profile</Button>
+            <TextArea placeholder="Enter text..." rows="single" />
+            <TextArea placeholder={'Enter\n multiline\n text...'} rows={3} />
+            <Button>Config</Button>
         </InputGroup>
     </Box>
 </Story>

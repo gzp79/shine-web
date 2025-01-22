@@ -42,6 +42,7 @@
             items: [
                 { title: 'Buttons', href: 'atoms/buttons' },
                 { title: 'Toggle', href: 'atoms/toggles' },
+                { title: 'Text Area', href: 'atoms/text-area' },
                 { title: 'Input Groups', href: 'atoms/input-groups' },
                 { title: 'ComboButtons', href: 'atoms/combo-buttons' }
             ]
