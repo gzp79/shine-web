@@ -30,7 +30,13 @@
         });
         socket.addEventListener('message', (event) => {
             console.log('message: ', event.data);
-            history.push(JSON.parse(event.data));
+            const msg = JSON.parse(event.data);
+            if (msg.type === 'chat' && msg.text.startsWith('@ping ')) {
+                const now = new Date().getTime();
+                const prev = parseInt(msg.text.substring(6));
+                msg.text = `Roundtrip: ${now - prev}ms`;
+            }
+            history.push(msg);
             while (history.length > 10) {
                 history.shift();
             }
@@ -43,12 +49,15 @@
             return;
         }
 
-        socket?.send(
-            JSON.stringify({
-                type: 'chat',
-                text: currentMessage
-            })
-        );
+        const msg = {
+            type: 'chat',
+            text: currentMessage
+        };
+        if (currentMessage === '@ping') {
+            msg.text = `@ping ${new Date().getTime()}`;
+        }
+
+        socket?.send(JSON.stringify(msg));
         currentMessage = '';
     };
 

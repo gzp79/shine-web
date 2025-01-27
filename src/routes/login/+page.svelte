@@ -76,7 +76,6 @@
     };
 </script>
 
-{redirectUrl}
 <div class="relative flex h-full flex-col items-center justify-center">
     <div
         class="pointer-events-none absolute left-0 top-0 size-full bg-cover bg-center bg-no-repeat opacity-[0.25]"
