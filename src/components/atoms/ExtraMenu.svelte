@@ -251,10 +251,10 @@
         // Check if there is already a drag in progress
         if (dragInfo) {
             if (evt.timeStamp - dragInfo.startTime > MAX_DRAG_TIME_MS) {
-                console.log!('onDragStart: restart drag, as prev event is taking too long');
+                //console.log!('onDragStart: restart drag, as prev event is taking too long');
             } else {
                 if (currentId[0] === 'mouse' && dragInfo.inputId[0] === 'mouse') {
-                    console.log!('drag_start: restart mouse');
+                    //console.log!('drag_start: restart mouse');
                 } else {
                     //console.log('ignore input type or pointer change');
                     return;

@@ -4,7 +4,7 @@ import { config } from '$config';
 import { loadThemeServerSide } from '$lib/theme/theme.svelte';
 
 if (config.environment === 'mock') {
-    console.log('starting server mock worker');
+    console.info('Starting server mock worker...');
     const { server } = await import('$mocks/node');
     server.listen({
         onUnhandledRequest(request, print) {

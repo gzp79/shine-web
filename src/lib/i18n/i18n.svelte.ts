@@ -1,6 +1,7 @@
 /* cspell: disable */
 import type { Cookies } from '@sveltejs/kit';
 import { browser } from '$app/environment';
+import { logI18n } from '$lib/loggers';
 import { type Nullable, getCookie, setCookie } from '$lib/utils';
 import { i18n } from '../../translations/i18n';
 
@@ -17,7 +18,7 @@ function getSupportedLocale(candidate: string) {
 
 /// return the preferred language set in the browser
 function defaultBrowserLanguage() {
-    //console.log(`Finding default browser language (${navigator.language}) ...`);
+    logI18n(`Finding default browser language (${navigator.language}) ...`);
     return `${navigator.language}`.toLowerCase();
 }
 
@@ -31,10 +32,10 @@ export async function loadLanguageServerSide(url: URL, cookies: Cookies, headers
 
     let locale = (cookies.get('lang') || '').toLowerCase();
     if (!locale) {
-        //console.log('Checking accept-language ...');
+        logI18n('Checking accept-language ...');
         locale = `${`${headers.get('accept-language')}`.match(/[a-zA-Z]+?(?=-|_|,|;)/)}`.toLowerCase();
     }
-    //console.log(`Selected language, server side: ${locale}`);
+    logI18n(`Selected language, server side: ${locale}`);
 
     locale = getSupportedLocale(locale);
     await loadTranslations(locale, pathname);
@@ -72,7 +73,7 @@ export function languageStore() {
     locale.subscribe((value) => {
         rune = value;
         if (browser) {
-            //console.log(`Setting lang cookie to ${rune}`);
+            logI18n(`Setting lang cookie to ${rune}`);
             setCookie('lang', rune);
         }
     });
