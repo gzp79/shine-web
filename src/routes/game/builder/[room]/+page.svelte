@@ -31,9 +31,9 @@
         socket.addEventListener('message', (event) => {
             console.log('message: ', event.data);
             const msg = JSON.parse(event.data);
-            if (msg.type === 'chat' && msg.text.startsWith('@speed ')) {
+            if (msg.type === 'chat' && msg.text.startsWith('@ping ')) {
                 const now = new Date().getTime();
-                const prev = parseInt(msg.text.substring(7));
+                const prev = parseInt(msg.text.substring(6));
                 msg.text = `Roundtrip: ${now - prev}ms`;
             }
             history.push(msg);
@@ -53,8 +53,8 @@
             type: 'chat',
             text: currentMessage
         };
-        if (currentMessage === '@speed') {
-            msg.text = `@speed ${new Date().getTime()}`;
+        if (currentMessage === '@ping') {
+            msg.text = `@ping ${new Date().getTime()}`;
         }
 
         socket?.send(JSON.stringify(msg));
