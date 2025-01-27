@@ -1,7 +1,7 @@
 import { config } from '$config';
 
 if (config.environment === 'mock') {
-    console.log('starting browser mock worker');
+    console.info('Starting browser mock worker...');
 
     const { worker } = await import('$mocks/browser');
     await worker.start({
