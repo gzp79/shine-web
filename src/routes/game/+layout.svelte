@@ -54,7 +54,6 @@
 </script>
 
 <App>
-    {loginUrl}
     {#if currentUser.error}
         <AppContent>
             <div class="flex h-full items-center justify-center">
