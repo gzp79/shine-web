@@ -8,11 +8,17 @@
     import ErrorCard from '$atoms/ErrorCard.svelte';
     import Button from '$atoms/Button.svelte';
     import LoadingCard from '$components/atoms/LoadingCard.svelte';
+    import { page } from '$app/stores';
 
     interface Props {
         children: Snippet;
     }
     let { children }: Props = $props();
+
+    let redirectUrl = $derived.by(() => {
+        const target = $page.url.searchParams.get('target');
+        return target ? `/game/${decodeURIComponent(target)}` : '/game';
+    });
 
     const currentUser = currentUserStore();
     $effect(() => {
@@ -38,7 +44,7 @@
             </div>
         </AppContent>
     {:else if currentUser.isAuthenticated}
-        {#await goto('/game')}{/await}
+        {#await goto(redirectUrl)}{/await}
     {:else}
         {@render children()}
     {/if}

@@ -16,27 +16,27 @@ function isCurrentUser(user: UserState): user is CurrentUser {
     return isLoaded(user) && !('isLoading' in user);
 }
 
-let user = $state<UserState>(null);
-let nextUpdate = $state(0);
+let s_user = $state<UserState>(null);
+let s_nextUpdate = $state(0);
 
 // Update the current user every n seconds
 const UPDATE_INTERVAL = 15 * 60;
 
 async function refreshCurrentUser(fetch: Fetch): Promise<void> {
     const now = Date.now();
-    if (user === null || now > nextUpdate) {
-        logUser('Refreshing current user', nextUpdate, user);
+    if (s_user === null || now > s_nextUpdate) {
+        logUser('Refreshing current user', s_nextUpdate, s_user);
         try {
-            user = { isLoading: now };
-            nextUpdate = now + UPDATE_INTERVAL * 1000;
+            s_user = { isLoading: now };
+            s_nextUpdate = now + UPDATE_INTERVAL * 1000;
 
             logUser('Fetching current user data...');
             const usr = await identityApi.getCurrentUser(fetch);
-            if ('isLoading' in user && user.isLoading == now) {
+            if ('isLoading' in s_user && s_user.isLoading == now) {
                 logUser('Fetching current user data completed', usr);
                 //update user only if it hasn't changed yet
-                user = usr;
-                nextUpdate = now + UPDATE_INTERVAL * 1000;
+                s_user = usr;
+                s_nextUpdate = now + UPDATE_INTERVAL * 1000;
             } else {
                 logUser('Fetching current user data was late...');
             }
@@ -44,34 +44,34 @@ async function refreshCurrentUser(fetch: Fetch): Promise<void> {
             logUser('Fetching current user data failed with error', error);
             if (error !== null && typeof error === 'object') {
                 if ('errorKind' in error && 'message' in error) {
-                    user = error as AppError;
+                    s_user = error as AppError;
                 } else if ('message' in error) {
-                    user = { errorKind: 'other', message: (error as Error).message };
+                    s_user = { errorKind: 'other', message: (error as Error).message };
                 } else {
-                    user = { errorKind: 'other', message: JSON.stringify(error) };
+                    s_user = { errorKind: 'other', message: JSON.stringify(error) };
                 }
             } else {
-                user = { errorKind: 'other', message: String(error) };
+                s_user = { errorKind: 'other', message: String(error) };
             }
-            nextUpdate = 0;
+            s_nextUpdate = 0;
         }
 
-        logUser('Refreshed current user', nextUpdate, user);
+        logUser('Refreshed current user', s_nextUpdate, s_user);
     }
 }
 
 export function currentUserStore() {
     return {
         get isNull(): boolean {
-            return user === null;
+            return s_user === null;
         },
 
         get isLoaded(): boolean {
-            return isLoaded(user);
+            return isLoaded(s_user);
         },
 
         forget(): void {
-            user = null;
+            s_user = null;
         },
 
         async refresh(): Promise<void> {
@@ -79,17 +79,21 @@ export function currentUserStore() {
         },
 
         get error(): AppError | null {
-            if (isMaybeError(user)) return user;
+            if (isMaybeError(s_user)) return s_user;
             return null;
         },
 
         get isAuthenticated(): boolean {
-            return isCurrentUser(user) && user.isAuthenticated;
+            return isCurrentUser(s_user) && s_user.isAuthenticated;
         },
 
         get user(): CurrentUser {
-            if (!isCurrentUser(user)) throw new Error('User not loaded');
-            return user as CurrentUser;
+            if (!isCurrentUser(s_user)) throw new Error('User not loaded');
+            return s_user as CurrentUser;
+        },
+
+        get raw(): UserState {
+            return s_user;
         }
     };
 }

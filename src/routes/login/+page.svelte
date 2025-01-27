@@ -12,6 +12,8 @@
     import { assets } from '$assets';
     import Typography from '$components/atoms/Typography.svelte';
     import { Dots } from '$atoms/icons/animated';
+    import { page } from '$app/stores';
+    import { logUser } from '$lib/loggers';
 
     interface Props {
         data: {
@@ -20,6 +22,11 @@
     }
 
     let { data }: Props = $props();
+
+    let redirectUrl = $derived.by(() => {
+        const target = $page.url.searchParams.get('target');
+        return target ? `/game/${decodeURIComponent(target)}` : '/game';
+    });
 
     let hasCaptcha = !config.turnstile.disable;
     if (!hasCaptcha) {
@@ -36,10 +43,12 @@
         const prompt = params.get('prompt');
 
         if (!prompt) {
-            window.location.href = identityApi.getTokenLoginUrl('/game', '/login?prompt=true');
-            console.log('Trying the remember me path');
+            const target = $page.url.searchParams.get('target');
+            const loginUrl = target ? `/login?prompt=true&target=${target}` : '/login?prompt=true';
+            window.location.href = identityApi.getTokenLoginUrl(redirectUrl, loginUrl);
+            logUser(`Trying the remember me token with redirectUrl [${redirectUrl}] and loginUrl [${loginUrl}]`);
         } else {
-            console.log('Prompt for login');
+            logUser('Prompt for login');
             setTimeout(
                 () => {
                     showLoading = false;
@@ -67,6 +76,7 @@
     };
 </script>
 
+{redirectUrl}
 <div class="relative flex h-full flex-col items-center justify-center">
     <div
         class="pointer-events-none absolute left-0 top-0 size-full bg-cover bg-center bg-no-repeat opacity-[0.25]"
@@ -86,7 +96,7 @@
                             variant="outline"
                             wide
                             disabled={!captcha}
-                            href={identityApi.getExternalLoginUrl(provider, rememberMe, captcha, '/game')}
+                            href={identityApi.getExternalLoginUrl(provider, rememberMe, captcha, redirectUrl)}
                             startIcon={providerIcon(provider)}
                             class="m-2"
                         >
@@ -104,7 +114,7 @@
         <Button
             color="primary"
             disabled={!captcha}
-            href={identityApi.getGuestLoginUrl(captcha, '/game')}
+            href={identityApi.getGuestLoginUrl(captcha, redirectUrl)}
             startIcon={providerIcon('guest')}
             class="m-0"
         >

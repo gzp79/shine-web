@@ -6,6 +6,7 @@
     import * as flags from '$atoms/icons/flags';
     import * as icons from '$atoms/icons/common';
     import { Story } from '../../_components';
+    import { logDesigner } from '$lib/loggers';
 
     let open = $state(false);
 </script>
@@ -52,7 +53,7 @@
 
     <Box border>
         <InputGroup id="dropDown">
-            <Button onclick={() => console.log('act')}>Logout</Button>
+            <Button onclick={() => logDesigner('act')}>Logout</Button>
             <Button id="dropDownTrigger" startIcon={icons.DropDown} />
         </InputGroup>
         <Popper
@@ -63,9 +64,9 @@
             reference="#dropDown"
         >
             <InputGroup vertical>
-                <Button wide endIcon={flags.FlagHU} onclick={() => console.log('select 1')}>Switch account</Button>
-                <Button wide endIcon={flags.FlagGB} onclick={() => console.log('select 2')}>Logout</Button>
-                <Button wide endIcon={flags.FlagHU} onclick={() => console.log('select 3')}>
+                <Button wide endIcon={flags.FlagHU} onclick={() => logDesigner('select 1')}>Switch account</Button>
+                <Button wide endIcon={flags.FlagGB} onclick={() => logDesigner('select 2')}>Logout</Button>
+                <Button wide endIcon={flags.FlagHU} onclick={() => logDesigner('select 3')}>
                     Logout from all session
                 </Button>
             </InputGroup>

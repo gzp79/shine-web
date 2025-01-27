@@ -46,14 +46,14 @@ export default defineConfig({
     ],
     server: {
         https: https,
-        port: 4443,
-        host: 'local-scytta.com',
+        port: parseInt(new URL(config.webUrl).port),
+        host: new URL(config.webUrl).hostname,
         proxy: {}
     },
     preview: {
         https: https,
-        port: 4443,
-        host: 'local-scytta.com',
+        port: parseInt(new URL(config.webUrl).port),
+        host: new URL(config.webUrl).hostname,
         proxy: {}
     },
     test: {

@@ -9,6 +9,7 @@
     import Button from '$atoms/Button.svelte';
     import App from '$lib/app/App.svelte';
     import AppContent from '$lib/app/AppContent.svelte';
+    import { page } from '$app/stores';
 
     interface Props {
         children: Snippet;
@@ -18,6 +19,18 @@
     let currentUser = currentUserStore();
     $effect(() => {
         if (currentUser.isNull) currentUser.refresh();
+    });
+
+    let loginUrl = $derived.by(() => {
+        const path = $page.url.pathname;
+        const queryString = $page.url.search;
+        if (path.startsWith('/game/')) {
+            const targetPath = path.substring(6);
+            const target = queryString ? `${targetPath}?${queryString}` : targetPath;
+            return `/login?target=${encodeURIComponent(target)}`;
+        } else {
+            return '/login';
+        }
     });
 
     onMount(() => {
@@ -41,6 +54,7 @@
 </script>
 
 <App>
+    {loginUrl}
     {#if currentUser.error}
         <AppContent>
             <div class="flex h-full items-center justify-center">
@@ -60,6 +74,6 @@
     {:else if currentUser.isAuthenticated}
         {@render children()}
     {:else}
-        {#await goto('/login')}{/await}
+        {#await goto(loginUrl)}{/await}
     {/if}
 </App>

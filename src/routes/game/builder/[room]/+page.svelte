@@ -12,18 +12,15 @@
         text: string;
     };
 
-    let pg = $page;
-    let room = pg.params.room;
-    let url = builderApi.getConnectUrl(room);
-
+    let room = $derived($page.params.room);
     let isConnected = $state(false);
-    let newText = $state('');
-    let message: ChatMessage[] = $state.raw([]);
-
-    $inspect(message);
+    let currentMessage = $state('');
+    let history: ChatMessage[] = $state.raw([]);
 
     let socket: WebSocket | undefined;
     const connect = () => {
+        let url = builderApi.getConnectUrl(room);
+
         socket = new WebSocket(url);
         socket.addEventListener('open', () => {
             isConnected = true;
@@ -33,26 +30,26 @@
         });
         socket.addEventListener('message', (event) => {
             console.log('message: ', event.data);
-            message.push(JSON.parse(event.data));
-            while (message.length > 10) {
-                message.shift();
+            history.push(JSON.parse(event.data));
+            while (history.length > 10) {
+                history.shift();
             }
-            message = [...message];
+            history = [...history];
         });
     };
 
     const sendMessage = () => {
-        if (!newText) {
+        if (!currentMessage) {
             return;
         }
 
         socket?.send(
             JSON.stringify({
                 type: 'chat',
-                text: newText
+                text: currentMessage
             })
         );
-        newText = '';
+        currentMessage = '';
     };
 
     onMount(() => {
@@ -63,7 +60,13 @@
 <Typography variant="h1">Room: {room}</Typography>
 
 <InputGroup class="w-full">
-    <TextArea placeholder={'Text...'} rows={3} disabled={!isConnected} onEnter={sendMessage} bind:text={newText} />
+    <TextArea
+        placeholder={'Text...'}
+        rows={3}
+        disabled={!isConnected}
+        onEnter={sendMessage}
+        bind:text={currentMessage}
+    />
     {#if isConnected}
         <Button onclick={sendMessage}>Send</Button>
     {:else}
@@ -72,7 +75,7 @@
 </InputGroup>
 
 <div class="h-full overflow-scroll">
-    {#each message as msg}
+    {#each history as msg}
         <div><i class="inline-block bg-info">{msg.from + ' >'}</i>{msg.text}</div>
     {/each}
 </div>
