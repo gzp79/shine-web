@@ -11,6 +11,11 @@
     let size = $state('md');
     let variant = $state<InputVariant>('filled');
     let wide = $state(false);
+    let showPattern = $state(false);
+
+    let pattern = $derived(
+        showPattern ? 'pattern-rectangles pattern-white pattern-bg-container pattern-size-6 pattern-opacity-100' : ''
+    );
 
     settingsStore().set(settings);
 </script>
@@ -20,10 +25,11 @@
     <Select label="Size" options={sizeList} bind:value={size} />
     <Select label="Variant" options={['filled', 'outline', 'ghost']} bind:value={variant} />
     <CheckBox label="Wide" bind:value={wide} />
+    <CheckBox label="Pattern" bind:value={showPattern} />
 {/snippet}
 
 <Story variant="center">
-    <Box border compact class="p-1 {wide && 'w-full'}">
+    <Box border compact class="p-1 {wide && 'w-full'} {pattern}">
         <InputGroup {variant} {wide} {size} {color}>
             <Button>Profile</Button>
             <Button>Settings</Button>
@@ -31,7 +37,7 @@
         </InputGroup>
     </Box>
 
-    <Box border compact class="p-1 {wide && 'w-full'}">
+    <Box border compact class="p-1 {wide && 'w-full'} {pattern}">
         <InputGroup vertical {variant} {wide} {size} {color}>
             <Button>Profile</Button>
             <Button>Settings</Button>
@@ -39,14 +45,14 @@
         </InputGroup>
     </Box>
 
-    <Box border compact class="p-1 {wide && 'w-full'}">
+    <Box border compact class="p-1 {wide && 'w-full'} {pattern}">
         <InputGroup {variant} {wide} {size} {color}>
             <Button>Merge</Button>
             <Button wide={false} startIcon={icons.DropDown} />
         </InputGroup>
     </Box>
 
-    <Box border compact class="p-1 {wide && 'w-full'}">
+    <Box border compact class="p-1 {wide && 'w-full'} {pattern}">
         <InputGroup {variant} {wide} {size} {color}>
             <Button>Profile</Button>
             <TextArea placeholder="Enter text..." rows="single" />
@@ -55,7 +61,7 @@
         </InputGroup>
     </Box>
 
-    <Box border compact class="p-1 {wide && 'w-full'}">
+    <Box border compact class="p-1 {wide && 'w-full'} {pattern}">
         <InputGroup vertical {variant} {wide} {size} {color}>
             <Button>Profile</Button>
             <TextArea placeholder="Enter text..." rows="single" />

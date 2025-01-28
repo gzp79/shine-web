@@ -7,12 +7,15 @@
     import ErrorCard from '$atoms/ErrorCard.svelte';
     import ResourceFetch from '$atoms/ResourceFetch.svelte';
     import LinkedIdentityCard from './LinkedIdentityCard.svelte';
+    import Button from '$components/atoms/Button.svelte';
+    import * as icons from '$atoms/icons/common';
 
     interface Props {
         identities: () => Promise<LinkedIdentity[]>;
-        onUnlink: (provider: string, providerUserId: string) => Promise<void>;
+        onUnlink?: (provider: string, providerUserId: string) => Promise<void>;
+        onLink?: () => void;
     }
-    const { identities, onUnlink }: Props = $props();
+    const { identities, onUnlink, onLink }: Props = $props();
 
     let dataVersion = $state(0);
 </script>
@@ -23,9 +26,7 @@
             <LoadingCard />
         {/snippet}
 
-        <!-- todo: generic fails on svelte-check -->
-        <!-- eslint-disable @typescript-eslint/no-explicit-any -->
-        {#snippet content(identities: /*LinkedIdentity[]*/ any, _isDirty: boolean)}
+        {#snippet content(identities: LinkedIdentity[], _isDirty: boolean)}
             {#each identities as identity (`${identity.provider}/${identity.providerUserId}`)}
                 <LinkedIdentityCard {identity} {onUnlink} {dataVersion} />
             {/each}
@@ -37,4 +38,12 @@
             </div>
         {/snippet}
     </ResourceFetch>
+
+    {#snippet actions()}
+        {#if onLink}
+            <Button color="secondary" startIcon={icons.Link} onclick={onLink}>
+                {$t('account.link')}
+            </Button>
+        {/if}
+    {/snippet}
 </Card>

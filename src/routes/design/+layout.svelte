@@ -31,6 +31,7 @@
                 { title: 'Popper', href: 'atoms/popper' },
                 { title: 'Key-Value Table', href: 'atoms/key-value-tables' },
                 { title: 'Cards', href: 'atoms/cards' },
+                { title: 'Modal', href: 'atoms/modals' },
                 { title: 'Alerts', href: 'atoms/alerts' },
                 { title: 'Helper Cards', href: 'atoms/helper-cards' },
                 { title: 'Simple Menu', href: 'atoms/simple-menu' },

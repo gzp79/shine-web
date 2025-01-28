@@ -1,4 +1,5 @@
 import twForm from '@tailwindcss/forms';
+import twPatterns from 'tailwindcss-bg-patterns';
 
 const containerColors = {
     surface: 'rgb(var(--color-surface))',
@@ -54,6 +55,7 @@ module.exports = {
     darkMode: 'class',
     content: ['./src/**/*.{svelte,js,ts}'],
     plugins: [
+        twPatterns,
         twForm({
             strategy: 'class'
         }),

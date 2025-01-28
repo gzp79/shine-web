@@ -15,6 +15,7 @@
     "activeSessions": "Active sessions",
     "sessionFingerprint": "Id",
     "unlink": "Unlink",
+    "link": "Link",
     "userAgent": "User agent",
     "loginDate": "Login date",
     "location": "Location",

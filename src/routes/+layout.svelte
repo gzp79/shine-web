@@ -17,4 +17,5 @@
 </script>
 
 <div id="popper"></div>
+<div id="modal"></div>
 {@render children()}

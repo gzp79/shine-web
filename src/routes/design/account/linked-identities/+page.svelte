@@ -98,7 +98,15 @@
 </script>
 
 <Story variant="center">
-    <LinkedIdentitiesCard identities={() => fetchIdentities(identities)} onUnlink={unlink} />
-    <LinkedIdentitiesCard identities={async.never} onUnlink={unlink} />
-    <LinkedIdentitiesCard identities={() => async.error(new Error('Test error'))} onUnlink={unlink} />
+    <LinkedIdentitiesCard
+        identities={() => fetchIdentities(identities)}
+        onUnlink={unlink}
+        onLink={() => logDesigner('linking')}
+    />
+    <LinkedIdentitiesCard identities={async.never} onUnlink={unlink} onLink={() => logDesigner('linking')} />
+    <LinkedIdentitiesCard
+        identities={() => async.error(new Error('Test error'))}
+        onUnlink={unlink}
+        onLink={() => logDesigner('linking')}
+    />
 </Story>

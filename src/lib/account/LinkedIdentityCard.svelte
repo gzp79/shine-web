@@ -9,7 +9,7 @@
     interface Props {
         identity: LinkedIdentity;
         dataVersion: number;
-        onUnlink: (provider: string, providerUserId: string) => Promise<void>;
+        onUnlink?: (provider: string, providerUserId: string) => Promise<void>;
     }
     const { identity, dataVersion, onUnlink }: Props = $props();
 
@@ -32,7 +32,7 @@
     const unlink = async () => {
         // memorize the current dataVersion to prevent multiple unlink requests
         disableVersion = dataVersion;
-        await onUnlink(identity.provider, identity.providerUserId);
+        await onUnlink?.(identity.provider, identity.providerUserId);
     };
 </script>
 

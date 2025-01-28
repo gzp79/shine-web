@@ -7,20 +7,20 @@
     import Box from '$atoms/Box.svelte';
     import Toggle from '$atoms/Toggle.svelte';
     import Logo from '$atoms/icons/Logo.svelte';
-    import * as icons from '$atoms/icons/social';
-    import { onMount, type Component } from 'svelte';
+    import { onMount } from 'svelte';
     import { assets } from '$assets';
     import Typography from '$components/atoms/Typography.svelte';
     import { Dots } from '$atoms/icons/animated';
     import { page } from '$app/stores';
     import { logUser } from '$lib/loggers';
+    import { providerIcon } from '$lib/account/utils.svelte';
+    import Modal from '$components/atoms/Modal.svelte';
 
     interface Props {
         data: {
             providers: string[];
         };
     }
-
     let { data }: Props = $props();
 
     let redirectUrl = $derived.by(() => {
@@ -35,7 +35,8 @@
 
     // when captcha is disabled use a test (site) key that always passes the server side validation
     let captcha = $state(hasCaptcha ? '' : '1x00000000000000000000AA');
-    let showLoading = $state(true);
+    let waitLoading = $state(true);
+    let showLoading = $derived(waitLoading || !captcha);
     let rememberMe = $state(true);
 
     onMount(() => {
@@ -51,29 +52,12 @@
             logUser('Prompt for login');
             setTimeout(
                 () => {
-                    showLoading = false;
+                    waitLoading = false;
                 },
                 hasCaptcha ? 5000 : 1000
             );
         }
     });
-
-    const providerIcon = (provider: string): Component | undefined => {
-        switch (provider) {
-            case 'google':
-                return icons.Google;
-            case 'twitter':
-                return icons.Twitter;
-            case 'github':
-                return icons.Github;
-            case 'discord':
-                return icons.Discord;
-            case 'gitlab':
-                return icons.Gitlab;
-            default:
-                return undefined;
-        }
-    };
 </script>
 
 <div class="relative flex h-full flex-col items-center justify-center">
@@ -121,14 +105,12 @@
         </Button>
     </div>
 
-    {#if showLoading || !captcha}
-        <div class="absolute inset-0 flex select-none items-center justify-center p-4 backdrop-blur-sm">
-            <Typography variant="h3" class="rounded-lg border border-on-surface bg-info p-2 text-on-info">
-                {$t('login.loadingCaptcha')}
-                <Dots class="inline-block h-8 w-8" />
-            </Typography>
-        </div>
-    {/if}
+    <Modal isOpen={showLoading} innerClass="bg-info text-on-info">
+        <Typography variant="h3">
+            {$t('login.loadingCaptcha')}
+            <Dots class="inline-block h-8 w-8" />
+        </Typography>
+    </Modal>
 
     <div class="hidden">
         {#if hasCaptcha}

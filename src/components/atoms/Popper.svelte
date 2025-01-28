@@ -63,7 +63,7 @@
 
     let width = $state(0);
 
-    let divClass = $derived(twMerge('fixed left-0 top-0 z-50', !isOpen ? 'hidden' : display));
+    let divClass = $derived(twMerge('fixed left-0 top-0 z-40', !isOpen ? 'hidden' : display));
     let divStyle = $derived(alignWidth ? `min-width: ${width}px;` : '');
 
     const show = () => {
