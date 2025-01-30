@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { identityApi } from '$lib/api/identity-api';
-    import { currentUserStore } from '$lib/account/currentUser.svelte';
-    import CurrentUserCard from '$lib/account/CurrentUserCard.svelte';
-    import ActiveSessionsCard from '$lib/account/ActiveSessionsCard.svelte';
-    import LinkedIdentitiesCard from '$lib/account/LinkedIdentitiesCard.svelte';
-    import ActiveTokensCard from '$lib/account/ActiveTokensCard.svelte';
-    import AppContent from '$lib/app/AppContent.svelte';
-    import Button from '$components/atoms/Button.svelte';
-    import { providerIcon } from '$lib/account/utils.svelte';
-    import Modal from '$components/atoms/Modal.svelte';
     import { page } from '$app/stores';
+    import Button from '$components/atoms/Button.svelte';
+    import Modal from '$components/atoms/Modal.svelte';
+    import ActiveSessionsCard from '$lib/account/ActiveSessionsCard.svelte';
+    import ActiveTokensCard from '$lib/account/ActiveTokensCard.svelte';
+    import CurrentUserCard from '$lib/account/CurrentUserCard.svelte';
+    import LinkedIdentitiesCard from '$lib/account/LinkedIdentitiesCard.svelte';
+    import { currentUserStore } from '$lib/account/currentUser.svelte';
+    import { providerIcon } from '$lib/account/utils.svelte';
+    import { identityApi } from '$lib/api/identity-api';
+    import AppContent from '$lib/app/AppContent.svelte';
 
     interface Props {
         data: {

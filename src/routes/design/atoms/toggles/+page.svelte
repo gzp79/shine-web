@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { actionColorList, sizeList, type ActionColor } from '$atoms/types';
     import Box from '$atoms/Box.svelte';
     import Toggle from '$atoms/Toggle.svelte';
-    import { settingsStore, Story, CheckBox, Select } from '../../_components';
+    import { type ActionColor, actionColorList, sizeList } from '$atoms/types';
+    import { CheckBox, Select, Story, settingsStore } from '../../_components';
 
     let value = $state(true);
     let color = $state<ActionColor>('primary');

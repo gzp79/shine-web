@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { v4 as uuid } from 'uuid';
-    import { async } from '$lib/utils';
-    import { logDesigner } from '$lib/loggers';
-    import type { LinkedIdentity } from '$lib/api/identity-api';
     import LinkedIdentitiesCard from '$lib/account/LinkedIdentitiesCard.svelte';
+    import type { LinkedIdentity } from '$lib/api/identity-api';
+    import { logDesigner } from '$lib/loggers';
+    import { async } from '$lib/utils';
+    import { v4 as uuid } from 'uuid';
     import Story from '../../_components/_Story.svelte';
 
     // emulate some backend stored list

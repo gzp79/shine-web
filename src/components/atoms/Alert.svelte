@@ -4,9 +4,9 @@
 
 <script lang="ts">
     import type { Snippet } from 'svelte';
-    import type { ElementProps } from './types';
-    import * as icons from './icons/common';
     import Card, { type Variant as CardVariant } from './Card.svelte';
+    import * as icons from './icons/common';
+    import type { ElementProps } from './types';
 
     interface Props extends ElementProps {
         variant?: Variant;

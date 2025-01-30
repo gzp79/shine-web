@@ -3,8 +3,8 @@
 </script>
 
 <script lang="ts" generics="T">
-    import type { Snippet } from 'svelte';
     import type { AppError, Nullable } from '$lib/utils';
+    import type { Snippet } from 'svelte';
 
     // generics="T" is not respected by the eslint
     /* eslint no-undef: "off" */

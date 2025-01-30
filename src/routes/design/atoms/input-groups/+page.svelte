@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { actionColorList, sizeList, type InputVariant } from '$atoms/types';
+    import Box from '$atoms/Box.svelte';
     import Button from '$atoms/Button.svelte';
     import InputGroup from '$atoms/InputGroup.svelte';
-    import Box from '$atoms/Box.svelte';
     import * as icons from '$atoms/icons/common';
-    import { CheckBox, Select, settingsStore, Story } from '../../_components';
+    import { type InputVariant, actionColorList, sizeList } from '$atoms/types';
     import TextArea from '$components/atoms/TextArea.svelte';
+    import { CheckBox, Select, Story, settingsStore } from '../../_components';
 
     let color = $state('secondary');
     let size = $state('md');

@@ -39,6 +39,7 @@ export type LinkedIdentities = z.infer<typeof LinkedIdentitiesSchema>;
 
 const ActiveSessionSchema = z.object({
     //userId: string,
+    tokenHash: z.string(),
     fingerprint: z.string(),
     createdAt: DateStringSchema,
     agent: z.string(),

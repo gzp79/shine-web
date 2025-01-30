@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { onMount, type Snippet } from 'svelte';
     import { afterNavigate, goto } from '$app/navigation';
-    import { currentUserStore } from '$lib/account/currentUser.svelte';
-    import { logUser } from '$lib/loggers';
-    import { t } from '$lib/i18n/i18n.svelte';
+    import { page } from '$app/stores';
+    import Button from '$atoms/Button.svelte';
     import ErrorCard from '$atoms/ErrorCard.svelte';
     import LoadingCard from '$atoms/LoadingCard.svelte';
-    import Button from '$atoms/Button.svelte';
+    import { currentUserStore } from '$lib/account/currentUser.svelte';
     import App from '$lib/app/App.svelte';
     import AppContent from '$lib/app/AppContent.svelte';
-    import { page } from '$app/stores';
+    import { t } from '$lib/i18n/i18n.svelte';
+    import { logUser } from '$lib/loggers';
+    import { type Snippet, onMount } from 'svelte';
 
     interface Props {
         children: Snippet;
@@ -17,9 +17,6 @@
     let { children }: Props = $props();
 
     let currentUser = currentUserStore();
-    $effect(() => {
-        if (currentUser.isNull) currentUser.refresh();
-    });
 
     let loginUrl = $derived.by(() => {
         const path = $page.url.pathname;
@@ -30,6 +27,16 @@
             return `/login?target=${encodeURIComponent(target)}`;
         } else {
             return '/login';
+        }
+    });
+
+    $effect(() => {
+        if (currentUser.isNull) {
+            logUser('Refreshing current user...');
+            currentUser.refresh();
+        } else if (currentUser.isLoaded && !currentUser.isAuthenticated) {
+            logUser('Login required');
+            goto(loginUrl);
         }
     });
 
@@ -72,7 +79,7 @@
         </AppContent>
     {:else if currentUser.isAuthenticated}
         {@render children()}
-    {:else}
-        {#await goto(loginUrl)}{/await}
+        <!-- {:else}
+        {void goto(loginUrl)} -->
     {/if}
 </App>

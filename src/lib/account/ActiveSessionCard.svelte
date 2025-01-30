@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { UAParser } from 'ua-parser-js';
-    import { t } from '$lib/i18n/i18n.svelte';
-    import type { ActiveSession } from '$lib/api/identity-api';
-    import { formatLocation } from '$lib/i18n/utils';
     import Card from '$atoms/Card.svelte';
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
     import * as clientIcons from '$atoms/icons/clients';
+    import type { ActiveSession } from '$lib/api/identity-api';
+    import { t } from '$lib/i18n/i18n.svelte';
+    import { formatLocation } from '$lib/i18n/utils';
+    import { UAParser } from 'ua-parser-js';
 
     interface Props {
         session: ActiveSession;

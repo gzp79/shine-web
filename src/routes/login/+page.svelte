@@ -1,20 +1,20 @@
 <script lang="ts">
-    import { identityApi } from '$lib/api/identity-api';
-    import { t } from '$lib/i18n/i18n.svelte';
-    import { config } from '$config';
-    import Turnstile from '$components/Turnstile.svelte';
-    import Button from '$atoms/Button.svelte';
+    import { page } from '$app/stores';
+    import { assets } from '$assets';
     import Box from '$atoms/Box.svelte';
+    import Button from '$atoms/Button.svelte';
     import Toggle from '$atoms/Toggle.svelte';
     import Logo from '$atoms/icons/Logo.svelte';
-    import { onMount } from 'svelte';
-    import { assets } from '$assets';
-    import Typography from '$components/atoms/Typography.svelte';
     import { Dots } from '$atoms/icons/animated';
-    import { page } from '$app/stores';
-    import { logUser } from '$lib/loggers';
-    import { providerIcon } from '$lib/account/utils.svelte';
+    import Turnstile from '$components/Turnstile.svelte';
     import Modal from '$components/atoms/Modal.svelte';
+    import Typography from '$components/atoms/Typography.svelte';
+    import { config } from '$config';
+    import { providerIcon } from '$lib/account/utils.svelte';
+    import { identityApi } from '$lib/api/identity-api';
+    import { t } from '$lib/i18n/i18n.svelte';
+    import { logUser } from '$lib/loggers';
+    import { onMount } from 'svelte';
 
     interface Props {
         data: {

@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { actionColorList, range, type ActionColor } from '$atoms/types';
     import Box from '$atoms/Box.svelte';
-    import { Select, settingsStore, Story } from '../../_components';
+    import { type ActionColor, actionColorList, range } from '$atoms/types';
+    import { Select, Story, settingsStore } from '../../_components';
 
     let color = $state<ActionColor>('warning');
 

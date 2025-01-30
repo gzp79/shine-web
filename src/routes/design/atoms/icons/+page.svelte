@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { type Component } from 'svelte';
-    import { actionColorList, sizeList, type ActionColor, type Size } from '$atoms/types';
-    import * as icons from '$atoms/icons/common';
-    import * as clients from '$atoms/icons/clients';
-    import * as animated from '$atoms/icons/animated';
-    import * as social from '$atoms/icons/social';
-    import * as flags from '$atoms/icons/flags';
+    import Box from '$atoms/Box.svelte';
     import Card from '$atoms/Card.svelte';
     import Typography from '$atoms/Typography.svelte';
-    import Box from '$atoms/Box.svelte';
-    import { CheckBox, Select, settingsStore, Story } from '../../_components';
+    import * as animated from '$atoms/icons/animated';
+    import * as clients from '$atoms/icons/clients';
+    import * as icons from '$atoms/icons/common';
+    import * as flags from '$atoms/icons/flags';
+    import * as social from '$atoms/icons/social';
+    import { type ActionColor, type Size, actionColorList, sizeList } from '$atoms/types';
+    import { type Component } from 'svelte';
+    import { CheckBox, Select, Story, settingsStore } from '../../_components';
 
     let size = $state<Size>('md');
     let color = $state<ActionColor>('primary');

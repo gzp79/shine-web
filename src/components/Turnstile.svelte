@@ -1,9 +1,9 @@
 <script lang="ts">
+    import { browser } from '$app/environment';
+    import { logAPI } from '$lib/loggers';
     import { onMount } from 'svelte';
     import type { Action } from 'svelte/action';
     import type { RenderParameters, WidgetId } from 'turnstile-types';
-    import { browser } from '$app/environment';
-    import { logAPI } from '$lib/loggers';
 
     interface Props {
         /**

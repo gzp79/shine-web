@@ -1,9 +1,9 @@
 <script lang="ts" module>
-    import { onMount, setContext, untrack, type Snippet } from 'svelte';
-    import { twMerge } from 'tailwind-merge';
-    import type { Nullable } from '$lib/utils';
-    import { dependsOn, range, simpleHash } from './types';
     import * as svg from '$atoms/svg';
+    import type { Nullable } from '$lib/utils';
+    import { type Snippet, onMount, setContext, untrack } from 'svelte';
+    import { twMerge } from 'tailwind-merge';
+    import { dependsOn, range, simpleHash } from './types';
 
     // move at least this much to start dragging
     const DRAG_TOLERANCE = 3.0;

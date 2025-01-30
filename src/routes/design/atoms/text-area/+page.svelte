@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { actionColorList, sizeList, type ActionColor, type Size } from '$atoms/types';
     import TextArea from '$atoms/TextArea.svelte';
-    import { CheckBox, Select, settingsStore, Story } from '../../_components';
+    import { type ActionColor, type Size, actionColorList, sizeList } from '$atoms/types';
     import { logDesigner } from '$lib/loggers';
+    import { CheckBox, Select, Story, settingsStore } from '../../_components';
 
     let color = $state<ActionColor>('secondary');
     let size = $state<Size>('md');

@@ -1,11 +1,11 @@
 <script lang="ts">
-    import type { Snippet } from 'svelte';
     import { t } from '$lib/i18n/i18n.svelte';
     import type { AppError } from '$lib/utils';
-    import type { ElementProps } from './types';
+    import type { Snippet } from 'svelte';
+    import Alert from './Alert.svelte';
     import Box from './Box.svelte';
     import Typography from './Typography.svelte';
-    import Alert from './Alert.svelte';
+    import type { ElementProps } from './types';
 
     interface Props extends Omit<ElementProps, 'role'> {
         caption?: string;

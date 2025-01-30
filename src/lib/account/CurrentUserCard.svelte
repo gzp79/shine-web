@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { t } from '$lib/i18n/i18n.svelte';
-    import type { CurrentUser } from '$lib/api/identity-api';
-    import { type AppError } from '$lib/utils';
-    import { Warning } from '$atoms/icons/common';
+    import Alert from '$atoms/Alert.svelte';
+    import Card from '$atoms/Card.svelte';
+    import ComboButton from '$atoms/ComboButton.svelte';
+    import ErrorCard from '$atoms/ErrorCard.svelte';
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
     import LoadingCard from '$atoms/LoadingCard.svelte';
     import ResourceFetch, { type Status } from '$atoms/ResourceFetch.svelte';
-    import Card from '$atoms/Card.svelte';
-    import ErrorCard from '$atoms/ErrorCard.svelte';
-    import Alert from '$atoms/Alert.svelte';
-    import ComboButton from '$atoms/ComboButton.svelte';
+    import { Warning } from '$atoms/icons/common';
+    import type { CurrentUser } from '$lib/api/identity-api';
+    import { t } from '$lib/i18n/i18n.svelte';
+    import { type AppError } from '$lib/utils';
 
     interface Props {
         user: () => Promise<CurrentUser>;

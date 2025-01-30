@@ -1,8 +1,8 @@
 <script lang="ts">
-    import ExtraMenu from '$atoms/ExtraMenu.svelte';
-    import ExtraMenuItem from '$atoms/ExtraMenuItem.svelte';
     import Box from '$atoms/Box.svelte';
     import Button from '$atoms/Button.svelte';
+    import ExtraMenu from '$atoms/ExtraMenu.svelte';
+    import ExtraMenuItem from '$atoms/ExtraMenuItem.svelte';
     import { range } from '$atoms/types';
     import { Story } from '../../_components';
 </script>

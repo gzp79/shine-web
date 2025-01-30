@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { logDesigner } from '$lib/loggers';
-    import { range } from '$atoms/types';
-    import ComboButton from '$atoms/ComboButton.svelte';
     import Box from '$atoms/Box.svelte';
+    import ComboButton from '$atoms/ComboButton.svelte';
+    import { range } from '$atoms/types';
+    import { logDesigner } from '$lib/loggers';
     import { Story } from '../../_components';
 
     let current = $state(3);

@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { type AppError } from '$lib/utils';
-    import { t } from '$lib/i18n/i18n.svelte';
-    import type { ActiveToken } from '$lib/api/identity-api';
     import Card from '$atoms/Card.svelte';
-    import LoadingCard from '$atoms/LoadingCard.svelte';
     import ErrorCard from '$atoms/ErrorCard.svelte';
+    import LoadingCard from '$atoms/LoadingCard.svelte';
     import ResourceFetch from '$atoms/ResourceFetch.svelte';
+    import type { ActiveToken } from '$lib/api/identity-api';
+    import { t } from '$lib/i18n/i18n.svelte';
+    import { type AppError } from '$lib/utils';
     import ActiveTokenCard from './ActiveTokenCard.svelte';
 
     interface Props {

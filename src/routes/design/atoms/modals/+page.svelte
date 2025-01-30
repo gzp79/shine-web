@@ -1,7 +1,7 @@
 <script lang="ts">
     import Button from '$atoms/Button.svelte';
-    import { Story } from '../../_components';
     import Modal from '$components/atoms/Modal.svelte';
+    import { Story } from '../../_components';
 
     let showModal1 = $state(false);
     let showModal2 = $state(false);

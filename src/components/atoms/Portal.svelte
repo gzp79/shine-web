@@ -1,5 +1,5 @@
 <script lang="ts" module>
-    import { tick, type Snippet } from 'svelte';
+    import { type Snippet, tick } from 'svelte';
 
     /**
      * Usage: <div use:portal={'css selector'}> or <div use:portal={document.body}>

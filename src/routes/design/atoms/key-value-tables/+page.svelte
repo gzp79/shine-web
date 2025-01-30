@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { sizeList, type Size } from '$atoms/types';
-    import KeyValueTable from '$atoms/KeyValueTable.svelte';
-    import Button from '$atoms/Button.svelte';
     import Box from '$atoms/Box.svelte';
-    import { Select, settingsStore, Story } from '../../_components';
+    import Button from '$atoms/Button.svelte';
+    import KeyValueTable from '$atoms/KeyValueTable.svelte';
+    import { type Size, sizeList } from '$atoms/types';
+    import { Select, Story, settingsStore } from '../../_components';
 
     let size = $state<Size>('xs');
 

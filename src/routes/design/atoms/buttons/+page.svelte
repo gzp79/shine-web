@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { logDesigner } from '$lib/loggers';
-    import { actionColorList, sizeList, type ActionColor } from '$atoms/types';
     import Box from '$atoms/Box.svelte';
     import Button from '$atoms/Button.svelte';
+    import { Spinner } from '$atoms/icons/animated';
     import { Firefox } from '$atoms/icons/clients';
     import { Settings, Warning } from '$atoms/icons/common';
-    import { Spinner } from '$atoms/icons/animated';
     import { Twitter } from '$atoms/icons/social';
-    import { Select, settingsStore, Story } from '../../_components';
+    import { type ActionColor, actionColorList, sizeList } from '$atoms/types';
+    import { logDesigner } from '$lib/loggers';
+    import { Select, Story, settingsStore } from '../../_components';
 
     let color = $state<ActionColor>('secondary');
     let action = $state('click');

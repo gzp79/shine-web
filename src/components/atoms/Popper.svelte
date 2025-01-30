@@ -1,9 +1,9 @@
 <script lang="ts" module>
-    import { onMount, type Snippet } from 'svelte';
-    import { twMerge } from 'tailwind-merge';
     import type { Middleware } from '@floating-ui/dom';
     import * as floatingDom from '@floating-ui/dom';
     import type { Nullable } from '$lib/utils';
+    import { type Snippet, onMount } from 'svelte';
+    import { twMerge } from 'tailwind-merge';
     import { portal } from './Portal.svelte';
 
     export type Behavior = 'click' | 'clickWithSelf' | 'toggle' | 'hover' | 'manual';

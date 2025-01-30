@@ -1,5 +1,5 @@
 <script lang="ts" module>
-    import { setContext, getContext, type Snippet } from 'svelte';
+    import { type Snippet, getContext, setContext } from 'svelte';
     import { twMerge } from 'tailwind-merge';
     import type { ActionColor, ElementProps } from './types';
 

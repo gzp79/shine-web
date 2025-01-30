@@ -1,8 +1,8 @@
 <script lang="ts">
-    import SimpleMenu from '$atoms/SimpleMenu.svelte';
-    import SimpleMenuItem from '$atoms/SimpleMenuItem.svelte';
     import Box from '$atoms/Box.svelte';
     import Button from '$atoms/Button.svelte';
+    import SimpleMenu from '$atoms/SimpleMenu.svelte';
+    import SimpleMenuItem from '$atoms/SimpleMenuItem.svelte';
     import { Story } from '../../_components';
 </script>
 

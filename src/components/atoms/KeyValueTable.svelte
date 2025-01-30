@@ -1,8 +1,8 @@
 <script lang="ts">
     import type { Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import { type Size } from './types';
     import CompileTailwindClasses from './CompileTailwindClasses.svelte';
+    import { type Size } from './types';
 
     interface Item {
         key: string;

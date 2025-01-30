@@ -1,12 +1,12 @@
 <script lang="ts">
     import Box from '$atoms/Box.svelte';
     import Button from '$atoms/Button.svelte';
-    import Popper from '$atoms/Popper.svelte';
     import InputGroup from '$atoms/InputGroup.svelte';
-    import * as flags from '$atoms/icons/flags';
+    import Popper from '$atoms/Popper.svelte';
     import * as icons from '$atoms/icons/common';
-    import { Story } from '../../_components';
+    import * as flags from '$atoms/icons/flags';
     import { logDesigner } from '$lib/loggers';
+    import { Story } from '../../_components';
 
     let open = $state(false);
 </script>

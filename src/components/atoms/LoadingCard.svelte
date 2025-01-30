@@ -1,8 +1,8 @@
 <script lang="ts">
     import { t } from '$lib/i18n/i18n.svelte';
-    import type { Size } from './types';
-    import { Dots } from './icons/animated';
     import Typography, { type Variant } from './Typography.svelte';
+    import { Dots } from './icons/animated';
+    import type { Size } from './types';
 
     interface Props {
         label?: string;

@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { getContext, type Component, type Snippet } from 'svelte';
-    import { twMerge } from 'tailwind-merge';
-    import { type ActionColor, type ElementProps, type InputVariant, type Size } from './types';
-    import type { GroupInfo } from './InputGroup.svelte';
+    import { type Component, type Snippet, getContext } from 'svelte';
     import type { HTMLAttributes } from 'svelte/elements';
+    import { twMerge } from 'tailwind-merge';
+    import type { GroupInfo } from './InputGroup.svelte';
+    import { type ActionColor, type ElementProps, type InputVariant, type Size } from './types';
 
     interface Props extends ElementProps {
         color?: ActionColor;
