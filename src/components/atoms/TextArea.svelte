@@ -63,7 +63,7 @@
                 !disabled && 'hover:highlight'
             ],
             variant === 'outline' && [
-                `text-accent-${color} border-accent-${color}`,
+                `text-on-${color} border-on-${color}`,
                 !group && ['m-1', 'rounded-lg', 'border-2'],
                 group &&
                     (group.vertical
@@ -72,7 +72,7 @@
                 !disabled && `hover:highlight-backdrop`
             ],
             variant === 'ghost' && [
-                `text-accent-${color}`,
+                `text-on-${color}`,
                 !group && ['m-1', 'rounded-lg', 'border-2', 'border-transparent'],
                 !disabled && `hover:highlight-backdrop`
             ],

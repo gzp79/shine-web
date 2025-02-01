@@ -77,14 +77,14 @@
     };
     let knobClass = $derived(
         twMerge(
-            `absolute rounded-full border border-on-${color} left-0 top-0`,
+            `absolute rounded-full left-0 top-0 border border-on-${color}`,
             knobSize[size],
             transition,
-            value ? 'bg-data-gray2' : 'bg-data-gray6',
-            //value ? `bg-${color}` : 'bg-data-gray6',
+            value ? `bg-knob-on` : `bg-knob-off`,
             value && knobTranslate[size]
         )
     );
+    let knobStyle = $derived([`--knob-on:var(--color-${color}-2)`, `--knob-off:var(--color-${color}-1)`].join(';'));
 </script>
 
 <label class={toggleClass}>
@@ -93,9 +93,18 @@
         <span class="mx-2 whitespace-nowrap align-middle">{offLabel}</span>
     {/if}
     <div class={barClass}>
-        <div class={knobClass}></div>
+        <div class={knobClass} style={knobStyle}></div>
     </div>
     {#if onLabel}
         <span class="mx-2 whitespace-nowrap align-middle">{onLabel}</span>
     {/if}
 </label>
+
+<style lang="css">
+    .bg-knob-on {
+        background-color: var(--knob-on);
+    }
+    .bg-knob-off {
+        background-color: var(--knob-off);
+    }
+</style>

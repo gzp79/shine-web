@@ -36,7 +36,7 @@
             'm-1 md:m-2 p-1 md:p-2',
             'min-h-min',
             'grid',
-            icon ? 'grid-cols-[fit-content(10%),auto]' : 'grid-cols-1',
+            icon ? 'grid-cols-[fit-content(10%)_auto]' : 'grid-cols-1',
             widthVariants[width]
         )
     );
