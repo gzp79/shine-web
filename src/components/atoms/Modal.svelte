@@ -3,17 +3,19 @@
     import { type Snippet, onMount } from 'svelte';
     import { twMerge } from 'tailwind-merge';
     import Box from './Box.svelte';
-    import Button from './Button.svelte';
     import { portal } from './Portal.svelte';
-    import * as icons from './icons/common';
+    import { Cross } from './icons/common';
     import type { ElementProps } from './types';
 </script>
 
 <script lang="ts">
+    import Typography from './Typography.svelte';
+
     interface Props extends ElementProps {
         // Selector for the layer element containing the popper, defaults to document.body
         layer?: string;
         isOpen?: boolean;
+        caption?: string;
         closeButton?: boolean;
         closeOnClickOutside?: boolean;
         closeOnEscape?: boolean;
@@ -24,6 +26,7 @@
     let {
         layer = '#modal',
         isOpen = $bindable(false),
+        caption,
         closeButton,
         closeOnClickOutside,
         closeOnEscape,
@@ -33,15 +36,6 @@
     }: Props = $props();
 
     let background = $state<Nullable<HTMLDivElement>>(null);
-    let boxCls = $derived(twMerge(['overflow-hidden', 'rounded-lg', 'p-0'], boxClass));
-    let innerCls = $derived(
-        twMerge(
-            ['flex', 'flex-col', 'items-center', 'justify-center'],
-            ['max-h-sm', 'h-fit', 'w-fit', 'overflow-y-auto', 'overflow-x-hidden'],
-            ['px-8', 'py-2'],
-            innerClass
-        )
-    );
 
     const handleClickOutside = (event: MouseEvent) => {
         if (event.target === background) isOpen = false;
@@ -65,6 +59,16 @@
             window.document.removeEventListener('keydown', handleEscape);
         };
     });
+
+    let boxCls = $derived(twMerge(['overflow-hidden', 'rounded-lg', 'p-0'], boxClass));
+    let innerCls = $derived(
+        twMerge(
+            ['flex', 'flex-col'],
+            ['max-h-sm', 'h-full', 'w-full', 'overflow-y-auto', 'overflow-x-hidden'],
+            ['p-2'],
+            innerClass
+        )
+    );
 </script>
 
 {#if isOpen}
@@ -73,21 +77,31 @@
         class="fixed inset-0 z-50 m-2 flex select-none items-center justify-center backdrop-blur-sm"
         bind:this={background}
     >
-        <div class="relative">
-            <Box border class={boxCls}>
-                <div class={innerCls}>
-                    {@render children?.()}
+        <Box border class={boxCls}>
+            {#if closeButton || caption}
+                <div class="flex items-center justify-between p-2 bg-container">
+                    <div>
+                        {#if caption}
+                            <Typography variant="h5">{caption}</Typography>
+                        {/if}
+                    </div>
+                    {#if closeButton}
+                        <button
+                            class="relative ms-4 h-8 w-8 select-none text-center rounded-lg align-middle text-on-surface hover:highlight-backdrop"
+                            onclick={() => (isOpen = false)}
+                        >
+                            <Cross
+                                size="sm"
+                                class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform"
+                            />
+                        </button>
+                    {/if}
                 </div>
-            </Box>
-            {#if closeButton}
-                <Button
-                    color="secondary"
-                    variant="ghost"
-                    class="absolute right-0 top-0 m-2 -translate-y-1/2 translate-x-1/2"
-                    startIcon={icons.Cross}
-                    onclick={() => (isOpen = false)}
-                />
             {/if}
-        </div>
+
+            <div class={innerCls}>
+                {@render children?.()}
+            </div>
+        </Box>
     </div>
 {/if}

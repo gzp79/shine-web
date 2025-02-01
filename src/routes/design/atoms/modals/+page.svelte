@@ -1,44 +1,68 @@
 <script lang="ts">
     import Button from '$atoms/Button.svelte';
+    import Box from '$components/atoms/Box.svelte';
     import Modal from '$components/atoms/Modal.svelte';
     import { Story } from '../../_components';
 
-    let showModal1 = $state(false);
-    let showModal2 = $state(false);
-    let showModal3 = $state(false);
-    let showModal3b = $state(false);
-    let showModal4 = $state(false);
+    let showModal1a = $state(false);
+    let showModal1b = $state(false);
+    let showModal1c = $state(false);
+    let showModal1d = $state(false);
+    let showModal1e = $state(false);
+
+    let showModal2a = $state(false);
+    let showModal2b = $state(false);
 </script>
 
 <Story variant="center">
-    <Button onclick={() => (showModal1 = !showModal1)}>Modal1 - default</Button>
-    <Button onclick={() => (showModal2 = !showModal2)}>Modal2 - closeOnClickOutside</Button>
-    <Button onclick={() => (showModal3 = !showModal3)}>Modal3 - manual, nest</Button>
-    <Button onclick={() => (showModal4 = !showModal4)}>Modal5 - big</Button>
+    <Box border class="flex h-max flex-col items-center">
+        <Button onclick={() => (showModal1a = true)}>Caption</Button>
+        <Button onclick={() => (showModal1b = true)}>X</Button>
+        <Button onclick={() => (showModal1c = true)}>Caption and X</Button>
+        <Button onclick={() => (showModal1d = true)}>No header</Button>
+        <Button onclick={() => (showModal1e = true)}>Big content</Button>
 
-    <Modal closeButton bind:isOpen={showModal1}>Model1</Modal>
-    <Modal closeOnClickOutside closeOnEscape bind:isOpen={showModal2}>Model2</Modal>
-    <Modal bind:isOpen={showModal3}>
-        Model3
-        <div>content</div>
-        <div>content</div>
-        <Button onclick={() => (showModal3 = false)}>Close</Button>
-        <Button onclick={() => (showModal3b = !showModal3b)}>Modal3b</Button>
-    </Modal>
-    <Modal bind:isOpen={showModal3b}>
-        Model3b
-        <Button onclick={() => (showModal3b = false)}>Close 3b</Button>
-        <Button
-            onclick={() => {
-                showModal3 = false;
-                showModal3b = false;
-            }}>Close 3,3b</Button
-        >
-    </Modal>
-    <Modal closeButton closeOnClickOutside closeOnEscape bind:isOpen={showModal4}>
-        Model5
-        {#each Array(100) as _}
-            <div class="p-4">Content</div>
-        {/each}
-    </Modal>
+        <Modal closeOnClickOutside closeOnEscape caption="Model" bind:isOpen={showModal1a}>
+            This is the content<br />
+            Close with Escape or click outside
+        </Modal>
+        <Modal closeOnClickOutside closeOnEscape closeButton bind:isOpen={showModal1b}>
+            This is the content<br />
+            Close with X, Escape or click outside
+        </Modal>
+        <Modal closeButton caption="Model" bind:isOpen={showModal1c}>
+            This is the content<br />
+            It can be closed only with the X button
+        </Modal>
+        <Modal closeOnClickOutside closeOnEscape bind:isOpen={showModal1d}>
+            This is the content<br />
+            Close with Escape or click outside
+        </Modal>
+        <Modal closeButton closeOnClickOutside closeOnEscape caption="Big, long content" bind:isOpen={showModal1e}>
+            {#each Array(100) as _, id (id)}
+                <div class="p-4">Content {id}</div>
+            {/each}
+        </Modal>
+    </Box>
+
+    <Box border class="flex h-max flex-col items-center">
+        <Button onclick={() => (showModal2a = true)}>Manual</Button>
+
+        <Modal bind:isOpen={showModal2a} caption="Model">
+            <Button onclick={() => (showModal2a = false)}>Close</Button>
+            <Button onclick={() => (showModal2b = true)}>Open Top</Button>
+        </Modal>
+        <Modal bind:isOpen={showModal2b}>
+            Model3b
+            <Button onclick={() => (showModal2b = false)}>Close</Button>
+            <Button
+                onclick={() => {
+                    showModal2a = false;
+                    showModal2b = false;
+                }}
+            >
+                Close All
+            </Button>
+        </Modal>
+    </Box>
 </Story>

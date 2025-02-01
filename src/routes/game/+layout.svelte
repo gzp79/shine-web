@@ -1,6 +1,6 @@
 <script lang="ts">
     import { afterNavigate, goto } from '$app/navigation';
-    import { page } from '$app/stores';
+    import { page } from '$app/state';
     import Button from '$atoms/Button.svelte';
     import ErrorCard from '$atoms/ErrorCard.svelte';
     import LoadingCard from '$atoms/LoadingCard.svelte';
@@ -19,8 +19,8 @@
     let currentUser = currentUserStore();
 
     let loginUrl = $derived.by(() => {
-        const path = $page.url.pathname;
-        const queryString = $page.url.search;
+        const path = page.url.pathname;
+        const queryString = page.url.search;
         if (path.startsWith('/game/')) {
             const targetPath = path.substring(6);
             const target = queryString ? `${targetPath}?${queryString}` : targetPath;

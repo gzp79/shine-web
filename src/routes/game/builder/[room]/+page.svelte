@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { page } from '$app/stores';
+    import { page } from '$app/state';
     import Button from '$components/atoms/Button.svelte';
     import InputGroup from '$components/atoms/InputGroup.svelte';
     import TextArea from '$components/atoms/TextArea.svelte';
@@ -12,7 +12,7 @@
         text: string;
     };
 
-    let room = $derived($page.params.room);
+    let room = $derived(page.params.room);
     let isConnected = $state(false);
     let currentMessage = $state('');
     let history: ChatMessage[] = $state.raw([]);

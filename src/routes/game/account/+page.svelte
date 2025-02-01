@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { page } from '$app/stores';
+    import { page } from '$app/state';
     import Button from '$components/atoms/Button.svelte';
     import Modal from '$components/atoms/Modal.svelte';
     import ActiveSessionsCard from '$lib/account/ActiveSessionsCard.svelte';
@@ -10,6 +10,7 @@
     import { providerIcon } from '$lib/account/utils.svelte';
     import { identityApi } from '$lib/api/identity-api';
     import AppContent from '$lib/app/AppContent.svelte';
+    import { t } from '$lib/i18n/i18n.svelte';
 
     interface Props {
         data: {
@@ -47,14 +48,14 @@
     <LinkedIdentitiesCard identities={() => identities} onUnlink={unlinkIdentity} onLink={linkIdentity} />
     <ActiveTokensCard tokens={() => tokens} onRevoke={revokeToken} />
 
-    <Modal closeButton closeOnClickOutside bind:isOpen={showLink}>
+    <Modal closeButton closeOnClickOutside caption={$t('account.link')} bind:isOpen={showLink}>
         {#each data.providers as provider}
             <Button
                 variant="outline"
                 wide
                 startIcon={providerIcon(provider)}
                 class="m-2"
-                href={identityApi.getExternalLinkUrl(provider, $page.url.pathname)}
+                href={identityApi.getExternalLinkUrl(provider, page.url.pathname)}
             >
                 {provider}
             </Button>

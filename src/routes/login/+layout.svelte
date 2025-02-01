@@ -1,6 +1,6 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { page } from '$app/stores';
+    import { page } from '$app/state';
     import Button from '$atoms/Button.svelte';
     import ErrorCard from '$atoms/ErrorCard.svelte';
     import LoadingCard from '$components/atoms/LoadingCard.svelte';
@@ -16,7 +16,7 @@
     let { children }: Props = $props();
 
     let redirectUrl = $derived.by(() => {
-        const target = $page.url.searchParams.get('target');
+        const target = page.url.searchParams.get('target');
         return target ? `/game/${decodeURIComponent(target)}` : '/game';
     });
 

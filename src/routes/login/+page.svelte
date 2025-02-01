@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { page } from '$app/stores';
+    import { page } from '$app/state';
     import { assets } from '$assets';
     import Box from '$atoms/Box.svelte';
     import Button from '$atoms/Button.svelte';
@@ -24,7 +24,7 @@
     let { data }: Props = $props();
 
     let redirectUrl = $derived.by(() => {
-        const target = $page.url.searchParams.get('target');
+        const target = page.url.searchParams.get('target');
         return target ? `/game/${decodeURIComponent(target)}` : '/game';
     });
 
@@ -44,7 +44,7 @@
         const prompt = params.get('prompt');
 
         if (!prompt) {
-            const target = $page.url.searchParams.get('target');
+            const target = page.url.searchParams.get('target');
             const loginUrl = target ? `/login?prompt=true&target=${target}` : '/login?prompt=true';
             window.location.href = identityApi.getTokenLoginUrl(redirectUrl, loginUrl);
             logUser(`Trying the remember me token with redirectUrl [${redirectUrl}] and loginUrl [${loginUrl}]`);
