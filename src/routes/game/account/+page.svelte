@@ -48,7 +48,7 @@
     <LinkedIdentitiesCard identities={() => identities} onUnlink={unlinkIdentity} onLink={linkIdentity} />
     <ActiveTokensCard tokens={() => tokens} onRevoke={revokeToken} />
 
-    <Modal closeButton closeOnClickOutside caption={$t('account.link')} bind:isOpen={showLink}>
+    <Modal closeButton closeOnClickOutside caption={$t('account.linkTitle')} bind:isOpen={showLink}>
         {#each data.providers as provider}
             <Button
                 variant="outline"

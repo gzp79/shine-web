@@ -13,9 +13,7 @@
     let wide = $state(false);
     let showPattern = $state(false);
 
-    let pattern = $derived(
-        showPattern ? 'pattern-rectangles pattern-white pattern-bg-container pattern-size-6 pattern-opacity-100' : ''
-    );
+    let pattern = $derived(showPattern ? 'bg-pattern' : '');
 
     settingsStore().set(settings);
 </script>
@@ -29,7 +27,7 @@
 {/snippet}
 
 <Story variant="center">
-    <Box border compact class="p-1 {wide && 'w-full'} {pattern}">
+    <Box border compact class="p-1 {wide && 'w-full'}{pattern}">
         <InputGroup {variant} {wide} {size} {color}>
             <Button>Profile</Button>
             <Button>Settings</Button>
@@ -70,3 +68,22 @@
         </InputGroup>
     </Box>
 </Story>
+
+<style>
+    :global(.bg-pattern) {
+        --s: 30px; /* control the size*/
+        --c1: var(--color-surface);
+        --c2: var(--color-container);
+        --c3: var(--color-sub-container);
+        --_g: 0 120deg, #0000 0;
+
+        background: conic-gradient(at calc(250% / 3) calc(100% / 3), var(--c3) var(--_g)),
+            conic-gradient(from -120deg at calc(50% / 3) calc(100% / 3), var(--c2) var(--_g)),
+            conic-gradient(from 120deg at calc(100% / 3) calc(250% / 3), var(--c1) var(--_g)),
+            conic-gradient(from 120deg at calc(200% / 3) calc(250% / 3), var(--c1) var(--_g)),
+            conic-gradient(from -180deg at calc(100% / 3) 50%, var(--c2) 60deg, var(--c1) var(--_g)),
+            conic-gradient(from 60deg at calc(200% / 3) 50%, var(--c1) 60deg, var(--c3) var(--_g)),
+            conic-gradient(from -60deg at 50% calc(100% / 3), var(--c1) 120deg, var(--c2) 0 240deg, var(--c3) 0);
+        background-size: calc(var(--s) * sqrt(3)) var(--s);
+    }
+</style>

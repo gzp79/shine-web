@@ -3,8 +3,8 @@
 /* 
 Color helper:
  https://uicolors.app/create
- generally the 100, 200, 400, 600 are used for the light theme
- and the 900, 800, 600, 400 are used for the dark theme 
+ Generally the 100, 200, 400, 600 color variants are used for the light theme
+ and a rule of thumb, the dark colors are the inverted light colors (light: 100 dark: 900).
 */
 
 @theme {
@@ -17,9 +17,9 @@ Color helper:
     --color-sub-container: #dbdbdb;
     --color-on-sub-container: #000000;
 
-    --color-primary: #8597ab;
-    --color-primary-1: #667b91;
-    --color-primary-2: #425162;
+    --color-primary: #859bab;
+    --color-primary-1: #668091;
+    --color-primary-2: #425462;
     --color-on-primary: #eceff2;
 
     --color-secondary: #f6f7f9;
@@ -67,10 +67,10 @@ Color helper:
         --color-sub-container: #464646;
         --color-on-sub-container: #dbdbdb;
 
-        --color-primary: #dbdbdb;
-        --color-primary-1: #dbdbdb;
-        --color-primary-2: #dbdbdb;
-        --color-on-primary: #323232;
+        --color-primary: #425462;
+        --color-primary-1: #516778;
+        --color-primary-2: #859bab;
+        --color-on-primary: #eceff2;
 
         --color-secondary: #22272f;
         --color-secondary-1: #333b47;
@@ -87,7 +87,7 @@ Color helper:
         --color-warning-2: #cd7d01;
         --color-on-warning: #febe11;
 
-        --color-danger: #831a1a;
+        --color-danger: #470808;
         --color-danger-1: #9d1717;
         --color-danger-2: #e32020;
         --color-on-danger: #fd6c6c;

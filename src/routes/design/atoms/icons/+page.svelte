@@ -40,6 +40,7 @@
             {@render icon(icons.Cross, 'Cross')}
             {@render icon(icons.Hamburger, 'Hamburger')}
             {@render icon(icons.Settings, 'Settings')}
+            {@render icon(icons.Link, 'Link')}
             {@render icon(icons.Info, 'Info')}
             {@render icon(icons.Warning, 'Warning')}
             {@render icon(icons.Light, 'Light')}
@@ -78,6 +79,7 @@
             {@render icon(social.Gitlab, 'Gitlab')}
             {@render icon(social.Google, 'Google')}
             {@render icon(social.Twitter, 'Twitter')}
+            {@render icon(social.Link, 'Link')}
         </div>
     </Card>
 
