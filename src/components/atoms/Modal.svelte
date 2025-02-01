@@ -19,8 +19,7 @@
         closeButton?: boolean;
         closeOnClickOutside?: boolean;
         closeOnEscape?: boolean;
-        innerClass?: string;
-        boxClass?: string;
+        class?: string;
         children?: Snippet;
     }
     let {
@@ -30,8 +29,7 @@
         closeButton,
         closeOnClickOutside,
         closeOnEscape,
-        innerClass,
-        boxClass,
+        class: innerClass,
         children
     }: Props = $props();
 
@@ -60,12 +58,12 @@
         };
     });
 
-    let boxCls = $derived(twMerge(['overflow-hidden', 'rounded-lg', 'p-0'], boxClass));
     let innerCls = $derived(
         twMerge(
-            ['flex', 'flex-col'],
-            ['max-h-sm', 'h-full', 'w-full', 'overflow-y-auto', 'overflow-x-hidden'],
-            ['p-2'],
+            'flex flex-col grow',
+            'max-h-sm h-full max-w-md min-w-min',
+            'overflow-y-auto overflow-x-hidden_',
+            'p-2',
             innerClass
         )
     );
@@ -77,7 +75,7 @@
         class="fixed inset-0 z-50 m-2 flex select-none items-center justify-center backdrop-blur-sm"
         bind:this={background}
     >
-        <Box border class={boxCls}>
+        <Box border level={1} class="flex flex-col rounded-lg p-0 overflow-hidden">
             {#if closeButton || caption}
                 <div class="flex items-center justify-between p-2 bg-container">
                     <div>

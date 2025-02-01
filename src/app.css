@@ -17,15 +17,15 @@ Color helper:
     --color-sub-container: #dbdbdb;
     --color-on-sub-container: #000000;
 
-    --color-primary: #859bab;
-    --color-primary-1: #668091;
-    --color-primary-2: #425462;
-    --color-on-primary: #eceff2;
+    --color-primary: #f6f7f9;
+    --color-primary-1: #eceef2;
+    --color-primary-2: #b0bcc9;
+    --color-on-primary: #516378;
 
-    --color-secondary: #f6f7f9;
-    --color-secondary-1: #eceef2;
-    --color-secondary-2: #b0bcc9;
-    --color-on-secondary: #516378;
+    --color-secondary: #b0bfc9;
+    --color-secondary-1: #859bab;
+    --color-secondary-2: #516778;
+    --color-on-secondary: #333e47;
 
     --color-info: #dff5ff;
     --color-info-1: #b8edff;
@@ -67,15 +67,15 @@ Color helper:
         --color-sub-container: #464646;
         --color-on-sub-container: #dbdbdb;
 
-        --color-primary: #425462;
-        --color-primary-1: #516778;
-        --color-primary-2: #859bab;
-        --color-on-primary: #eceff2;
+        --color-primary: #22272f;
+        --color-primary-1: #333b47;
+        --color-primary-2: #424e62;
+        --color-on-primary: #8595ab;
 
-        --color-secondary: #22272f;
-        --color-secondary-1: #333b47;
-        --color-secondary-2: #424e62;
-        --color-on-secondary: #8595ab;
+        --color-secondary: #425462;
+        --color-secondary-1: #516778;
+        --color-secondary-2: #859bab;
+        --color-on-secondary: #eceff2;
 
         --color-info: #095471;
         --color-info-1: #036689;

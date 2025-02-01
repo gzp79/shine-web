@@ -27,6 +27,13 @@
         ['text-primary-2', 'text-secondary-2', 'text-info-2', 'text-warning-2', 'text-danger-2', 'text-success-2'],
         ['text-on-primary','text-on-secondary', 'text-on-info', 'text-on-warning', 'text-on-danger', 'text-on-success'],
 
+        ['placeholder:text-surface', 'placeholder:text-on-surface'],
+        ['placeholder:text-on-surface', 'placeholder:text-on-on-surface'],
+        ['placeholder:text-primary', 'placeholder:text-secondary', 'placeholder:text-info', 'placeholder:text-warning', 'placeholder:text-danger', 'placeholder:text-success'],
+        ['placeholder:text-primary-1', 'placeholder:text-secondary-1', 'placeholder:text-info-1', 'placeholder:text-warning-1', 'placeholder:text-danger-1', 'placeholder:text-success-1'],
+        ['placeholder:text-primary-2', 'placeholder:text-secondary-2', 'placeholder:text-info-2', 'placeholder:text-warning-2', 'placeholder:text-danger-2', 'placeholder:text-success-2'],
+        ['placeholder:text-on-primary','placeholder:text-on-secondary', 'placeholder:text-on-info', 'placeholder:text-on-warning', 'placeholder:text-on-danger', 'placeholder:text-on-success'],
+
         ['border-surface', 'border-on-surface'],
         ['border-on-surface', 'border-on-on-surface'],
         ['border-primary', 'border-secondary', 'border-info', 'border-warning', 'border-danger', 'border-success'],

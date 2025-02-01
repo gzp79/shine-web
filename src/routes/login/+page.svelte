@@ -95,7 +95,7 @@
         <div class="mx-3 h-full border-l border-on-surface md:mx-8"></div>
 
         <Button
-            color="primary"
+            color="secondary"
             disabled={!captcha}
             href={identityApi.getGuestLoginUrl(captcha, redirectUrl)}
             startIcon={providerIcon('guest')}
@@ -105,7 +105,7 @@
         </Button>
     </div>
 
-    <Modal isOpen={showLoading} innerClass="bg-info text-on-info">
+    <Modal isOpen={showLoading} class="bg-info text-on-info">
         <Typography variant="h3">
             {$t('login.loadingCaptcha')}
             <Dots class="inline-block h-8 w-8" />

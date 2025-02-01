@@ -7,7 +7,7 @@
     import TextArea from '$components/atoms/TextArea.svelte';
     import { CheckBox, Select, Story, settingsStore } from '../../_components';
 
-    let color = $state('secondary');
+    let color = $state('primary');
     let size = $state('md');
     let variant = $state<InputVariant>('filled');
     let wide = $state(false);
@@ -19,7 +19,7 @@
 </script>
 
 {#snippet settings()}
-    <Select label="Color" options={actionColorList} bind:value={color} />
+    <Select label="Color" options={[...actionColorList.map((x) => [x, x]), ['none', undefined]]} bind:value={color} />
     <Select label="Size" options={sizeList} bind:value={size} />
     <Select label="Variant" options={['filled', 'outline', 'ghost']} bind:value={variant} />
     <CheckBox label="Wide" bind:value={wide} />
@@ -57,6 +57,17 @@
             <TextArea placeholder={'Enter\n multiline\n text...'} rows={3} />
             <Button>Config</Button>
         </InputGroup>
+    </Box>
+
+    <Box border>
+        <Box border compact class="p-1 {wide && 'w-full'} {pattern}">
+            <InputGroup {variant} {wide} {size} {color}>
+                <Button>Profile</Button>
+                <TextArea placeholder="Enter text..." rows="single" />
+                <TextArea placeholder={'Enter\n multiline\n text...'} rows={3} />
+                <Button>Config</Button>
+            </InputGroup>
+        </Box>
     </Box>
 
     <Box border compact class="p-1 {wide && 'w-full'} {pattern}">

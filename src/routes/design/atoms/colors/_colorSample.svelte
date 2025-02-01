@@ -36,8 +36,9 @@
 
 <div bind:this={divRef} class="relative bg-{color} mx-2 mt-2 h-24 w-24 border-2 border-on-{color}">
     {#if shades}
-        <div class="absolute bottom-0 left-[33%] w-[34%] h-[33%] bg-{color}-1"></div>
-        <div class="absolute bottom-0 left-[66%] w-[34%] h-[33%] bg-{color}-2"></div>
+        <div class="absolute bottom-0 left-0 w-[34%] h-[33%] bg-{color}-1"></div>
+        <div class="absolute bottom-0 left-[33%] w-[34%] h-[33%] bg-{color}-2"></div>
+        <div class="absolute bottom-0 left-[66%] w-[34%] h-[33%] bg-on-{color}"></div>
     {/if}
     <div
         class="absolute top-0 left-0 h-full w-full flex items-center justify-center text-on-{color} text-center text-xl"

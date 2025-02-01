@@ -6,7 +6,7 @@
 
 <App>
     <AppContent class="flex items-center justify-center">
-        <Button href="/game" preload="code" color="primary" size="lg">Play</Button>
+        <Button href="/game" preload="code" color="secondary" size="lg">Play</Button>
         <Button
             href="/design"
             preload="disable"

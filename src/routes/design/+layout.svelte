@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { beforeNavigate } from '$app/navigation';
     import Box from '$atoms/Box.svelte';
     import Typography from '$atoms/Typography.svelte';
     import { Hamburger } from '$atoms/icons/common';
@@ -62,10 +61,6 @@
             ]
         }
     ].filter(Boolean) as MenuItem[];
-
-    beforeNavigate(() => {
-        currentSettings.set(null);
-    });
 </script>
 
 <div class="grid h-full grid-rows-[auto_1fr_auto] overflow-hidden">

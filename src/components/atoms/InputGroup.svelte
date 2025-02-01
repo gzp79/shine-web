@@ -1,6 +1,7 @@
 <script lang="ts" module>
-    import { type Snippet, setContext } from 'svelte';
+    import { type Snippet, getContext, setContext } from 'svelte';
     import { twMerge } from 'tailwind-merge';
+    import type { BoxInfo } from './Box.svelte';
     import type { ActionColor, ElementProps, InputVariant, Size } from './types';
 
     export interface GroupInfo {
@@ -27,7 +28,7 @@
 
     let {
         size = 'md',
-        color = 'secondary',
+        color: baseColor,
         vertical = false,
         variant = 'filled',
         wide,
@@ -38,18 +39,23 @@
         ...rest
     }: Props = $props();
 
-    let divClass = $derived(twMerge('inline-flex', vertical && 'flex-col', wide && 'w-full', className));
+    // Hidden Dependency (Box):
+    let box: BoxInfo = getContext('Box_props');
+
+    let colorWithFallback = $derived(baseColor ?? 'primary');
 
     // convert props into state, so it can be updated and children reactively
-    let context = $state<GroupInfo>({ size, color, vertical, variant, wide });
+    let context = $state({} as GroupInfo);
     $effect(() => {
         context.size = size;
-        context.color = color;
+        context.color = variant === 'filled' ? colorWithFallback : (baseColor ?? box?.fgColor ?? colorWithFallback);
         context.vertical = vertical;
         context.variant = variant;
         context.wide = wide;
     });
     setContext('InputGroup_props', context);
+
+    let divClass = $derived(twMerge('inline-flex', vertical && 'flex-col', wide && 'w-full', className));
 </script>
 
 <svelte:element this={element} class={divClass} bind:this={div} {...rest}>

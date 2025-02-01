@@ -20,7 +20,7 @@
         size?: Size;
         wide?: boolean;
     }
-    let { items, current = $bindable(0), color = 'secondary', disabled, size, wide }: Props = $props();
+    let { items, current = $bindable(0), color = 'primary', disabled, size, wide }: Props = $props();
 
     let reference = $state<HTMLElement>();
     let trigger = $state<HTMLElement>();
