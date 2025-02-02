@@ -27,7 +27,7 @@
 {/snippet}
 
 <Story variant="center">
-    <Box border compact class="p-1 {wide && 'w-full'}{pattern}">
+    <Box border compact class="p-1 {wide && 'w-full'} {pattern}">
         <InputGroup {variant} {wide} {size} {color}>
             <Button>Profile</Button>
             <Button>Settings</Button>

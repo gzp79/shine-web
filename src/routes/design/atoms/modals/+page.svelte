@@ -41,14 +41,21 @@
             This is the content<br />
             Close with Escape or click outside
         </Modal>
-        <Modal closeButton closeOnClickOutside closeOnEscape caption="Big, long content" bind:isOpen={showModal1e}>
+        <Modal closeButton closeOnClickOutside closeOnEscape caption="Long" bind:isOpen={showModal1e}>
             {#each Array(100) as _, id (id)}
                 <div class="p-4">Content {id}</div>
             {/each}
         </Modal>
-        <Modal closeButton closeOnClickOutside closeOnEscape caption="Link" bind:isOpen={showModal1f}>
-            {#each ['google', 'discord'] as provider}
-                <Button variant="outline" wide startIcon={providerIcon(provider)} class="m-2">
+        <Modal
+            closeButton
+            closeOnClickOutside
+            closeOnEscape
+            caption="Link my account to the selection"
+            bind:isOpen={showModal1f}
+            class="max-w-min"
+        >
+            {#each ['google', 'discord', 'a long provide name'] as provider}
+                <Button variant="outline" wide startIcon={providerIcon(provider)} class="mx-0">
                     {provider}
                 </Button>
             {/each}

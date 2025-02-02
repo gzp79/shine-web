@@ -88,14 +88,14 @@ Color helper:
         --color-on-warning: #febe11;
 
         --color-danger: #470808;
-        --color-danger-1: #9d1717;
-        --color-danger-2: #e32020;
-        --color-on-danger: #fd6c6c;
+        --color-danger-1: #831a1a;
+        --color-danger-2: #bf1616;
+        --color-on-danger: #f53e3e;
 
-        --color-success: #2e5710;
-        --color-success-1: #36670d;
-        --color-success-2: #55ac04;
-        --color-on-success: #90f12a;
+        --color-success: #153102;
+        --color-success-1: #2e5710;
+        --color-success-2: #408308;
+        --color-on-success: #70d70b;
 
         --color-data-gray-1: #868990;
         --color-data-gray-2: #6b6e6f;

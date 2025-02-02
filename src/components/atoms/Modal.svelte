@@ -58,24 +58,25 @@
         };
     });
 
-    let innerCls = $derived(
+    let modalClass = $derived(
+        twMerge('fixed inset-0 z-50', 'm-2', 'flex select-none items-center justify-center', 'backdrop-blur-sm')
+    );
+    let outerCls = $derived(
         twMerge(
-            'flex flex-col grow',
-            'max-h-sm h-full max-w-md min-w-min',
-            'overflow-y-auto overflow-x-hidden_',
-            'p-2',
-            innerClass
+            'm-0 p-0',
+            'min-h-min w-fit overflow-hidden',
+            'grid',
+            closeButton || caption ? 'grid-rows-[fit-content(10%)_auto]' : 'grid-rows-1',
+            'backdrop-blur-sm'
         )
     );
+
+    let innerCls = $derived(twMerge('min-h-min w-full p-4 flex flex-col', innerClass));
 </script>
 
 {#if isOpen}
-    <div
-        use:portal={layer}
-        class="fixed inset-0 z-50 m-2 flex select-none items-center justify-center backdrop-blur-sm"
-        bind:this={background}
-    >
-        <Box border level={1} class="flex flex-col rounded-lg p-0 overflow-hidden">
+    <div use:portal={layer} class={modalClass} bind:this={background}>
+        <Box border level={1} class={outerCls}>
             {#if closeButton || caption}
                 <div class="flex items-center justify-between p-2 bg-container">
                     <div>
@@ -97,8 +98,12 @@
                 </div>
             {/if}
 
-            <div class={innerCls}>
-                {@render children?.()}
+            <div class="max-h-md min-h-3 w-full overflow-y-auto overflow-x-hidden flex justify-center">
+                {#if children}
+                    <div class={innerCls}>
+                        {@render children()}
+                    </div>
+                {/if}
             </div>
         </Box>
     </div>

@@ -48,13 +48,13 @@
     <LinkedIdentitiesCard identities={() => identities} onUnlink={unlinkIdentity} onLink={linkIdentity} />
     <ActiveTokensCard tokens={() => tokens} onRevoke={revokeToken} />
 
-    <Modal closeButton closeOnClickOutside caption={$t('account.linkTitle')} bind:isOpen={showLink}>
+    <Modal closeButton closeOnClickOutside caption={$t('account.linkTitle')} bind:isOpen={showLink} class="max-w-min">
         {#each data.providers as provider}
             <Button
                 variant="outline"
                 wide
                 startIcon={providerIcon(provider)}
-                class="m-2"
+                class="mx-0"
                 href={identityApi.getExternalLinkUrl(provider, page.url.pathname)}
             >
                 {provider}

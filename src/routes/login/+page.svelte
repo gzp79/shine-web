@@ -71,12 +71,12 @@
         <div class="me-8 flex h-full w-0 items-center justify-start overflow-clip lg:w-[50vw]">
             <Typography variant="h1">{$t('login.title')}</Typography>
         </div>
-        <div class="flex h-full flex-col items-center">
-            <Box border class="mx-0 h-full w-full overflow-y-auto px-8 py-2">
+        <div class="flex h-full flex-col items-center justify-center">
+            <Box border class="mx-0 h-full w-full overflow-y-auto px-8 py-2 min-h-32 max-h-min">
                 <div class="flex flex-col items-center justify-center">
                     {#each data.providers as provider}
                         <Button
-                            variant="outline"
+                            color="secondary"
                             wide
                             disabled={!captcha}
                             href={identityApi.getExternalLoginUrl(provider, rememberMe, captcha, redirectUrl)}
@@ -95,7 +95,7 @@
         <div class="mx-3 h-full border-l border-on-surface md:mx-8"></div>
 
         <Button
-            color="secondary"
+            variant="outline"
             disabled={!captcha}
             href={identityApi.getGuestLoginUrl(captcha, redirectUrl)}
             startIcon={providerIcon('guest')}
