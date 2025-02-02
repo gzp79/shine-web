@@ -1,10 +1,10 @@
 <script lang="ts">
     import type { Component } from 'svelte';
-    import { type ActionColor, type Size } from './types';
     import Button from './Button.svelte';
     import InputGroup from './InputGroup.svelte';
     import Popper from './Popper.svelte';
     import * as icons from './icons/common';
+    import { type ActionColor, type Size } from './types';
 
     interface Item {
         caption: string;
@@ -20,7 +20,7 @@
         size?: Size;
         wide?: boolean;
     }
-    let { items, current = $bindable(0), color = 'secondary', disabled, size, wide }: Props = $props();
+    let { items, current = $bindable(0), color = 'primary', disabled, size, wide }: Props = $props();
 
     let reference = $state<HTMLElement>();
     let trigger = $state<HTMLElement>();

@@ -1,18 +1,18 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
-    import { builderApi } from '$lib/api/builder-api';
-    import { page } from '$app/stores';
+    import { page } from '$app/state';
     import Button from '$components/atoms/Button.svelte';
     import InputGroup from '$components/atoms/InputGroup.svelte';
     import TextArea from '$components/atoms/TextArea.svelte';
     import Typography from '$components/atoms/Typography.svelte';
+    import { builderApi } from '$lib/api/builder-api';
+    import { onMount } from 'svelte';
 
     type ChatMessage = {
         from: string;
         text: string;
     };
 
-    let room = $derived($page.params.room);
+    let room = $derived(page.params.room);
     let isConnected = $state(false);
     let currentMessage = $state('');
     let history: ChatMessage[] = $state.raw([]);

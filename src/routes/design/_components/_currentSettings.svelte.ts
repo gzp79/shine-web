@@ -1,5 +1,5 @@
 import type { Nullable } from '$lib/utils';
-import { type Snippet } from 'svelte';
+import { type Snippet, onDestroy } from 'svelte';
 
 let settings = $state<Nullable<Snippet>>(null);
 
@@ -11,6 +11,13 @@ export function settingsStore() {
 
         set(value: Nullable<Snippet>) {
             settings = value;
+
+            // Automatically clean up when the component is destroyed
+            if (value) {
+                onDestroy(() => {
+                    settings = null;
+                });
+            }
         }
     };
 }

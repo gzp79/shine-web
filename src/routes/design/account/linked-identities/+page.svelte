@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { v4 as uuid } from 'uuid';
-    import { async } from '$lib/utils';
-    import { logDesigner } from '$lib/loggers';
-    import type { LinkedIdentity } from '$lib/api/identity-api';
     import LinkedIdentitiesCard from '$lib/account/LinkedIdentitiesCard.svelte';
+    import type { LinkedIdentity } from '$lib/api/identity-api';
+    import { logDesigner } from '$lib/loggers';
+    import { async } from '$lib/utils';
+    import { v4 as uuid } from 'uuid';
     import Story from '../../_components/_Story.svelte';
 
     // emulate some backend stored list
@@ -98,7 +98,15 @@
 </script>
 
 <Story variant="center">
-    <LinkedIdentitiesCard identities={() => fetchIdentities(identities)} onUnlink={unlink} />
-    <LinkedIdentitiesCard identities={async.never} onUnlink={unlink} />
-    <LinkedIdentitiesCard identities={() => async.error(new Error('Test error'))} onUnlink={unlink} />
+    <LinkedIdentitiesCard
+        identities={() => fetchIdentities(identities)}
+        onUnlink={unlink}
+        onLink={() => logDesigner('linking')}
+    />
+    <LinkedIdentitiesCard identities={async.never} onUnlink={unlink} onLink={() => logDesigner('linking')} />
+    <LinkedIdentitiesCard
+        identities={() => async.error(new Error('Test error'))}
+        onUnlink={unlink}
+        onLink={() => logDesigner('linking')}
+    />
 </Story>

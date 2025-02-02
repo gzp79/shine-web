@@ -1,9 +1,10 @@
 <script lang="ts" module>
-    import { type Snippet } from 'svelte';
+    import { isSnippet } from '$lib/utils';
+    import { type Component, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import type { ElementProps } from './types';
     import Box, { type Variant as BoxVariant } from './Box.svelte';
     import Typography from './Typography.svelte';
+    import type { ElementProps } from './types';
 
     export type Width = 'default' | 'fit' | 'full';
     export type Variant = BoxVariant;
@@ -11,7 +12,7 @@
 
 <script lang="ts">
     interface Props extends ElementProps {
-        icon?: Snippet;
+        icon?: Snippet | Component;
         caption?: string;
 
         shadow?: boolean;
@@ -35,7 +36,7 @@
             'm-1 md:m-2 p-1 md:p-2',
             'min-h-min',
             'grid',
-            icon ? 'grid-cols-[fit-content(10%),auto]' : 'grid-cols-1',
+            icon ? 'grid-cols-[fit-content(10%)_auto]' : 'grid-cols-1',
             widthVariants[width]
         )
     );
@@ -44,7 +45,12 @@
 <Box compact border {variant} {shadow} class={boxClass} {...rest}>
     {#if icon}
         <div class="my-2 ms-2 flex h-10 w-10 items-center justify-center md:h-12 md:w-12">
-            {@render icon()}
+            {#if isSnippet(icon)}
+                {@render icon()}
+            {:else}
+                {@const Icon = icon}
+                <Icon />
+            {/if}
         </div>
     {/if}
 

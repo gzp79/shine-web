@@ -1,30 +1,30 @@
 <script lang="ts">
-    import { identityApi } from '$lib/api/identity-api';
-    import { t } from '$lib/i18n/i18n.svelte';
-    import { config } from '$config';
-    import Turnstile from '$components/Turnstile.svelte';
-    import Button from '$atoms/Button.svelte';
+    import { page } from '$app/state';
+    import { assets } from '$assets';
     import Box from '$atoms/Box.svelte';
+    import Button from '$atoms/Button.svelte';
     import Toggle from '$atoms/Toggle.svelte';
     import Logo from '$atoms/icons/Logo.svelte';
-    import * as icons from '$atoms/icons/social';
-    import { onMount, type Component } from 'svelte';
-    import { assets } from '$assets';
-    import Typography from '$components/atoms/Typography.svelte';
     import { Dots } from '$atoms/icons/animated';
-    import { page } from '$app/stores';
+    import Turnstile from '$components/Turnstile.svelte';
+    import Modal from '$components/atoms/Modal.svelte';
+    import Typography from '$components/atoms/Typography.svelte';
+    import { config } from '$config';
+    import { providerIcon } from '$lib/account/utils.svelte';
+    import { identityApi } from '$lib/api/identity-api';
+    import { t } from '$lib/i18n/i18n.svelte';
     import { logUser } from '$lib/loggers';
+    import { onMount } from 'svelte';
 
     interface Props {
         data: {
             providers: string[];
         };
     }
-
     let { data }: Props = $props();
 
     let redirectUrl = $derived.by(() => {
-        const target = $page.url.searchParams.get('target');
+        const target = page.url.searchParams.get('target');
         return target ? `/game/${decodeURIComponent(target)}` : '/game';
     });
 
@@ -35,7 +35,8 @@
 
     // when captcha is disabled use a test (site) key that always passes the server side validation
     let captcha = $state(hasCaptcha ? '' : '1x00000000000000000000AA');
-    let showLoading = $state(true);
+    let waitLoading = $state(true);
+    let showLoading = $derived(waitLoading || !captcha);
     let rememberMe = $state(true);
 
     onMount(() => {
@@ -43,7 +44,7 @@
         const prompt = params.get('prompt');
 
         if (!prompt) {
-            const target = $page.url.searchParams.get('target');
+            const target = page.url.searchParams.get('target');
             const loginUrl = target ? `/login?prompt=true&target=${target}` : '/login?prompt=true';
             window.location.href = identityApi.getTokenLoginUrl(redirectUrl, loginUrl);
             logUser(`Trying the remember me token with redirectUrl [${redirectUrl}] and loginUrl [${loginUrl}]`);
@@ -51,29 +52,12 @@
             logUser('Prompt for login');
             setTimeout(
                 () => {
-                    showLoading = false;
+                    waitLoading = false;
                 },
                 hasCaptcha ? 5000 : 1000
             );
         }
     });
-
-    const providerIcon = (provider: string): Component | undefined => {
-        switch (provider) {
-            case 'google':
-                return icons.Google;
-            case 'twitter':
-                return icons.Twitter;
-            case 'github':
-                return icons.Github;
-            case 'discord':
-                return icons.Discord;
-            case 'gitlab':
-                return icons.Gitlab;
-            default:
-                return undefined;
-        }
-    };
 </script>
 
 <div class="relative flex h-full flex-col items-center justify-center">
@@ -87,12 +71,12 @@
         <div class="me-8 flex h-full w-0 items-center justify-start overflow-clip lg:w-[50vw]">
             <Typography variant="h1">{$t('login.title')}</Typography>
         </div>
-        <div class="flex h-full flex-col items-center">
-            <Box border class="mx-0 h-full w-full overflow-y-auto px-8 py-2">
+        <div class="flex h-full flex-col items-center justify-center">
+            <Box border class="mx-0 h-full w-full overflow-y-auto px-8 py-2 min-h-32 max-h-min">
                 <div class="flex flex-col items-center justify-center">
                     {#each data.providers as provider}
                         <Button
-                            variant="outline"
+                            color="secondary"
                             wide
                             disabled={!captcha}
                             href={identityApi.getExternalLoginUrl(provider, rememberMe, captcha, redirectUrl)}
@@ -111,7 +95,7 @@
         <div class="mx-3 h-full border-l border-on-surface md:mx-8"></div>
 
         <Button
-            color="primary"
+            variant="outline"
             disabled={!captcha}
             href={identityApi.getGuestLoginUrl(captcha, redirectUrl)}
             startIcon={providerIcon('guest')}
@@ -121,14 +105,12 @@
         </Button>
     </div>
 
-    {#if showLoading || !captcha}
-        <div class="absolute inset-0 flex select-none items-center justify-center p-4 backdrop-blur-sm">
-            <Typography variant="h3" class="rounded-lg border border-on-surface bg-info p-2 text-on-info">
-                {$t('login.loadingCaptcha')}
-                <Dots class="inline-block h-8 w-8" />
-            </Typography>
-        </div>
-    {/if}
+    <Modal isOpen={showLoading} class="bg-info text-on-info">
+        <Typography variant="h3">
+            {$t('login.loadingCaptcha')}
+            <Dots class="inline-block h-8 w-8" />
+        </Typography>
+    </Modal>
 
     <div class="hidden">
         {#if hasCaptcha}

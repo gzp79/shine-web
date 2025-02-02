@@ -1,10 +1,10 @@
 <script lang="ts" module>
-    import Typography from '$atoms/Typography.svelte';
     import Alert from '$atoms/Alert.svelte';
     import Card from '$atoms/Card.svelte';
+    import Typography from '$atoms/Typography.svelte';
+    import type { Fetch } from '$lib/utils';
     import { Story } from '../../_components';
     import type { PageData } from './$types';
-    import type { Fetch } from '$lib/utils';
 
     export type Data = Partial<{ ok: boolean; error?: Error }>;
     export async function fetchData(fetch: Fetch): Promise<Data> {

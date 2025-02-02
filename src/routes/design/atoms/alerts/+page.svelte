@@ -3,7 +3,7 @@
     import Box from '$atoms/Box.svelte';
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
     import Typography from '$atoms/Typography.svelte';
-    import { settingsStore, CheckBox, Story } from '../../_components';
+    import { CheckBox, Story, settingsStore } from '../../_components';
 
     let shadow = $state(true);
 

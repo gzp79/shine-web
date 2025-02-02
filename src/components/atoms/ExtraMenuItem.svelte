@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { getContext, type Snippet } from 'svelte';
-    import { getVisualInfo, type ExtraMenuContext } from './ExtraMenu.svelte';
     import type { Nullable } from '$lib/utils';
+    import { type Snippet, getContext } from 'svelte';
+    import { type ExtraMenuContext, getVisualInfo } from './ExtraMenu.svelte';
 
     interface Props {
         children: Snippet;

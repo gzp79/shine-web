@@ -1,15 +1,16 @@
 <script lang="ts">
-    import { logDesigner } from '$lib/loggers';
-    import { actionColorList, sizeList, type ActionColor } from '$atoms/types';
     import Box from '$atoms/Box.svelte';
     import Button from '$atoms/Button.svelte';
+    import { Spinner } from '$atoms/icons/animated';
     import { Firefox } from '$atoms/icons/clients';
     import { Settings, Warning } from '$atoms/icons/common';
-    import { Spinner } from '$atoms/icons/animated';
     import { Twitter } from '$atoms/icons/social';
-    import { Select, settingsStore, Story } from '../../_components';
+    import { type ActionColor, actionColorList, sizeList } from '$atoms/types';
+    import { logDesigner } from '$lib/loggers';
+    import { Select, Story, settingsStore } from '../../_components';
+    import Separator from '../../_components/_Separator.svelte';
 
-    let color = $state<ActionColor>('secondary');
+    let color = $state<ActionColor>('primary');
     let action = $state('click');
     let href = '#top';
 
@@ -136,5 +137,35 @@
             <Button {color} variant="ghost" {...btnAction} startIcon={Warning}>Button</Button>
             <Button {color} variant="ghost" disabled {...btnAction} startIcon={Warning}>Button</Button>
         </div>
+    </Box>
+
+    <Separator />
+
+    <div class="border p-2">
+        <p>Button without color and without a parent box</p>
+        <Button>Default</Button>
+        <Button variant="outline">Outline</Button>
+        <Button variant="ghost">Ghost</Button>
+    </div>
+    <Box border>
+        <p>Button without color takes the color of the parent box</p>
+        <Button>Default</Button>
+        <Button variant="outline">Outline</Button>
+        <Button variant="ghost">Ghost</Button>
+        <Box border>
+            <Button>Default</Button>
+            <Button variant="outline">Outline</Button>
+            <Button variant="ghost">Ghost</Button>
+            <Box border>
+                <Button>Default</Button>
+                <Button variant="outline">Outline</Button>
+                <Button variant="ghost">Ghost</Button>
+            </Box>
+        </Box>
+        <Box border shadow variant={{ color }}>
+            <Button>Default</Button>
+            <Button variant="outline">Outline</Button>
+            <Button variant="ghost">Ghost</Button>
+        </Box>
     </Box>
 </Story>

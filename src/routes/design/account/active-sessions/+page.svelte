@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { v4 as uuid } from 'uuid';
-    import { async } from '$lib/utils';
     import ActiveSessionsCard from '$lib/account/ActiveSessionsCard.svelte';
+    import { async } from '$lib/utils';
+    import { v4 as uuid } from 'uuid';
     import Story from '../../_components/_Story.svelte';
 </script>
 
@@ -29,6 +29,7 @@
                     'The native client'
                     /* c-spell: enable */
                 ].map((agent) => ({
+                    tokenHash: uuid(),
                     fingerprint: uuid(),
                     agent,
                     createdAt: new Date('2021-08-01T12:00:00Z')

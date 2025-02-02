@@ -1,15 +1,15 @@
 <script lang="ts">
-    import { t } from '$lib/i18n/i18n.svelte';
-    import type { LinkedIdentity } from '$lib/api/identity-api';
-    import KeyValueTable from '$atoms/KeyValueTable.svelte';
-    import * as social from '$atoms/icons/social';
     import Button from '$atoms/Button.svelte';
     import Card from '$atoms/Card.svelte';
+    import KeyValueTable from '$atoms/KeyValueTable.svelte';
+    import * as social from '$atoms/icons/social';
+    import type { LinkedIdentity } from '$lib/api/identity-api';
+    import { t } from '$lib/i18n/i18n.svelte';
 
     interface Props {
         identity: LinkedIdentity;
         dataVersion: number;
-        onUnlink: (provider: string, providerUserId: string) => Promise<void>;
+        onUnlink?: (provider: string, providerUserId: string) => Promise<void>;
     }
     const { identity, dataVersion, onUnlink }: Props = $props();
 
@@ -32,7 +32,7 @@
     const unlink = async () => {
         // memorize the current dataVersion to prevent multiple unlink requests
         disableVersion = dataVersion;
-        await onUnlink(identity.provider, identity.providerUserId);
+        await onUnlink?.(identity.provider, identity.providerUserId);
     };
 </script>
 

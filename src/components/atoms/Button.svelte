@@ -1,9 +1,10 @@
 <script lang="ts">
-    import { getContext, type Component, type Snippet } from 'svelte';
-    import { twMerge } from 'tailwind-merge';
-    import { type ActionColor, type ElementProps, type InputVariant, type Size } from './types';
-    import type { GroupInfo } from './InputGroup.svelte';
+    import { type Component, type Snippet, getContext } from 'svelte';
     import type { HTMLAttributes } from 'svelte/elements';
+    import { twMerge } from 'tailwind-merge';
+    import type { BoxInfo } from './Box.svelte';
+    import type { GroupInfo } from './InputGroup.svelte';
+    import { type ActionColor, type ElementProps, type InputVariant, type Size } from './types';
 
     interface Props extends ElementProps {
         color?: ActionColor;
@@ -28,7 +29,7 @@
     let {
         startIcon: StartIcon,
         endIcon: EndIcon,
-        color: baseColor = 'primary',
+        color: baseColor,
         size: baseSize = 'md',
         wide: baseWide,
         variant: baseVariant = 'filled',
@@ -44,10 +45,12 @@
     }: Props = $props();
 
     // Hidden Dependency (InputGroup):
-    // - determine the color and size
-    // - fix the border and rounding
     let group: GroupInfo = getContext('InputGroup_props');
+    // Hidden Dependency (Box):
+    let box: BoxInfo = getContext('Box_props');
+
     let color = $derived(group?.color ?? baseColor);
+    let colorWithFallback = $derived(color ?? 'primary');
     let size = $derived(group?.size ?? baseSize);
     let variant = $derived(group?.variant ?? baseVariant);
     let wide = $derived(group ? (baseWide === undefined ? group.wide : baseWide) : baseWide);
@@ -100,7 +103,7 @@
             'inline-flex items-center justify-center text-center whitespace-nowrap',
 
             variant === 'filled' && [
-                `bg-${color} text-on-${color} border-on-${color}`,
+                `bg-${colorWithFallback} text-on-${colorWithFallback} border-on-${colorWithFallback}`,
                 !group && 'border-2',
                 group &&
                     (group.vertical
@@ -110,7 +113,9 @@
                 !disabled && 'hover:highlight'
             ],
             variant === 'outline' && [
-                `text-accent-${color} border-accent-${color}`,
+                box && !color
+                    ? `text-${box.fgColor} border-${box.border}`
+                    : `text-on-${colorWithFallback} border-on-${colorWithFallback}`,
                 !group && 'border-2',
                 group &&
                     (group.vertical
@@ -120,7 +125,7 @@
                 !disabled && `hover:highlight-backdrop`
             ],
             variant === 'ghost' && [
-                `text-accent-${color}`,
+                box && !color ? `text-${box.fgColor}` : `text-on-${colorWithFallback}`,
                 !group && 'border-2 border-transparent',
                 group &&
                     (group.vertical

@@ -7,8 +7,8 @@
 </script>
 
 <script lang="ts">
-    import { twMerge } from 'tailwind-merge';
     import type { Snippet } from 'svelte';
+    import { twMerge } from 'tailwind-merge';
     import CompileTailwindClasses from '../CompileTailwindClasses.svelte';
     import type { Size } from '../types';
 

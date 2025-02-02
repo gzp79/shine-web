@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { beforeNavigate } from '$app/navigation';
     import Box from '$atoms/Box.svelte';
     import Typography from '$atoms/Typography.svelte';
     import { Hamburger } from '$atoms/icons/common';
@@ -31,6 +30,7 @@
                 { title: 'Popper', href: 'atoms/popper' },
                 { title: 'Key-Value Table', href: 'atoms/key-value-tables' },
                 { title: 'Cards', href: 'atoms/cards' },
+                { title: 'Modal', href: 'atoms/modals' },
                 { title: 'Alerts', href: 'atoms/alerts' },
                 { title: 'Helper Cards', href: 'atoms/helper-cards' },
                 { title: 'Simple Menu', href: 'atoms/simple-menu' },
@@ -61,10 +61,6 @@
             ]
         }
     ].filter(Boolean) as MenuItem[];
-
-    beforeNavigate(() => {
-        currentSettings.set(null);
-    });
 </script>
 
 <div class="grid h-full grid-rows-[auto_1fr_auto] overflow-hidden">

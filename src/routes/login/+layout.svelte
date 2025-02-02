@@ -1,14 +1,14 @@
 <script lang="ts">
-    import type { Snippet } from 'svelte';
     import { goto } from '$app/navigation';
-    import { t } from '$lib/i18n/i18n.svelte';
+    import { page } from '$app/state';
+    import Button from '$atoms/Button.svelte';
+    import ErrorCard from '$atoms/ErrorCard.svelte';
+    import LoadingCard from '$components/atoms/LoadingCard.svelte';
     import { currentUserStore } from '$lib/account/currentUser.svelte';
     import App from '$lib/app/App.svelte';
     import AppContent from '$lib/app/AppContent.svelte';
-    import ErrorCard from '$atoms/ErrorCard.svelte';
-    import Button from '$atoms/Button.svelte';
-    import LoadingCard from '$components/atoms/LoadingCard.svelte';
-    import { page } from '$app/stores';
+    import { t } from '$lib/i18n/i18n.svelte';
+    import type { Snippet } from 'svelte';
 
     interface Props {
         children: Snippet;
@@ -16,7 +16,7 @@
     let { children }: Props = $props();
 
     let redirectUrl = $derived.by(() => {
-        const target = $page.url.searchParams.get('target');
+        const target = page.url.searchParams.get('target');
         return target ? `/game/${decodeURIComponent(target)}` : '/game';
     });
 
@@ -44,7 +44,7 @@
             </div>
         </AppContent>
     {:else if currentUser.isAuthenticated}
-        {#await goto(redirectUrl)}{/await}
+        {void goto(redirectUrl)}
     {:else}
         {@render children()}
     {/if}

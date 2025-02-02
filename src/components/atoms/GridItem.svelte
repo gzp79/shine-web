@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Snippet } from 'svelte';
-    import { toResponsiveClass, type ResponsiveProp } from './types';
     import CompileTailwindClasses from './CompileTailwindClasses.svelte';
+    import { type ResponsiveProp, toResponsiveClass } from './types';
 
     type Spans = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'full';
 

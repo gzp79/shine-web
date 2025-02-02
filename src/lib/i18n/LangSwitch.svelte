@@ -3,7 +3,7 @@
     import Button from '$components/atoms/Button.svelte';
     import InputGroup from '$components/atoms/InputGroup.svelte';
     import Popper from '$components/atoms/Popper.svelte';
-    import { t, languageStore } from './i18n.svelte';
+    import { languageStore, t } from './i18n.svelte';
 
     const items = [
         { data: 'hu', caption: $t('lang.hu'), icon: flags.FlagHU },

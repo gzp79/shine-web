@@ -1,102 +1,136 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-@import 'tailwindcss/variants';
+@import 'tailwindcss';
+
+/* 
+Color helper:
+ https://uicolors.app/create
+ Generally the 100, 200, 400, 600 color variants are used for the light theme
+ and a rule of thumb, the dark colors are the inverted light colors (light: 100 dark: 900).
+*/
+
+@theme {
+    --color-*: initial;
+
+    --color-surface: #ffffff;
+    --color-on-surface: #000000;
+    --color-container: #f3f3f3;
+    --color-on-container: #000000;
+    --color-sub-container: #dbdbdb;
+    --color-on-sub-container: #000000;
+
+    --color-primary: #f6f7f9;
+    --color-primary-1: #eceef2;
+    --color-primary-2: #b0bcc9;
+    --color-on-primary: #516378;
+
+    --color-secondary: #b0bfc9;
+    --color-secondary-1: #859bab;
+    --color-secondary-2: #516778;
+    --color-on-secondary: #333e47;
+
+    --color-info: #dff5ff;
+    --color-info-1: #b8edff;
+    --color-info-2: #32d1fe;
+    --color-on-info: #0098ce;
+
+    --color-warning: #fff2aa;
+    --color-warning-1: #ffe988;
+    --color-warning-2: #febe11;
+    --color-on-warning: #cd7d01;
+
+    --color-danger: #ffdfdf;
+    --color-danger-1: #ffc8c8;
+    --color-danger-2: #fd6c6c;
+    --color-on-danger: #e32020;
+
+    --color-success: #e7ffc8;
+    --color-success-1: #d0ff97;
+    --color-success-2: #90f12a;
+    --color-on-success: #55ac04;
+
+    --color-data-gray-1: #f5f6f6;
+    --color-data-gray-2: #e6e7e7;
+    --color-data-gray-3: #d0d1d1;
+    --color-data-gray-4: #aeb0b2;
+    --color-data-gray-5: #868990;
+    --color-data-gray-6: #6b6e6f;
+    --color-data-gray-7: #616365;
+
+    --hover-action-brightness: 0.75;
+}
 
 @layer base {
-    :root {
-        --color-surface: 255 255 255;
-        --color-on-surface: 0 0 0;
-        --color-container: 243 243 243;
-        --color-on-container: 0 0 0;
-        --color-sub-container: 219 219 219;
-        --color-on-sub-container: 0 0 0;
-
-        --color-primary: 40 46 55;
-        --color-on-primary: 255 255 255;
-        --color-accent-primary: 40 46 55;
-        --color-secondary: 255 255 255;
-        --color-on-secondary: 40 46 55;
-        --color-accent-secondary: 40 46 55;
-        --color-info: 215 246 255;
-        --color-on-info: 0 104 121;
-        --color-accent-info: 0 104 121;
-        --color-warning: 255 242 170;
-        --color-on-warning: 106 95 0;
-        --color-accent-warning: 106 95 0;
-        --color-danger: 255 237 235;
-        --color-on-danger: 146 26 29;
-        --color-accent-danger: 146 26 29;
-        --color-success: 210 255 156;
-        --color-on-success: 63 105 0;
-        --color-accent-success: 63 105 0;
-
-        --color-data-gray-1: 245 246 246;
-        --color-data-gray-2: 230 231 231;
-        --color-data-gray-3: 208 209 209;
-        --color-data-gray-4: 174 176 178;
-        --color-data-gray-5: 134 137 138;
-        --color-data-gray-6: 107 110 111;
-        --color-data-gray-7: 97 99 101;
-
-        --hover-action-brightness: 0.75;
-    }
-
     [data-theme='dark'] {
-        --color-surface: 40 40 40;
-        --color-on-surface: 219 219 219;
-        --color-container: 55 55 55;
-        --color-on-container: 219 219 219;
-        --color-sub-container: 70 70 70;
-        --color-on-sub-container: 219 219 219;
+        --color-surface: #282828;
+        --color-on-surface: #dbdbdb;
+        --color-container: #373737;
+        --color-on-container: #dbdbdb;
+        --color-sub-container: #464646;
+        --color-on-sub-container: #dbdbdb;
 
-        --color-primary: 219 219 219;
-        --color-on-primary: 50 50 50;
-        --color-accent-primary: 219 219 219;
-        --color-secondary: 50 50 50;
-        --color-on-secondary: 219 219 219;
-        --color-accent-secondary: 219 219 219;
-        --color-info: 0 104 121;
-        --color-on-info: 215 246 255;
-        --color-accent-info: 107 175 188;
-        --color-warning: 106 95 0;
-        --color-on-warning: 255 242 170;
-        --color-accent-warning: 181 167 85;
-        --color-danger: 146 26 29;
-        --color-on-danger: 255 237 235;
-        --color-accent-danger: 186 132 132;
-        --color-success: 63 105 0;
-        --color-on-success: 210 255 156;
-        --color-accent-success: 137 180 78;
+        --color-primary: #22272f;
+        --color-primary-1: #333b47;
+        --color-primary-2: #424e62;
+        --color-on-primary: #8595ab;
 
-        --color-data-gray-1: 134 137 138;
-        --color-data-gray-2: 107 110 111;
-        --color-data-gray-3: 97 99 101;
-        --color-data-gray-4: 78 79 80;
-        --color-data-gray-5: 68 69 70;
-        --color-data-gray-6: 60 61 61;
-        --color-data-gray-7: 37 37 39;
+        --color-secondary: #425462;
+        --color-secondary-1: #516778;
+        --color-secondary-2: #859bab;
+        --color-on-secondary: #eceff2;
+
+        --color-info: #095471;
+        --color-info-1: #036689;
+        --color-info-2: #0098ce;
+        --color-on-info: #32d1fe;
+
+        --color-warning: #733810;
+        --color-warning-1: #87450c;
+        --color-warning-2: #cd7d01;
+        --color-on-warning: #febe11;
+
+        --color-danger: #470808;
+        --color-danger-1: #831a1a;
+        --color-danger-2: #bf1616;
+        --color-on-danger: #f53e3e;
+
+        --color-success: #153102;
+        --color-success-1: #2e5710;
+        --color-success-2: #408308;
+        --color-on-success: #70d70b;
+
+        --color-data-gray-1: #868990;
+        --color-data-gray-2: #6b6e6f;
+        --color-data-gray-3: #616365;
+        --color-data-gray-4: #4e4f50;
+        --color-data-gray-5: #444546;
+        --color-data-gray-6: #3c3d3d;
+        --color-data-gray-7: #252527;
 
         --hover-action-brightness: 1.5;
     }
 
     html {
-        background-color: rgb(var(--color-surface));
-        color: rgb(var(--color-on-surface));
+        background-color: var(--color-surface);
+        color: var(--color-on-surface);
     }
 
     html[data-theme='dark'] {
-        background-color: rgb(var(--color-surface));
-        color: rgb(var(--color-on-surface));
+        background-color: var(--color-surface);
+        color: var(--color-on-surface);
     }
 }
 
 @layer utilities {
     .highlight {
-        @apply brightness-[--hover-action-brightness];
+        @apply brightness-(--hover-action-brightness);
+    }
+    .hover\:highlight:hover {
+        @apply brightness-(--hover-action-brightness);
     }
     .highlight-backdrop {
-        @apply backdrop-brightness-[--hover-action-brightness];
+        @apply backdrop-brightness-(--hover-action-brightness);
+    }
+    .hover\:highlight-backdrop:hover {
+        @apply backdrop-brightness-(--hover-action-brightness);
     }
 
     .scrollbar-hide::-webkit-scrollbar {
@@ -108,212 +142,196 @@
         overscroll-behavior-y: none;
     }
 
-    .min-w {
-        &-xs {
-            min-width: 20rem;
-        }
-        &-sm {
-            min-width: 24rem;
-        }
-        &-md {
-            min-width: 28rem;
-        }
-        &-lg {
-            min-width: 32rem;
-        }
-        &-xl {
-            min-width: 36rem;
-        }
-        &-2xl {
-            min-width: 42rem;
-        }
-        &-3xl {
-            min-width: 48rem;
-        }
-        &-4xl {
-            min-width: 56rem;
-        }
-        &-5xl {
-            min-width: 64rem;
-        }
-        &-6xl {
-            min-width: 72rem;
-        }
-        &-7xl {
-            min-width: 80rem;
-        }
+    .min-w-xs {
+        min-width: 20rem;
+    }
+    .min-w-sm {
+        min-width: 24rem;
+    }
+    .min-w-md {
+        min-width: 28rem;
+    }
+    .min-w-lg {
+        min-width: 32rem;
+    }
+    .min-w-xl {
+        min-width: 36rem;
+    }
+    .min-w-2xl {
+        min-width: 42rem;
+    }
+    .min-w-3xl {
+        min-width: 48rem;
+    }
+    .min-w-4xl {
+        min-width: 56rem;
+    }
+    .min-w-5xl {
+        min-width: 64rem;
+    }
+    .min-w-6xl {
+        min-width: 72rem;
+    }
+    .min-w-7xl {
+        min-width: 80rem;
     }
 
-    .max-w {
-        &-xs {
-            max-width: 20rem;
-        }
-        &-sm {
-            max-width: 24rem;
-        }
-        &-md {
-            max-width: 28rem;
-        }
-        &-lg {
-            max-width: 32rem;
-        }
-        &-xl {
-            max-width: 36rem;
-        }
-        &-2xl {
-            max-width: 42rem;
-        }
-        &-3xl {
-            max-width: 48rem;
-        }
-        &-4xl {
-            max-width: 56rem;
-        }
-        &-5xl {
-            max-width: 64rem;
-        }
-        &-6xl {
-            max-width: 72rem;
-        }
-        &-7xl {
-            max-width: 80rem;
-        }
+    .max-w-xs {
+        max-width: 20rem;
+    }
+    .max-w-sm {
+        max-width: 24rem;
+    }
+    .max-w-md {
+        max-width: 28rem;
+    }
+    .max-w-lg {
+        max-width: 32rem;
+    }
+    .max-w-xl {
+        max-width: 36rem;
+    }
+    .max-w-2xl {
+        max-width: 42rem;
+    }
+    .max-w-3xl {
+        max-width: 48rem;
+    }
+    .max-w-4xl {
+        max-width: 56rem;
+    }
+    .max-w-5xl {
+        max-width: 64rem;
+    }
+    .max-w-6xl {
+        max-width: 72rem;
+    }
+    .max-w-7xl {
+        max-width: 80rem;
     }
 
-    .min-h {
-        &-xs {
-            min-height: 10rem;
-        }
-        &-sm {
-            min-height: 12rem;
-        }
-        &-md {
-            min-height: 14rem;
-        }
-        &-lg {
-            min-height: 16rem;
-        }
-        &-xl {
-            min-height: 18rem;
-        }
-        &-2xl {
-            min-height: 21rem;
-        }
-        &-3xl {
-            min-height: 24rem;
-        }
-        &-4xl {
-            min-height: 28rem;
-        }
-        &-5xl {
-            min-height: 32rem;
-        }
-        &-6xl {
-            min-height: 36rem;
-        }
-        &-7xl {
-            min-height: 40rem;
-        }
+    .min-h-xs {
+        min-height: 10rem;
+    }
+    .min-h-sm {
+        min-height: 12rem;
+    }
+    .min-h-md {
+        min-height: 14rem;
+    }
+    .min-h-lg {
+        min-height: 16rem;
+    }
+    .min-h-xl {
+        min-height: 18rem;
+    }
+    .min-h-2xl {
+        min-height: 21rem;
+    }
+    .min-h-3xl {
+        min-height: 24rem;
+    }
+    .min-h-4xl {
+        min-height: 28rem;
+    }
+    .min-h-5xl {
+        min-height: 32rem;
+    }
+    .min-h-6xl {
+        min-height: 36rem;
+    }
+    .min-h-7xl {
+        min-height: 40rem;
     }
 
-    .max-h {
-        &-xs {
-            max-height: 20rem;
-        }
-        &-sm {
-            max-height: 24rem;
-        }
-        &-md {
-            max-height: 28rem;
-        }
-        &-lg {
-            max-height: 32rem;
-        }
-        &-xl {
-            max-height: 36rem;
-        }
-        &-2xl {
-            max-height: 42rem;
-        }
-        &-3xl {
-            max-height: 48rem;
-        }
-        &-4xl {
-            max-height: 56rem;
-        }
-        &-5xl {
-            max-height: 64rem;
-        }
-        &-6xl {
-            max-height: 72rem;
-        }
-        &-7xl {
-            max-height: 80rem;
-        }
+    .max-h-xs {
+        max-height: 20rem;
+    }
+    .max-h-sm {
+        max-height: 24rem;
+    }
+    .max-h-md {
+        max-height: 28rem;
+    }
+    .max-h-lg {
+        max-height: 32rem;
+    }
+    .max-h-xl {
+        max-height: 36rem;
+    }
+    .max-h-2xl {
+        max-height: 42rem;
+    }
+    .max-h-3xl {
+        max-height: 48rem;
+    }
+    .max-h-4xl {
+        max-height: 56rem;
+    }
+    .max-h-5xl {
+        max-height: 64rem;
+    }
+    .max-h-6xl {
+        max-height: 72rem;
+    }
+    .max-h-7xl {
+        max-height: 80rem;
     }
 
-    .icon {
-        &-xs {
-            @apply h-4 w-4;
-        }
-        &-sm {
-            @apply h-5 w-5;
-        }
-        &-md {
-            @apply h-9 w-9;
-        }
-        &-lg {
-            @apply h-12 w-12;
-        }
+    .icon-xs {
+        @apply h-4 w-4;
     }
-    .min-icon {
-        &-xs {
-            @apply min-h-4 min-w-4;
-        }
-        &-sm {
-            @apply min-h-5 min-w-5;
-        }
-        &-md {
-            @apply min-h-9 min-w-9;
-        }
-        &-lg {
-            @apply min-h-12 min-w-12;
-        }
+    .icon-sm {
+        @apply h-5 w-5;
     }
-    .max-icon {
-        &-xs {
-            @apply max-h-4 max-w-4;
-        }
-        &-sm {
-            @apply max-h-5 max-w-5;
-        }
-        &-md {
-            @apply max-h-9 max-w-9;
-        }
-        &-lg {
-            @apply max-h-12 max-w-12;
-        }
+    .icon-md {
+        @apply h-9 w-9;
+    }
+    .icon-lg {
+        @apply h-12 w-12;
+    }
+    .min-icon-xs {
+        @apply min-h-4 min-w-4;
+    }
+    .min-icon-sm {
+        @apply min-h-5 min-w-5;
+    }
+    .min-icon-md {
+        @apply min-h-9 min-w-9;
+    }
+    .min-icon-lg {
+        @apply min-h-12 min-w-12;
+    }
+    .max-icon-xs {
+        @apply max-h-4 max-w-4;
+    }
+    .max-icon-sm {
+        @apply max-h-5 max-w-5;
+    }
+    .max-icon-md {
+        @apply max-h-9 max-w-9;
+    }
+    .max-icon-lg {
+        @apply max-h-12 max-w-12;
     }
 
-    .grid {
-        &-cols-1-auto {
-            grid-template-columns: repeat(1, max-content);
-        }
-        &-cols-2-auto {
-            grid-template-columns: repeat(2, max-content);
-        }
-        &-cols-3-auto {
-            grid-template-columns: repeat(3, max-content);
-        }
-        &-cols-4-auto {
-            grid-template-columns: repeat(4, max-content);
-        }
-        &-cols-5-auto {
-            grid-template-columns: repeat(5, max-content);
-        }
-        &-cols-6-auto {
-            grid-template-columns: repeat(6, max-content);
-        }
+    .grid-cols-1-auto {
+        grid-template-columns: repeat(1, max-content);
+    }
+    .grid-cols-2-auto {
+        grid-template-columns: repeat(2, max-content);
+    }
+    .grid-cols-3-auto {
+        grid-template-columns: repeat(3, max-content);
+    }
+    .grid-cols-4-auto {
+        grid-template-columns: repeat(4, max-content);
+    }
+    .grid-cols-5-auto {
+        grid-template-columns: repeat(5, max-content);
+    }
+    .grid-cols-6-auto {
+        grid-template-columns: repeat(6, max-content);
     }
 
     .table {
@@ -323,64 +341,42 @@
         :where(th, td) {
             @apply px-4 py-3 align-middle;
         }
-
-        /*
-        tr.active,
-        tr.active:nth-child(even) {
-            @apply brightness-125;
-        }
-        tr.hover,
-        tr.hover:nth-child(even) {
-            @apply [@media(hover:hover)]:hover:brightness-125;
-        }*/
-
-        /*:where(thead tr, tbody tr:not(:last-child), tbody tr:first-child:last-child) {
-            @apply border-b-base-200 border-b;
-        }
-    
-        :where(thead, tfoot) {
-            @apply text-base-content/60 whitespace-nowrap text-xs font-bold;
-        }
-
-        :where(tfoot) {
-            @apply border-t-base-200 border-t;
-        }*/
-
-        &-xs :not(thead):not(tfoot) tr {
-            @apply text-xs;
-        }
-        &-xs :where(th, td) {
-            @apply px-1 py-1;
-        }
-        &-sm :not(thead):not(tfoot) tr {
-            @apply text-sm;
-        }
-        &-sm :where(th, td) {
-            @apply px-2 py-1.5;
-        }
-        &-md :not(thead):not(tfoot) tr {
-            @apply text-sm;
-        }
-        &-md :where(th, td) {
-            @apply px-3 py-2;
-        }
-        &-lg :not(thead):not(tfoot) tr {
-            @apply text-base;
-        }
-        &-lg :where(th, td) {
-            @apply px-4 py-3;
-        }
+    }
+    .table-xs :not(thead):not(tfoot) tr {
+        @apply text-xs;
+    }
+    .table-xs :where(th, td) {
+        @apply px-1 py-1;
+    }
+    .table-sm :not(thead):not(tfoot) tr {
+        @apply text-sm;
+    }
+    .table-sm :where(th, td) {
+        @apply px-2 py-1.5;
+    }
+    .table-md :not(thead):not(tfoot) tr {
+        @apply text-sm;
+    }
+    .table-md :where(th, td) {
+        @apply px-3 py-2;
+    }
+    .table-lg :not(thead):not(tfoot) tr {
+        @apply text-base;
+    }
+    .table-lg :where(th, td) {
+        @apply px-4 py-3;
     }
 }
 
 .settings {
-    /*    @apply m-2 h-min w-1/2 max-w-lg rounded border p-2;
-    &-label {
+    @apply m-2 h-min w-1/2 max-w-lg rounded-sm border p-2;
+
+    /*&-label {
         @apply label ml-2;
-    }
-    &-key-value {
-        @apply mb-4 grid grid-cols-2 gap-1;
     }*/
+    .settings-key-value {
+        @apply mb-4 grid grid-cols-2 gap-1;
+    }
 }
 
 body {

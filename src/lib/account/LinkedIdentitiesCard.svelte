@@ -1,18 +1,21 @@
 <script lang="ts">
-    import { t } from '$lib/i18n/i18n.svelte';
-    import type { LinkedIdentity } from '$lib/api/identity-api';
-    import { type AppError } from '$lib/utils';
     import Card from '$atoms/Card.svelte';
-    import LoadingCard from '$atoms/LoadingCard.svelte';
     import ErrorCard from '$atoms/ErrorCard.svelte';
+    import LoadingCard from '$atoms/LoadingCard.svelte';
     import ResourceFetch from '$atoms/ResourceFetch.svelte';
+    import Button from '$components/atoms/Button.svelte';
+    import { Link } from '$components/atoms/icons/common';
+    import type { LinkedIdentity } from '$lib/api/identity-api';
+    import { t } from '$lib/i18n/i18n.svelte';
+    import { type AppError } from '$lib/utils';
     import LinkedIdentityCard from './LinkedIdentityCard.svelte';
 
     interface Props {
         identities: () => Promise<LinkedIdentity[]>;
-        onUnlink: (provider: string, providerUserId: string) => Promise<void>;
+        onUnlink?: (provider: string, providerUserId: string) => Promise<void>;
+        onLink?: () => void;
     }
-    const { identities, onUnlink }: Props = $props();
+    const { identities, onUnlink, onLink }: Props = $props();
 
     let dataVersion = $state(0);
 </script>
@@ -23,9 +26,7 @@
             <LoadingCard />
         {/snippet}
 
-        <!-- todo: generic fails on svelte-check -->
-        <!-- eslint-disable @typescript-eslint/no-explicit-any -->
-        {#snippet content(identities: /*LinkedIdentity[]*/ any, _isDirty: boolean)}
+        {#snippet content(identities: LinkedIdentity[], _isDirty: boolean)}
             {#each identities as identity (`${identity.provider}/${identity.providerUserId}`)}
                 <LinkedIdentityCard {identity} {onUnlink} {dataVersion} />
             {/each}
@@ -37,4 +38,12 @@
             </div>
         {/snippet}
     </ResourceFetch>
+
+    {#snippet actions()}
+        {#if onLink}
+            <Button color="secondary" startIcon={Link} onclick={onLink}>
+                {$t('account.link')}
+            </Button>
+        {/if}
+    {/snippet}
 </Card>

@@ -53,7 +53,6 @@
             `bg-${color}`,
             barSize[size],
             transition
-            //value && 'brightness-150'
         )
     );
 
@@ -77,11 +76,10 @@
     };
     let knobClass = $derived(
         twMerge(
-            `absolute rounded-full border border-on-${color} left-0 top-0`,
+            `absolute rounded-full left-0 top-0 border border-on-${color}`,
             knobSize[size],
             transition,
-            value ? 'bg-data-gray2' : 'bg-data-gray6',
-            //value ? `bg-${color}` : 'bg-data-gray6',
+            value ? `bg-${color}-2` : `bg-${color}-1`,
             value && knobTranslate[size]
         )
     );

@@ -1,6 +1,6 @@
 <script lang="ts" module>
-    import { twMerge } from 'tailwind-merge';
     import type { Snippet } from 'svelte';
+    import { twMerge } from 'tailwind-merge';
     import CompileTailwindClasses from '../CompileTailwindClasses.svelte';
     import type { ActionColor, Size } from '../types';
 

@@ -1,4 +1,5 @@
 import { browser } from '$app/environment';
+import type { Snippet } from 'svelte';
 
 export type Nullable<T> = T | null;
 export function maybeNull<T>(): Nullable<T> {
@@ -53,6 +54,10 @@ export const async = {
         return new Promise(() => {});
     },
 
+    resolved<T>(data: T): Promise<T> {
+        return Promise.resolve(data);
+    },
+
     async error(error: Error): Promise<never> {
         throw error;
     }
@@ -78,4 +83,9 @@ export function setCookie(key: string, value: string) {
 
 export function deleteCookie(key: string) {
     updateCookie(key, '', new Date(0));
+}
+
+export function isSnippet(obj: unknown): obj is Snippet {
+    // workaround for sveltekit issue https://github.com/sveltejs/svelte/issues/9774
+    return typeof obj !== 'function';
 }

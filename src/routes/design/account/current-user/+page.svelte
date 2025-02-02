@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { v4 as uuid } from 'uuid';
-    import { onMount } from 'svelte';
-    import { async } from '$lib/utils';
-    import { logDesigner } from '$lib/loggers';
-    import type { CurrentUser } from '$lib/api/identity-api';
     import CurrentUserCard from '$lib/account/CurrentUserCard.svelte';
+    import type { CurrentUser } from '$lib/api/identity-api';
+    import { logDesigner } from '$lib/loggers';
+    import { async } from '$lib/utils';
+    import { onMount } from 'svelte';
+    import { v4 as uuid } from 'uuid';
     import Story from '../../_components/_Story.svelte';
 
     let fetchReactiveUser = async (userId: string): Promise<CurrentUser> => {

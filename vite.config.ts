@@ -1,4 +1,5 @@
 import { sveltekit } from '@sveltejs/kit/vite';
+import tailwindcss from '@tailwindcss/vite';
 import fs from 'fs';
 import { viteStaticCopy } from 'vite-plugin-static-copy';
 import { defineConfig } from 'vitest/config';
@@ -39,6 +40,7 @@ if (fs.existsSync('certificates/cert.key')) {
 export default defineConfig({
     plugins: [
         assetConverter(),
+        tailwindcss(),
         sveltekit(),
         viteStaticCopy({
             targets: [...additionalAssets]

@@ -39,6 +39,7 @@ export type LinkedIdentities = z.infer<typeof LinkedIdentitiesSchema>;
 
 const ActiveSessionSchema = z.object({
     //userId: string,
+    tokenHash: z.string(),
     fingerprint: z.string(),
     createdAt: DateStringSchema,
     agent: z.string(),
@@ -161,6 +162,12 @@ class IdentityApi {
         const redirectUrl = encodeURIComponent(`${this.webUrl}${redirect}`);
         const errorUrl = encodeURIComponent(`${this.webUrl}/error`);
         return `${this.serviceUrl}/identity/auth/${provider}/login?redirectUrl=${redirectUrl}&errorUrl=${errorUrl}&rememberMe=${rememberMe}&captcha=${captcha}`;
+    }
+
+    getExternalLinkUrl(provider: string, redirect: string): string {
+        const redirectUrl = encodeURIComponent(`${this.webUrl}${redirect}`);
+        const errorUrl = encodeURIComponent(`${this.webUrl}/error`);
+        return `${this.serviceUrl}/identity/auth/${provider}/link?redirectUrl=${redirectUrl}&errorUrl=${errorUrl}`;
     }
 
     getLogoutUrl(terminateAll: boolean, redirect: string): string {

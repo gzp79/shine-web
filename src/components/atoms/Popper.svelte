@@ -1,9 +1,9 @@
 <script lang="ts" module>
-    import { onMount, type Snippet } from 'svelte';
-    import { twMerge } from 'tailwind-merge';
     import type { Middleware } from '@floating-ui/dom';
     import * as floatingDom from '@floating-ui/dom';
     import type { Nullable } from '$lib/utils';
+    import { type Snippet, onMount } from 'svelte';
+    import { twMerge } from 'tailwind-merge';
     import { portal } from './Portal.svelte';
 
     export type Behavior = 'click' | 'clickWithSelf' | 'toggle' | 'hover' | 'manual';
@@ -63,7 +63,7 @@
 
     let width = $state(0);
 
-    let divClass = $derived(twMerge('fixed left-0 top-0 z-50', !isOpen ? 'hidden' : display));
+    let divClass = $derived(twMerge('fixed left-0 top-0 z-40', !isOpen ? 'hidden' : display));
     let divStyle = $derived(alignWidth ? `min-width: ${width}px;` : '');
 
     const show = () => {

@@ -1,5 +1,5 @@
 <script lang="ts" module>
-    import { setContext, type Snippet } from 'svelte';
+    import { type Snippet, setContext } from 'svelte';
     import Box from './Box.svelte';
 
     export interface SimpleMenuContext {

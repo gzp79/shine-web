@@ -1,8 +1,9 @@
 <script lang="ts">
-    import { twMerge } from 'tailwind-merge';
-    import type { ActionColor, ElementProps, InputVariant, Size } from './types';
-    import type { GroupInfo } from './InputGroup.svelte';
     import { getContext } from 'svelte';
+    import { twMerge } from 'tailwind-merge';
+    import type { BoxInfo } from './Box.svelte';
+    import type { GroupInfo } from './InputGroup.svelte';
+    import type { ActionColor, ElementProps, InputVariant, Size } from './types';
 
     interface Props extends ElementProps {
         rows?: 'single' | number | [number, number];
@@ -24,7 +25,7 @@
         text = $bindable(),
         placeholder = '',
         variant: baseVariant = 'filled',
-        color: baseColor = 'primary',
+        color: baseColor,
         size: baseSize = 'md',
         resizable,
         disabled,
@@ -40,13 +41,14 @@
     };
 
     // Hidden Dependency (InputGroup):
-    // - determine the color and size
-    // - fix the border and rounding
     let group: GroupInfo = getContext('InputGroup_props');
+    // Hidden Dependency (Box):
+    let box: BoxInfo = getContext('Box_props');
+
     let color = $derived(group?.color ?? baseColor);
+    let colorWithFallback = $derived(color ?? 'primary');
     let size = $derived(group?.size ?? baseSize);
     let variant = $derived(group?.variant ?? baseVariant);
-    //let wide = $derived(group ? (baseWide === undefined ? group.wide : baseWide) : baseWide);
 
     const txtClass = $derived(
         twMerge(
@@ -54,7 +56,7 @@
             !resizable && 'resize-none',
 
             variant === 'filled' && [
-                `bg-${color} text-on-${color} border-on-${color}`,
+                `bg-${colorWithFallback} text-on-${colorWithFallback} placeholder:text-${colorWithFallback}-2 border-on-${colorWithFallback}`,
                 !group && ['m-1', 'rounded-lg', 'border-2'],
                 group &&
                     (group.vertical
@@ -63,7 +65,9 @@
                 !disabled && 'hover:highlight'
             ],
             variant === 'outline' && [
-                `text-accent-${color} border-accent-${color}`,
+                box && !color
+                    ? `text-${box.fgColor} placeholder:text-${box.fgColor2} border-${box.border}`
+                    : `text-on-${colorWithFallback} placeholder:text-${colorWithFallback}-2 border-on-${colorWithFallback}`,
                 !group && ['m-1', 'rounded-lg', 'border-2'],
                 group &&
                     (group.vertical
@@ -72,7 +76,9 @@
                 !disabled && `hover:highlight-backdrop`
             ],
             variant === 'ghost' && [
-                `text-accent-${color}`,
+                box && !color
+                    ? `text-${box.fgColor} placeholder:text-${box.fgColor2}`
+                    : `text-on-${colorWithFallback} placeholder:text-${colorWithFallback}-2`,
                 !group && ['m-1', 'rounded-lg', 'border-2', 'border-transparent'],
                 !disabled && `hover:highlight-backdrop`
             ],

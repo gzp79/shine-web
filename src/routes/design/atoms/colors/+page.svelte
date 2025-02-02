@@ -17,7 +17,7 @@
     {#each actionColorList as color}
         <div class="flex flex-col items-center rounded-lg border">
             <div class="m-2">
-                <ColorSample {color} />
+                <ColorSample {color} shades />
             </div>
         </div>
     {/each}
