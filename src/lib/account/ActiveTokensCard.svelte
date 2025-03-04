@@ -23,9 +23,7 @@
             <LoadingCard />
         {/snippet}
 
-        <!-- todo: generic fails on svelte-check -->
-        <!-- eslint-disable @typescript-eslint/no-explicit-any -->
-        {#snippet content(tokens: /*ActiveToken[]*/ any, _isDirty: boolean)}
+        {#snippet content(tokens: ActiveToken[], _isDirty: boolean)}
             {#each tokens as token (token.tokenHash)}
                 <ActiveTokenCard {token} {onRevoke} {dataVersion} />
             {/each}

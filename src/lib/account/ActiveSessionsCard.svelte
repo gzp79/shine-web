@@ -20,9 +20,7 @@
             <LoadingCard />
         {/snippet}
 
-        <!-- todo: generic fails on svelte-check -->
-        <!-- eslint-disable @typescript-eslint/no-explicit-any -->
-        {#snippet content(sessions: /*ActiveSession[]*/ any, _isDirty: boolean)}
+        {#snippet content(sessions: ActiveSession[], _isDirty: boolean)}
             {#each sessions as session (session.tokenHash)}
                 <ActiveSessionCard {session} />
             {/each}
