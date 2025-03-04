@@ -2,5 +2,6 @@
     "title": "Login",
     "guest": "Guest",
     "loadingCaptcha": "Waiting for server",
-    "rememberMe": "Remember me"
+    "rememberMe": "Remember me",
+    "continueAs": "Continue as {{name}}"
 }

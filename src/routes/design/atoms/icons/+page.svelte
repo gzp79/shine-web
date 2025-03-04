@@ -79,7 +79,6 @@
             {@render icon(social.Gitlab, 'Gitlab')}
             {@render icon(social.Google, 'Google')}
             {@render icon(social.Twitter, 'Twitter')}
-            {@render icon(social.Link, 'Link')}
         </div>
     </Card>
 

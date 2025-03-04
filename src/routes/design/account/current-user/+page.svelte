@@ -93,6 +93,22 @@
                 isAuthenticated: true,
                 isLinked: true,
                 name: 'John Doe',
+                userId: '2f8e4b8e-4b8e-4b8e-8b1e-2f8e4b8e4b8e',
+                email: 'johndoe@example.com',
+                isEmailConfirmed: false,
+                roles: [],
+                sessionLength: 1234
+            })}
+        onLogout={() => logDesigner('logout')}
+        onConfirmEmail={() => logDesigner('confirmEmail')}
+    />
+
+    <CurrentUserCard
+        user={() =>
+            Promise.resolve({
+                isAuthenticated: true,
+                isLinked: true,
+                name: 'John Doe',
                 userId: '8b1e2f8e-4b8e-4b8e-8b1e-2f8e4b8e4b8e',
                 email: 'johndoe@example.com',
                 isEmailConfirmed: true,
@@ -100,6 +116,7 @@
                 sessionLength: 1234
             })}
         onLogout={() => logDesigner('logout')}
+        onConfirmEmail={() => logDesigner('confirmEmail')}
     />
 
     <CurrentUserCard user={async.never} onLogout={() => logDesigner('logout')} />

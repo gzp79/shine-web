@@ -18,16 +18,29 @@
 
     let currentUser = currentUserStore();
 
+    // For links we ask for prompt always, but once the prompt is completed, a silent parameter is added to the link URL
+    // not to start en infinite loop of prompts
+    let isPromptForLink = $derived(
+        page.url.pathname.startsWith('/link') && page.url.searchParams.get('silent') !== 'true'
+    );
+
     let loginUrl = $derived.by(() => {
-        const path = page.url.pathname;
-        const queryString = page.url.search;
-        if (path.startsWith('/game/')) {
-            const targetPath = path.substring(6);
-            const target = queryString ? `${targetPath}?${queryString}` : targetPath;
-            return `/login?target=${encodeURIComponent(target)}`;
-        } else {
-            return '/login';
+        const targetPath = page.url.pathname;
+        const targetParams = page.url.searchParams;
+
+        const params = new URLSearchParams();
+        if (targetPath.startsWith('/link')) {
+            params.set('prompt', 'true');
+            targetParams.set('silent', 'true');
+            const hint = targetPath.split('/').pop();
+            if (hint) {
+                params.set('hint', hint);
+            }
         }
+        params.set('target', `${targetPath}?${targetParams}`);
+
+        console.log('loginUrl', `/login?${params.toString()}`);
+        return `/login?${params.toString()}`;
     });
 
     $effect(() => {
@@ -36,6 +49,8 @@
             currentUser.refresh();
         } else if (currentUser.isLoaded && !currentUser.isAuthenticated) {
             logUser('Login required');
+            goto(loginUrl);
+        } else if (isPromptForLink) {
             goto(loginUrl);
         }
     });
@@ -71,15 +86,13 @@
                 </ErrorCard>
             </div>
         </AppContent>
-    {:else if !currentUser.isLoaded}
+    {:else if !currentUser.isLoaded || isPromptForLink}
         <AppContent>
             <div class="flex h-full items-center justify-center">
-                <LoadingCard label={$t('account.loading')} />
+                <LoadingCard label={$t('common.loading')} />
             </div>
         </AppContent>
     {:else if currentUser.isAuthenticated}
         {@render children()}
-        <!-- {:else}
-        {void goto(loginUrl)} -->
     {/if}
 </App>

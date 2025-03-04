@@ -27,7 +27,7 @@
 
     const widthVariants: Record<Width, string> = {
         default: 'max-w-xl w-[100%]',
-        fit: 'max-w-xl w-fit',
+        fit: 'max-w-xl min-w-fit',
         full: 'w-full'
     };
 

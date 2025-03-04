@@ -4,5 +4,6 @@
     },
 
     "cSpell.words": ["crossenv", "daisyui", "endregion", "hoverable", "scytta", "tailwindcss"],
-    "cSpell.ignorePaths": ["/static/_headers"]
+    "cSpell.ignorePaths": ["/static/_headers"],
+    "i18n-ally.localesPaths": ["src/lib/translations/**/*.{json}"]
 }

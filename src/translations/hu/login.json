@@ -2,5 +2,6 @@
     "title": "Bejelentkezés",
     "guest": "Vendég",
     "loadingCaptcha": "Várakozás a szerverre",
-    "rememberMe": "Emlékezz rám"
+    "rememberMe": "Emlékezz rám",
+    "continueAs": "Folytatás mint {{name}}"
 }

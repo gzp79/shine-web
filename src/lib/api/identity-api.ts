@@ -134,7 +134,7 @@ class IdentityApi {
     getGuestLoginUrl(captcha: string, redirect: string): string {
         const redirectUrl = encodeURIComponent(`${this.webUrl}${redirect}`);
         const errorUrl = encodeURIComponent(`${this.webUrl}/error`);
-        return `${this.serviceUrl}/identity/auth/token/login?redirectUrl=${redirectUrl}&errorUrl=${errorUrl}&rememberMe=true&captcha=${captcha}`;
+        return `${this.serviceUrl}/identity/auth/guest/login?redirectUrl=${redirectUrl}&errorUrl=${errorUrl}&rememberMe=true&captcha=${captcha}`;
     }
 
     async getExternalLoginProviders(fetch: Fetch): Promise<string[]> {
@@ -270,6 +270,42 @@ class IdentityApi {
         }
 
         logAPI('revokeToken completed');
+    }
+
+    async startEmailConfirmation(): Promise<void> {
+        logAPI('startEmailConfirmation...');
+        const url = `${this.serviceUrl}/identity/api/auth/user/email/confirm`;
+        const response = await fetch(url, {
+            method: 'POST',
+            credentials: 'include',
+            ...fetchCacheOption('no-store')
+        });
+
+        if (!response.ok) {
+            const error = await fetchError('Failed to start email confirmation', response);
+            logAPI('startEmailConfirmation failed with error', error);
+            throw error;
+        }
+
+        logAPI('startEmailConfirmation completed');
+    }
+
+    async completeEmailConfirmation(token: string): Promise<void> {
+        logAPI('completeEmailConfirmation...');
+        const url = `${this.serviceUrl}/identity/api/auth/user/email/complete?token=${token}`;
+        const response = await fetch(url, {
+            method: 'POST',
+            credentials: 'include',
+            ...fetchCacheOption('no-store')
+        });
+
+        if (!response.ok) {
+            const error = await fetchError('Failed to complete email confirmation', response);
+            logAPI('completeEmailConfirmation failed with error', error);
+            throw error;
+        }
+
+        logAPI('completeEmailConfirmation completed');
     }
 }
 

@@ -6,21 +6,26 @@
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
     import LoadingCard from '$atoms/LoadingCard.svelte';
     import ResourceFetch, { type Status } from '$atoms/ResourceFetch.svelte';
-    import { Warning } from '$atoms/icons/common';
+    import * as icons from '$atoms/icons/common';
+    import Button from '$components/atoms/Button.svelte';
     import type { CurrentUser } from '$lib/api/identity-api';
     import { t } from '$lib/i18n/i18n.svelte';
     import { type AppError } from '$lib/utils';
 
     interface Props {
         user: () => Promise<CurrentUser>;
+        onConfirmEmail?: string | (() => void);
         onLogout?: string | (() => void);
         onLogoutAll?: string | (() => void);
     }
-    const { user, onLogout: logout, onLogoutAll: logoutAll }: Props = $props();
+    const { user, onConfirmEmail: confirmEmail, onLogout: logout, onLogoutAll: logoutAll }: Props = $props();
 
     let fetchLoading = $state<Status>('loading');
     let disableActions = $derived(fetchLoading !== 'completed');
 
+    let confirmEmailAction = $derived(
+        typeof confirmEmail === 'string' ? { href: confirmEmail } : { onclick: confirmEmail }
+    );
     let logoutAction = $derived(typeof logout === 'string' ? { href: logout } : { onclick: logout });
     let logoutAllAction = $derived(typeof logoutAll === 'string' ? { href: logoutAll } : { onclick: logoutAll });
 </script>
@@ -31,22 +36,25 @@
             <LoadingCard />
         {/snippet}
 
-        <!-- todo: generic fails on svelte-check -->
-        <!-- eslint-disable @typescript-eslint/no-explicit-any -->
-        {#snippet content(user: /*CurrentUser*/ any, _isDirty: boolean)}
+        {#snippet content(user: CurrentUser, _isDirty: boolean)}
             {#if !user.isLinked}
                 <Alert variant="warning" caption={$t('account.linkWarning')} />
             {/if}
 
             {#snippet email()}
                 {#if user.email}
-                    {#if user.isEmailConfirmed}
-                        <Warning color="warning" size="sm" class="inline-block" />
-                    {/if}
-                    {user.email}
-                    {#if user.isEmailConfirmed}
-                        <Warning color="warning" size="sm" class="inline-block" />
-                    {/if}
+                    <div class="flex items-center space-x-2">
+                        {user.email}
+                        {#if !user.isEmailConfirmed}
+                            {#if confirmEmail}
+                                <Button startIcon={icons.Warning} color="warning" size="sm" {...confirmEmailAction}>
+                                    {$t('account.confirm')}
+                                </Button>
+                            {:else}
+                                <icons.Warning color="warning" size="sm" class="inline-block mx-2" />
+                            {/if}
+                        {/if}
+                    </div>
                 {:else}
                     <i class="bg-warning text-on-warning">{$t('account.noEmail')}</i>
                 {/if}

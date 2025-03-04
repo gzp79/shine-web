@@ -12,7 +12,7 @@
 
     let color = $state<ActionColor>('primary');
     let action = $state('click');
-    let href = '#top';
+    let href = '#bottom';
 
     function onclick() {
         logDesigner('clicked');
@@ -44,6 +44,13 @@
                 Button-{size}
             </Button>
         {/each}
+    </Box>
+
+    <Box border class="flex h-max flex-col">
+        <Button {color} {onclick}>Active button</Button>
+        <Button {color} disabled {onclick}>Disabled button</Button>
+        <Button {color} {href}>Active link</Button>
+        <Button {color} disabled {href}>Disabled link</Button>
     </Box>
 
     <Box border class="flex h-max flex-col">
@@ -168,4 +175,5 @@
             <Button variant="ghost">Ghost</Button>
         </Box>
     </Box>
+    <div id="bottom"></div>
 </Story>

@@ -22,24 +22,21 @@ let s_nextUpdate = $state(0);
 // Update the current user every n seconds
 const UPDATE_INTERVAL = 15 * 60;
 
-async function refreshCurrentUser(fetch: Fetch): Promise<void> {
+async function refreshCurrentUser(fetch: Fetch, force?: boolean): Promise<void> {
     const now = Date.now();
-    if (s_user === null || now > s_nextUpdate) {
+    if (s_user === null || now > s_nextUpdate || force) {
         logUser('Refreshing current user', s_nextUpdate, s_user);
         try {
-            s_user = { isLoading: now };
+            if (!isCurrentUser(s_user)) {
+                // If there is no current user trigger a loading state
+                s_user = { isLoading: now };
+            }
             s_nextUpdate = now + UPDATE_INTERVAL * 1000;
 
             logUser('Fetching current user data...');
             const usr = await identityApi.getCurrentUser(fetch);
-            if ('isLoading' in s_user && s_user.isLoading == now) {
-                logUser('Fetching current user data completed', usr);
-                //update user only if it hasn't changed yet
-                s_user = usr;
-                s_nextUpdate = now + UPDATE_INTERVAL * 1000;
-            } else {
-                logUser('Fetching current user data was late...');
-            }
+            s_user = usr;
+            s_nextUpdate = now + UPDATE_INTERVAL * 1000;
         } catch (error) {
             logUser('Fetching current user data failed with error', error);
             if (error !== null && typeof error === 'object') {
@@ -74,8 +71,8 @@ export function currentUserStore() {
             s_user = null;
         },
 
-        async refresh(): Promise<void> {
-            await refreshCurrentUser(fetch);
+        async refresh(force?: boolean): Promise<void> {
+            await refreshCurrentUser(fetch, force);
         },
 
         get error(): AppError | null {

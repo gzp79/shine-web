@@ -13,6 +13,12 @@ export const providerIcon = (provider: string): Component | undefined => {
             return icons.Discord;
         case 'gitlab':
             return icons.Gitlab;
+
+        // special cases
+        case 'guest':
+            return undefined;
+        case 'continue':
+            return icons.ActiveUser;
         default:
             return undefined;
     }

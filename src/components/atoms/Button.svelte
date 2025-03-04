@@ -156,33 +156,37 @@
     const endIconClass = $derived(twMerge(children && endIconMargin[size], iconSize[size]));
 
     let el = $derived(href ? 'a' : 'button');
+    let buttonOptions: HTMLAttributes<HTMLElement> = $derived({
+        disabled
+    });
     let linkOptions: HTMLAttributes<HTMLElement> = $derived.by(() => {
+        let preloadData = {};
         if (preload === 'disable')
-            return {
+            preloadData = {
                 'data-sveltekit-preload-data': 'off',
                 'data-sveltekit-preload-code': 'off'
             };
         else if (preload === 'code')
-            return {
+            preloadData = {
                 'data-sveltekit-preload-data': 'off',
                 'data-sveltekit-preload-code': 'hover'
             };
         else if (preload === 'hover')
-            return {
+            preloadData = {
                 'data-sveltekit-preload-data': 'hover',
                 'data-sveltekit-preload-code': 'hover'
             };
         else if (preload === 'eager')
-            return {
+            preloadData = {
                 'data-sveltekit-preload-data': 'hover',
                 'data-sveltekit-preload-code': 'eager'
             };
-        else return {};
+        return preloadData;
     });
     let elProps = $derived({
-        href,
+        ...(disabled ? {} : { href }),
         onclick,
-        ...(href ? linkOptions : {}),
+        ...(href ? linkOptions : buttonOptions),
         ...rest
     });
 </script>

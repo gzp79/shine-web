@@ -5,7 +5,7 @@
     "role": "Roles",
     "email": "Email",
     "noEmail": "No email",
-    "linkWarning": "Your account is currently not linked to any social network, so you may lose access.",
+    "linkWarning": "Your account is currently not linked to any social network, you may lose your access.",
     "logout": "Logout",
     "logoutAll": "Logout from all devices",
     "linkedIdentities": "Linked identities",
@@ -30,5 +30,9 @@
     "active": "active",
     "revoke": "Revoke",
     "failedToLoadUserInfo": "Failed to load user info",
-    "loading": "Loading ..."
+    "loading": "Loading ...",
+    "confirm": "Confirm",
+    "confirmTitle": "Email confirmation",
+    "confirmText": "We have sent a confirmation email to the provided address. Please check your inbox.",
+    "ok": "Ok"
 }

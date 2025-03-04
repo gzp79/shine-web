@@ -5,7 +5,7 @@
     "role": "Szerepkör",
     "email": "Email",
     "noEmail": "Nincs email",
-    "linkWarning": "Fiókod jelenleg nincs összekapcsolva egyetlen közösségi hálózattal sem, ezért elveszítheted a hozzáférést.",
+    "linkWarning": "Fiókod jelenleg nincs összekapcsolva egyetlen közösségi hálózattal sem, így könnyen elveszítheted a hozzáférést.",
     "logout": "Kijelentkezés",
     "logoutAll": "Minden eszközről kijelentkezés",
     "linkedIdentities": "Összekapcsolt azonosítók",
@@ -30,5 +30,9 @@
     "active": "aktív",
     "revoke": "Visszavonás",
     "failedToLoadUserInfo": "Nem sikerült betölteni a felhasználói adatokat",
-    "loading": "Betöltés ..."
+    "loading": "Betöltés ...",
+    "confirm": "Megerősítés",
+    "confirmTitle": "Email megerősítése",
+    "confirmText": "A megerősítő emailt elküldtük a megadott címre. Kérjük, ellenőrizd a beérkezett leveleket.",
+    "ok": "Tovább"
 }

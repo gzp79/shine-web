@@ -25,7 +25,7 @@
         {#if error.detail}
             <Box border class="min-h-max">
                 <Typography variant="code">
-                    <pre>{JSON.stringify(error.detail, null, 2)}</pre>
+                    <pre class="whitespace-pre-wrap break-words">{JSON.stringify(error.detail, null, 2)}</pre>
                 </Typography>
             </Box>
         {/if}
