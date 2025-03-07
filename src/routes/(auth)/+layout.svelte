@@ -37,9 +37,12 @@
                 params.set('hint', hint);
             }
         }
-        params.set('target', `${targetPath}?${targetParams}`);
+        if ([...targetParams.entries()].length > 0) {
+            params.set('target', `${targetPath}?${targetParams}`);
+        } else {
+            params.set('target', `${targetPath}`);
+        }
 
-        console.log('loginUrl', `/login?${params.toString()}`);
         return `/login?${params.toString()}`;
     });
 

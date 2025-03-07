@@ -9,7 +9,7 @@
     let currentUser = currentUserStore();
     const task = async () => {
         console.log('completeEmailConfirmation', page.url.searchParams.get('token'));
-        await identityApi.completeEmailConfirmation(page.url.searchParams.get('token') ?? '');
+        await identityApi.completeEmailOperation(page.url.searchParams.get('token') ?? '');
         console.log('refreshing user');
         currentUser.refresh(true);
         console.log('done');

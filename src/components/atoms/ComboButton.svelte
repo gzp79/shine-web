@@ -28,10 +28,10 @@
 </script>
 
 <InputGroup {color} {wide} {size} bind:div={reference}>
-    <Button wide endIcon={currentItem.icon} onclick={() => currentItem.onclick?.()} href={currentItem.href} {disabled}>
+    <Button endIcon={currentItem.icon} onclick={() => currentItem.onclick?.()} href={currentItem.href} {disabled}>
         {currentItem.caption}
     </Button>
-    <Button wide={false} bind:button={trigger} endIcon={icons.DropDown} />
+    <Button bind:button={trigger} endIcon={icons.DropDown} />
 </InputGroup>
 <Popper
     behavior="click"
@@ -42,7 +42,7 @@
 >
     <InputGroup {color} vertical {size}>
         {#each items as item, index}
-            <Button wide endIcon={item.icon} onclick={() => (current = index)}>{item.caption}</Button>
+            <Button endIcon={item.icon} onclick={() => (current = index)}>{item.caption}</Button>
         {/each}
     </InputGroup>
 </Popper>

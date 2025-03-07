@@ -2,9 +2,6 @@
     import { page } from '$app/state';
     import Button from '$atoms/Button.svelte';
     import Modal from '$atoms/Modal.svelte';
-    import Typography from '$atoms/Typography.svelte';
-    import { Spinner } from '$atoms/icons/animated';
-    import ErrorCard from '$components/atoms/ErrorCard.svelte';
     import ActiveSessionsCard from '$lib/account/ActiveSessionsCard.svelte';
     import ActiveTokensCard from '$lib/account/ActiveTokensCard.svelte';
     import CurrentUserCard from '$lib/account/CurrentUserCard.svelte';
@@ -14,7 +11,6 @@
     import { identityApi } from '$lib/api/identity-api';
     import AppContent from '$lib/app/AppContent.svelte';
     import { t } from '$lib/i18n/i18n.svelte';
-    import { FetchError } from '$lib/utils';
 
     interface Props {
         data: {
@@ -25,22 +21,6 @@
 
     let currentUser = currentUserStore();
     let showLink = $state(false);
-    let isConfirmPending = $state(false);
-    let showEmailConfirm = $state(false);
-    let isWaitConfirmation = $state<boolean | FetchError>(true);
-
-    let confirmEmailAction = () => {
-        showEmailConfirm = true;
-        isWaitConfirmation = true;
-        isConfirmPending = true;
-        identityApi
-            .startEmailConfirmation()
-            .then(() => (isWaitConfirmation = false))
-            .catch((error) => (isWaitConfirmation = error));
-    };
-    let confirmEmail = confirmEmailAction;
-    let logout = identityApi.getLogoutUrl(false, '/');
-    let logoutAll = identityApi.getLogoutUrl(true, '/');
     let sessions = identityApi.getActiveSessions();
 
     let identities = $state(identityApi.getLinkedIdentities());
@@ -61,10 +41,13 @@
 
 <AppContent class="my-auto flex flex-col items-center overflow-y-auto px-4">
     <CurrentUserCard
-        user={() => Promise.resolve(currentUser.user)}
-        onConfirmEmail={isConfirmPending ? undefined : confirmEmail}
-        onLogout={logout}
-        onLogoutAll={logoutAll}
+        context={{
+            fetchUser: async () => currentUser.user,
+            refreshUser: async () => currentUser.refresh(true),
+            startEmailConfirmation: async () => identityApi.startEmailConfirmation(),
+            startEmailChange: async (newEmail: string) => identityApi.startEmailChange(newEmail),
+            getLogoutUrl: (all: boolean, redirectUrl: string) => identityApi.getLogoutUrl(all, redirectUrl)
+        }}
     />
     <ActiveSessionsCard sessions={() => sessions} />
     <LinkedIdentitiesCard identities={() => identities} onUnlink={unlinkIdentity} onLink={linkIdentity} />
@@ -82,32 +65,5 @@
                 {provider}
             </Button>
         {/each}
-    </Modal>
-
-    <Modal caption={$t('account.confirmTitle')} bind:isOpen={showEmailConfirm}>
-        {#if isWaitConfirmation instanceof FetchError}
-            <ErrorCard error={isWaitConfirmation} />
-            <div class="flex justify-end space-x-2">
-                <Button
-                    onclick={() => {
-                        showEmailConfirm = false;
-                        isConfirmPending = false;
-                    }}
-                >
-                    {$t('account.ok')}
-                </Button>
-            </div>
-        {:else}
-            <Typography variant="text" class="w-full text-justify">{$t('account.confirmText')}</Typography>
-            <div class="flex justify-end space-x-2">
-                <Button
-                    startIcon={isWaitConfirmation ? Spinner : undefined}
-                    disabled={isWaitConfirmation}
-                    onclick={() => (showEmailConfirm = false)}
-                >
-                    {$t('account.ok')}
-                </Button>
-            </div>
-        {/if}
     </Modal>
 </AppContent>

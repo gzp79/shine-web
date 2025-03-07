@@ -290,8 +290,30 @@ class IdentityApi {
         logAPI('startEmailConfirmation completed');
     }
 
-    async completeEmailConfirmation(token: string): Promise<void> {
-        logAPI('completeEmailConfirmation...');
+    async startEmailChange(newEmail: string): Promise<void> {
+        logAPI('startEmailChange...');
+        const url = `${this.serviceUrl}/identity/api/auth/user/email/change`;
+        const response = await fetch(url, {
+            method: 'POST',
+            credentials: 'include',
+            ...fetchCacheOption('no-store'),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: newEmail })
+        });
+
+        if (!response.ok) {
+            const error = await fetchError('Failed to start email confirmation', response);
+            logAPI('startEmailChange failed with error', error);
+            throw error;
+        }
+
+        logAPI('startEmailChange completed');
+    }
+
+    async completeEmailOperation(token: string): Promise<void> {
+        logAPI('completeEmailOperation...');
         const url = `${this.serviceUrl}/identity/api/auth/user/email/complete?token=${token}`;
         const response = await fetch(url, {
             method: 'POST',
@@ -301,11 +323,11 @@ class IdentityApi {
 
         if (!response.ok) {
             const error = await fetchError('Failed to complete email confirmation', response);
-            logAPI('completeEmailConfirmation failed with error', error);
+            logAPI('completeEmailOperation failed with error', error);
             throw error;
         }
 
-        logAPI('completeEmailConfirmation completed');
+        logAPI('completeEmailOperation completed');
     }
 }
 

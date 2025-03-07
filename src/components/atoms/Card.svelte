@@ -26,8 +26,8 @@
     let { icon, caption, shadow, variant, width = 'default', children, actions, ...rest }: Props = $props();
 
     const widthVariants: Record<Width, string> = {
-        default: 'max-w-xl w-[100%]',
-        fit: 'max-w-xl min-w-fit',
+        default: 'max-w-xl w-full',
+        fit: 'max-w-full w-fit',
         full: 'w-full'
     };
 
@@ -36,7 +36,7 @@
             'm-1 md:m-2 p-1 md:p-2',
             'min-h-min',
             'grid',
-            icon ? 'grid-cols-[fit-content(10%)_auto]' : 'grid-cols-1',
+            icon ? 'grid-cols-[fit-content(10%)_minmax(0,1fr)]' : 'grid-cols-1',
             widthVariants[width]
         )
     );

@@ -1,5 +1,5 @@
 import { browser } from '$app/environment';
-import type { Snippet } from 'svelte';
+import { type Snippet } from 'svelte';
 
 export type Nullable<T> = T | null;
 export function maybeNull<T>(): Nullable<T> {

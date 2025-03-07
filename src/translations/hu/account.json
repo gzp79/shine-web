@@ -33,6 +33,8 @@
     "loading": "Betöltés ...",
     "confirm": "Megerősítés",
     "confirmTitle": "Email megerősítése",
-    "confirmText": "A megerősítő emailt elküldtük a megadott címre. Kérjük, ellenőrizd a beérkezett leveleket.",
-    "ok": "Tovább"
+    "ok": "Tovább",
+    "confirmPendingText": "Email megerősítés folyamat ...",
+    "confirmCompleteText": "A megerősítő emailt elküldtük a megadott címre. Kérjük, ellenőrizd a beérkezett leveleket.",
+    "updateEmail": "Modosítás"
 }

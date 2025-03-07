@@ -64,14 +64,14 @@
     let outerCls = $derived(
         twMerge(
             'm-0 p-0',
-            'min-h-min w-fit overflow-hidden',
+            'min-h-min max-w-[80%] w-fit overflow-hidden',
             'grid',
             closeButton || caption ? 'grid-rows-[fit-content(10%)_auto]' : 'grid-rows-1',
             'backdrop-blur-sm'
         )
     );
 
-    let innerCls = $derived(twMerge('min-h-min w-full p-4 flex flex-col', innerClass));
+    let innerCls = $derived(twMerge('min-h-min h-fit w-full p-4 flex flex-col', innerClass));
 </script>
 
 {#if isOpen}
