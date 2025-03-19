@@ -20,8 +20,6 @@
         startEmailChange: (newEmail: string) => Promise<void>;
         getLogoutUrl: (all: boolean, redirectUrl: string) => string;
     }
-
-    const DISABLE_EMAIL_OPS = true;
 </script>
 
 <script lang="ts">
@@ -119,27 +117,26 @@
                     {/if}
                 </div>
                 <!-- {#if emailStatus !== 'complete'} -->
-                {#if !DISABLE_EMAIL_OPS}
-                    <div class="flex justify-start ms-8 sm:ms-0">
-                        {#if user.email && !user.isEmailConfirmed}
-                            <ComboButton
-                                size="xs"
-                                disabled={currentUserStore.isDirty}
-                                items={[
-                                    {
-                                        caption: $t('account.confirm'),
-                                        onclick: () => startEmailConfirmation()
-                                    },
-                                    { caption: $t('account.updateEmail'), onclick: () => startEmailChange() }
-                                ]}
-                            />
-                        {:else}
-                            <Button size="xs" disabled={currentUserStore.isDirty} onclick={() => startEmailChange()}>
-                                {$t('account.updateEmail')}
-                            </Button>
-                        {/if}
-                    </div>
-                {/if}
+                <div class="flex justify-start ms-8 sm:ms-0">
+                    {#if user.email && !user.isEmailConfirmed}
+                        <ComboButton
+                            size="xs"
+                            disabled={currentUserStore.isDirty}
+                            items={[
+                                {
+                                    caption: $t('account.confirm'),
+                                    onclick: () => startEmailConfirmation()
+                                },
+                                { caption: $t('account.updateEmail'), onclick: () => startEmailChange() }
+                            ]}
+                        />
+                    {:else}
+                        <Button size="xs" disabled={currentUserStore.isDirty} onclick={() => startEmailChange()}>
+                            {$t('account.updateEmail')}
+                        </Button>
+                    {/if}
+                </div>
+                <!-- {/if} -->
             </div>
         {/snippet}
 
