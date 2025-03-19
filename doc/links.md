@@ -21,6 +21,7 @@
     - <https://github.com/edent/SuperTinyIcons>
     - <https://www.freepik.com/free-vector/hand-drawn-skull-silhouette-illustration_31256137.htm#fromView=image_search_similar&page=1&position=8&uuid=cc4e0551-f23c-4ccd-ac64-bf0935d0d0f5>
     - <https://roundicons.com/hand-drawn-doodle-icon-set/>
+    - <https://www.svgfind.com/vectors/wolf-doodle/>
 - dev tools
     - [Svg path editor](https://yqnn.github.io/svg-path-editor/)
     - [Lots of css tools](https://dev.to/lissy93/super-useful-css-resources-1ba)

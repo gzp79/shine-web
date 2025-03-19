@@ -1,8 +1,8 @@
 <script lang="ts">
+    import { logDesigner } from '$lib/loggers';
     import Box from '$atoms/Box.svelte';
     import ComboButton from '$atoms/ComboButton.svelte';
     import { range } from '$atoms/types';
-    import { logDesigner } from '$lib/loggers';
     import { Story } from '../../_components';
 
     let current = $state(3);
@@ -30,15 +30,15 @@
 </script>
 
 <Story variant="center">
-    <Box border compact class="p-1">
+    <Box border compact class="p-4">
         <ComboButton bind:current {items} />
     </Box>
 
-    <Box border compact class="w-full p-1">
+    <Box border compact class="w-full p-4">
         <ComboButton wide bind:current {items} />
     </Box>
 
-    <Box border compact class="p-1">
+    <Box border compact class="p-4">
         <ComboButton current={3} items={range(0, 20).map((x) => ({ caption: `Item ${x}` }))} />
     </Box>
 </Story>

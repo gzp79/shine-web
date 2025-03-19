@@ -1,7 +1,7 @@
 import { config } from '$config';
+import { z } from 'zod';
 import { logAPI } from '$lib/loggers';
 import { type Fetch, SchemaError, fetchCacheOption, fetchError } from '$lib/utils';
-import { z } from 'zod';
 import { DateStringSchema, OptionalSchema } from './schema-helpers';
 
 export const GUEST_PROVIDER_ID = 'guest';
@@ -134,7 +134,7 @@ class IdentityApi {
     getGuestLoginUrl(captcha: string, redirect: string): string {
         const redirectUrl = encodeURIComponent(`${this.webUrl}${redirect}`);
         const errorUrl = encodeURIComponent(`${this.webUrl}/error`);
-        return `${this.serviceUrl}/identity/auth/token/login?redirectUrl=${redirectUrl}&errorUrl=${errorUrl}&rememberMe=true&captcha=${captcha}`;
+        return `${this.serviceUrl}/identity/auth/guest/login?redirectUrl=${redirectUrl}&errorUrl=${errorUrl}&rememberMe=true&captcha=${captcha}`;
     }
 
     async getExternalLoginProviders(fetch: Fetch): Promise<string[]> {
@@ -270,6 +270,64 @@ class IdentityApi {
         }
 
         logAPI('revokeToken completed');
+    }
+
+    async startEmailConfirmation(): Promise<void> {
+        logAPI('startEmailConfirmation...');
+        const url = `${this.serviceUrl}/identity/api/auth/user/email/confirm`;
+        const response = await fetch(url, {
+            method: 'POST',
+            credentials: 'include',
+            ...fetchCacheOption('no-store')
+        });
+
+        if (!response.ok) {
+            const error = await fetchError('Failed to start email confirmation', response);
+            logAPI('startEmailConfirmation failed with error', error);
+            throw error;
+        }
+
+        logAPI('startEmailConfirmation completed');
+    }
+
+    async startEmailChange(newEmail: string): Promise<void> {
+        logAPI('startEmailChange...');
+        const url = `${this.serviceUrl}/identity/api/auth/user/email/change`;
+        const response = await fetch(url, {
+            method: 'POST',
+            credentials: 'include',
+            ...fetchCacheOption('no-store'),
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email: newEmail })
+        });
+
+        if (!response.ok) {
+            const error = await fetchError('Failed to start email confirmation', response);
+            logAPI('startEmailChange failed with error', error);
+            throw error;
+        }
+
+        logAPI('startEmailChange completed');
+    }
+
+    async completeEmailOperation(token: string): Promise<void> {
+        logAPI('completeEmailOperation...');
+        const url = `${this.serviceUrl}/identity/api/auth/user/email/complete?token=${token}`;
+        const response = await fetch(url, {
+            method: 'POST',
+            credentials: 'include',
+            ...fetchCacheOption('no-store')
+        });
+
+        if (!response.ok) {
+            const error = await fetchError('Failed to complete email confirmation', response);
+            logAPI('completeEmailOperation failed with error', error);
+            throw error;
+        }
+
+        logAPI('completeEmailOperation completed');
     }
 }
 

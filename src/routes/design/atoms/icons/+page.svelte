@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { type Component } from 'svelte';
     import Box from '$atoms/Box.svelte';
     import Card from '$atoms/Card.svelte';
     import Typography from '$atoms/Typography.svelte';
@@ -8,7 +9,6 @@
     import * as flags from '$atoms/icons/flags';
     import * as social from '$atoms/icons/social';
     import { type ActionColor, type Size, actionColorList, sizeList } from '$atoms/types';
-    import { type Component } from 'svelte';
     import { CheckBox, Select, Story, settingsStore } from '../../_components';
 
     let size = $state<Size>('md');
@@ -79,7 +79,6 @@
             {@render icon(social.Gitlab, 'Gitlab')}
             {@render icon(social.Google, 'Google')}
             {@render icon(social.Twitter, 'Twitter')}
-            {@render icon(social.Link, 'Link')}
         </div>
     </Card>
 

@@ -1,5 +1,5 @@
 <script>
-    import ErrorCard from '$atoms/ErrorCard.svelte';
+    import ErrorCard from '$components/ErrorCard.svelte';
 </script>
 
 <div class="flex h-full items-center justify-center">

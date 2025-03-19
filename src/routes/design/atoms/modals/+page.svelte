@@ -1,8 +1,10 @@
 <script lang="ts">
+    import { type Component } from 'svelte';
+    import Box from '$atoms/Box.svelte';
     import Button from '$atoms/Button.svelte';
-    import Box from '$components/atoms/Box.svelte';
-    import Modal from '$components/atoms/Modal.svelte';
-    import { providerIcon } from '$lib/account/utils.svelte';
+    import Modal from '$atoms/Modal.svelte';
+    import Stack from '$atoms/Stack.svelte';
+    import * as icons from '$atoms/icons/social';
     import { Story } from '../../_components';
 
     let showModal1a = $state(false);
@@ -17,13 +19,16 @@
 </script>
 
 <Story variant="center">
-    <Box border class="flex h-max flex-col items-center">
-        <Button onclick={() => (showModal1a = true)}>Caption</Button>
-        <Button onclick={() => (showModal1b = true)}>X</Button>
-        <Button onclick={() => (showModal1c = true)}>Caption and X</Button>
-        <Button onclick={() => (showModal1d = true)}>No header</Button>
-        <Button onclick={() => (showModal1e = true)}>Big content</Button>
-        <Button onclick={() => (showModal1f = true)}>ButtonList</Button>
+    <Box border>
+        <Stack align="center">
+            <Button onclick={() => (showModal1a = true)}>Caption</Button>
+            <Button onclick={() => (showModal1b = true)}>X</Button>
+            <Button onclick={() => (showModal1c = true)}>Caption and X</Button>
+            <Button onclick={() => (showModal1d = true)}>No header</Button>
+            <Button onclick={() => (showModal1e = true)}>Big content</Button>
+            <Button onclick={() => (showModal1f = true)}>ButtonList</Button>
+            <Button onclick={() => (showModal2a = true)}>Manual</Button>
+        </Stack>
 
         <Modal closeOnClickOutside closeOnEscape caption="Model" bind:isOpen={showModal1a}>
             This is the content<br />
@@ -54,16 +59,12 @@
             bind:isOpen={showModal1f}
             class="max-w-min"
         >
-            {#each ['google', 'discord', 'a long provide name'] as provider}
-                <Button variant="outline" wide startIcon={providerIcon(provider)} class="mx-0">
+            {#each [['google', icons.Google], ['discord', icons.Discord], ['a long provide name', icons.Gitlab]] as [provider, icon]}
+                <Button variant="outline" wide startIcon={icon as Component}>
                     {provider}
                 </Button>
             {/each}
         </Modal>
-    </Box>
-
-    <Box border class="flex h-max flex-col items-center">
-        <Button onclick={() => (showModal2a = true)}>Manual</Button>
 
         <Modal bind:isOpen={showModal2a} caption="Model" class="flex-col items-center">
             <p>Some content</p>

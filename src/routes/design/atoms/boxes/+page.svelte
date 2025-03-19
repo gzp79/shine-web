@@ -105,6 +105,16 @@
         </Box>
     </Box>
 
+    <Box border shadow legend="Legend">
+        <Box border legend="Legend">
+            <Box border legend="Legend">
+                <Box border legend="Legend">Inner most</Box>
+            </Box>
+            <Box border legend={{ text: 'Legend', color, size: 'xl' }}>Custom legend</Box>
+            <Box border variant={{ color }} legend="Legend">Variant with legend</Box>
+        </Box>
+    </Box>
+
     <Box border shadow>
         Some custom class with dense layout
         <Box border class="flex flex-row flex-wrap justify-center">

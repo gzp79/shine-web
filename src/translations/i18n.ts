@@ -1,6 +1,6 @@
 /* cspell: disable */
-import { dev } from '$app/environment';
 import I18N, { type Config, type Modifier, type Parser } from 'sveltekit-i18n';
+import { dev } from '$app/environment';
 import lang from '../translations/lang.json';
 
 /* cspell: enable */
@@ -19,9 +19,7 @@ function createLoader(path: string, key: string, routes?: RegExp[]) {
     });
 }
 
-interface Params {
-    value: number | string | Date;
-}
+type Params = Record<string, number | string | Date>;
 
 const config: Config<Partial<Params>> = {
     log: {
@@ -29,8 +27,8 @@ const config: Config<Partial<Params>> = {
     },
     translations: langList.reduce((r, v) => ({ ...r, ...{ [v]: { lang } } }), {}),
     loaders: [
-        ...createLoader('common_common', 'common', [/.*/]),
-        ...createLoader('common_account', 'account', [/.*/]),
+        ...createLoader('common', 'common', [/.*/]),
+        ...createLoader('account', 'account', [/account|design\/.*/]),
         ...createLoader('login', 'login'),
         ...createLoader('tools', 'tools')
     ]

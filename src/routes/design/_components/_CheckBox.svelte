@@ -1,6 +1,6 @@
 <script lang="ts">
+    import CompileTailwindClasses from '$atoms/CompileTailwindClasses.svelte';
     import Typography from '$atoms/Typography.svelte';
-    import CompileTailwindClasses from '$components/atoms/CompileTailwindClasses.svelte';
     import { STYLE } from './_currentSettings.svelte';
 
     interface Props {

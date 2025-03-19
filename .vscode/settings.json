@@ -4,5 +4,10 @@
     },
 
     "cSpell.words": ["crossenv", "daisyui", "endregion", "hoverable", "scytta", "tailwindcss"],
-    "cSpell.ignorePaths": ["/static/_headers"]
+    "cSpell.ignorePaths": ["/static/_headers"],
+    "i18n-ally.localesPaths": ["./src/translations"],
+    "i18n-ally.namespace": true,
+    "i18n-ally.pathMatcher": "{locale}/{namespace}.json",
+    "i18n-ally.sourceLanguage": "en",
+    "i18n-ally.keystyle": "nested"
 }
