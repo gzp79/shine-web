@@ -18,12 +18,12 @@
         }
     ],
     "importOrder": [
-        "^@(.*)$",
         "<THIRD_PARTY_MODULES>",
-        "^$app/(.*)$",
-        "^$lib/(.*)$",
-        "^$atoms/(.*)$",
-        "^$components/(.*)$",
+        "^\\$app/(.*)$",
+        "^\\$lib/(.*)$",
+        "^\\$atoms/(.*)$",
+        "^\\$components/(.*)$",
+        "^\\$features/(.*)$",
         "^[./]"
     ],
     "importOrderSeparation": false,

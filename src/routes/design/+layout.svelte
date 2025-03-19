@@ -1,9 +1,9 @@
 <script lang="ts">
+    import { config } from '$config';
+    import QuickConfig from '$lib/app/QuickConfig.svelte';
     import Box from '$atoms/Box.svelte';
     import Typography from '$atoms/Typography.svelte';
     import { Hamburger } from '$atoms/icons/common';
-    import { config } from '$config';
-    import QuickConfig from '$lib/app/QuickConfig.svelte';
     import { Section, settingsStore } from './_components';
     import { STYLE } from './_components/_currentSettings.svelte';
 
@@ -25,16 +25,14 @@
                 { title: 'Colors', href: 'atoms/colors' },
                 { title: 'Typography', href: 'atoms/typography' },
                 { title: 'Icons', href: 'atoms/icons' },
+                { title: 'ResourceFetch', href: 'atoms/resource-fetch' },
                 { title: 'Boxes', href: 'atoms/boxes' },
+                { title: 'Stacks', href: 'atoms/stacks' },
                 { title: 'Grids', href: 'atoms/grids' },
                 { title: 'Popper', href: 'atoms/popper' },
                 { title: 'Key-Value Table', href: 'atoms/key-value-tables' },
                 { title: 'Cards', href: 'atoms/cards' },
-                { title: 'Modal', href: 'atoms/modals' },
-                { title: 'Alerts', href: 'atoms/alerts' },
-                { title: 'Helper Cards', href: 'atoms/helper-cards' },
-                { title: 'Simple Menu', href: 'atoms/simple-menu' },
-                { title: 'Extra Menu', href: 'atoms/extra-menu' }
+                { title: 'Modal', href: 'atoms/modals' }
             ]
         },
         {
@@ -47,6 +45,14 @@
                 { title: 'ComboButtons', href: 'atoms/combo-buttons' }
             ]
         },
+        {
+            title: 'Components',
+            items: [
+                { title: 'Alerts', href: 'components/alerts' },
+                { title: 'Loading Cards', href: 'components/loading-cards' },
+                { title: 'Error Cards', href: 'components/error-cards' }
+            ]
+        },
         config.environment === 'mock' && {
             title: 'Utils',
             items: [{ title: 'Mock test', href: 'utils/mock-test' }]
@@ -54,10 +60,10 @@
         {
             title: 'Account',
             items: [
-                { title: 'Current User Card', href: 'account/current-user' },
-                { title: 'Linked Identities', href: 'account/linked-identities' },
-                { title: 'Active Sessions', href: 'account/active-sessions' },
-                { title: 'Active Tokens', href: 'account/active-tokens' }
+                { title: 'Current User Card', href: 'features/account/current-user' },
+                { title: 'Linked Identities', href: 'features/account/linked-identities' },
+                { title: 'Active Sessions', href: 'features/account/active-sessions' },
+                { title: 'Active Tokens', href: 'features/account/active-tokens' }
             ]
         }
     ].filter(Boolean) as MenuItem[];

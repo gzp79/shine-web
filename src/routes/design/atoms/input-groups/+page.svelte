@@ -2,9 +2,9 @@
     import Box from '$atoms/Box.svelte';
     import Button from '$atoms/Button.svelte';
     import InputGroup from '$atoms/InputGroup.svelte';
+    import TextArea from '$atoms/TextArea.svelte';
     import * as icons from '$atoms/icons/common';
     import { type InputVariant, actionColorList, sizeList } from '$atoms/types';
-    import TextArea from '$components/atoms/TextArea.svelte';
     import { CheckBox, Select, Story, settingsStore } from '../../_components';
 
     let color = $state('primary');
@@ -27,7 +27,7 @@
 {/snippet}
 
 <Story variant="center">
-    <Box border compact class="p-1 {wide && 'w-full'} {pattern}">
+    <Box border compact class="p-4 {wide && 'w-full'} {pattern}">
         <InputGroup {variant} {wide} {size} {color}>
             <Button>Profile</Button>
             <Button>Settings</Button>
@@ -35,7 +35,7 @@
         </InputGroup>
     </Box>
 
-    <Box border compact class="p-1 {wide && 'w-full'} {pattern}">
+    <Box border compact class="p-4 {wide && 'w-full'} {pattern}">
         <InputGroup vertical {variant} {wide} {size} {color}>
             <Button>Profile</Button>
             <Button>Settings</Button>
@@ -43,14 +43,14 @@
         </InputGroup>
     </Box>
 
-    <Box border compact class="p-1 {wide && 'w-full'} {pattern}">
+    <Box border compact class="p-4 {wide && 'w-full'} {pattern}">
         <InputGroup {variant} {wide} {size} {color}>
             <Button>Merge</Button>
             <Button wide={false} startIcon={icons.DropDown} />
         </InputGroup>
     </Box>
 
-    <Box border compact class="p-1 {wide && 'w-full'} {pattern}">
+    <Box border compact class="p-4 {wide && 'w-full'} {pattern}">
         <InputGroup {variant} {wide} {size} {color}>
             <Button>Profile</Button>
             <TextArea placeholder="Enter text..." rows="single" />
@@ -59,18 +59,25 @@
         </InputGroup>
     </Box>
 
-    <Box border>
-        <Box border compact class="p-1 {wide && 'w-full'} {pattern}">
-            <InputGroup {variant} {wide} {size} {color}>
-                <Button>Profile</Button>
-                <TextArea placeholder="Enter text..." rows="single" />
-                <TextArea placeholder={'Enter\n multiline\n text...'} rows={3} />
-                <Button>Config</Button>
-            </InputGroup>
-        </Box>
+    <Box border compact level={1} class="p-4 {wide && 'w-full'} {pattern}">
+        <InputGroup {variant} {wide} {size} {color}>
+            <Button>Profile</Button>
+            <TextArea placeholder="Enter text..." rows="single" />
+            <TextArea placeholder={'Enter\n multiline\n text...'} rows={3} />
+            <Button>Config</Button>
+        </InputGroup>
     </Box>
 
-    <Box border compact class="p-1 {wide && 'w-full'} {pattern}">
+    <Box border compact level={2} class="p-4 {wide && 'w-full'} {pattern}">
+        <InputGroup {variant} {wide} {size} {color}>
+            <Button>Profile</Button>
+            <TextArea placeholder="Enter text..." rows="single" />
+            <TextArea placeholder={'Enter\n multiline\n text...'} rows={3} />
+            <Button>Config</Button>
+        </InputGroup>
+    </Box>
+
+    <Box border compact class="p-4 {wide && 'w-full'} {pattern}">
         <InputGroup vertical {variant} {wide} {size} {color}>
             <Button>Profile</Button>
             <TextArea placeholder="Enter text..." rows="single" />

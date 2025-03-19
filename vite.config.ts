@@ -9,6 +9,10 @@ import { config } from './src/generated/config';
 // Determine the environment
 console.log(`Environment: (${config.environment})`);
 
+if (config.environment === 'dev') {
+    process.env.DEBUG = 'app:user, app:resources';
+}
+
 const additionalAssets = [];
 additionalAssets.push({
     src: 'static-generated/assets/*',

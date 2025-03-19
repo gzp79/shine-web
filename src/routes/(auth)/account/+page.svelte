@@ -1,16 +1,14 @@
 <script lang="ts">
-    import { page } from '$app/state';
-    import Button from '$atoms/Button.svelte';
-    import Modal from '$atoms/Modal.svelte';
-    import ActiveSessionsCard from '$lib/account/ActiveSessionsCard.svelte';
-    import ActiveTokensCard from '$lib/account/ActiveTokensCard.svelte';
-    import CurrentUserCard from '$lib/account/CurrentUserCard.svelte';
-    import LinkedIdentitiesCard from '$lib/account/LinkedIdentitiesCard.svelte';
-    import { currentUserStore } from '$lib/account/currentUser.svelte';
-    import { providerIcon } from '$lib/account/utils.svelte';
     import { identityApi } from '$lib/api/identity-api';
     import AppContent from '$lib/app/AppContent.svelte';
-    import { t } from '$lib/i18n/i18n.svelte';
+    import Stack from '$atoms/Stack.svelte';
+    import ActiveSessionsCard from '$features/account/ActiveSessionCard.svelte';
+    import ActiveTokensCard from '$features/account/ActiveTokenCard.svelte';
+    import CurrentUserCard from '$features/account/CurrentUserCard.svelte';
+    import LinkedIdentitiesCard from '$features/account/LinkedIdentityCard.svelte';
+    import { setActiveSessionStore } from '$features/account/activeSessionStore.svelte';
+    import { setActiveTokenStore } from '$features/account/activeTokenStore.svelte';
+    import { setLinkedIdentityStore } from '$features/account/linkedIdentityStore.svelte';
 
     interface Props {
         data: {
@@ -19,51 +17,30 @@
     }
     let { data }: Props = $props();
 
-    let currentUser = currentUserStore();
-    let showLink = $state(false);
-    let sessions = identityApi.getActiveSessions();
+    let activeTokeStore = setActiveTokenStore({
+        load: () => identityApi.getActiveTokens(),
+        revoke: (tokenHash: string) => identityApi.revokeToken(tokenHash)
+    });
+    activeTokeStore.refresh();
 
-    let identities = $state(identityApi.getLinkedIdentities());
-    let unlinkIdentity = async (provider: string, providerUserId: string) => {
-        await identityApi.unlinkIdentity(provider, providerUserId);
-        identities = identityApi.getLinkedIdentities();
-    };
-    let linkIdentity = () => {
-        showLink = true;
-    };
+    let activeSessionStore = setActiveSessionStore({
+        load: () => identityApi.getActiveSessions()
+    });
+    activeSessionStore.refresh();
 
-    let tokens = $state(identityApi.getActiveTokens());
-    let revokeToken = async (tokenHash: string) => {
-        await identityApi.revokeToken(tokenHash);
-        tokens = identityApi.getActiveTokens();
-    };
+    let linkedIdentityStore = setLinkedIdentityStore({
+        load: () => identityApi.getLinkedIdentities(),
+        unlink: (provider: string, providerUserId: string) => identityApi.unlinkIdentity(provider, providerUserId),
+        getLinkUrl: (provider: string, redirect: string) => identityApi.getExternalLinkUrl(provider, redirect)
+    });
+    linkedIdentityStore.refresh();
 </script>
 
-<AppContent class="my-auto flex flex-col items-center overflow-y-auto px-4">
-    <CurrentUserCard
-        context={{
-            fetchUser: async () => currentUser.user,
-            refreshUser: async () => currentUser.refresh(true),
-            startEmailConfirmation: async () => identityApi.startEmailConfirmation(),
-            startEmailChange: async (newEmail: string) => identityApi.startEmailChange(newEmail),
-            getLogoutUrl: (all: boolean, redirectUrl: string) => identityApi.getLogoutUrl(all, redirectUrl)
-        }}
-    />
-    <ActiveSessionsCard sessions={() => sessions} />
-    <LinkedIdentitiesCard identities={() => identities} onUnlink={unlinkIdentity} onLink={linkIdentity} />
-    <ActiveTokensCard tokens={() => tokens} onRevoke={revokeToken} />
-
-    <Modal closeButton closeOnClickOutside caption={$t('account.linkTitle')} bind:isOpen={showLink} class="max-w-min">
-        {#each data.providers as provider}
-            <Button
-                variant="outline"
-                wide
-                startIcon={providerIcon(provider)}
-                class="mx-0"
-                href={identityApi.getExternalLinkUrl(provider, page.url.pathname)}
-            >
-                {provider}
-            </Button>
-        {/each}
-    </Modal>
+<AppContent class="p-4">
+    <Stack spacing={4} align="center">
+        <CurrentUserCard />
+        <ActiveSessionsCard />
+        <LinkedIdentitiesCard providers={data.providers} />
+        <ActiveTokensCard />
+    </Stack>
 </AppContent>

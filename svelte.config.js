@@ -10,12 +10,13 @@ const config = {
         adapter: adapter(),
         alias: {
             $generated: './src/generated',
-            $components: './src/components',
-            $atoms: './src/components/atoms',
+            $assets: './src/generated/assets',
             $lib: './src/lib',
+            $atoms: './src/atoms',
+            $components: './src/components',
+            $features: './src/features',
             $mocks: './src/mocks',
-            $config: './src/config',
-            $assets: './src/generated/assets'
+            $config: './src/config'
         }
     }
 };

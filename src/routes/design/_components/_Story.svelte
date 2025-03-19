@@ -14,7 +14,7 @@
         center: 'flex-col items-center'
     };
 
-    let storyClass = $derived(twMerge('flex w-full gap-2 p-4', variantClass[variant]));
+    let storyClass = $derived(twMerge('flex w-full gap-4 p-4', variantClass[variant]));
 </script>
 
 <div class={storyClass}>

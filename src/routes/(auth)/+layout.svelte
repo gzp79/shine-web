@@ -1,22 +1,31 @@
 <script lang="ts">
+    import { type Snippet, onMount } from 'svelte';
     import { afterNavigate, goto } from '$app/navigation';
     import { page } from '$app/state';
-    import Button from '$atoms/Button.svelte';
-    import ErrorCard from '$atoms/ErrorCard.svelte';
-    import LoadingCard from '$atoms/LoadingCard.svelte';
-    import { currentUserStore } from '$lib/account/currentUser.svelte';
+    import { identityApi } from '$lib/api/identity-api';
     import App from '$lib/app/App.svelte';
     import AppContent from '$lib/app/AppContent.svelte';
     import { t } from '$lib/i18n/i18n.svelte';
     import { logUser } from '$lib/loggers';
-    import { type Snippet, onMount } from 'svelte';
+    import Button from '$atoms/Button.svelte';
+    import LoadingCard from '$atoms/LoadingCard.svelte';
+    import ErrorCard from '$components/ErrorCard.svelte';
+    import { setCurrentUserStore } from '$features/account/currentUser.svelte';
 
     interface Props {
         children: Snippet;
     }
     let { children }: Props = $props();
 
-    let currentUser = currentUserStore();
+    let currentUserStore = setCurrentUserStore({
+        load: () => identityApi.getCurrentUser(fetch),
+        startEmailConfirmation: () => identityApi.startEmailConfirmation(),
+        startEmailChange: (email: string) => identityApi.startEmailChange(email),
+        getLogoutUrl: (all: boolean, redirectUrl: string) => identityApi.getLogoutUrl(all, redirectUrl)
+    });
+    $effect(() => {
+        currentUserStore.refresh();
+    });
 
     // For links we ask for prompt always, but once the prompt is completed, a silent parameter is added to the link URL
     // not to start en infinite loop of prompts
@@ -47,10 +56,7 @@
     });
 
     $effect(() => {
-        if (currentUser.isNull) {
-            logUser('Refreshing current user...');
-            currentUser.refresh();
-        } else if (currentUser.isLoaded && !currentUser.isAuthenticated) {
+        if (currentUserStore.isContent && !currentUserStore.content.isAuthenticated) {
             logUser('Login required');
             goto(loginUrl);
         } else if (isPromptForLink) {
@@ -61,8 +67,8 @@
     onMount(() => {
         const handleDocumentVisibility = async () => {
             if (document.visibilityState === 'visible') {
-                logUser('Checking user after document focus...');
-                currentUser.refresh();
+                logUser('Refresh user after document focus...');
+                currentUserStore.refresh();
             }
         };
 
@@ -74,28 +80,29 @@
     });
 
     afterNavigate(() => {
-        currentUserStore().refresh();
+        logUser('Refresh user after navigation...');
+        currentUserStore.refresh();
     });
 </script>
 
 <App>
-    {#if currentUser.error}
+    {#if currentUserStore.isError}
         <AppContent>
             <div class="flex h-full items-center justify-center">
-                <ErrorCard caption={$t('account.failedToLoadUserInfo')} error={currentUser.error}>
+                <ErrorCard caption={$t('account.failedToLoadUserInfo')} error={currentUserStore.error}>
                     {#snippet actions()}
-                        <Button onclick={() => currentUser.refresh()}>{$t('common.retry')}</Button>
+                        <Button onclick={() => currentUserStore.refresh()}>{$t('common.retry')}</Button>
                     {/snippet}
                 </ErrorCard>
             </div>
         </AppContent>
-    {:else if !currentUser.isLoaded || isPromptForLink}
+    {:else if currentUserStore.isEmpty || isPromptForLink}
         <AppContent>
             <div class="flex h-full items-center justify-center">
                 <LoadingCard label={$t('common.loading')} />
             </div>
         </AppContent>
-    {:else if currentUser.isAuthenticated}
+    {:else if currentUserStore.content.isAuthenticated}
         {@render children()}
     {/if}
 </App>

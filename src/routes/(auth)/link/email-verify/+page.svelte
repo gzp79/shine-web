@@ -1,18 +1,15 @@
 <script lang="ts">
     import { page } from '$app/state';
-    import Button from '$components/atoms/Button.svelte';
-    import ErrorCard from '$components/atoms/ErrorCard.svelte';
-    import { currentUserStore } from '$lib/account/currentUser.svelte';
     import { identityApi } from '$lib/api/identity-api';
     import AppContent from '$lib/app/AppContent.svelte';
+    import Button from '$atoms/Button.svelte';
+    import ErrorCard from '$components/ErrorCard.svelte';
+    import { getCurrentUserStore } from '$features/account/currentUser.svelte';
 
-    let currentUser = currentUserStore();
+    let currentUserStore = getCurrentUserStore();
     const task = async () => {
-        console.log('completeEmailConfirmation', page.url.searchParams.get('token'));
         await identityApi.completeEmailOperation(page.url.searchParams.get('token') ?? '');
-        console.log('refreshing user');
-        currentUser.refresh(true);
-        console.log('done');
+        currentUserStore.refresh({ force: true });
     };
 </script>
 

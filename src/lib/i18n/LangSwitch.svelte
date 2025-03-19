@@ -1,8 +1,8 @@
 <script lang="ts">
+    import Button from '$atoms/Button.svelte';
+    import InputGroup from '$atoms/InputGroup.svelte';
+    import Popper from '$atoms/Popper.svelte';
     import * as flags from '$atoms/icons/flags';
-    import Button from '$components/atoms/Button.svelte';
-    import InputGroup from '$components/atoms/InputGroup.svelte';
-    import Popper from '$components/atoms/Popper.svelte';
     import { languageStore, t } from './i18n.svelte';
 
     const items = [

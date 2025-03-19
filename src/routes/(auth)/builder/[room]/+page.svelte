@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { page } from '$app/state';
-    import Button from '$components/atoms/Button.svelte';
-    import InputGroup from '$components/atoms/InputGroup.svelte';
-    import TextArea from '$components/atoms/TextArea.svelte';
-    import Typography from '$components/atoms/Typography.svelte';
-    import { builderApi } from '$lib/api/builder-api';
     import { onMount } from 'svelte';
+    import { page } from '$app/state';
+    import { builderApi } from '$lib/api/builder-api';
+    import Button from '$atoms/Button.svelte';
+    import InputGroup from '$atoms/InputGroup.svelte';
+    import TextArea from '$atoms/TextArea.svelte';
+    import Typography from '$atoms/Typography.svelte';
 
     type ChatMessage = {
         from: string;

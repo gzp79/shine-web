@@ -1,6 +1,6 @@
 /* cspell: disable */
-import { dev } from '$app/environment';
 import I18N, { type Config, type Modifier, type Parser } from 'sveltekit-i18n';
+import { dev } from '$app/environment';
 import lang from '../translations/lang.json';
 
 /* cspell: enable */
