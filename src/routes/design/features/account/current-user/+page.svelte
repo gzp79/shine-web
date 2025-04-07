@@ -36,12 +36,17 @@
             await async.delay(1000);
             return {
                 isAuthenticated: true,
-                isLinked: true,
-                name: 'Changing user id',
                 userId: randomUserId,
+                name: 'Changing user id',
                 isEmailConfirmed: false,
+                isLinked: true,
                 roles: [],
-                sessionLength: 1234
+                sessionLength: 1234,
+                remainingSessionTime: 4321,
+                details: {
+                    kind: 'user',
+                    createdAt: new Date()
+                }
             };
         };
     });
@@ -68,12 +73,17 @@
                 ...mockDataService,
                 load: async () => ({
                     isAuthenticated: true,
+                    userId: '2f8e4b8e-4b8e-4b8e-8b1e-2f8e4b8e4b8e',
+                    name: 'John Doe',
                     isLinked: false,
-                    name: 'John Doe',
-                    userId: '2f8e4b8e-4b8e-4b8e-8b1e-2f8e4b8e4b8e',
                     isEmailConfirmed: false,
                     roles: [],
-                    sessionLength: 1234
+                    sessionLength: 1234,
+                    remainingSessionTime: 4321,
+                    details: {
+                        kind: 'user',
+                        createdAt: new Date()
+                    }
                 })
             })}
     >
@@ -86,13 +96,18 @@
                 ...mockDataService,
                 load: async () => ({
                     isAuthenticated: true,
-                    isLinked: true,
                     name: 'John Doe',
                     userId: '2f8e4b8e-4b8e-4b8e-8b1e-2f8e4b8e4b8e',
-                    email: 'johndoe@example.com',
+                    isLinked: true,
                     isEmailConfirmed: false,
                     roles: [],
-                    sessionLength: 1234
+                    sessionLength: 1234,
+                    remainingSessionTime: 4321,
+                    details: {
+                        kind: 'user',
+                        createdAt: new Date(),
+                        email: 'johndoe@example.com'
+                    }
                 })
             })}
     >
@@ -105,13 +120,18 @@
                 ...mockDataService,
                 load: async () => ({
                     isAuthenticated: true,
-                    isLinked: true,
                     name: 'John Doe',
                     userId: 'd3b07384-d9a0-4c9b-8b1e-2f8e4b8e4b8e',
-                    email: undefined,
+                    isLinked: true,
                     isEmailConfirmed: false,
                     roles: ['admin', 'user', 'god'],
-                    sessionLength: 1234
+                    sessionLength: 1234,
+                    remainingSessionTime: 4321,
+                    details: {
+                        kind: 'user',
+                        createdAt: new Date(),
+                        email: undefined
+                    }
                 })
             })}
     >
@@ -124,13 +144,18 @@
                 ...mockDataService,
                 load: async () => ({
                     isAuthenticated: true,
-                    isLinked: true,
                     name: 'John Doe',
                     userId: '2f8e4b8e-4b8e-4b8e-8b1e-2f8e4b8e4b8e',
-                    email: 'johndoe@example.com',
+                    isLinked: true,
                     isEmailConfirmed: true,
                     roles: [],
-                    sessionLength: 1234
+                    sessionLength: 1234,
+                    remainingSessionTime: 4321,
+                    details: {
+                        kind: 'user',
+                        createdAt: new Date(),
+                        email: 'johndoe@example.com'
+                    }
                 })
             })}
     >
@@ -159,13 +184,18 @@
                             ...mockDataService,
                             load: async () => ({
                                 isAuthenticated: true,
-                                isLinked: true,
-                                name: 'John Doe',
                                 userId: '2f8e4b8e-4b8e-4b8e-8b1e-2f8e4b8e4b8e',
-                                email: 'johndoe@example.com',
+                                name: 'John Doe',
+                                isLinked: true,
                                 isEmailConfirmed: false,
                                 roles: [],
-                                sessionLength: 1234
+                                sessionLength: 1234,
+                                remainingSessionTime: 4321,
+                                details: {
+                                    kind: 'user',
+                                    createdAt: new Date(),
+                                    email: 'johndoe@example.com'
+                                }
                             }),
                             startEmailConfirmation: async () => {
                                 console.log('Starting email confirmation...');

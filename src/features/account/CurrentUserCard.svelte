@@ -107,18 +107,18 @@
         {#snippet email()}
             <div class="flex flex-col sm:flex-row space-y-1">
                 <div class="flex items-center space-x-2">
-                    {#if user.email}
+                    {#if user.details.email}
                         {#if !user.isEmailConfirmed}
                             <Warning size="sm" color="warning" />
                         {/if}
-                        <span class="me-2">{user.email}</span>
+                        <span class="me-2">{user.details.email}</span>
                     {:else}
                         <i class="bg-warning text-on-warning">{$t('account.noEmail')}</i>
                     {/if}
                 </div>
                 <!-- {#if emailStatus !== 'complete'} -->
                 <div class="flex justify-start ms-8 sm:ms-0">
-                    {#if user.email && !user.isEmailConfirmed}
+                    {#if user.details.email && !user.isEmailConfirmed}
                         <ComboButton
                             size="xs"
                             disabled={currentUserStore.isDirty}
@@ -146,7 +146,11 @@
                 { key: $t('account.userName'), value: user.name, class: 'break-all' },
                 { key: $t('account.userId'), value: user.userId, class: 'break-all' },
                 { key: $t('account.email'), value: email },
-                { key: $t('account.role'), value: user.roles.join(', ') }
+                { key: $t('account.role'), value: user.roles.join(', ') },
+                {
+                    key: $t('account.registrationDate'),
+                    value: $t('common.dateTime', { value: user.details.createdAt }, { date: { dateStyle: 'long' } })
+                }
             ]}
         />
     {/if}

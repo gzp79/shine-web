@@ -5,6 +5,7 @@
     "role": "Szerepkör",
     "email": "Email",
     "noEmail": "Nincs email",
+    "registrationDate": "Regisztráció dátuma",
     "linkWarning": "Fiókod jelenleg nincs összekapcsolva egyetlen közösségi hálózattal sem, így könnyen elveszítheted a hozzáférést.",
     "logout": "Kijelentkezés",
     "logoutAll": "Minden eszközről kijelentkezés",
@@ -30,10 +31,7 @@
     "active": "aktív",
     "revoke": "Visszavonás",
     "failedToLoadUserInfo": "Nem sikerült betölteni a felhasználói adatokat",
-    "loading": "Betöltés ...",
-    "confirm": "Megerősítés",
     "confirmTitle": "Email megerősítése",
-    "ok": "Tovább",
     "confirmPendingText": "Email megerősítés folyamat ...",
     "confirmCompleteText": "A megerősítő emailt elküldtük a megadott címre. Kérjük, ellenőrizd a beérkezett leveleket.",
     "updateEmail": "Modosítás"

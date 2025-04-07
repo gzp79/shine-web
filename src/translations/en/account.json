@@ -5,6 +5,7 @@
     "role": "Roles",
     "email": "Email",
     "noEmail": "No email",
+    "registrationDate": "Registration date",
     "linkWarning": "Your account is currently not linked to any social network, you may lose your access.",
     "logout": "Logout",
     "logoutAll": "Logout from all devices",

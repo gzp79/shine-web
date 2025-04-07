@@ -1,5 +1,7 @@
 {
     "loading": "Loading...",
+    "ok": "Ok",
+    "confirm": "Confirm",
     "retry": "Retry",
     "somethingWentWrong": "Something went wrong",
     "dateTime": "{{value:date}}",
