@@ -6,7 +6,7 @@
 
     interface Item {
         key: string;
-        value: Snippet | string;
+        value: string | Snippet;
         class?: string;
     }
     interface Props {

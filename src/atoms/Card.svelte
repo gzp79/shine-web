@@ -26,7 +26,7 @@
     let { icon, caption, shadow, variant, width = 'default', children, actions, ...rest }: Props = $props();
 
     const widthVariants: Record<Width, string> = {
-        default: 'max-w-xl w-full',
+        default: 'max-w-3xl w-full',
         fit: 'max-w-full w-fit',
         full: 'w-full'
     };

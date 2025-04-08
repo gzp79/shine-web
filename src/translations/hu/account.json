@@ -29,10 +29,8 @@
     "activeStatus": "Állapot",
     "expired": "lejárt",
     "active": "aktív",
-    "revoke": "Visszavonás",
     "failedToLoadUserInfo": "Nem sikerült betölteni a felhasználói adatokat",
     "confirmTitle": "Email megerősítése",
     "confirmPendingText": "Email megerősítés folyamat ...",
-    "confirmCompleteText": "A megerősítő emailt elküldtük a megadott címre. Kérjük, ellenőrizd a beérkezett leveleket.",
-    "updateEmail": "Modosítás"
+    "confirmCompleteText": "A megerősítő emailt elküldtük a megadott címre. Kérjük, ellenőrizd a beérkezett leveleket."
 }

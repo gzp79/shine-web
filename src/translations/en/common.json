@@ -1,10 +1,14 @@
 {
+    "dateTime": "{{value:date}}",
+    "currency": "{{value:currency}}",
+
     "loading": "Loading...",
+    "somethingWentWrong": "Something went wrong",
+
     "ok": "Ok",
     "confirm": "Confirm",
     "retry": "Retry",
-    "somethingWentWrong": "Something went wrong",
-    "dateTime": "{{value:date}}",
-    "currency": "{{value:currency}}",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "update": "Update",
+    "revoke": "Revoke"
 }

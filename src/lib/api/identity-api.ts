@@ -23,8 +23,8 @@ const CurrentUserDetailsSchema = z.object({
 const CurrentUserSchema = z.object({
     userId: z.string(),
     name: z.string(),
-    isEmailConfirmed: z.boolean(),
     isLinked: z.boolean(),
+    isEmailConfirmed: z.boolean(),
     roles: z.array(z.string()),
     sessionLength: z.number(),
     remainingSessionTime: z.number(),
@@ -105,7 +105,7 @@ class IdentityApi {
 
     async getCurrentUser(fetch: Fetch): Promise<CurrentUser> {
         logAPI('getCurrentUser...');
-        const url = `${this.serviceUrl}/identity/api/auth/user/info`;
+        const url = `${this.serviceUrl}/identity/api/auth/user/info?method=full`;
         const response = await fetch(url, {
             method: 'GET',
             credentials: 'include',

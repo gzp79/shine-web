@@ -36,7 +36,7 @@
     linkedIdentityStore.refresh();
 </script>
 
-<AppContent class="p-4">
+<AppContent class="px-2 py-8">
     <Stack spacing={4} align="center">
         <CurrentUserCard />
         <ActiveSessionsCard />

@@ -29,14 +29,9 @@
     "activeStatus": "Status",
     "expired": "expired",
     "active": "active",
-    "revoke": "Revoke",
     "failedToLoadUserInfo": "Failed to load user info",
-    "loading": "Loading ...",
-    "confirm": "Confirm",
     "confirmTitle": "Email confirmation",
-    "ok": "Ok",
     "confirmCompleteText": "We have sent a confirmation email to the provided address. Please check your inbox.",
     "confirmPendingText": "Starting email confirmation process ...",
-    "updateEmail": "Update",
     "newEmail": "New email address"
 }
