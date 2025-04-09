@@ -1,5 +1,5 @@
 <script lang="ts">
-    import CompileTailwindClasses from '$atoms/CompileTailwindClasses.svelte';
+    import TailwindClasses from '$atoms/TailwindClasses.svelte';
     import Typography from '$atoms/Typography.svelte';
     import { STYLE } from './_currentSettings.svelte';
 
@@ -15,7 +15,7 @@
 </Typography>
 <input type="checkbox" class="justify-self-center accent-{STYLE.background}" bind:checked={value} />
 
-<CompileTailwindClasses
+<TailwindClasses
     classList={[
         'accent-surface',
         'accent-container',

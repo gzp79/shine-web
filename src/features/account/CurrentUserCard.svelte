@@ -1,4 +1,5 @@
 <script lang="ts" module>
+    import { type CurrentUser } from '$lib/api/identity-api';
     import { t } from '$lib/i18n/i18n.svelte';
     import { FetchError } from '$lib/utils';
     import Button from '$atoms/Button.svelte';
@@ -7,12 +8,14 @@
     import KeyValueTable from '$atoms/KeyValueTable.svelte';
     import LoadingCard from '$atoms/LoadingCard.svelte';
     import Modal from '$atoms/Modal.svelte';
-    import TextArea from '$atoms/TextArea.svelte';
+    import Stack from '$atoms/Stack.svelte';
     import Typography from '$atoms/Typography.svelte';
     import { Spinner } from '$atoms/icons/animated';
     import Warning from '$atoms/icons/common/_warning.svelte';
+    import { EmailSchema } from '$atoms/types/validator';
     import Alert from '$components/Alert.svelte';
     import ErrorCard from '$components/ErrorCard.svelte';
+    import ValidatedTextArea from '$components/ValidatedTextArea.svelte';
     import { getCurrentUserStore } from './currentUser.svelte';
 
     export interface EmailService {
@@ -25,6 +28,7 @@
 <script lang="ts">
     const currentUserStore = getCurrentUserStore();
     $effect(() => {
+        console.log('refreshing currentUserStore...');
         currentUserStore.refresh();
     });
 
@@ -36,13 +40,17 @@
 
     type EmailStatus = 'none' | 'waitingResponse' | 'gettingNewEmail' | 'gettingAcknowledge' | 'complete' | FetchError;
     let emailStatus = $state<EmailStatus>('none');
+    type EmailOp = 'confirm' | 'update';
+    let emailOp = $state<EmailOp>('confirm');
     let newEmail = $state('');
+    let isEmailValid = $state(false);
 
     const startEmailConfirmation = async () => {
+        emailOp = 'confirm';
         if (emailStatus === 'complete') {
             // just to avoid multiple clicks and make the user feel better
             emailStatus = 'gettingAcknowledge';
-            currentUserStore.refresh();
+            //currentUserStore.refresh();
         } else {
             emailStatus = 'waitingResponse';
             try {
@@ -55,10 +63,11 @@
         }
     };
     const startEmailChange = async () => {
+        emailOp = 'update';
         if (emailStatus === 'complete') {
             // just to avoid multiple clicks and make the user feel better
             emailStatus = 'gettingAcknowledge';
-            currentUserStore.refresh();
+            //currentUserStore.refresh();
         } else {
             emailStatus = 'gettingNewEmail';
         }
@@ -85,14 +94,43 @@
     const finishEmailOperation = async () => {
         emailStatus = 'complete';
     };
-
-    /*$effect(() => {
-        if (disableActions) {
-            // close popup if the user is not allowed to do anything
-            emailFlow.reset();
-        }
-    });*/
 </script>
+
+{#snippet email(user: CurrentUser)}
+    <div class="flex flex-col sm:flex-row space-y-1">
+        <div class="flex items-center space-x-2">
+            {#if user.details.email}
+                {#if !user.isEmailConfirmed}
+                    <Warning size="sm" color="warning" />
+                {/if}
+                <span class="me-2">{user.details.email}</span>
+            {:else}
+                <i class="bg-warning text-on-warning">{$t('account.noEmail')}</i>
+            {/if}
+        </div>
+        <!-- {#if emailStatus !== 'complete'} -->
+        <div class="flex justify-start ms-8 sm:ms-0">
+            {#if user.details.email && !user.isEmailConfirmed}
+                <ComboButton
+                    size="xs"
+                    disabled={currentUserStore.isDirty}
+                    items={[
+                        {
+                            caption: $t('common.confirm'),
+                            onclick: () => startEmailConfirmation()
+                        },
+                        { caption: $t('common.update'), onclick: () => startEmailChange() }
+                    ]}
+                />
+            {:else}
+                <Button size="xs" disabled={currentUserStore.isDirty} onclick={() => startEmailChange()}>
+                    {$t('common.update')}
+                </Button>
+            {/if}
+        </div>
+        <!-- {/if} -->
+    </div>
+{/snippet}
 
 <Card caption={$t('account.userInfo')}>
     {#if currentUserStore.isEmpty}
@@ -100,55 +138,28 @@
     {:else if currentUserStore.isError}
         <ErrorCard error={currentUserStore.error} />
     {:else if user}
-        {#if !user.isLinked}
-            <Alert variant="warning" caption={$t('account.linkWarning')} />
-        {/if}
-
-        {#snippet email()}
-            <div class="flex flex-col sm:flex-row space-y-1">
-                <div class="flex items-center space-x-2">
-                    {#if user.email}
-                        {#if !user.isEmailConfirmed}
-                            <Warning size="sm" color="warning" />
-                        {/if}
-                        <span class="me-2">{user.email}</span>
-                    {:else}
-                        <i class="bg-warning text-on-warning">{$t('account.noEmail')}</i>
-                    {/if}
-                </div>
-                <!-- {#if emailStatus !== 'complete'} -->
-                <div class="flex justify-start ms-8 sm:ms-0">
-                    {#if user.email && !user.isEmailConfirmed}
-                        <ComboButton
-                            size="xs"
-                            disabled={currentUserStore.isDirty}
-                            items={[
-                                {
-                                    caption: $t('account.confirm'),
-                                    onclick: () => startEmailConfirmation()
-                                },
-                                { caption: $t('account.updateEmail'), onclick: () => startEmailChange() }
-                            ]}
-                        />
-                    {:else}
-                        <Button size="xs" disabled={currentUserStore.isDirty} onclick={() => startEmailChange()}>
-                            {$t('account.updateEmail')}
-                        </Button>
-                    {/if}
-                </div>
-                <!-- {/if} -->
-            </div>
+        {#snippet emailValue()}
+            {@render email(user)}
         {/snippet}
+        <Stack>
+            {#if !user.isLinked}
+                <Alert variant="warning" caption={$t('account.linkWarning')} />
+            {/if}
 
-        <KeyValueTable
-            size="xs"
-            items={[
-                { key: $t('account.userName'), value: user.name, class: 'break-all' },
-                { key: $t('account.userId'), value: user.userId, class: 'break-all' },
-                { key: $t('account.email'), value: email },
-                { key: $t('account.role'), value: user.roles.join(', ') }
-            ]}
-        />
+            <KeyValueTable
+                size="xs"
+                items={[
+                    { key: $t('account.userName'), value: user.name, class: 'break-all' },
+                    { key: $t('account.userId'), value: user.userId, class: 'break-all' },
+                    { key: $t('account.email'), value: emailValue },
+                    { key: $t('account.role'), value: user.roles.join(', ') },
+                    {
+                        key: $t('account.registrationDate'),
+                        value: $t('common.dateTime', { value: user.details.createdAt }, { date: { dateStyle: 'long' } })
+                    }
+                ]}
+            />
+        </Stack>
     {/if}
 
     {#snippet actions()}
@@ -162,30 +173,46 @@
     {/snippet}
 </Card>
 
-<Modal caption={$t('account.confirmTitle')} isOpen={emailStatus !== 'none' && emailStatus !== 'complete'}>
+<Modal
+    caption={$t(`account.emailModal.${emailOp}.title`)}
+    isOpen={emailStatus !== 'none' && emailStatus !== 'complete'}
+>
     {#if emailStatus instanceof FetchError}
         <ErrorCard error={emailStatus} />
         <div class="flex justify-end space-x-2">
-            <Button onclick={() => clearEmailError()}>{$t('account.ok')}</Button>
+            <Button onclick={() => clearEmailError()}>{$t('common.ok')}</Button>
         </div>
     {:else if emailStatus == 'waitingResponse'}
-        <Typography variant="text" class="w-full text-justify">{$t('account.confirmPendingText')}</Typography>
+        <Typography variant="text" class="w-full text-justify">{$t(`account.emailModal.${emailOp}.waiting`)}</Typography
+        >
         <div class="flex justify-end space-x-2">
             <Button disabled startIcon={Spinner}>
-                {$t('account.ok')}
+                {$t('common.ok')}
             </Button>
         </div>
     {:else if emailStatus == 'gettingNewEmail'}
-        <Typography variant="text" class="w-full text-justify">{$t('account.confirmPendingText')}</Typography>
-        <TextArea rows="single" placeholder={$t('account.newEmail')} class="w-full" bind:text={newEmail}></TextArea>
-        <div class="flex justify-end space-x-2">
-            <Button onclick={() => cancelEmailChange()}>{$t('common.cancel')}</Button>
-            <Button color="secondary" onclick={() => submitEmailChange(newEmail)}>{$t('account.updateEmail')}</Button>
-        </div>
+        <Stack>
+            <ValidatedTextArea
+                rows="single"
+                placeholder={$t('account.emailModal.update.newEmail')}
+                class="w-full"
+                validate={EmailSchema}
+                bind:text={newEmail}
+                bind:valid={isEmailValid}
+            />
+            <Stack direction="row" spacing={1} class="justify-end">
+                <Button onclick={() => cancelEmailChange()}>{$t('common.cancel')}</Button>
+                <Button color="secondary" disabled={!isEmailValid} onclick={() => submitEmailChange(newEmail)}>
+                    {$t('common.update')}
+                </Button>
+            </Stack>
+        </Stack>
     {:else if emailStatus == 'gettingAcknowledge'}
-        <Typography variant="text" class="w-full text-justify">{$t('account.confirmCompleteText')}</Typography>
+        <Typography variant="text" class="w-full text-justify"
+            >{$t(`account.emailModal.${emailOp}.completed`)}</Typography
+        >
         <div class="flex justify-end space-x-2">
-            <Button onclick={() => finishEmailOperation()}>{$t('account.ok')}</Button>
+            <Button onclick={() => finishEmailOperation()}>{$t('common.ok')}</Button>
         </div>
     {/if}
 </Modal>

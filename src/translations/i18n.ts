@@ -19,7 +19,7 @@ function createLoader(path: string, key: string, routes?: RegExp[]) {
     });
 }
 
-type Params = Record<string, number | string | Date>;
+type Params = Record<string, unknown>;
 
 const config: Config<Partial<Params>> = {
     log: {
@@ -28,6 +28,7 @@ const config: Config<Partial<Params>> = {
     translations: langList.reduce((r, v) => ({ ...r, ...{ [v]: { lang } } }), {}),
     loaders: [
         ...createLoader('common', 'common', [/.*/]),
+        ...createLoader('validation', 'validation', [/.*/]),
         ...createLoader('account', 'account', [/account|design\/.*/]),
         ...createLoader('login', 'login'),
         ...createLoader('tools', 'tools')

@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Snippet } from 'svelte';
-    import CompileTailwindClasses from './CompileTailwindClasses.svelte';
+    import TailwindClasses from './TailwindClasses.svelte';
     import { type ResponsiveProp, toResponsiveClass, toResponsiveProp } from './types/responsive-prop';
 
     type Spaces = 0 | 0.5 | 1 | 2 | 4 | 8 | 12;
@@ -38,7 +38,7 @@
     );
 </script>
 
-<CompileTailwindClasses
+<TailwindClasses
     classList={[
         'grid-cols-1 grid-cols-2 grid-cols-3 grid-cols-4 grid-cols-5 grid-cols-6 grid-cols-7 grid-cols-8 grid-cols-9 grid-cols-10 grid-cols-11 grid-cols-12',
         'md:grid-cols-1 md:grid-cols-2 md:grid-cols-3 md:grid-cols-4 md:grid-cols-5 md:grid-cols-6 md:grid-cols-7 md:grid-cols-8 md:grid-cols-9 md:grid-cols-10 md:grid-cols-11 md:grid-cols-12',

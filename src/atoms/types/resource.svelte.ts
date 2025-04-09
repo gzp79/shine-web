@@ -5,7 +5,7 @@ import type { AppError } from '$lib/utils';
 type ResourceState<T> =
     | { type: 'empty' }
     | { type: 'content'; content: T; age: number; isDirty: boolean }
-    | { type: 'error'; error: AppError };
+    | { type: 'error'; retryCount: number; error: AppError };
 
 export interface ResourceService<T> {
     load: () => Promise<T>;
@@ -73,24 +73,26 @@ export class ResourceStore<T, S extends ResourceService<T>> {
         }
 
         const now = Date.now();
-        logResource(`${this.uniqueId()}: Start loading resource at ${now}, loading: ${this.isLoading}`);
+        logResource.log(`${this.uniqueId()}: Start loading resource at ${now}, loading: ${this.isLoading}`);
         this.lastUpdate = now;
         this.isLoading = true;
         let newResource: ResourceState<T>;
+        const retryCount = this.resource.type === 'error' ? this.resource.retryCount : 0;
         try {
             const content = await this.service.load();
             newResource = { type: 'content', content, age: Date.now(), isDirty: false };
         } catch (err) {
-            newResource = { type: 'error', error: err as AppError };
+            logResource.warn(`${this.uniqueId()}: Loading resource failed`, err);
+            newResource = { type: 'error', retryCount: retryCount + 1, error: err as AppError };
         }
 
         // when multiple load calls are made, only the last one should update the resource
         if (this.lastUpdate === now) {
-            logResource(`${this.uniqueId()}: Loading resource completed with ${newResource.type}`);
+            logResource.log(`${this.uniqueId()}: Loading resource completed with ${newResource.type}`);
             this.resource = newResource;
             this.isLoading = false;
         } else {
-            logResource(
+            logResource.log(
                 `${this.uniqueId()}: Loading resource ignored request as ${now} is replaced by ${this.lastUpdate}`
             );
         }
@@ -100,21 +102,21 @@ export class ResourceStore<T, S extends ResourceService<T>> {
         let reload = false;
 
         if (options?.force) {
-            logResource(`${this.uniqueId()}: Refreshing resource forced`);
+            logResource.log(`${this.uniqueId()}: Refreshing resource forced`);
             reload ||= true;
         }
 
         if (!this.isLoading) {
             if (options?.interval && this.age > options.interval * 1000) {
-                logResource(`${this.uniqueId()}: Refreshing resource for outdated content`);
+                logResource.log(`${this.uniqueId()}: Refreshing resource for outdated content`);
                 reload ||= true;
             }
             if (this.resource.type === 'empty') {
-                logResource(`${this.uniqueId()}: Refreshing resource for the initial load`);
+                logResource.log(`${this.uniqueId()}: Refreshing resource for the initial load`);
                 reload ||= true;
             }
-            if (this.resource.type === 'error' && !options?.keepError) {
-                logResource(`${this.uniqueId()}: Refreshing resource  from error state`);
+            if (this.resource.type === 'error' && !options?.keepError && this.resource.retryCount < 3) {
+                logResource.log(`${this.uniqueId()}: Refreshing resource from error state`);
                 reload ||= true;
             }
         }
@@ -122,7 +124,7 @@ export class ResourceStore<T, S extends ResourceService<T>> {
         if (reload) {
             await this.load();
         } else {
-            logResource(`${this.uniqueId()}: Skipping resource refresh `);
+            logResource.log(`${this.uniqueId()}: Skipping resource refresh `);
         }
     }
 

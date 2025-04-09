@@ -18,6 +18,7 @@
         class?: string;
 
         onEnter?: (test: string) => void;
+        onBlur?: (test: string) => void;
     }
 
     let {
@@ -30,7 +31,8 @@
         resizable,
         disabled,
         class: className,
-        onEnter
+        onEnter,
+        onBlur
     }: Props = $props();
 
     const sizeMods: Record<Size, string> = {
@@ -103,10 +105,31 @@
             onEnter?.(text ?? '');
         }
     };
+    const handleBlur = () => {
+        if (onBlur) {
+            onBlur(text ?? '');
+        }
+    };
 </script>
 
 {#if rows === 'single'}
-    <input type="text" {placeholder} {disabled} bind:value={text} class={txtClass} onkeydown={handleKey} />
+    <input
+        type="text"
+        {placeholder}
+        {disabled}
+        bind:value={text}
+        class={txtClass}
+        onkeydown={handleKey}
+        onblur={handleBlur}
+    />
 {:else}
-    <textarea {rows} {placeholder} {disabled} bind:value={text} class={txtClass} onkeydown={handleKey}></textarea>
+    <textarea
+        {rows}
+        {placeholder}
+        {disabled}
+        bind:value={text}
+        class={txtClass}
+        onkeydown={handleKey}
+        onblur={handleBlur}
+    ></textarea>
 {/if}

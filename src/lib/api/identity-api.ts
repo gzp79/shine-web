@@ -11,14 +11,24 @@ const ProviderSchema = z.object({
 });
 export type Provider = z.infer<typeof ProviderSchema>;
 
+const IdentityKindSchema = z.enum(['user']);
+export type IdentityKind = z.infer<typeof IdentityKindSchema>;
+
+const CurrentUserDetailsSchema = z.object({
+    kind: IdentityKindSchema,
+    createdAt: DateStringSchema,
+    email: OptionalSchema(z.string())
+});
+
 const CurrentUserSchema = z.object({
-    isLinked: z.boolean(),
     userId: z.string(),
     name: z.string(),
-    email: OptionalSchema(z.string()),
+    isLinked: z.boolean(),
     isEmailConfirmed: z.boolean(),
     roles: z.array(z.string()),
-    sessionLength: z.number()
+    sessionLength: z.number(),
+    remainingSessionTime: z.number(),
+    details: CurrentUserDetailsSchema
 });
 export type CurrentUser = z.infer<typeof CurrentUserSchema> & { isAuthenticated: boolean };
 
@@ -95,7 +105,7 @@ class IdentityApi {
 
     async getCurrentUser(fetch: Fetch): Promise<CurrentUser> {
         logAPI('getCurrentUser...');
-        const url = `${this.serviceUrl}/identity/api/auth/user/info`;
+        const url = `${this.serviceUrl}/identity/api/auth/user/info?method=full`;
         const response = await fetch(url, {
             method: 'GET',
             credentials: 'include',
@@ -109,13 +119,19 @@ class IdentityApi {
         } else if (response.status == 401) {
             logAPI('getCurrentUser failed with 401');
             return {
-                isAuthenticated: false,
-                isLinked: false,
                 userId: '',
                 name: '',
                 isEmailConfirmed: false,
+                isLinked: false,
+                isAuthenticated: false,
                 roles: [],
-                sessionLength: 0
+                sessionLength: 0,
+                remainingSessionTime: 0,
+                details: {
+                    kind: 'user',
+                    createdAt: new Date(),
+                    email: undefined
+                }
             };
         } else {
             const error = await fetchError('Failed to getCurrentUser', response);

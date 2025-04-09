@@ -1,7 +1,7 @@
 <script lang="ts" module>
     import type { Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import CompileTailwindClasses from '../CompileTailwindClasses.svelte';
+    import TailwindClasses from '../TailwindClasses.svelte';
     import type { ActionColor, Size } from '../types';
 
     export const TRANSPARENCY = 0.3;
@@ -33,7 +33,7 @@
     );
 </script>
 
-<CompileTailwindClasses
+<TailwindClasses
     classList={[
         'stroke-surface stroke-primary stroke-info stroke-warning stroke-danger stroke-success',
         'fill-surface fill-primary fill-info fill-warning fill-danger fill-success',

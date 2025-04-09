@@ -1,8 +1,14 @@
 {
-    "loading": "Loading...",
-    "retry": "Retry",
-    "somethingWentWrong": "Something went wrong",
     "dateTime": "{{value:date}}",
     "currency": "{{value:currency}}",
-    "cancel": "Cancel"
+
+    "loading": "Loading...",
+    "somethingWentWrong": "Something went wrong",
+
+    "ok": "Ok",
+    "confirm": "Confirm",
+    "retry": "Retry",
+    "cancel": "Cancel",
+    "update": "Update",
+    "revoke": "Revoke"
 }

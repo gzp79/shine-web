@@ -63,7 +63,7 @@
 
     {#snippet actions()}
         <Button disabled={tokenStore.isDirty} color="danger" onclick={revoke}>
-            {$t('account.revoke')}
+            {$t('common.revoke')}
         </Button>
     {/snippet}
 </Card>

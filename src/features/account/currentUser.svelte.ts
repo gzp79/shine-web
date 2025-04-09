@@ -21,14 +21,14 @@ const contextKey = Symbol('currentUserStore');
 
 export function setCurrentUserStore(dataService: CurrentUserService): CurrentUserStore {
     const store = new CurrentUserStore(dataService);
-    setContext(contextKey, () => store);
+    setContext(contextKey, store);
     return store;
 }
 
 export function getCurrentUserStore(): CurrentUserStore {
-    const store = getContext<() => CurrentUserStore>(contextKey);
+    const store = getContext<CurrentUserStore>(contextKey);
     if (!store) {
         throw new Error('CurrentUserStore not found, missing call to setCurrentUserStore');
     }
-    return store();
+    return store;
 }

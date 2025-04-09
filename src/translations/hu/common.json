@@ -1,7 +1,14 @@
 {
-    "loading": "Betöltés...",
-    "retry": "Újra",
-    "somethingWentWrong": "Valami hiba történt",
     "dateTime": "{{value:date}}",
-    "currency": "{{value:currency}}"
+    "currency": "{{value:currency}}",
+
+    "loading": "Betöltés...",
+    "somethingWentWrong": "Valami hiba történt",
+
+    "ok": "Rendben",
+    "confirm": "Megerősít",
+    "retry": "Ismét",
+    "cancel": "Mégsem",
+    "update": "Módosít",
+    "revoke": "Visszavon"
 }

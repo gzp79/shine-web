@@ -5,6 +5,7 @@
     "role": "Roles",
     "email": "Email",
     "noEmail": "No email",
+    "registrationDate": "Registration date",
     "linkWarning": "Your account is currently not linked to any social network, you may lose your access.",
     "logout": "Logout",
     "logoutAll": "Logout from all devices",
@@ -28,14 +29,18 @@
     "activeStatus": "Status",
     "expired": "expired",
     "active": "active",
-    "revoke": "Revoke",
     "failedToLoadUserInfo": "Failed to load user info",
-    "loading": "Loading ...",
-    "confirm": "Confirm",
-    "confirmTitle": "Email confirmation",
-    "ok": "Ok",
-    "confirmCompleteText": "We have sent a confirmation email to the provided address. Please check your inbox.",
-    "confirmPendingText": "Starting email confirmation process ...",
-    "updateEmail": "Update",
-    "newEmail": "New email address"
+    "emailModal": {
+        "confirm": {
+            "title": "Confirm email",
+            "waiting": "Starting email confirmation ...",
+            "completed": "We have sent the confirmation email to the provided address. Please check your inbox."
+        },
+        "update": {
+            "title": "Change email",
+            "newEmail": "New email address",
+            "waiting": "Starting email change ...",
+            "completed": "We have sent the confirm email to the new address. Please check your inbox."
+        }
+    }
 }

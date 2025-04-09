@@ -4,9 +4,12 @@ import debug from 'debug';
 // - set level to All (verbose)
 // - window.localStorage.setItem('debug', 'designer:design');
 
-export const logAPI = debug('app:api');
-export const logResource = debug('app:resources');
-export const logUser = debug('app:user');
-export const logI18n = debug('app:i18n');
+export const logAPI = debug('log:api');
+export const logResource = {
+    log: debug('log:resources'),
+    warn: debug('warn:resources')
+};
+export const logUser = debug('log:user');
+export const logI18n = debug('log:i18n');
 
-export const logDesigner = debug('designer:design');
+export const logDesigner = debug('log:design');

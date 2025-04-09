@@ -5,6 +5,11 @@
     import { type Size, sizeList } from '$atoms/types';
     import { Select, Story, settingsStore } from '../../_components';
 
+    // type CompositeParam = {
+    //     name: string;
+    //     value: number;
+    // };
+
     let size = $state<Size>('xs');
 
     let count = $state(1);
@@ -29,6 +34,11 @@
 {#snippet buttonValue()}
     <Button size="xs">This is a button</Button>
 {/snippet}
+
+<!-- {#snippet renderValue(v1: string, v2: number, v3: CompositeParam)}
+    {`simple: [${v1}] - [${v2}]`}<br />
+    {`composite: [${v3?.name ?? 'ERROR'}] - [${v3?.value ?? 'ERROR'}]`}
+{/snippet} -->
 
 {#snippet nestedValue()}
     <Box border class="max-w-80">
@@ -77,6 +87,8 @@
     </Box>
 
     <Box border>
+        <!-- {@const s1 = renderValue('const', 42, { name: 'v', value: 42 })}
+        {@const s2 = renderValue('const', count, { name: 'v', value: count })} -->
         <KeyValueTable
             {size}
             items={[
@@ -85,6 +97,8 @@
                 { key: 'button', value: buttonValue },
                 { key: 'nested Table', value: nestedValue },
                 { key: 'settings', value: settingsValue }
+                //{ key: 'render', value: s1 },
+                //{ key: 'render', value: s2 }
             ]}
         />
     </Box>
