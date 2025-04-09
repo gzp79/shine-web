@@ -1,0 +1,7 @@
+{
+    "required": "Ez az érték kötelező",
+    "outOfRange": "Adj meg egy értéket {{min}} és {{max}} között",
+    "notInteger": "Adj meg egy érvényes egész számot",
+    "invalidEmail": "Adj meg egy érvényes e-mail címet",
+    "invalidInput": "Adj meg egy érvényes értéket"
+}

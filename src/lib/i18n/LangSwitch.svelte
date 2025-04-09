@@ -6,8 +6,8 @@
     import { languageStore, t } from './i18n.svelte';
 
     const items = [
-        { data: 'hu', caption: $t('lang.hu'), icon: flags.FlagHU },
-        { data: 'en', caption: $t('lang.en'), icon: flags.FlagGB }
+        { data: 'en', caption: $t('lang.en'), icon: flags.FlagGB },
+        { data: 'hu', caption: $t('lang.hu'), icon: flags.FlagHU }
     ];
 
     let language = languageStore();

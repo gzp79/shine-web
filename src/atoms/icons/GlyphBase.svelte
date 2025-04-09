@@ -9,7 +9,7 @@
 <script lang="ts">
     import type { Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import CompileTailwindClasses from '../CompileTailwindClasses.svelte';
+    import TailwindClasses from '../TailwindClasses.svelte';
     import type { Size } from '../types';
 
     interface Props extends GlyphProps {
@@ -28,7 +28,7 @@
     );
 </script>
 
-<CompileTailwindClasses classList={['icon-xs icon-sm icon-md icon-lg']} />
+<TailwindClasses classList={['icon-xs icon-sm icon-md icon-lg']} />
 
 <svg xmlns="http://www.w3.org/2000/svg" viewBox={viewBox.join(' ')} class={svgClass}>
     {@render children()}

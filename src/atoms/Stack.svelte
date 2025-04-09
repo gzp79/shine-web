@@ -22,7 +22,7 @@
     let clsStack = twMerge([
         'flex',
         direction === 'row' ? 'flex-row min-w-fit w-full' : 'flex-col min-h-fit h-full',
-        spacing ? toResponsiveClass(spacing, (spacing) => `gap-${spacing}`) : 'gap-2',
+        spacing !== undefined ? toResponsiveClass(spacing, (spacing) => `gap-${spacing}`) : 'gap-2',
         align && `items-${align}`,
         justify && `justify-${justify}`,
         className

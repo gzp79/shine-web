@@ -30,7 +30,17 @@
     "expired": "lejárt",
     "active": "aktív",
     "failedToLoadUserInfo": "Nem sikerült betölteni a felhasználói adatokat",
-    "confirmTitle": "Email megerősítése",
-    "confirmPendingText": "Email megerősítés folyamat ...",
-    "confirmCompleteText": "A megerősítő emailt elküldtük a megadott címre. Kérjük, ellenőrizd a beérkezett leveleket."
+    "emailModal": {
+        "confirm": {
+            "title": "Email megerősítése",
+            "waiting": "Indítjuk az email megerősítését ...",
+            "completed": "Elküldtük a megerősítő emailt a megadott címre. Kérjük, ellenőrizd a beérkező levelek között."
+        },
+        "update": {
+            "title": "Email megváltoztatása",
+            "newEmail": "Új email cím",
+            "waiting": "Indítjuk az email megváltoztatását ...",
+            "completed": "Elküldtük a megerősítő emailt az új címre. Kérjük, ellenőrizd a beérkező levelek között."
+        }
+    }
 }

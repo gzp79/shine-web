@@ -30,8 +30,17 @@
     "expired": "expired",
     "active": "active",
     "failedToLoadUserInfo": "Failed to load user info",
-    "confirmTitle": "Email confirmation",
-    "confirmCompleteText": "We have sent a confirmation email to the provided address. Please check your inbox.",
-    "confirmPendingText": "Starting email confirmation process ...",
-    "newEmail": "New email address"
+    "emailModal": {
+        "confirm": {
+            "title": "Confirm email",
+            "waiting": "Starting email confirmation ...",
+            "completed": "We have sent the confirmation email to the provided address. Please check your inbox."
+        },
+        "update": {
+            "title": "Change email",
+            "newEmail": "New email address",
+            "waiting": "Starting email change ...",
+            "completed": "We have sent the confirm email to the new address. Please check your inbox."
+        }
+    }
 }

@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import CompileTailwindClasses from './CompileTailwindClasses.svelte';
+    import TailwindClasses from './TailwindClasses.svelte';
     import { type Size } from './types';
 
     interface Item {
@@ -19,7 +19,7 @@
     const tableClass = $derived(twMerge('table', `table-${size}`));
 </script>
 
-<CompileTailwindClasses classList={['table-xs table-sm table-md table-lg']} />
+<TailwindClasses classList={['table-xs table-sm table-md table-lg']} />
 
 <table class={tableClass}>
     <tbody>

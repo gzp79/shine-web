@@ -1,5 +1,5 @@
 <script lang="ts" module>
-    export type Variant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'text' | 'code' | 'legend';
+    export type Variant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'text' | 'footnote' | 'code' | 'legend';
     export type Weight = 'normal' | 'emphasis' | 'bold';
 </script>
 
@@ -27,6 +27,7 @@
         h5: 'h5',
         h6: 'h6',
         text: 'p',
+        footnote: 'p',
         code: 'code',
         legend: 'legend'
     };
@@ -40,6 +41,7 @@
         h5: `text-lg ${sharedHClasses}`,
         h6: `text-base ${sharedHClasses}`,
         text: 'text-base',
+        footnote: 'text-sm',
         code: 'text-sm',
         legend: 'text-base'
     };

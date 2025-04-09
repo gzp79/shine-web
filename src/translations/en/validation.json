@@ -1,0 +1,7 @@
+{
+    "required": "This value is required",
+    "outOfRange": "Please enter a value between {{min}} and {{max}}",
+    "notInteger": "Please enter a valid integer",
+    "invalidEmail": "Please enter a valid email address",
+    "invalidInput": "Please enter a valid value"
+}

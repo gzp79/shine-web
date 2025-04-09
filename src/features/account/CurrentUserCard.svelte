@@ -9,12 +9,13 @@
     import LoadingCard from '$atoms/LoadingCard.svelte';
     import Modal from '$atoms/Modal.svelte';
     import Stack from '$atoms/Stack.svelte';
-    import TextArea from '$atoms/TextArea.svelte';
     import Typography from '$atoms/Typography.svelte';
     import { Spinner } from '$atoms/icons/animated';
     import Warning from '$atoms/icons/common/_warning.svelte';
+    import { EmailSchema } from '$atoms/types/validator';
     import Alert from '$components/Alert.svelte';
     import ErrorCard from '$components/ErrorCard.svelte';
+    import ValidatedTextArea from '$components/ValidatedTextArea.svelte';
     import { getCurrentUserStore } from './currentUser.svelte';
 
     export interface EmailService {
@@ -39,9 +40,13 @@
 
     type EmailStatus = 'none' | 'waitingResponse' | 'gettingNewEmail' | 'gettingAcknowledge' | 'complete' | FetchError;
     let emailStatus = $state<EmailStatus>('none');
+    type EmailOp = 'confirm' | 'update';
+    let emailOp = $state<EmailOp>('confirm');
     let newEmail = $state('');
+    let isEmailValid = $state(false);
 
     const startEmailConfirmation = async () => {
+        emailOp = 'confirm';
         if (emailStatus === 'complete') {
             // just to avoid multiple clicks and make the user feel better
             emailStatus = 'gettingAcknowledge';
@@ -58,6 +63,7 @@
         }
     };
     const startEmailChange = async () => {
+        emailOp = 'update';
         if (emailStatus === 'complete') {
             // just to avoid multiple clicks and make the user feel better
             emailStatus = 'gettingAcknowledge';
@@ -167,28 +173,44 @@
     {/snippet}
 </Card>
 
-<Modal caption={$t('account.confirmTitle')} isOpen={emailStatus !== 'none' && emailStatus !== 'complete'}>
+<Modal
+    caption={$t(`account.emailModal.${emailOp}.title`)}
+    isOpen={emailStatus !== 'none' && emailStatus !== 'complete'}
+>
     {#if emailStatus instanceof FetchError}
         <ErrorCard error={emailStatus} />
         <div class="flex justify-end space-x-2">
             <Button onclick={() => clearEmailError()}>{$t('common.ok')}</Button>
         </div>
     {:else if emailStatus == 'waitingResponse'}
-        <Typography variant="text" class="w-full text-justify">{$t('account.confirmPendingText')}</Typography>
+        <Typography variant="text" class="w-full text-justify">{$t(`account.emailModal.${emailOp}.waiting`)}</Typography
+        >
         <div class="flex justify-end space-x-2">
             <Button disabled startIcon={Spinner}>
                 {$t('common.ok')}
             </Button>
         </div>
     {:else if emailStatus == 'gettingNewEmail'}
-        <Typography variant="text" class="w-full text-justify">{$t('account.confirmPendingText')}</Typography>
-        <TextArea rows="single" placeholder={$t('account.newEmail')} class="w-full" bind:text={newEmail}></TextArea>
-        <div class="flex justify-end space-x-2">
-            <Button onclick={() => cancelEmailChange()}>{$t('common.cancel')}</Button>
-            <Button color="secondary" onclick={() => submitEmailChange(newEmail)}>{$t('common.update')}</Button>
-        </div>
+        <Stack>
+            <ValidatedTextArea
+                rows="single"
+                placeholder={$t('account.emailModal.update.newEmail')}
+                class="w-full"
+                validate={EmailSchema}
+                bind:text={newEmail}
+                bind:valid={isEmailValid}
+            />
+            <Stack direction="row" spacing={1} class="justify-end">
+                <Button onclick={() => cancelEmailChange()}>{$t('common.cancel')}</Button>
+                <Button color="secondary" disabled={!isEmailValid} onclick={() => submitEmailChange(newEmail)}>
+                    {$t('common.update')}
+                </Button>
+            </Stack>
+        </Stack>
     {:else if emailStatus == 'gettingAcknowledge'}
-        <Typography variant="text" class="w-full text-justify">{$t('account.confirmCompleteText')}</Typography>
+        <Typography variant="text" class="w-full text-justify"
+            >{$t(`account.emailModal.${emailOp}.completed`)}</Typography
+        >
         <div class="flex justify-end space-x-2">
             <Button onclick={() => finishEmailOperation()}>{$t('common.ok')}</Button>
         </div>

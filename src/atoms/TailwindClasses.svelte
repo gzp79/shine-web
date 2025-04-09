@@ -68,10 +68,10 @@
         ['text-xs', 'text-sm', 'text-md', 'text-lg'],
         ['icon-xs', 'icon-sm', 'icon-md', 'icon-lg'],
 
-        ['gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-5', 'gap-6', 'gap-7', 'gap-8', 'gap-9', 'gap-10', 'gap-11', 'gap-12'],
-        ['xs:gap-1', 'xs:gap-2', 'xs:gap-3', 'xs:gap-4', 'xs:gap-5', 'xs:gap-6', 'xs:gap-7', 'xs:gap-8', 'xs:gap-9', 'xs:gap-10', 'xs:gap-11', 'xs:gap-12'],
-        ['md:gap-1', 'md:gap-2', 'md:gap-3', 'md:gap-4', 'md:gap-5', 'md:gap-6', 'md:gap-7', 'md:gap-8', 'md:gap-9', 'md:gap-10', 'md:gap-11', 'md:gap-12'],
-        ['lg:gap-1', 'lg:gap-2', 'lg:gap-3', 'lg:gap-4', 'lg:gap-5', 'lg:gap-6', 'lg:gap-7', 'lg:gap-8', 'lg:gap-9', 'lg:gap-10', 'lg:gap-11', 'lg:gap-12'],
+        ['gap-0', 'gap-1', 'gap-2', 'gap-3', 'gap-4', 'gap-5', 'gap-6', 'gap-7', 'gap-8', 'gap-9', 'gap-10', 'gap-11', 'gap-12'],
+        ['xs:gap-0', 'xs:gap-1', 'xs:gap-2', 'xs:gap-3', 'xs:gap-4', 'xs:gap-5', 'xs:gap-6', 'xs:gap-7', 'xs:gap-8', 'xs:gap-9', 'xs:gap-10', 'xs:gap-11', 'xs:gap-12'],
+        ['md:gap-0', 'md:gap-1', 'md:gap-2', 'md:gap-3', 'md:gap-4', 'md:gap-5', 'md:gap-6', 'md:gap-7', 'md:gap-8', 'md:gap-9', 'md:gap-10', 'md:gap-11', 'md:gap-12'],
+        ['lg:gap-0', 'lg:gap-1', 'lg:gap-2', 'lg:gap-3', 'lg:gap-4', 'lg:gap-5', 'lg:gap-6', 'lg:gap-7', 'lg:gap-8', 'lg:gap-9', 'lg:gap-10', 'lg:gap-11', 'lg:gap-12'],
     ];
     void defaultSafeList;
 
