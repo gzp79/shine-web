@@ -3,8 +3,8 @@
     "userName": "Név",
     "userId": "Azonosító",
     "role": "Szerepkör",
-    "email": "Email",
-    "noEmail": "Nincs email",
+    "email": "E-mail",
+    "noEmail": "Nincs e-mail",
     "registrationDate": "Regisztráció dátuma",
     "linkWarning": "Fiókod jelenleg nincs összekapcsolva egyetlen közösségi hálózattal sem, így könnyen elveszítheted a hozzáférést.",
     "logout": "Kijelentkezés",
@@ -33,14 +33,14 @@
     "emailModal": {
         "confirm": {
             "title": "Email megerősítése",
-            "waiting": "Indítjuk az email megerősítését ...",
-            "completed": "Elküldtük a megerősítő emailt a megadott címre. Kérjük, ellenőrizd a beérkező levelek között."
+            "waiting": "Indítjuk az e-mail megerősítését ...",
+            "completed": "Elküldtük a megerősítő e-mailt a megadott címre. Kérjük, ellenőrizd a beérkező levelek között."
         },
         "update": {
             "title": "Email megváltoztatása",
-            "newEmail": "Új email cím",
-            "waiting": "Indítjuk az email megváltoztatását ...",
-            "completed": "Elküldtük a megerősítő emailt az új címre. Kérjük, ellenőrizd a beérkező levelek között."
+            "newEmail": "Új e-mail cím",
+            "waiting": "Indítjuk az e-mail megváltoztatását ...",
+            "completed": "Elküldtük a megerősítő e-mailt az új címre. Kérjük, ellenőrizd a beérkező levelek között."
         }
     }
 }

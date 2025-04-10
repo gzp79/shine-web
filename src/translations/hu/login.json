@@ -3,5 +3,8 @@
     "guest": "Vendég",
     "loadingCaptcha": "Várakozás a szerverre",
     "rememberMe": "Emlékezz rám",
-    "continueAs": "Folytatás mint {{name}}"
+    "continueAs": "Folytatás mint {{name}}",
+    "info": {
+        "emailVerify": "E-mail művelet befejezése"
+    }
 }

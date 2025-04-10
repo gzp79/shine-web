@@ -3,5 +3,8 @@
     "guest": "Guest",
     "loadingCaptcha": "Waiting for server",
     "rememberMe": "Remember me",
-    "continueAs": "Continue as {{name}}"
+    "continueAs": "Continue as {{name}}",
+    "info": {
+        "emailVerify": "Completing e-mail operation"
+    }
 }

@@ -1,3 +1,7 @@
+export type MediaType = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type MediaPrefixType = '' | 'sm:' | 'md:' | 'lg:' | 'xl:';
+
+//Note: due to mobile first, xs is the default class, unless overridden by another media query
 export interface ResponsiveProp<T extends NonNullable<unknown>> {
     xs: T;
     sm?: T;
@@ -12,19 +16,18 @@ export function toResponsiveProp<T extends NonNullable<unknown>>(value: T): Resp
 
 export function toResponsiveClass<T extends NonNullable<unknown>>(
     prop: T | ResponsiveProp<T>,
-    className: (prop: T) => string
-): string {
+    className: (media: MediaPrefixType, prop: T) => string | string[]
+): string | string[] {
     if (typeof prop === 'object' && 'xs' in prop) {
-        return [
-            className(prop.xs),
-            prop.sm && `sm:${className(prop.sm)}`,
-            prop.md && `md:${className(prop.md)}`,
-            prop.lg && `lg:${className(prop.lg)}`,
-            prop.xl && `xl:${className(prop.xl)}`
-        ]
-            .filter((x) => x)
-            .join(' ');
+        const res = [
+            className('', prop.xs),
+            prop.sm ? className('sm:', prop.sm) : [],
+            prop.md ? className('md:', prop.md) : [],
+            prop.lg ? className('lg:', prop.lg) : [],
+            prop.xl ? className('xl:', prop.xl) : []
+        ].flat();
+        return res;
     } else {
-        return className(prop);
+        return className('', prop);
     }
 }
