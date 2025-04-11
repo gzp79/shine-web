@@ -5,6 +5,6 @@
     "rememberMe": "Remember me",
     "continueAs": "Continue as {{name}}",
     "info": {
-        "emailVerify": "Completing e-mail operation"
+        "emailVerify": "Completing email operation"
     }
 }

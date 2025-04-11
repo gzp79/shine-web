@@ -49,17 +49,18 @@
         allowGuest: boolean;
     };
     let extraInfo: ExtraInfo = $derived.by(() => {
-        console.log('extraInfo', redirectUrl);
-        if (redirectUrl.startsWith('/link/email-verify?')) {
-            return {
-                loginText: $t('login.info.emailVerify'),
-                allowGuest: false
-            };
+        let hint = page.url.searchParams.get('hint') || '';
+        switch (hint) {
+            case 'email-verify':
+                return {
+                    loginText: $t('login.info.emailVerify'),
+                    allowGuest: false
+                };
+            default:
+                return {
+                    allowGuest: true
+                };
         }
-
-        return {
-            allowGuest: true
-        };
     });
 
     let hasCaptcha = !config.turnstile.disable;

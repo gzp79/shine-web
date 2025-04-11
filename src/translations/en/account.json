@@ -3,8 +3,8 @@
     "userName": "Name",
     "userId": "Id",
     "role": "Roles",
-    "email": "E-mail",
-    "noEmail": "No e-mail",
+    "email": "Email",
+    "noEmail": "No email",
     "registrationDate": "Registration date",
     "linkWarning": "Your account is currently not linked to any social network, you may lose your access.",
     "logout": "Logout",
@@ -32,15 +32,15 @@
     "failedToLoadUserInfo": "Failed to load user info",
     "emailModal": {
         "confirm": {
-            "title": "Confirm e-mail",
-            "waiting": "Starting e-mail confirmation ...",
-            "completed": "We have sent the confirmation e-mail to the provided address. Please check your inbox."
+            "title": "Confirm email",
+            "waiting": "Starting email confirmation ...",
+            "completed": "We have sent the confirmation email to the provided address. Please check your inbox."
         },
         "update": {
-            "title": "Change e-mail",
-            "newEmail": "New e-mail address",
-            "waiting": "Starting e-mail change ...",
-            "completed": "We have sent the confirm e-mail to the new address. Please check your inbox."
+            "title": "Change email",
+            "newEmail": "New email address",
+            "waiting": "Starting email change ...",
+            "completed": "We have sent the confirm email to the new address. Please check your inbox."
         }
     }
 }
