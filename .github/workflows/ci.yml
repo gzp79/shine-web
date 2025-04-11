@@ -40,13 +40,11 @@ jobs:
             - name: Build
               run: |
                   npm run build
-                  npx wrangler deploy --dry-run --outdir ./.svelte-kit/cloudflare-tmp
-                  cp ./.svelte-kit/cloudflare-tmp/_worker.js ./.svelte-kit/cloudflare/_worker.js
+                  npx wrangler deploy --dry-run --outdir ./dist/cloudflare-tmp
+                  cp ./dist/cloudflare-tmp/_worker.js ./dist/cloudflare/_worker.js
 
             - name: Collect artifact items
               run: |
-                  mkdir -p ./dist/.svelte-kit
-                  cp -r .svelte-kit/cloudflare ./dist/.svelte-kit/cloudflare                  
                   cp wrangler.json ./dist/wrangler.json
 
             # Upload the release artifact before test would modify anything
@@ -55,7 +53,6 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                   name: website-artifacts
-                  include-hidden-files: true
                   path: ./dist
 
             # Create a preview
