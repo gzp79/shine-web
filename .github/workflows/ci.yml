@@ -45,7 +45,7 @@ jobs:
 
             - name: Collect artifact items
               run: |
-                  mkdir -p ./dist
+                  mkdir -p ./dist/.svelte-kit
                   cp -r .svelte-kit/cloudflare ./dist/.svelte-kit/cloudflare                  
                   cp wrangler.json ./dist/wrangler.json
                   ls -R ./dist
