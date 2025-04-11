@@ -41,7 +41,7 @@
     {reference}
 >
     <InputGroup {color} vertical {size}>
-        {#each items as item, index}
+        {#each items as item, index (item.caption)}
             <Button endIcon={item.icon} onclick={() => (current = index)}>{item.caption}</Button>
         {/each}
     </InputGroup>

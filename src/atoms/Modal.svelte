@@ -1,7 +1,7 @@
 <script lang="ts" module>
+    import type { Nullable } from '$lib/utils';
     import { type Snippet, onMount } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import type { Nullable } from '$lib/utils';
     import Box from './Box.svelte';
     import { portal } from './Portal.svelte';
     import { Cross } from './icons/common';

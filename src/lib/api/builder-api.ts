@@ -1,6 +1,6 @@
-import { config } from '$config';
+import { config } from '@config';
 
-//import { logAPI } from '$lib/loggers';
+//import { logAPI } from '@lib/loggers';
 
 class BuilderApi {
     constructor(public readonly serviceUrl: string) {}

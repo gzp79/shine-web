@@ -122,7 +122,7 @@
                         ? 'first:border-t-2 last:border-b-2 border-x-2 border-t-2 first:rounded-t-lg last:rounded-b-lg '
                         : 'first:border-s-2 last:border-e-2 border-y-2 border-s-2 first:rounded-s-lg last:rounded-e-lg'),
                 !disabled && !group && 'active:scale-95',
-                !disabled && `hover:highlight-backdrop`
+                !disabled && 'hover:highlight-backdrop'
             ],
             variant === 'ghost' && [
                 box && !color ? `text-${box.fgColor}` : `text-on-${colorWithFallback}`,
@@ -132,7 +132,7 @@
                         ? 'border-2 border-transparent first:rounded-t-lg last:rounded-b-lg '
                         : 'border-2 border-transparent first:rounded-s-lg last:rounded-e-lg'),
                 !disabled && !group && 'active:scale-95',
-                !disabled && `hover:highlight-backdrop`
+                !disabled && 'hover:highlight-backdrop'
             ],
 
             !group && ['m-1', wide ? 'min-w-full justify-center' : 'w-fit h-fit', 'rounded-full'],

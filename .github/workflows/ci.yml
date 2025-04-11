@@ -40,26 +40,33 @@ jobs:
             - name: Build
               run: |
                   npm run build
+                  npx wrangler deploy ./.svelte-kit/cloudflare/_worker.js --dry-run --outdir ./.svelte-kit/cloudflare-tmp
+                  cp ./.svelte-kit/cloudflare-tmp/_worker.js ./.svelte-kit/cloudflare/_worker.js
+
+            - name: Collet artifacts
+              run: |
+                  mkdir -p ./dist
+                  cp -r .svelte-kit/cloudflare ./dist/cloudflare
+                  cp wrangler.json ./dist/wrangler.json
 
             # Upload the release artifact before test would modify anything
-            - name: Upload website artifacts
+            - name: Upload artifact
               if: github.ref == 'refs/heads/master'
               uses: actions/upload-artifact@v4
               with:
                   name: website-artifacts
-                  path: .svelte-kit/cloudflare
+                  path: ./dist
 
             # Create a preview
-            # Consider if this temp site should be used for testing
-            - name: Publish website to preview site
+            - name: Upload a preview site
               id: preview_deploy
               if: github.event_name == 'pull_request'
               uses: cloudflare/wrangler-action@v3
               with:
                   apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
                   accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-                  workingDirectory: .svelte-kit/cloudflare
-                  command: pages deploy --project-name=shine-web --branch=${{ github.head_ref || github.ref_name }} .
+                  workingDirectory: ./dist
+                  command: versions upload
 
             - name: Preview Url
               env:
@@ -67,34 +74,9 @@ jobs:
               run: |
                   echo "**Deployment url**: <${DEPLOYMENT_URL}>" >> $GITHUB_STEP_SUMMARY
 
-            # - name: Start web server
-            # uses: JarvusInnovations/background-action@v1
-            # with:
-            #     run: |
-            #         npm run preview
-            #     log-output: true
-            #     wait-on: |
-            #         https://localhost:4443
-            #     wait-for: 2m
-
-            # - name: Test
-            #   run: |
-            #     sudo echo "127.0.0.1 local-scytta.com" | sudo tee -a /etc/hosts
-            #     npx playwright install --with-deps
-            #     npm run test:setup
-            #     npm run test
-            #     npm run test:report
-
-            # - name: Publish test results
-            #   if: github.ref == 'refs/heads/master' || steps.test.conclusion == 'failure'
-            #   uses: actions/upload-artifact@v4
-            #   with:
-            #     name: test-reports
-            #     path: ./reports
-
     deploy:
         needs: build
-        if: github.ref == 'refs/heads/master'
+        # if: github.ref == 'refs/heads/master'
         runs-on: ubuntu-latest
         permissions:
             contents: read
@@ -112,4 +94,4 @@ jobs:
                   apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
                   accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
                   workingDirectory: ./dist
-                  command: pages deploy --project-name=shine-web .
+                  command: deploy .

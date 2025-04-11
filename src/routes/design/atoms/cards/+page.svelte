@@ -1,10 +1,10 @@
 <script lang="ts">
-    import Button from '$atoms/Button.svelte';
-    import Card, { type Width } from '$atoms/Card.svelte';
-    import KeyValueTable from '$atoms/KeyValueTable.svelte';
-    import { Settings } from '$atoms/icons/common';
-    import { Google } from '$atoms/icons/social';
-    import { range } from '$atoms/types';
+    import Button from '@atoms/Button.svelte';
+    import Card, { type Width } from '@atoms/Card.svelte';
+    import KeyValueTable from '@atoms/KeyValueTable.svelte';
+    import { Settings } from '@atoms/icons/common';
+    import { Google } from '@atoms/icons/social';
+    import { range } from '@atoms/types';
     import { CheckBox, Select, Story, lorem, settingsStore } from '../../_components';
 
     let showContent = $state(3);
@@ -91,7 +91,7 @@
             <Settings color="warning" />
         {/snippet}
 
-        {#each range(0, 4) as _i}
+        {#each range(0, 4) as i (i)}
             <Card caption="Google" width="full">
                 {#snippet icon()}
                     <Google />

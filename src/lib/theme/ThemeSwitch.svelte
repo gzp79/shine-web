@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Button from '$atoms/Button.svelte';
-    import { Dark, DarkAndLight, Light } from '$atoms/icons/common';
+    import Button from '@atoms/Button.svelte';
+    import { Dark, DarkAndLight, Light } from '@atoms/icons/common';
     import { themeStore } from './theme.svelte';
 
     let theme = themeStore();

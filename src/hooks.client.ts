@@ -1,9 +1,9 @@
-import { config } from '$config';
+import { config } from '@config';
 
 if (config.environment === 'mock') {
     console.info('Starting browser mock worker...');
 
-    const { worker } = await import('$mocks/browser');
+    const { worker } = await import('@mocks/browser');
     await worker.start({
         onUnhandledRequest(request, print) {
             const url = new URL(request.url);

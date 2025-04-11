@@ -1,5 +1,5 @@
-import { config as baseConfig } from '$generated/config';
-import '$lib/prelude';
+import { config as baseConfig } from '@generated/config';
+import '@lib/prelude';
 
 export interface Config {
     environment: 'mock' | 'dev' | 'prod';

@@ -1,13 +1,13 @@
 <script lang="ts">
     import { logDesigner } from '$lib/loggers';
-    import Box from '$atoms/Box.svelte';
-    import Button from '$atoms/Button.svelte';
-    import Stack from '$atoms/Stack.svelte';
-    import { Spinner } from '$atoms/icons/animated';
-    import { Firefox } from '$atoms/icons/clients';
-    import { Settings, Warning } from '$atoms/icons/common';
-    import { Twitter } from '$atoms/icons/social';
-    import { type ActionColor, actionColorList, sizeList } from '$atoms/types';
+    import Box from '@atoms/Box.svelte';
+    import Button from '@atoms/Button.svelte';
+    import Stack from '@atoms/Stack.svelte';
+    import { Spinner } from '@atoms/icons/animated';
+    import { Firefox } from '@atoms/icons/clients';
+    import { Settings, Warning } from '@atoms/icons/common';
+    import { Twitter } from '@atoms/icons/social';
+    import { type ActionColor, actionColorList, sizeList } from '@atoms/types';
     import { Select, Story, settingsStore } from '../../_components';
 
     let color = $state<ActionColor>('primary');
@@ -40,7 +40,7 @@
 <Story variant="dense">
     <Box border class="h-max">
         <Stack>
-            {#each sizeList as size}
+            {#each sizeList as size (size)}
                 <Button {size} {color} {...btnAction}>
                     Button-{size}
                 </Button>
@@ -59,7 +59,7 @@
 
     <Box border class="h-max">
         <Stack>
-            {#each sizeList as size}
+            {#each sizeList as size (size)}
                 <Stack direction="row">
                     <Button {size} {color} startIcon={Settings} {...btnAction} />
                     <Button variant="outline" {size} {color} startIcon={Settings} {...btnAction} />
@@ -71,7 +71,7 @@
 
     <Box border class="h-max">
         <Stack>
-            {#each sizeList as size}
+            {#each sizeList as size (size)}
                 <Button {size} {color} startIcon={Twitter} {...btnAction}>
                     Button-{size}
                 </Button>
@@ -81,7 +81,7 @@
 
     <Box border class="h-max">
         <Stack>
-            {#each sizeList as size}
+            {#each sizeList as size (size)}
                 <Button {size} {color} endIcon={Twitter} {...btnAction}>
                     Button-{size}
                 </Button>
@@ -91,7 +91,7 @@
 
     <Box border class="h-max">
         <Stack>
-            {#each sizeList as size}
+            {#each sizeList as size (size)}
                 <Button {size} {color} startIcon={Twitter} endIcon={Twitter} {...btnAction}>
                     Button-{size}
                 </Button>
@@ -100,7 +100,7 @@
     </Box>
 
     <Box border class="flex h-max w-96 flex-col">
-        {#each sizeList as size}
+        {#each sizeList as size (size)}
             <Button wide {size} {color} startIcon={Twitter} endIcon={Twitter} {...btnAction}>
                 Button-{size}
             </Button>

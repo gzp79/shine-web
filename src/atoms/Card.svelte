@@ -1,7 +1,7 @@
 <script lang="ts" module>
+    import { isSnippet } from '$lib/utils';
     import { type Component, type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import { isSnippet } from '$lib/utils';
     import Box, { type Variant as BoxVariant } from './Box.svelte';
     import Typography from './Typography.svelte';
     import type { ElementProps } from './types';

@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { config } from '$config';
     import QuickConfig from '$lib/app/QuickConfig.svelte';
-    import Box from '$atoms/Box.svelte';
-    import Typography from '$atoms/Typography.svelte';
-    import { Hamburger } from '$atoms/icons/common';
+    import { config } from '@config';
+    import Box from '@atoms/Box.svelte';
+    import Typography from '@atoms/Typography.svelte';
+    import { Hamburger } from '@atoms/icons/common';
     import { Section, settingsStore } from './_components';
     import { STYLE } from './_components/_currentSettings.svelte';
 
@@ -99,10 +99,10 @@
                 </svg>
             </button>
             {#if showSelection}
-                {#each menu as group}
+                {#each menu as group (group.title)}
                     <Typography variant="h4" element="h2" class="mx-2">{group.title}</Typography>
                     <ul class="mx-4 w-max">
-                        {#each group.items as item}
+                        {#each group.items as item (item.title)}
                             <li class="hover:highlight-backdrop">
                                 <a href={`/design/${item.href}`}>
                                     <Typography variant="h6" element="h3">{item.title}</Typography>

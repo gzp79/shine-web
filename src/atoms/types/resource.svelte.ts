@@ -1,6 +1,6 @@
 import { v4 as uuid } from 'uuid';
-import { logResource } from '$lib/loggers';
-import type { AppError } from '$lib/utils';
+import { logResource } from '@lib/loggers';
+import { type AppError } from '@lib/utils';
 
 type ResourceState<T> =
     | { type: 'empty' }

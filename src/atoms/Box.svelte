@@ -103,7 +103,7 @@
     let boxClass = $derived(
         twMerge(
             'rounded-lg',
-            !compact && `p-4`,
+            !compact && 'p-4',
             !ghost && `bg-${colors.bgColor}`,
             `text-${colors.fgColor}`,
             border && `border border-${colors.border}`,

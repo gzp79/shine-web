@@ -1,6 +1,6 @@
 import { getContext, setContext } from 'svelte';
-import type { CurrentUser } from '$lib/api/identity-api';
-import { type ResourceRefreshOptions, type ResourceService, ResourceStore } from '$atoms/types/resource.svelte';
+import { type CurrentUser } from '@lib/api/identity-api';
+import { type ResourceRefreshOptions, type ResourceService, ResourceStore } from '@atoms/types/resource.svelte';
 
 // Update the current user every n seconds
 const UPDATE_INTERVAL = 15 * 60;

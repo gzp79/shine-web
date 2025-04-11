@@ -1,5 +1,5 @@
-import type { Cookies } from '@sveltejs/kit';
-import { type Nullable, getCookie, setCookie } from '$lib/utils';
+import { type Cookies } from '@sveltejs/kit';
+import { type Nullable, getCookie, setCookie } from '@lib/utils';
 
 export type Theme = 'light' | 'dark' | 'system';
 export const themeList: Theme[] = ['light', 'dark', 'system'];

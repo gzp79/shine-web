@@ -1,9 +1,9 @@
 <script lang="ts">
     import { z } from 'zod';
-    import Stack from '$atoms/Stack.svelte';
-    import TextArea from '$atoms/TextArea.svelte';
-    import Validation, { type ValidationResult, isValidResult } from '$atoms/Validation.svelte';
-    import type { ActionColor, ElementProps, InputVariant, Size } from '$atoms/types';
+    import Stack from '@atoms/Stack.svelte';
+    import TextArea from '@atoms/TextArea.svelte';
+    import Validation, { type ValidationResult, isValidResult } from '@atoms/Validation.svelte';
+    import type { ActionColor, ElementProps, InputVariant, Size } from '@atoms/types';
 
     interface Props extends ElementProps {
         rows?: 'single' | number | [number, number];

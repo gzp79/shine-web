@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Box from '$atoms/Box.svelte';
-    import { type ActionColor, actionColorList, range } from '$atoms/types';
+    import Box from '@atoms/Box.svelte';
+    import { type ActionColor, actionColorList, range } from '@atoms/types';
     import { Select, Story, settingsStore } from '../../_components';
 
     let color = $state<ActionColor>('warning');
@@ -118,7 +118,7 @@
     <Box border shadow>
         Some custom class with dense layout
         <Box border class="flex flex-row flex-wrap justify-center">
-            {#each range(0, 7) as _i}
+            {#each range(0, 7) as i (i)}
                 <Box border compact class="w-max whitespace-nowrap p-3">Nested custom box</Box>
             {/each}
         </Box>

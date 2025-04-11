@@ -1,14 +1,14 @@
 <script lang="ts">
     import { identityApi } from '$lib/api/identity-api';
     import AppContent from '$lib/app/AppContent.svelte';
-    import Stack from '$atoms/Stack.svelte';
-    import ActiveSessionsCard from '$features/account/ActiveSessionCard.svelte';
-    import ActiveTokensCard from '$features/account/ActiveTokenCard.svelte';
-    import CurrentUserCard from '$features/account/CurrentUserCard.svelte';
-    import LinkedIdentitiesCard from '$features/account/LinkedIdentityCard.svelte';
-    import { setActiveSessionStore } from '$features/account/activeSessionStore.svelte';
-    import { setActiveTokenStore } from '$features/account/activeTokenStore.svelte';
-    import { setLinkedIdentityStore } from '$features/account/linkedIdentityStore.svelte';
+    import Stack from '@atoms/Stack.svelte';
+    import ActiveSessionsCard from '@features/account/ActiveSessionCard.svelte';
+    import ActiveTokensCard from '@features/account/ActiveTokenCard.svelte';
+    import CurrentUserCard from '@features/account/CurrentUserCard.svelte';
+    import LinkedIdentitiesCard from '@features/account/LinkedIdentityCard.svelte';
+    import { setActiveSessionStore } from '@features/account/activeSessionStore.svelte';
+    import { setActiveTokenStore } from '@features/account/activeTokenStore.svelte';
+    import { setLinkedIdentityStore } from '@features/account/linkedIdentityStore.svelte';
 
     interface Props {
         data: {

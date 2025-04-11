@@ -1,7 +1,7 @@
 <script lang="ts">
-    import Box from '$atoms/Box.svelte';
-    import Button from '$atoms/Button.svelte';
-    import Stack from '$atoms/Stack.svelte';
+    import Box from '@atoms/Box.svelte';
+    import Button from '@atoms/Button.svelte';
+    import Stack from '@atoms/Stack.svelte';
     import { MediaSize, Story } from '../../_components';
 </script>
 

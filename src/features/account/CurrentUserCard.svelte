@@ -2,20 +2,20 @@
     import { type CurrentUser } from '$lib/api/identity-api';
     import { t } from '$lib/i18n/i18n.svelte';
     import { FetchError } from '$lib/utils';
-    import Button from '$atoms/Button.svelte';
-    import Card from '$atoms/Card.svelte';
-    import ComboButton from '$atoms/ComboButton.svelte';
-    import KeyValueTable from '$atoms/KeyValueTable.svelte';
-    import LoadingCard from '$atoms/LoadingCard.svelte';
-    import Modal from '$atoms/Modal.svelte';
-    import Stack from '$atoms/Stack.svelte';
-    import Typography from '$atoms/Typography.svelte';
-    import { Spinner } from '$atoms/icons/animated';
-    import Warning from '$atoms/icons/common/_warning.svelte';
-    import { EmailSchema } from '$atoms/types/validator';
-    import Alert from '$components/Alert.svelte';
-    import ErrorCard from '$components/ErrorCard.svelte';
-    import ValidatedTextArea from '$components/ValidatedTextArea.svelte';
+    import Button from '@atoms/Button.svelte';
+    import Card from '@atoms/Card.svelte';
+    import ComboButton from '@atoms/ComboButton.svelte';
+    import KeyValueTable from '@atoms/KeyValueTable.svelte';
+    import LoadingCard from '@atoms/LoadingCard.svelte';
+    import Modal from '@atoms/Modal.svelte';
+    import Stack from '@atoms/Stack.svelte';
+    import Typography from '@atoms/Typography.svelte';
+    import { Spinner } from '@atoms/icons/animated';
+    import Warning from '@atoms/icons/common/_warning.svelte';
+    import { EmailSchema } from '@atoms/types/validator';
+    import Alert from '@components/Alert.svelte';
+    import ErrorCard from '@components/ErrorCard.svelte';
+    import ValidatedTextArea from '@components/ValidatedTextArea.svelte';
     import { getCurrentUserStore } from './currentUser.svelte';
 
     export interface EmailService {

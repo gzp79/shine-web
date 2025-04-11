@@ -1,11 +1,11 @@
 <script lang="ts">
     import { logDesigner } from '$lib/loggers';
-    import Box from '$atoms/Box.svelte';
-    import Button from '$atoms/Button.svelte';
-    import InputGroup from '$atoms/InputGroup.svelte';
-    import Popper from '$atoms/Popper.svelte';
-    import * as icons from '$atoms/icons/common';
-    import * as flags from '$atoms/icons/flags';
+    import Box from '@atoms/Box.svelte';
+    import Button from '@atoms/Button.svelte';
+    import InputGroup from '@atoms/InputGroup.svelte';
+    import Popper from '@atoms/Popper.svelte';
+    import * as icons from '@atoms/icons/common';
+    import * as flags from '@atoms/icons/flags';
     import { Story } from '../../_components';
 
     let open = $state(false);

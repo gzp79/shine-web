@@ -1,8 +1,8 @@
 <script lang="ts">
-    import Box from '$atoms/Box.svelte';
-    import Button from '$atoms/Button.svelte';
-    import KeyValueTable from '$atoms/KeyValueTable.svelte';
-    import { type Size, sizeList } from '$atoms/types';
+    import Box from '@atoms/Box.svelte';
+    import Button from '@atoms/Button.svelte';
+    import KeyValueTable from '@atoms/KeyValueTable.svelte';
+    import { type Size, sizeList } from '@atoms/types';
     import { Select, Story, settingsStore } from '../../_components';
 
     // type CompositeParam = {

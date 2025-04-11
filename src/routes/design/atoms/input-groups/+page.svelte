@@ -1,10 +1,10 @@
 <script lang="ts">
-    import Box from '$atoms/Box.svelte';
-    import Button from '$atoms/Button.svelte';
-    import InputGroup from '$atoms/InputGroup.svelte';
-    import TextArea from '$atoms/TextArea.svelte';
-    import * as icons from '$atoms/icons/common';
-    import { type InputVariant, actionColorList, sizeList } from '$atoms/types';
+    import Box from '@atoms/Box.svelte';
+    import Button from '@atoms/Button.svelte';
+    import InputGroup from '@atoms/InputGroup.svelte';
+    import TextArea from '@atoms/TextArea.svelte';
+    import * as icons from '@atoms/icons/common';
+    import { type InputVariant, actionColorList, sizeList } from '@atoms/types';
     import { CheckBox, Select, Story, settingsStore } from '../../_components';
 
     let color = $state('primary');
@@ -54,7 +54,7 @@
         <InputGroup {variant} {wide} {size} {color}>
             <Button>Profile</Button>
             <TextArea placeholder="Enter text..." rows="single" />
-            <TextArea placeholder={'Enter\n multiline\n text...'} rows={3} />
+            <TextArea placeholder="Enter\n multiline\n text..." rows={3} />
             <Button>Config</Button>
         </InputGroup>
     </Box>
@@ -63,7 +63,7 @@
         <InputGroup {variant} {wide} {size} {color}>
             <Button>Profile</Button>
             <TextArea placeholder="Enter text..." rows="single" />
-            <TextArea placeholder={'Enter\n multiline\n text...'} rows={3} />
+            <TextArea placeholder="Enter\n multiline\n text..." rows={3} />
             <Button>Config</Button>
         </InputGroup>
     </Box>
@@ -72,7 +72,7 @@
         <InputGroup {variant} {wide} {size} {color}>
             <Button>Profile</Button>
             <TextArea placeholder="Enter text..." rows="single" />
-            <TextArea placeholder={'Enter\n multiline\n text...'} rows={3} />
+            <TextArea placeholder="Enter\n multiline\n text..." rows={3} />
             <Button>Config</Button>
         </InputGroup>
     </Box>
@@ -81,7 +81,7 @@
         <InputGroup vertical {variant} {wide} {size} {color}>
             <Button>Profile</Button>
             <TextArea placeholder="Enter text..." rows="single" />
-            <TextArea placeholder={'Enter\n multiline\n text...'} rows={3} />
+            <TextArea placeholder="Enter\n multiline\n text..." rows={3} />
             <Button>Config</Button>
         </InputGroup>
     </Box>
@@ -95,7 +95,8 @@
         --c3: var(--color-sub-container);
         --_g: 0 120deg, #0000 0;
 
-        background: conic-gradient(at calc(250% / 3) calc(100% / 3), var(--c3) var(--_g)),
+        background:
+            conic-gradient(at calc(250% / 3) calc(100% / 3), var(--c3) var(--_g)),
             conic-gradient(from -120deg at calc(50% / 3) calc(100% / 3), var(--c2) var(--_g)),
             conic-gradient(from 120deg at calc(100% / 3) calc(250% / 3), var(--c1) var(--_g)),
             conic-gradient(from 120deg at calc(200% / 3) calc(250% / 3), var(--c1) var(--_g)),

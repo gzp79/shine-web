@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { assets } from '$assets';
-    import { config } from '$config';
     import { goto } from '$app/navigation';
     import { page } from '$app/state';
     import { identityApi } from '$lib/api/identity-api';
@@ -8,18 +6,20 @@
     import AppContent from '$lib/app/AppContent.svelte';
     import { t } from '$lib/i18n/i18n.svelte';
     import { logUser } from '$lib/loggers';
-    import Box from '$atoms/Box.svelte';
-    import Button from '$atoms/Button.svelte';
-    import LoadingCard from '$atoms/LoadingCard.svelte';
-    import Modal from '$atoms/Modal.svelte';
-    import Toggle from '$atoms/Toggle.svelte';
-    import Typography from '$atoms/Typography.svelte';
-    import Logo from '$atoms/icons/Logo.svelte';
-    import { Dots } from '$atoms/icons/animated';
-    import ErrorCard from '$components/ErrorCard.svelte';
-    import Turnstile from '$components/Turnstile.svelte';
-    import { setCurrentUserStore } from '$features/account/currentUser.svelte';
-    import { providerIcon } from '$features/account/providers.svelte';
+    import { assets } from '@assets';
+    import { config } from '@config';
+    import Box from '@atoms/Box.svelte';
+    import Button from '@atoms/Button.svelte';
+    import LoadingCard from '@atoms/LoadingCard.svelte';
+    import Modal from '@atoms/Modal.svelte';
+    import Toggle from '@atoms/Toggle.svelte';
+    import Typography from '@atoms/Typography.svelte';
+    import Logo from '@atoms/icons/Logo.svelte';
+    import { Dots } from '@atoms/icons/animated';
+    import ErrorCard from '@components/ErrorCard.svelte';
+    import Turnstile from '@components/Turnstile.svelte';
+    import { setCurrentUserStore } from '@features/account/currentUser.svelte';
+    import { providerIcon } from '@features/account/providers.svelte';
 
     interface Props {
         data: {
@@ -147,7 +147,7 @@
                     >
                         <Box border class="overflow-y-auto max-h-min">
                             <div class="flex flex-col gap-2 items-center py-2">
-                                {#each data.providers as provider}
+                                {#each data.providers as provider (provider)}
                                     <Button
                                         color="secondary"
                                         wide

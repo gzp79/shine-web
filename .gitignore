@@ -1,10 +1,9 @@
 node_modules
 
 # Output
-.output
-.vercel
-.wrangler
+/.wrangler
 /.svelte-kit
+/dist
 /build
 /temp
 

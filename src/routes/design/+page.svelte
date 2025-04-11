@@ -1,5 +1,5 @@
 <script>
-    import Typography from '$atoms/Typography.svelte';
+    import Typography from '@atoms/Typography.svelte';
 </script>
 
 <div class="flex h-full items-center justify-around">

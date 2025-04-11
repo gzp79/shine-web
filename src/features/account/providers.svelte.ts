@@ -1,5 +1,5 @@
-import type { Component } from 'svelte';
-import * as icons from '$atoms/icons/social';
+import { type Component } from 'svelte';
+import * as icons from '@atoms/icons/social';
 
 export const providerIcon = (provider: string): Component | undefined => {
     switch (provider) {

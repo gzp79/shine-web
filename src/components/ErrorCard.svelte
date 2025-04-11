@@ -1,12 +1,12 @@
 <script lang="ts">
-    import type { Snippet } from 'svelte';
     import { t } from '$lib/i18n/i18n.svelte';
     import type { AppError } from '$lib/utils';
-    import Box from '$atoms/Box.svelte';
-    import Stack from '$atoms/Stack.svelte';
-    import Typography from '$atoms/Typography.svelte';
-    import type { ElementProps } from '$atoms/types';
-    import Alert from '$components/Alert.svelte';
+    import type { Snippet } from 'svelte';
+    import Box from '@atoms/Box.svelte';
+    import Stack from '@atoms/Stack.svelte';
+    import Typography from '@atoms/Typography.svelte';
+    import type { ElementProps } from '@atoms/types';
+    import Alert from '@components/Alert.svelte';
 
     interface Props extends Omit<ElementProps, 'role'> {
         caption?: string;
