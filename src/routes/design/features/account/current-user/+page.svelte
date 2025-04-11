@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { v4 as uuid } from 'uuid';
     import type { CurrentUser } from '$lib/api/identity-api';
     import { async } from '$lib/utils';
-    import Box from '$atoms/Box.svelte';
-    import Button from '$atoms/Button.svelte';
-    import ContextProvider from '$atoms/ContextProvider.svelte';
-    import Stack from '$atoms/Stack.svelte';
-    import CurrentUserCard from '$features/account/CurrentUserCard.svelte';
-    import { type CurrentUserService, setCurrentUserStore } from '$features/account/currentUser.svelte';
+    import { v4 as uuid } from 'uuid';
+    import Box from '@atoms/Box.svelte';
+    import Button from '@atoms/Button.svelte';
+    import ContextProvider from '@atoms/ContextProvider.svelte';
+    import Stack from '@atoms/Stack.svelte';
+    import CurrentUserCard from '@features/account/CurrentUserCard.svelte';
+    import { type CurrentUserService, setCurrentUserStore } from '@features/account/currentUser.svelte';
     import { Story } from '../../../_components';
 
     const mockDataService: CurrentUserService = {
@@ -19,7 +19,6 @@
     };
 
     let remountEmailConfirmation = $state(0);
-    $inspect('remountEmailConfirmation', remountEmailConfirmation);
 
     let randomUserId = $state(uuid());
     $effect(() => {
@@ -177,7 +176,7 @@
     <Box border legend="Email confirmation and change dialogs">
         <Stack align="center">
             <Button onclick={() => remountEmailConfirmation++}>Remount</Button>
-            {#each [remountEmailConfirmation] as _ (remountEmailConfirmation)}
+            {#each [remountEmailConfirmation]}
                 <ContextProvider
                     use={() =>
                         setCurrentUserStore({

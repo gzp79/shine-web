@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { z } from 'zod';
     import { logDesigner } from '$lib/loggers';
-    import Box from '$atoms/Box.svelte';
-    import Stack from '$atoms/Stack.svelte';
-    import TextArea from '$atoms/TextArea.svelte';
-    import { type ActionColor, type Size, actionColorList, sizeList } from '$atoms/types';
-    import { EmailSchema, RangedIntegerSchema } from '$atoms/types/validator';
-    import ValidatedTextArea from '$components/ValidatedTextArea.svelte';
+    import { z } from 'zod';
+    import Box from '@atoms/Box.svelte';
+    import Stack from '@atoms/Stack.svelte';
+    import TextArea from '@atoms/TextArea.svelte';
+    import { type ActionColor, type Size, actionColorList, sizeList } from '@atoms/types';
+    import { EmailSchema, RangedIntegerSchema } from '@atoms/types/validator';
+    import ValidatedTextArea from '@components/ValidatedTextArea.svelte';
     import { CheckBox, Select, Story, settingsStore } from '../../_components';
 
     let color = $state<ActionColor>('primary');

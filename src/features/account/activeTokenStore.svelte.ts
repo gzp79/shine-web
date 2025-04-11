@@ -1,6 +1,6 @@
 import { getContext, setContext } from 'svelte';
-import type { ActiveToken } from '$lib/api/identity-api';
-import { type ResourceService, ResourceStore } from '$atoms/types/resource.svelte';
+import { type ActiveToken } from '@lib/api/identity-api';
+import { type ResourceService, ResourceStore } from '@atoms/types/resource.svelte';
 
 export interface ActiveTokenService extends ResourceService<ActiveToken[]> {
     revoke: (tokenHash: string) => Promise<void>;

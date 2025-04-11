@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { v4 as uuid } from 'uuid';
     import type { ActiveToken } from '$lib/api/identity-api';
     import { async } from '$lib/utils';
-    import Box from '$atoms/Box.svelte';
-    import ContextProvider from '$atoms/ContextProvider.svelte';
-    import ActiveTokenCard from '$features/account/ActiveTokenCard.svelte';
-    import { setActiveTokenStore } from '$features/account/activeTokenStore.svelte';
+    import { v4 as uuid } from 'uuid';
+    import Box from '@atoms/Box.svelte';
+    import ContextProvider from '@atoms/ContextProvider.svelte';
+    import ActiveTokenCard from '@features/account/ActiveTokenCard.svelte';
+    import { setActiveTokenStore } from '@features/account/activeTokenStore.svelte';
     import { Story } from '../../../_components';
 
     const tokenTemplate: ActiveToken = {

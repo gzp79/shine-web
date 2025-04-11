@@ -23,7 +23,7 @@
 
 <table class={tableClass}>
     <tbody>
-        {#each filteredItems as item}
+        {#each filteredItems as item (item.key)}
             <tr class="border-none">
                 <th class="w-min-content text-nowrap">{item.key}</th>
                 {#if typeof item.value === 'string'}

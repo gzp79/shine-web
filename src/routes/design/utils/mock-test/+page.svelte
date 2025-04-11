@@ -1,8 +1,8 @@
 <script lang="ts" module>
     import type { Fetch } from '$lib/utils';
-    import Card from '$atoms/Card.svelte';
-    import Typography from '$atoms/Typography.svelte';
-    import Alert from '$components/Alert.svelte';
+    import Card from '@atoms/Card.svelte';
+    import Typography from '@atoms/Typography.svelte';
+    import Alert from '@components/Alert.svelte';
     import { Story } from '../../_components';
     import type { PageData } from './$types';
 

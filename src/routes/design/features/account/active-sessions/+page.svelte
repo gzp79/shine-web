@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { v4 as uuid } from 'uuid';
     import { async } from '$lib/utils';
-    import ContextProvider from '$atoms/ContextProvider.svelte';
-    import ActiveSessionCard from '$features/account/ActiveSessionCard.svelte';
-    import { setActiveSessionStore } from '$features/account/activeSessionStore.svelte';
+    import { v4 as uuid } from 'uuid';
+    import ContextProvider from '@atoms/ContextProvider.svelte';
+    import ActiveSessionCard from '@features/account/ActiveSessionCard.svelte';
+    import { setActiveSessionStore } from '@features/account/activeSessionStore.svelte';
     import Story from '../../../_components/_Story.svelte';
 </script>
 

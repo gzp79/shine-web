@@ -9,14 +9,14 @@ const config = {
     kit: {
         adapter: adapter(),
         alias: {
-            $generated: './src/generated',
-            $assets: './src/generated/assets',
-            $lib: './src/lib',
-            $atoms: './src/atoms',
-            $components: './src/components',
-            $features: './src/features',
-            $mocks: './src/mocks',
-            $config: './src/config'
+            '@config': './src/config',
+            '@mocks': './src/mocks',
+            '@generated': './src/generated',
+            '@assets': './src/generated/assets',
+            '@lib': './src/lib',
+            '@atoms': './src/atoms',
+            '@components': './src/components',
+            '@features': './src/features'
         }
     }
 };

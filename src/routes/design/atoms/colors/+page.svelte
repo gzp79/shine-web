@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { actionColorList, containerColorList } from '$atoms/types';
+    import { actionColorList, containerColorList } from '@atoms/types';
     import { Story } from '../../_components';
     import ColorSample from './_colorSample.svelte';
 </script>
 
 <Story variant="dense">
-    {#each containerColorList as color}
+    {#each containerColorList as color (color)}
         <div class="flex flex-col items-center rounded-lg border">
             <div class="m-2">
                 <ColorSample {color} />
@@ -14,7 +14,7 @@
     {/each}
 </Story>
 <Story variant="dense">
-    {#each actionColorList as color}
+    {#each actionColorList as color (color)}
         <div class="flex flex-col items-center rounded-lg border">
             <div class="m-2">
                 <ColorSample {color} shades />

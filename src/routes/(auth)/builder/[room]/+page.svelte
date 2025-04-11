@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { onMount } from 'svelte';
     import { page } from '$app/state';
     import { builderApi } from '$lib/api/builder-api';
-    import Button from '$atoms/Button.svelte';
-    import InputGroup from '$atoms/InputGroup.svelte';
-    import TextArea from '$atoms/TextArea.svelte';
-    import Typography from '$atoms/Typography.svelte';
+    import { onMount } from 'svelte';
+    import Button from '@atoms/Button.svelte';
+    import InputGroup from '@atoms/InputGroup.svelte';
+    import TextArea from '@atoms/TextArea.svelte';
+    import Typography from '@atoms/Typography.svelte';
 
     type ChatMessage = {
         from: string;
@@ -69,13 +69,7 @@
 <Typography variant="h1">Room: {room}</Typography>
 
 <InputGroup class="w-full">
-    <TextArea
-        placeholder={'Text...'}
-        rows={3}
-        disabled={!isConnected}
-        onEnter={sendMessage}
-        bind:text={currentMessage}
-    />
+    <TextArea placeholder="Text..." rows={3} disabled={!isConnected} onEnter={sendMessage} bind:text={currentMessage} />
     {#if isConnected}
         <Button onclick={sendMessage}>Send</Button>
     {:else}
@@ -84,6 +78,7 @@
 </InputGroup>
 
 <div class="h-full overflow-scroll">
+    <!-- eslint-disable-next-line svelte/require-each-key -->
     {#each history as msg}
         <div><i class="inline-block bg-info">{msg.from + ' >'}</i>{msg.text}</div>
     {/each}

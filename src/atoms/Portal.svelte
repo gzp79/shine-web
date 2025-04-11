@@ -25,7 +25,7 @@
             } else if (target instanceof HTMLElement) {
                 targetEl = target;
             } else {
-                throw new TypeError(`Unknown portal target type`);
+                throw new TypeError('Unknown portal target type');
             }
 
             targetEl.appendChild(el);

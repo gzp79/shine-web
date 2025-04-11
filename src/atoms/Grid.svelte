@@ -40,7 +40,6 @@
             className
         ])
     );
-    $inspect(containerClass, 'containerClass');
 </script>
 
 <TailwindClasses

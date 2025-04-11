@@ -1,6 +1,6 @@
 import { getContext, setContext } from 'svelte';
-import { type LinkedIdentity } from '$lib/api/identity-api';
-import { type ResourceService, ResourceStore } from '$atoms/types/resource.svelte';
+import { type LinkedIdentity } from '@lib/api/identity-api';
+import { type ResourceService, ResourceStore } from '@atoms/types/resource.svelte';
 
 export interface LinkedIdentityService extends ResourceService<LinkedIdentity[]> {
     unlink: (provider: string, providerUserId: string) => Promise<void>;

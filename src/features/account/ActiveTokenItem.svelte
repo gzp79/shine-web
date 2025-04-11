@@ -2,9 +2,9 @@
     import type { ActiveToken } from '$lib/api/identity-api';
     import { t } from '$lib/i18n/i18n.svelte';
     import { formatLocation } from '$lib/i18n/utils';
-    import Button from '$atoms/Button.svelte';
-    import Card from '$atoms/Card.svelte';
-    import KeyValueTable from '$atoms/KeyValueTable.svelte';
+    import Button from '@atoms/Button.svelte';
+    import Card from '@atoms/Card.svelte';
+    import KeyValueTable from '@atoms/KeyValueTable.svelte';
     import { getActiveTokenStore } from './activeTokenStore.svelte';
 
     interface Props {

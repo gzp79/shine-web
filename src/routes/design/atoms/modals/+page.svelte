@@ -1,10 +1,10 @@
 <script lang="ts">
     import { type Component } from 'svelte';
-    import Box from '$atoms/Box.svelte';
-    import Button from '$atoms/Button.svelte';
-    import Modal from '$atoms/Modal.svelte';
-    import Stack from '$atoms/Stack.svelte';
-    import * as icons from '$atoms/icons/social';
+    import Box from '@atoms/Box.svelte';
+    import Button from '@atoms/Button.svelte';
+    import Modal from '@atoms/Modal.svelte';
+    import Stack from '@atoms/Stack.svelte';
+    import * as icons from '@atoms/icons/social';
     import { Story } from '../../_components';
 
     let showModal1a = $state(false);
@@ -59,7 +59,7 @@
             bind:isOpen={showModal1f}
             class="max-w-min"
         >
-            {#each [['google', icons.Google], ['discord', icons.Discord], ['a long provide name', icons.Gitlab]] as [provider, icon]}
+            {#each [['google', icons.Google], ['discord', icons.Discord], ['a long provide name', icons.Gitlab]] as [provider, icon] (provider)}
                 <Button variant="outline" wide startIcon={icon as Component}>
                     {provider}
                 </Button>

@@ -20,7 +20,7 @@ additionalAssets.push({
 });
 
 if (config.environment === 'mock') {
-    console.log(`  Mocking`);
+    console.log('  Mocking');
     additionalAssets.push({
         src: 'static-generated/mockServiceWorker.js',
         dest: ''

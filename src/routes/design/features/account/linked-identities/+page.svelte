@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { v4 as uuid } from 'uuid';
     import type { LinkedIdentity } from '$lib/api/identity-api';
     import { async } from '$lib/utils';
-    import Box from '$atoms/Box.svelte';
-    import ContextProvider from '$atoms/ContextProvider.svelte';
-    import LinkedIdentityCard from '$features/account/LinkedIdentityCard.svelte';
-    import { setLinkedIdentityStore } from '$features/account/linkedIdentityStore.svelte';
+    import { v4 as uuid } from 'uuid';
+    import Box from '@atoms/Box.svelte';
+    import ContextProvider from '@atoms/ContextProvider.svelte';
+    import LinkedIdentityCard from '@features/account/LinkedIdentityCard.svelte';
+    import { setLinkedIdentityStore } from '@features/account/linkedIdentityStore.svelte';
     import { Story } from '../../../_components';
 
     const template = {

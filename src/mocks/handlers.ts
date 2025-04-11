@@ -1,4 +1,4 @@
-import { config } from '$config';
+import { config } from '@config';
 import { HttpResponse, RequestHandler, http } from 'msw';
 import { defaultLoginProvider, noUserInfo } from './data/user';
 

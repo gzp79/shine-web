@@ -75,14 +75,14 @@
                     (group.vertical
                         ? 'first:border-t-2 last:border-b-2 border-x-2 border-t-2 first:rounded-t-lg last:rounded-b-lg'
                         : 'first:border-s-2 last:border-e-2 border-y-2 border-s-2 first:rounded-s-lg last:rounded-e-lg'),
-                !disabled && `hover:highlight-backdrop`
+                !disabled && 'hover:highlight-backdrop'
             ],
             variant === 'ghost' && [
                 box && !color
                     ? `text-${box.fgColor} placeholder:text-${box.fgColor2}`
                     : `text-on-${colorWithFallback} placeholder:text-${colorWithFallback}-2`,
                 !group && ['rounded-lg', 'border-2', 'border-transparent'],
-                !disabled && `hover:highlight-backdrop`
+                !disabled && 'hover:highlight-backdrop'
             ],
 
             sizeMods[size],

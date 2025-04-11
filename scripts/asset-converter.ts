@@ -14,7 +14,7 @@ const root = path.join(__dirname, '..');
 const contentInputDir = path.join(root, 'assets');
 const contentFile = path.join(contentInputDir, 'assets.json');
 
-const contentOutputDir = path.join(root, `static-generated/assets`);
+const contentOutputDir = path.join(root, 'static-generated/assets');
 const contentPrefix = '/assets';
 const linkContentFile = path.join(root, 'src/generated/assets.ts');
 
@@ -244,7 +244,7 @@ async function createLinkFile(contents: Record<string, Content>) {
         const distKey = toContentName(key);
         for (const [suffix, filePath] of Object.entries(content.targets)) {
             const targetPath = toContentLink(contentPrefix, filePath);
-            linkContent.push(`    ${distKey}${suffix}: "${targetPath}", // ${content.task.path}`);
+            linkContent.push(`    ${distKey}${suffix}: '${targetPath}', // ${content.task.path}`);
         }
     }
     linkContent.push('};');

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { type Snippet, onMount } from 'svelte';
     import { afterNavigate, goto } from '$app/navigation';
     import { page } from '$app/state';
     import { identityApi } from '$lib/api/identity-api';
@@ -7,10 +6,11 @@
     import AppContent from '$lib/app/AppContent.svelte';
     import { t } from '$lib/i18n/i18n.svelte';
     import { logUser } from '$lib/loggers';
-    import Button from '$atoms/Button.svelte';
-    import LoadingCard from '$atoms/LoadingCard.svelte';
-    import ErrorCard from '$components/ErrorCard.svelte';
-    import { setCurrentUserStore } from '$features/account/currentUser.svelte';
+    import { type Snippet, onMount } from 'svelte';
+    import Button from '@atoms/Button.svelte';
+    import LoadingCard from '@atoms/LoadingCard.svelte';
+    import ErrorCard from '@components/ErrorCard.svelte';
+    import { setCurrentUserStore } from '@features/account/currentUser.svelte';
 
     interface Props {
         children: Snippet;

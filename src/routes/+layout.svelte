@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { type Snippet } from 'svelte';
     import { afterNavigate } from '$app/navigation';
     import { refreshLanguage } from '$lib/i18n/i18n.svelte';
     import { refreshTheme } from '$lib/theme/theme.svelte';
+    import { type Snippet } from 'svelte';
     import '../app.css';
 
     interface Props {

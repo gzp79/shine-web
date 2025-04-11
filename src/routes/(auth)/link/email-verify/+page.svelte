@@ -2,9 +2,9 @@
     import { page } from '$app/state';
     import { identityApi } from '$lib/api/identity-api';
     import AppContent from '$lib/app/AppContent.svelte';
-    import Button from '$atoms/Button.svelte';
-    import ErrorCard from '$components/ErrorCard.svelte';
-    import { getCurrentUserStore } from '$features/account/currentUser.svelte';
+    import Button from '@atoms/Button.svelte';
+    import ErrorCard from '@components/ErrorCard.svelte';
+    import { getCurrentUserStore } from '@features/account/currentUser.svelte';
 
     let currentUserStore = getCurrentUserStore();
     const task = async () => {

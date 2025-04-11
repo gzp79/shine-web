@@ -1,11 +1,11 @@
 // hooks.server.ts
-import { config } from '$config';
+import { config } from '@config';
 import type { Handle } from '@sveltejs/kit';
-import { loadThemeServerSide } from '$lib/theme/theme.svelte';
+import { loadThemeServerSide } from '@lib/theme/theme.svelte';
 
 if (config.environment === 'mock') {
     console.info('Starting server mock worker...');
-    const { server } = await import('$mocks/node');
+    const { server } = await import('@mocks/node');
     server.listen({
         onUnhandledRequest(request, print) {
             const url = new URL(request.url);

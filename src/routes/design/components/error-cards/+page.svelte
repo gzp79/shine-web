@@ -1,7 +1,7 @@
 <script lang="ts">
-    import Button from '$atoms/Button.svelte';
-    import { range } from '$atoms/types';
-    import ErrorCard from '$components/ErrorCard.svelte';
+    import Button from '@atoms/Button.svelte';
+    import { range } from '@atoms/types';
+    import ErrorCard from '@components/ErrorCard.svelte';
     import { Story } from '../../_components';
 </script>
 
@@ -35,7 +35,7 @@
             }
         }}
     >
-        {#each range(0, 3) as i}
+        {#each range(0, 3) as i (i)}
             <p>Some children {i}</p>
         {/each}
         <ErrorCard
@@ -45,7 +45,7 @@
                 message: 'This is the nested error message'
             }}
         />
-        {#each range(0, 5) as i}
+        {#each range(0, 5) as i (i)}
             <p>Some children {3 + i}</p>
         {/each}
         {#snippet actions()}
