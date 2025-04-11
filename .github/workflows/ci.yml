@@ -41,11 +41,13 @@ jobs:
               run: |
                   npm run build
                   npx wrangler deploy --dry-run --outdir ./dist/cloudflare-tmp
-                  cp ./dist/cloudflare-tmp/_worker.js ./dist/cloudflare/_worker.js
+                  cp ./.svelte-kit/cloudflare-tmp/_worker.js ./.svelte-kit/cloudflare/_worker.js
 
             - name: Collect artifact items
               run: |
-                  cp wrangler.json ./dist/wrangler.json
+                  mkdir -p ./dist
+                  cp -r .svelte-kit/cloudflare ./dist/cloudflare
+                  jq '.main = "cloudflare/_worker.js" | .assets.directory = "cloudflare"' wrangler.json > ./dist/wrangler.json
 
             # Upload the release artifact before test would modify anything
             - name: Upload artifact
