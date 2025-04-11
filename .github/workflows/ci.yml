@@ -48,7 +48,6 @@ jobs:
                   mkdir -p ./dist/.svelte-kit
                   cp -r .svelte-kit/cloudflare ./dist/.svelte-kit/cloudflare                  
                   cp wrangler.json ./dist/wrangler.json
-                  ls -R ./dist
 
             # Upload the release artifact before test would modify anything
             - name: Upload artifact
@@ -56,6 +55,7 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                   name: website-artifacts
+                  include-hidden-files: true
                   path: ./dist
 
             # Create a preview
