@@ -44,16 +44,21 @@
         return target ? `${decodeURIComponent(target)}` : '/game';
     });
 
-    type ExtraInfo = {
+    type HintInfo = {
         loginText?: string;
         allowGuest: boolean;
     };
-    let extraInfo: ExtraInfo = $derived.by(() => {
+    let extraInfo: HintInfo = $derived.by(() => {
         let hint = page.url.searchParams.get('hint') || '';
         switch (hint) {
-            case 'email-verify':
+            case 'email-confirm':
                 return {
-                    loginText: $t('login.info.emailVerify'),
+                    loginText: $t('login.info.emailConfirm'),
+                    allowGuest: false
+                };
+            case 'email-change':
+                return {
+                    loginText: $t('login.info.emailChange'),
                     allowGuest: false
                 };
             default:
@@ -126,9 +131,9 @@
                     >
                         <Typography variant="h1" class="hidden md:block">{$t('login.title')}</Typography>
                         {#if extraInfo.loginText}
-                            <Typography variant="h4">
-                                {extraInfo.loginText}
-                            </Typography>
+                            <Typography variant="h3" class="px-4">{extraInfo.loginText}</Typography>
+                        {:else}
+                            <Typography variant="h2" class="md:hidden">{$t('login.title')}</Typography>
                         {/if}
                         <!-- <div
                             class="rounded border w-[80%] max-w-[600px] aspect-video ms-16 mt-16 my-auto overflow-hidden hidden md:block"
@@ -137,10 +142,10 @@
                     </div>
 
                     <div
-                        class="flex flex-col flex-1 max-h-[60%] p-2 overflow-hidden items-center
+                        class="flex flex-col max-h-[60%] p-2 overflow-hidden items-center
                                md:flex-none md:self-center"
                     >
-                        <Box border class="overflow-y-auto flex-1">
+                        <Box border class="overflow-y-auto max-h-min">
                             <div class="flex flex-col gap-2 items-center py-2">
                                 {#each data.providers as provider}
                                     <Button

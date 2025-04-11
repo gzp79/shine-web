@@ -5,6 +5,7 @@
     "rememberMe": "Emlékezz rám",
     "continueAs": "Folytatás mint {{name}}",
     "info": {
-        "emailVerify": "E-mail művelet befejezése"
+        "emailConfirm": "E-mail-cím megerősítése",
+        "emailChange": "E-mail-cím megváltoztatása"
     }
 }

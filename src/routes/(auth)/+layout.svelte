@@ -36,12 +36,12 @@
     let loginUrl = $derived.by(() => {
         const targetPath = page.url.pathname;
         const targetParams = page.url.searchParams;
+        const hint = page.url.searchParams.get('hint') || '';
 
         const params = new URLSearchParams();
         if (targetPath.startsWith('/link')) {
             params.set('prompt', 'true');
             targetParams.set('silent', 'true');
-            const hint = targetPath.split('/').pop();
             if (hint) {
                 params.set('hint', hint);
             }
