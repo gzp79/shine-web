@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { Snippet } from 'svelte';
+    import { twMerge } from 'tailwind-merge';
     import TailwindClasses from './TailwindClasses.svelte';
     import { type ResponsiveProp, toResponsiveClass, toResponsiveProp } from './types/responsive-prop';
 
@@ -13,29 +14,33 @@
             | { col: Spaces | ResponsiveProp<Spaces>; row: Spaces | ResponsiveProp<Spaces> };
         columns?: Columns | ResponsiveProp<Columns>;
         dense?: boolean;
+        class?: string;
         children: Snippet;
     }
 
-    let { spacing = toResponsiveProp(2), columns, dense, children }: Props = $props();
+    let { spacing = toResponsiveProp(2), columns, dense, class: className, children }: Props = $props();
 
     let spacingClass = $derived(
         typeof spacing === 'object' && 'col' in spacing
-            ? [toResponsiveClass(spacing.col, (s) => `gap-x-${s}`), toResponsiveClass(spacing.row, (s) => `gap-y-${s}`)]
-            : [toResponsiveClass(spacing, (s) => `gap-${s}`)]
+            ? [
+                  toResponsiveClass(spacing.col, (m, s) => `${m}gap-x-${s}`),
+                  toResponsiveClass(spacing.row, (m, s) => `${m}gap-y-${s}`)
+              ]
+            : [toResponsiveClass(spacing, (m, s) => `${m}gap-${s}`)]
     );
 
-    let containerClass = $derived.by(() =>
-        [
-            `grid`,
+    let containerClass = $derived(
+        twMerge([
+            'grid',
             'auto-rows-fr',
             'auto-cols-fr',
-            columns && toResponsiveClass(columns, (s) => `grid-cols-${s}`),
+            columns && toResponsiveClass(columns, (m, s) => `${m}grid-cols-${s}`),
             dense && 'grid-flow-dense',
-            ...spacingClass
-        ]
-            .filter((x) => x)
-            .join(' ')
+            ...spacingClass,
+            className
+        ])
     );
+    $inspect(containerClass, 'containerClass');
 </script>
 
 <TailwindClasses

@@ -3,22 +3,22 @@
     "userName": "Név",
     "userId": "Azonosító",
     "role": "Szerepkör",
-    "email": "Email",
-    "noEmail": "Nincs email",
+    "email": "E-mail",
+    "noEmail": "Nincs e-mail",
     "registrationDate": "Regisztráció dátuma",
-    "linkWarning": "Fiókod jelenleg nincs összekapcsolva egyetlen közösségi hálózattal sem, így könnyen elveszítheted a hozzáférést.",
+    "linkWarning": "Fiókod jelenleg nincs összekapcsolva egyetlen közösségi hálózattal sem, ezért könnyen elveszítheted a hozzáférésedet.",
     "logout": "Kijelentkezés",
-    "logoutAll": "Minden eszközről kijelentkezés",
+    "logoutAll": "Kijelentkezés minden eszközről",
     "linkedIdentities": "Összekapcsolt azonosítók",
     "provider": "Szolgáltató",
-    "providerUserId": "Felhasználói azonosító",
+    "providerUserId": "Azonosító",
     "linkDate": "Összekapcsolás dátuma",
     "activeSessions": "Aktív munkamenetek",
     "sessionFingerprint": "Azonosító",
     "unlink": "Törlés",
     "link": "Összekapcsol",
     "linkTitle": "Azonosító összekapcsolása",
-    "userAgent": "Felhasználói ügynök",
+    "userAgent": "Böngésző azonosító",
     "loginDate": "Bejelentkezés dátuma",
     "location": "Helyszín",
     "activeTokens": "Aktív tokenek",
@@ -29,18 +29,18 @@
     "activeStatus": "Állapot",
     "expired": "lejárt",
     "active": "aktív",
-    "failedToLoadUserInfo": "Nem sikerült betölteni a felhasználói adatokat",
+    "failedToLoadUserInfo": "A felhasználói adatokat nem sikerült betölteni.",
     "emailModal": {
         "confirm": {
-            "title": "Email megerősítése",
-            "waiting": "Indítjuk az email megerősítését ...",
-            "completed": "Elküldtük a megerősítő emailt a megadott címre. Kérjük, ellenőrizd a beérkező levelek között."
+            "title": "E-mail megerősítése",
+            "waiting": "Az e-mail-cím megerősítése folyamatban van...",
+            "completed": "Elküldtük a megerősítő e-mailt a megadott címre. Kérjük, ellenőrizd a beérkező leveleket, valamint a spam mappát is."
         },
         "update": {
-            "title": "Email megváltoztatása",
-            "newEmail": "Új email cím",
-            "waiting": "Indítjuk az email megváltoztatását ...",
-            "completed": "Elküldtük a megerősítő emailt az új címre. Kérjük, ellenőrizd a beérkező levelek között."
+            "title": "E-mail megváltoztatása",
+            "newEmail": "Új e-mail cím",
+            "waiting": "Az e-mail-cím megváltoztatása folyamatban van...",
+            "completed": "Elküldtük a megerősítő e-mailt a megadott címre. Kérjük, ellenőrizd a beérkező leveleket, valamint a spam mappát is."
         }
     }
 }

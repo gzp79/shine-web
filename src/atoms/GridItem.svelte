@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { Snippet } from 'svelte';
+    import { twMerge } from 'tailwind-merge';
     import TailwindClasses from './TailwindClasses.svelte';
     import { type ResponsiveProp, toResponsiveClass } from './types/responsive-prop';
 
@@ -9,20 +10,20 @@
         size?: Spans | ResponsiveProp<Spans>;
         start?: Spans | ResponsiveProp<Spans>;
         span?: Spans | ResponsiveProp<Spans>;
+        class?: string;
 
         children: Snippet;
     }
 
-    let { size, start: offset, span, children }: Props = $props();
+    let { size, start: offset, span, class: className, children }: Props = $props();
 
     let itemClass = $derived(
-        [
-            size && toResponsiveClass(size, (size) => `col-span-${size}`),
-            offset && toResponsiveClass(offset, (offset) => `col-start-${offset}`),
-            span && toResponsiveClass(span, (span) => `row-span-${span}`)
-        ]
-            .filter((x) => x)
-            .join(' ')
+        twMerge([
+            size && toResponsiveClass(size, (m, size) => `${m}col-span-${size}`),
+            offset && toResponsiveClass(offset, (m, offset) => `${m}col-start-${offset}`),
+            span && toResponsiveClass(span, (m, span) => `${m}row-span-${span}`),
+            className
+        ])
     );
 </script>
 
