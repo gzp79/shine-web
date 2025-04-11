@@ -13,7 +13,7 @@
     },
     "routes": [
         {
-            "pattern": "www2.scytta.com",
+            "pattern": "www.scytta.com",
             "custom_domain": true
         }
     ]
