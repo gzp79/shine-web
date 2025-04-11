@@ -43,15 +43,16 @@ jobs:
                   npx wrangler deploy ./.svelte-kit/cloudflare/_worker.js --dry-run --outdir ./.svelte-kit/cloudflare-tmp
                   cp ./.svelte-kit/cloudflare-tmp/_worker.js ./.svelte-kit/cloudflare/_worker.js
 
-            - name: Collet artifacts
+            - name: Collect artifact items
               run: |
                   mkdir -p ./dist
-                  cp -r .svelte-kit/cloudflare ./dist/cloudflare
+                  cp -r .svelte-kit/cloudflare ./dist/cloudflare                  
                   cp wrangler.json ./dist/wrangler.json
+                  ls -R ./dist
 
             # Upload the release artifact before test would modify anything
             - name: Upload artifact
-              if: github.ref == 'refs/heads/master'
+              #   if: github.ref == 'refs/heads/master'
               uses: actions/upload-artifact@v4
               with:
                   name: website-artifacts
