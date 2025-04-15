@@ -4,6 +4,7 @@
     import { onMount } from 'svelte';
     import type { Action } from 'svelte/action';
     import type { RenderParameters, WidgetId } from 'turnstile-types';
+    import { afterBFCacheRestore } from '@atoms/types/bfcache';
 
     interface Props {
         /**
@@ -187,12 +188,14 @@
     let mounted = $state(false);
 
     /**
-     * Resets the widget.
-     * @param widgetId - The ID of the widget.
+     * Resets the widget and generates a new token.
      */
-    /*export const reset: TurnstileObject['reset'] = (): void => {
-        widgetId && window?.turnstile?.reset(widgetId);
-    };*/
+    export const reset = (): void => {
+        token = '';
+        if (widgetId) {
+            window?.turnstile?.reset(widgetId);
+        }
+    };
 
     const turnstileSettings = $derived({
         sitekey: siteKey,
@@ -266,6 +269,8 @@
             mounted = false;
         };
     });
+
+    afterBFCacheRestore(() => reset());
 </script>
 
 {#if loaded && mounted}

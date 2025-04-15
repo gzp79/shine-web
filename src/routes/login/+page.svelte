@@ -16,6 +16,7 @@
     import Typography from '@atoms/Typography.svelte';
     import Logo from '@atoms/icons/Logo.svelte';
     import { Dots } from '@atoms/icons/animated';
+    import { afterBFCacheRestore } from '@atoms/types/bfcache';
     import ErrorCard from '@components/ErrorCard.svelte';
     import Turnstile from '@components/Turnstile.svelte';
     import { setCurrentUserStore } from '@features/account/currentUser.svelte';
@@ -34,13 +35,10 @@
         startEmailChange: (email: string) => identityApi.startEmailChange(email),
         getLogoutUrl: (all: boolean, redirectUrl: string) => identityApi.getLogoutUrl(all, redirectUrl)
     });
-    $effect(() => {
-        currentUserStore.refresh();
-    });
 
     let prompt = $derived(page.url.searchParams.get('prompt'));
     let redirectUrl = $derived.by(() => {
-        const target = page.url.searchParams.get('target');
+        const target = page.url.searchParams.get('redirectUrl');
         return target ? `${decodeURIComponent(target)}` : '/game';
     });
 
@@ -85,10 +83,10 @@
                 logUser(`Redirecting user with an active session to ${redirectUrl}`);
                 goto(redirectUrl);
             } else {
-                const target = page.url.searchParams.get('target');
-                const loginUrl = target ? `/login?prompt=true&target=${target}` : '/login?prompt=true';
-                logUser(`Trying the remember me token with redirectUrl [${redirectUrl}] and loginUrl [${loginUrl}]`);
-                window.location.href = identityApi.getTokenLoginUrl(redirectUrl, loginUrl);
+                // if we have no authenticated user, try the token flow
+                // if it fails user will land on the error page, that should be redirected to the login with a prompt
+                logUser(`Trying the remember me token with redirectUrl [${redirectUrl}]`);
+                window.location.href = identityApi.getTokenLoginUrl(redirectUrl);
             }
         } else {
             logUser('Prompt for login');
@@ -99,6 +97,13 @@
                 hasCaptcha ? 5000 : 1000
             );
         }
+    });
+
+    $effect(() => {
+        currentUserStore.refresh();
+    });
+    afterBFCacheRestore(() => {
+        currentUserStore.refresh({ force: true });
     });
 </script>
 
