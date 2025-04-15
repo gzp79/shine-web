@@ -30,8 +30,8 @@ const config: Config<Partial<Params>> = {
         ...createLoader('common', 'common', [/.*/]),
         ...createLoader('validation', 'validation', [/.*/]),
         ...createLoader('account', 'account', [/account|design\/.*/]),
-        ...createLoader('login', 'login'),
-        ...createLoader('tools', 'tools')
+        ...createLoader('error', 'error'),
+        ...createLoader('login', 'login')
     ]
 };
 

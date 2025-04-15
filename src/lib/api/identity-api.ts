@@ -140,11 +140,10 @@ class IdentityApi {
         }
     }
 
-    getTokenLoginUrl(redirect: string, login: string): string {
+    getTokenLoginUrl(redirect: string): string {
         const redirectUrl = encodeURIComponent(`${this.webUrl}${redirect}`);
-        const loginUrl = encodeURIComponent(`${this.webUrl}${login}`);
         const errorUrl = encodeURIComponent(`${this.webUrl}/error`);
-        return `${this.serviceUrl}/identity/auth/token/login?redirectUrl=${redirectUrl}&loginUrl=${loginUrl}&errorUrl=${errorUrl}&rememberMe=false`;
+        return `${this.serviceUrl}/identity/auth/token/login?redirectUrl=${redirectUrl}&errorUrl=${errorUrl}&rememberMe=false`;
     }
 
     getGuestLoginUrl(captcha: string, redirect: string): string {

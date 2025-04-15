@@ -10,7 +10,7 @@
         { data: 'hu', caption: $t('lang.hu'), icon: flags.FlagHU }
     ];
 
-    //todo: let id = $props.id()
+    const id = $props.id();
 
     let language = languageStore();
     let current = $state(items.findIndex((x) => x.data === language.current));
@@ -20,12 +20,12 @@
     });
 </script>
 
-<Button variant="ghost" id="lang-trigger" endIcon={items[current].icon} />
+<Button variant="ghost" id={`lang-trigger-${id}`} endIcon={items[current].icon} />
 <Popper
     behavior="click"
     alignWidth
     display="flex flex-col rounded-lg border max-h-96 overflow-y-auto"
-    trigger="#lang-trigger"
+    trigger={`#lang-trigger-${id}`}
 >
     <InputGroup vertical size="sm">
         {#each items as item, index (item.data)}
