@@ -12,3 +12,18 @@ import Settings from './_settings.svelte';
 import Warning from './_warning.svelte';
 
 export { Check, Cross, Hamburger, Settings, Info, Warning, Light, Dark, DarkAndLight, Fatal, DropDown, Link };
+
+export const allIcons = {
+    Check: Check,
+    Cross: Cross,
+    Hamburger: Hamburger,
+    Settings: Settings,
+    Info: Info,
+    Warning: Warning,
+    Light: Light,
+    Dark: Dark,
+    DarkAndLight: DarkAndLight,
+    Fatal: Fatal,
+    DropDown: DropDown,
+    Link: Link
+};

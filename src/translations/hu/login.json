@@ -5,7 +5,12 @@
     "rememberMe": "Emlékezz rám",
     "continueAs": "Folytatás mint {{name}}",
     "info": {
-        "emailConfirm": "E-mail-cím megerősítése",
-        "emailChange": "E-mail-cím megváltoztatása"
-    }
+        "emailConfirm": "E\u2011mail cím megerősítése",
+        "emailChange": "E\u2011mail cím megváltoztatása",
+        "loginExpired": "A bejelentkezés lejárt, kérjük, jelentkezzen be újra"
+    },
+    "email": "Email",
+    "emailModalTitle": "Bejelentkezés e\u2011mail címmel",
+    "emailModalContinue": "Bejelentkezés",
+    "emailWaitUser": "Bejelentkezési e\u2011mailt küldtünk, kérjük, ellenőrizze a beérkező leveleit, és kattintson a hivatkozásra a bejelentkezéshez. Ha nem látja az e\u2011mailt, kérjük, ellenőrizze a levélszemét mappát."
 }

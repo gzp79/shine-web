@@ -12,13 +12,16 @@
     import Button from '@atoms/Button.svelte';
     import LoadingCard from '@atoms/LoadingCard.svelte';
     import Modal from '@atoms/Modal.svelte';
+    import Stack from '@atoms/Stack.svelte';
     import Toggle from '@atoms/Toggle.svelte';
     import Typography from '@atoms/Typography.svelte';
     import Logo from '@atoms/icons/Logo.svelte';
     import { Dots } from '@atoms/icons/animated';
     import { afterBFCacheRestore } from '@atoms/types/bfcache';
+    import { EmailSchema } from '@atoms/types/validator';
     import ErrorCard from '@components/ErrorCard.svelte';
     import Turnstile from '@components/Turnstile.svelte';
+    import ValidatedTextArea from '@components/ValidatedTextArea.svelte';
     import { setCurrentUserStore } from '@features/account/currentUser.svelte';
     import { providerIcon } from '@features/account/providers.svelte';
 
@@ -49,6 +52,11 @@
     let extraInfo: HintInfo = $derived.by(() => {
         let hint = page.url.searchParams.get('hint') || '';
         switch (hint) {
+            case 'login-expired':
+                return {
+                    loginText: $t('login.info.loginExpired'),
+                    allowGuest: true
+                };
             case 'email-confirm':
                 return {
                     loginText: $t('login.info.emailConfirm'),
@@ -76,6 +84,14 @@
     let waitLoading = $state(true);
     let showLoading = $derived(waitLoading || !captcha);
     let rememberMe = $state(true);
+    let providers = $state(data.providers.sort());
+
+    let showEmailInput = $state(false);
+    let email = $state('');
+    let isEmailValid = $state(false);
+    const emailLogin = () => {
+        showEmailInput = true;
+    };
 
     $effect(() => {
         if (!prompt) {
@@ -152,7 +168,17 @@
                     >
                         <Box border class="overflow-y-auto max-h-min">
                             <div class="flex flex-col gap-2 items-center py-2">
-                                {#each data.providers as provider (provider)}
+                                <Button
+                                    color="secondary"
+                                    wide
+                                    disabled={!captcha}
+                                    onclick={emailLogin}
+                                    startIcon={providerIcon('email')}
+                                    class="m-2"
+                                >
+                                    {$t('login.email')}
+                                </Button>
+                                {#each providers as provider (provider)}
                                     <Button
                                         color="secondary"
                                         wide
@@ -225,6 +251,29 @@
                     {$t('login.loadingCaptcha')}
                     <Dots class="inline-block h-8 w-8" />
                 </Typography>
+            </Modal>
+
+            <Modal isOpen={!showLoading && showEmailInput} caption={$t('login.emailModalTitle')}>
+                <Stack>
+                    <ValidatedTextArea
+                        rows="single"
+                        placeholder={$t('account.emailModal.update.newEmail')}
+                        class="w-full"
+                        validate={EmailSchema}
+                        bind:text={email}
+                        bind:valid={isEmailValid}
+                    />
+                    <Stack direction="row" spacing={1} class="justify-end">
+                        <Button onclick={() => (showEmailInput = false)}>{$t('common.cancel')}</Button>
+                        <Button
+                            color="secondary"
+                            disabled={!isEmailValid}
+                            href={identityApi.getEmailLoginUrl(email, rememberMe, captcha, redirectUrl)}
+                        >
+                            {$t('login.emailModalContinue')}
+                        </Button>
+                    </Stack>
+                </Stack>
             </Modal>
         {/if}
     </AppContent>

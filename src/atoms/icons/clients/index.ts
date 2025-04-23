@@ -9,3 +9,15 @@ import Opera from './_opera.svelte';
 import Safari from './_safari.svelte';
 
 export { Chrome, Edge, Opera, Safari, Firefox, Mobile, Android, IPhone, Mac };
+
+export const allIcons = {
+    Chrome: Chrome,
+    Edge: Edge,
+    Opera: Opera,
+    Safari: Safari,
+    Firefox: Firefox,
+    Mobile: Mobile,
+    Android: Android,
+    IPhone: IPhone,
+    Mac: Mac
+};

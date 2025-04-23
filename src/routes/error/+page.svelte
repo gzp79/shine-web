@@ -1,6 +1,8 @@
-<script>
+<script lang="ts">
     import { goto } from '$app/navigation';
     import { page } from '$app/state';
+    import App from '@lib/app/App.svelte';
+    import AppContent from '@lib/app/AppContent.svelte';
     import { t } from '@lib/i18n/i18n.svelte';
     import { logUser } from '@lib/loggers';
     import Button from '@atoms/Button.svelte';
@@ -17,11 +19,31 @@
             errorType === 'auth-error' ||
             errorType === 'auth-session-expired'
         ) {
-            logUser(`Redirecting to login page (${errorType})`);
-            return targetUrl ? `/login?prompt=true&target=${encodeURIComponent(targetUrl)}` : '/login?prompt=true';
+            let params: Record<string, string> = {
+                prompt: 'true'
+            };
+            if (errorType !== 'auth-login-required') {
+                params['hint'] = 'login-expired';
+            }
+            if (targetUrl) {
+                params['target'] = encodeURIComponent(targetUrl);
+            }
+            const searchParams = new URLSearchParams(params);
+            return `/login?${searchParams}`;
+        } else if (errorType === 'auth-email-login') {
+            return 'public/email-login';
         }
 
-        return '';
+        return undefined;
+    });
+
+    $effect(() => {
+        if (redirectUrl) {
+            logUser(`Redirecting to ${redirectUrl}`);
+            {
+                goto(redirectUrl);
+            }
+        }
     });
 
     let message = $derived.by(() => {
@@ -34,12 +56,14 @@
     });
 </script>
 
-{#if redirectUrl}
-    {goto(redirectUrl)}
-{:else}
-    <ErrorCard error={{ errorKind: 'other', message }}>
-        {#snippet actions()}
-            <Button color="primary" href={targetUrl || '/game'}>{$t('common.back')}</Button>
-        {/snippet}
-    </ErrorCard>
+{#if !redirectUrl}
+    <App>
+        <AppContent>
+            <ErrorCard error={{ errorKind: 'other', message }}>
+                {#snippet actions()}
+                    <Button color="primary" href={targetUrl || '/game'}>{$t('common.back')}</Button>
+                {/snippet}
+            </ErrorCard>
+        </AppContent>
+    </App>
 {/if}

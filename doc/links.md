@@ -24,4 +24,5 @@
     - <https://www.svgfind.com/vectors/wolf-doodle/>
 - dev tools
     - [Svg path editor](https://yqnn.github.io/svg-path-editor/)
+    - [Svg optimizer](https://svgomg.net/)
     - [Lots of css tools](https://dev.to/lissy93/super-useful-css-resources-1ba)

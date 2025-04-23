@@ -6,6 +6,11 @@
     "continueAs": "Continue as {{name}}",
     "info": {
         "emailConfirm": "Completing email confirmation",
-        "emailChange": "Completing email change"
-    }
+        "emailChange": "Completing email change",
+        "loginExpired": "Session expired, please login again"
+    },
+    "email": "Email",
+    "emailModalTitle": "Login with email",
+    "emailModalContinue": "Login",
+    "emailWaitUser": "Login email has been sent, please check your inbox and click the link to login. If you don't see the email, please check your spam folder."
 }
