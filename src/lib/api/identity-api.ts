@@ -4,8 +4,6 @@ import { logAPI } from '@lib/loggers';
 import { type Fetch, SchemaError, fetchCacheOption, fetchError } from '@lib/utils';
 import { DateStringSchema, OptionalSchema } from './schema-helpers';
 
-export const GUEST_PROVIDER_ID = 'guest';
-
 const ProviderSchema = z.object({
     providers: z.array(z.string())
 });
@@ -64,7 +62,7 @@ const ActiveSessionsSchema = z.object({
 });
 export type ActiveSessions = z.infer<typeof ActiveSessionsSchema>;
 
-const TokenKindSchema = z.enum(['singleAccess', 'persistent', 'access']);
+const TokenKindSchema = z.enum(['singleAccess', 'persistent', 'access', 'emailAccess']);
 export type TokenKind = z.infer<typeof TokenKindSchema>;
 
 const ActiveTokenSchema = z.object({
@@ -150,6 +148,12 @@ class IdentityApi {
         const redirectUrl = encodeURIComponent(`${this.webUrl}${redirect}`);
         const errorUrl = encodeURIComponent(`${this.webUrl}/error`);
         return `${this.serviceUrl}/identity/auth/guest/login?redirectUrl=${redirectUrl}&errorUrl=${errorUrl}&rememberMe=true&captcha=${captcha}`;
+    }
+
+    getEmailLoginUrl(email: string, rememberMe: boolean, captcha: string, redirect: string): string {
+        const redirectUrl = encodeURIComponent(`${this.webUrl}${redirect}`);
+        const errorUrl = encodeURIComponent(`${this.webUrl}/error`);
+        return `${this.serviceUrl}/identity/auth/email/login?email=${email}&redirectUrl=${redirectUrl}&errorUrl=${errorUrl}&rememberMe=${rememberMe}&captcha=${captcha}`;
     }
 
     async getExternalLoginProviders(fetch: Fetch): Promise<string[]> {

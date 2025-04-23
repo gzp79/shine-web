@@ -3,8 +3,8 @@
     "userName": "Név",
     "userId": "Azonosító",
     "role": "Szerepkör",
-    "email": "E-mail",
-    "noEmail": "Nincs e-mail",
+    "email": "E\u2011mail",
+    "noEmail": "Nincs e\u2011mail",
     "registrationDate": "Regisztráció dátuma",
     "linkWarning": "Fiókod jelenleg nincs összekapcsolva egyetlen közösségi hálózattal sem, ezért könnyen elveszítheted a hozzáférésedet.",
     "logout": "Kijelentkezés",
@@ -32,15 +32,15 @@
     "failedToLoadUserInfo": "A felhasználói adatokat nem sikerült betölteni.",
     "emailModal": {
         "confirm": {
-            "title": "E-mail megerősítése",
-            "waiting": "Az e-mail-cím megerősítése folyamatban van...",
-            "completed": "Elküldtük a megerősítő e-mailt a megadott címre. Kérjük, ellenőrizd a beérkező leveleket, valamint a spam mappát is."
+            "title": "E\u2011mail megerősítése",
+            "waiting": "Az e\u2011mail\u2011cím megerősítése folyamatban van...",
+            "completed": "Elküldtük a megerősítő e\u2011mailt a megadott címre. Kérjük, ellenőrizd a beérkező leveleket, valamint a spam mappát is."
         },
         "update": {
-            "title": "E-mail megváltoztatása",
-            "newEmail": "Új e-mail cím",
-            "waiting": "Az e-mail-cím megváltoztatása folyamatban van...",
-            "completed": "Elküldtük a megerősítő e-mailt a megadott címre. Kérjük, ellenőrizd a beérkező leveleket, valamint a spam mappát is."
+            "title": "E\u2011mail megváltoztatása",
+            "newEmail": "Új e\u2011mail cím",
+            "waiting": "Az e\u2011mail cím megváltoztatása folyamatban van...",
+            "completed": "Elküldtük a megerősítő e\u2011mailt a megadott címre. Kérjük, ellenőrizd a beérkező leveleket, valamint a spam mappát is."
         }
     }
 }
