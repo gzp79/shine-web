@@ -137,7 +137,7 @@
             <div class="relative flex flex-col h-full">
                 <div
                     class="absolute pointer-events-none left-0 top-0 size-full bg-cover bg-center bg-no-repeat opacity-[0.25]"
-                    style="background-image: url('{assets.loginBackground}'), url('{assets.loginBackground_alt}');"
+                    style="background-image: url('{assets.loginBackground}'), url('{config.assetUrl}/{assets.loginBackground_alt}');"
                 ></div>
 
                 <Logo class="h-[20%] w-full shrink-0 fill-current p-4 text-on-surface" />
