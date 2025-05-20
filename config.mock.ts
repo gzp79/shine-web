@@ -5,7 +5,6 @@ export const config = {
     builderUrl: 'https://cloud.scytta.com',
     webUrl: 'https://scytta.com:4443',
     assetUrl: 'https://scytta.com:4443',
-    staticUrl: 'https://scytta.com:4443',
 
     turnstile: {
         siteKey: '1x00000000000000000000BB'

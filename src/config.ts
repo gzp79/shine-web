@@ -8,7 +8,6 @@ export interface Config {
     builderUrl: string;
     webUrl: string;
     assetUrl: string;
-    staticUrl: string;
 
     // when null, mock is disabled
     mocks?: string[];
