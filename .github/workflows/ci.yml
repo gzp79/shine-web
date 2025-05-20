@@ -69,7 +69,7 @@ jobs:
 
             # Upload the release artifact before test would modify anything
             - name: Upload spa artifact
-              #if: github.ref == 'refs/heads/master'
+              if: github.ref == 'refs/heads/master'
               uses: actions/upload-artifact@v4
               with:
                   name: spa
@@ -78,14 +78,14 @@ jobs:
 
             # Upload the release artifact before test would modify anything
             - name: Upload asset artifact
-              #if: github.ref == 'refs/heads/master'
+              if: github.ref == 'refs/heads/master'
               uses: actions/upload-artifact@v4
               with:
                   name: assets
                   path: ./static-generated/assets
 
             # Create a preview
-            - name: Upload a preview site
+            - name: Upload preview site
               id: preview_deploy
               if: github.event_name == 'pull_request'
               uses: cloudflare/wrangler-action@v3
@@ -102,8 +102,8 @@ jobs:
               run: |
                   echo "**Deployment url**: <${DEPLOYMENT_URL}>" >> $GITHUB_STEP_SUMMARY
 
-            # upload the artifact to the ClodFlare R2 asset bucket
-            - name: Upload website artifacts
+            # upload the artifact to the CloudFlare R2 asset bucket
+            - name: Upload preview assets
               if: github.event_name == 'pull_request'
               env:
                   AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
@@ -121,18 +121,26 @@ jobs:
             contents: read
 
         steps:
-            - name: Download website artifacts
+            - name: Download spa artifacts
               uses: actions/download-artifact@v4
               with:
                   name: spa
                   path: ./dist
 
-            # Assets are already uploaded to the R2 bucket, we don't need to download them again
-            # - name: Download website artifacts
-            #   uses: actions/download-artifact@v4
-            #   with:
-            #       name: assets
-            #       path: ./assets
+            - name: Download asset artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  name: assets
+                  path: ./assets
+
+            - name: Upload assets
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+              run: |
+                  aws s3 sync ./assets s3://${BUCKET_NAME}/ \
+                      --endpoint-url=${BUCKET_LINK} \
+                      --cache-control "public, max-age=31536000, immutable"
 
             - name: Upload latest.json
               env:
