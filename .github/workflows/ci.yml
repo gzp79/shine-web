@@ -28,12 +28,24 @@ jobs:
               with:
                   node-version: 18.x
 
+            - name: Install AWS CLI
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+                  AWS_DEFAULT_REGION: auto
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y awscli
+                  aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
+                  aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
+                  aws configure set default.region "$AWS_DEFAULT_REGION"
+
             - name: Pre-build
               run: |
                   npm ci
                   npm run mkcert
                   npm run env:prod
-                  npm run build:assets
+                  npm run build:assets -- --version ${{ github.sha }}
                   npm run lint
                   npm run check
 
@@ -43,20 +55,28 @@ jobs:
                   npx wrangler deploy --dry-run --outdir ./.svelte-kit/cloudflare-tmp
                   cp ./.svelte-kit/cloudflare-tmp/_worker.js ./.svelte-kit/cloudflare/_worker.js
 
-            - name: Collect artifact items
+            - name: Collect spa artifact items
               run: |
                   mkdir -p ./dist
                   cp -r .svelte-kit/cloudflare ./dist/cloudflare
                   jq '.main = "cloudflare/_worker.js" | .assets.directory = "cloudflare"' wrangler.json > ./dist/wrangler.json
 
             # Upload the release artifact before test would modify anything
-            - name: Upload artifact
+            - name: Upload spa artifact
               if: github.ref == 'refs/heads/master'
               uses: actions/upload-artifact@v4
               with:
-                  name: website-artifacts
+                  name: spa
                   include-hidden-files: true
                   path: ./dist
+
+            # Upload the release artifact before test would modify anything
+            - name: Upload asset artifact
+              if: github.ref == 'refs/heads/master'
+              uses: actions/upload-artifact@v4
+              with:
+                  name: assets
+                  path: ./static-generated/assets
 
             # Create a preview
             - name: Upload a preview site
@@ -75,6 +95,17 @@ jobs:
                   DEPLOYMENT_URL: ${{ steps.preview_deploy.outputs.deployment-url }}
               run: |
                   echo "**Deployment url**: <${DEPLOYMENT_URL}>" >> $GITHUB_STEP_SUMMARY
+
+            # upload the artifact to the ClodFlare R2 asset bucket
+            - name: Upload website artifacts
+              if: github.event_name == 'pull_request'
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+              run: |
+                  aws s3 sync ./static-generated/assets s3://shine-assets/ \
+                      --endpoint-url=https://ce847ac4c44fb11af63e62ba34ec40db.r2.cloudflarestorage.com \
+                      --cache-control "public, max-age=31536000, immutable"
 
     deploy:
         needs: build
