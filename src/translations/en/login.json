@@ -5,12 +5,12 @@
     "rememberMe": "Remember me",
     "continueAs": "Continue as {{name}}",
     "info": {
-        "emailConfirm": "Completing email confirmation",
-        "emailChange": "Completing email change",
-        "loginExpired": "Session expired, please login again"
+        "emailConfirm": "Completing email confirmation request",
+        "emailChange": "Completing email change request",
+        "loginExpired": "Your session has expired, please log in again"
     },
     "email": "Email",
     "emailModalTitle": "Login with email",
     "emailModalContinue": "Login",
-    "emailWaitUser": "Login email has been sent, please check your inbox and click the link to login. If you don't see the email, please check your spam folder."
+    "emailWaitUser": "A login email has been sent. Please check your inbox and click the link to log in. If you don't see the email, check your spam folder."
 }

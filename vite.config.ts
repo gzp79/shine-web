@@ -14,10 +14,12 @@ if (config.environment === 'dev') {
 }
 
 const additionalAssets = [];
-additionalAssets.push({
-    src: 'static-generated/assets/*',
-    dest: 'assets/'
-});
+if (config.environment !== 'prod') {
+    additionalAssets.push({
+        src: 'static-generated/assets/*',
+        dest: ''
+    });
+}
 
 if (config.environment === 'mock') {
     console.log('  Mocking');

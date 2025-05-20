@@ -11,6 +11,10 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
     cancel-in-progress: true
 
+env:
+    BUCKET_LINK: https://ce847ac4c44fb11af63e62ba34ec40db.r2.cloudflarestorage.com
+    BUCKET_NAME: shine-assets
+
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -28,7 +32,19 @@ jobs:
               with:
                   node-version: 18.x
 
+            - name: Setup AWS CLI
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+                  AWS_DEFAULT_REGION: auto
+              run: |
+                  aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
+                  aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
+                  aws configure set default.region "$AWS_DEFAULT_REGION"
+
             - name: Pre-build
+              env:
+                  ASSET_VERSION: ${{ github.sha }}
               run: |
                   npm ci
                   npm run mkcert
@@ -38,25 +54,35 @@ jobs:
                   npm run check
 
             - name: Build
+              env:
+                  ASSET_VERSION: ${{ github.sha }}
               run: |
                   npm run build
                   npx wrangler deploy --dry-run --outdir ./.svelte-kit/cloudflare-tmp
                   cp ./.svelte-kit/cloudflare-tmp/_worker.js ./.svelte-kit/cloudflare/_worker.js
 
-            - name: Collect artifact items
+            - name: Collect spa artifact items
               run: |
                   mkdir -p ./dist
                   cp -r .svelte-kit/cloudflare ./dist/cloudflare
                   jq '.main = "cloudflare/_worker.js" | .assets.directory = "cloudflare"' wrangler.json > ./dist/wrangler.json
 
             # Upload the release artifact before test would modify anything
-            - name: Upload artifact
-              if: github.ref == 'refs/heads/master'
+            - name: Upload spa artifact
+              #if: github.ref == 'refs/heads/master'
               uses: actions/upload-artifact@v4
               with:
-                  name: website-artifacts
+                  name: spa
                   include-hidden-files: true
                   path: ./dist
+
+            # Upload the release artifact before test would modify anything
+            - name: Upload asset artifact
+              #if: github.ref == 'refs/heads/master'
+              uses: actions/upload-artifact@v4
+              with:
+                  name: assets
+                  path: ./static-generated/assets
 
             # Create a preview
             - name: Upload a preview site
@@ -76,6 +102,17 @@ jobs:
               run: |
                   echo "**Deployment url**: <${DEPLOYMENT_URL}>" >> $GITHUB_STEP_SUMMARY
 
+            # upload the artifact to the ClodFlare R2 asset bucket
+            - name: Upload website artifacts
+              if: github.event_name == 'pull_request'
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+              run: |
+                  aws s3 sync ./static-generated/assets s3://${BUCKET_NAME}/ \
+                      --endpoint-url=${BUCKET_LINK} \
+                      --cache-control "public, max-age=31536000, immutable"
+
     deploy:
         needs: build
         if: github.ref == 'refs/heads/master'
@@ -87,8 +124,25 @@ jobs:
             - name: Download website artifacts
               uses: actions/download-artifact@v4
               with:
-                  name: website-artifacts
+                  name: spa
                   path: ./dist
+
+            # Assets are already uploaded to the R2 bucket, we don't need to download them again
+            # - name: Download website artifacts
+            #   uses: actions/download-artifact@v4
+            #   with:
+            #       name: assets
+            #       path: ./assets
+
+            - name: Upload latest.json
+              env:
+                  AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+                  AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+              run: |
+                  echo '{ "version": "'${{ github.sha }}'" }' > ./latest.json
+                  aws s3 cp ./latest.json s3://${BUCKET_NAME}/latest.json \
+                      --endpoint-url=${BUCKET_LINK} \
+                      --cache-control "no-cache, no-store, must-revalidate"
 
             - name: Publish website to site
               uses: cloudflare/wrangler-action@v3

@@ -7,7 +7,7 @@ export interface Config {
     identityUrl: string;
     builderUrl: string;
     webUrl: string;
-    contentUrl: string;
+    assetUrl: string;
 
     // when null, mock is disabled
     mocks?: string[];

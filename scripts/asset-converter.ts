@@ -15,7 +15,6 @@ const contentInputDir = path.join(root, 'assets');
 const contentFile = path.join(contentInputDir, 'assets.json');
 
 const contentOutputDir = path.join(root, 'static-generated/assets');
-const contentPrefix = '/assets';
 const linkContentFile = path.join(root, 'src/generated/assets.ts');
 
 type ConverterType = 'group' | 'copy' | 'minimizeSVG' | 'minimizeYAML' | 'convertWebP';
@@ -172,20 +171,20 @@ function flattenContents(module: string | null, contents: Record<string, any>): 
     return result;
 }
 
-function toContentLink(contentPrefix: string, relativeTargetPath: string): string {
-    const targetPath = path.join(contentPrefix, relativeTargetPath);
-    const normalizedPath = targetPath.replace(/\\/g, '/');
+function toContentLink(relativeTargetPath: string): string {
+    const normalizedPath = relativeTargetPath.replace(/\\/g, '/');
     return normalizedPath;
 }
 
-async function convertContent(force: boolean): Promise<Record<string, Content>> {
+async function convertContent(force: boolean, version: string): Promise<Record<string, Content>> {
     const rawContents: Record<string, Task> = JSON.parse(await fs.readFile(contentFile, 'utf-8'));
     const contents: Record<string, Task> = flattenContents(null, rawContents);
 
     const contentMap: Record<string, Content> = {};
 
     console.log(`Creating directory: ${contentOutputDir}`);
-    await fs.mkdir(contentOutputDir, { recursive: true });
+    const targetFolder = path.join(contentOutputDir, version);
+    await fs.mkdir(targetFolder, { recursive: true });
 
     for (const [key, task] of Object.entries(contents)) {
         const sourcePath = path.join(contentInputDir, task.path);
@@ -206,12 +205,12 @@ async function convertContent(force: boolean): Promise<Record<string, Content>> 
 
         const variants = converter.getVariants(content);
         for (const variant of variants) {
-            const relativeTargetPath = `${rev}${variant.postfix}`;
+            const relativeTargetPath = path.join(version, `${rev}${variant.postfix}`);
             content.targets[variant.variant] = relativeTargetPath;
         }
 
         const relativeTargetPaths = Object.values(content.targets);
-        const targetLinks = relativeTargetPaths.map((x) => toContentLink(contentPrefix, x));
+        const targetLinks = relativeTargetPaths.map((x) => toContentLink(x));
         console.log(`[${task.path}] Converting (${task.converter}): ${sourcePath} -> [${targetLinks.join(', ')}]`);
         if (force || (await isFileOutdated(task.path, sourcePath, relativeTargetPaths))) {
             await converter.convert(content);
@@ -243,7 +242,7 @@ async function createLinkFile(contents: Record<string, Content>) {
         }
         const distKey = toContentName(key);
         for (const [suffix, filePath] of Object.entries(content.targets)) {
-            const targetPath = toContentLink(contentPrefix, filePath);
+            const targetPath = toContentLink(filePath);
             linkContent.push(`    ${distKey}${suffix}: '${targetPath}', // ${content.task.path}`);
         }
     }
@@ -267,8 +266,18 @@ async function createLinkFile(contents: Record<string, Content>) {
 
 async function main() {
     const force = process.argv.includes('--force');
+    // parse --version=version
+    const versionArg = process.argv.find((arg) => arg.startsWith('--version='));
+    let version = versionArg ? versionArg.split('=')[1] : undefined;
 
-    const map = await convertContent(force);
+    if (process.env.ASSET_VERSION && !version) {
+        version = process.env.ASSET_VERSION;
+    }
+    if (!version) {
+        version = 'custom';
+    }
+
+    const map = await convertContent(force, version);
     await createLinkFile(map);
 }
 
