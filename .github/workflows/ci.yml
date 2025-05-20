@@ -39,11 +39,13 @@ jobs:
                   aws configure set default.region "$AWS_DEFAULT_REGION"
 
             - name: Pre-build
+              env:
+                  ASSET_VERSION: ${{ github.sha }}
               run: |
                   npm ci
                   npm run mkcert
                   npm run env:prod
-                  npm run build:assets -- --version ${{ github.sha }}
+                  npm run build:assets
                   npm run lint
                   npm run check
 
@@ -61,7 +63,7 @@ jobs:
 
             # Upload the release artifact before test would modify anything
             - name: Upload spa artifact
-              if: github.ref == 'refs/heads/master'
+              #if: github.ref == 'refs/heads/master'
               uses: actions/upload-artifact@v4
               with:
                   name: spa
@@ -70,7 +72,7 @@ jobs:
 
             # Upload the release artifact before test would modify anything
             - name: Upload asset artifact
-              if: github.ref == 'refs/heads/master'
+              #if: github.ref == 'refs/heads/master'
               uses: actions/upload-artifact@v4
               with:
                   name: assets
@@ -116,8 +118,14 @@ jobs:
             - name: Download website artifacts
               uses: actions/download-artifact@v4
               with:
-                  name: website-artifacts
+                  name: spa
                   path: ./dist
+
+            - name: Download website artifacts
+              uses: actions/download-artifact@v4
+              with:
+                  name: assets
+                  path: ./assets
 
             - name: Publish website to site
               uses: cloudflare/wrangler-action@v3

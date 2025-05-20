@@ -268,7 +268,14 @@ async function main() {
     const force = process.argv.includes('--force');
     // parse --version=version
     const versionArg = process.argv.find((arg) => arg.startsWith('--version='));
-    const version = versionArg ? versionArg.split('=')[1] : 'custom';
+    let version = versionArg ? versionArg.split('=')[1] : undefined;
+
+    if (process.env.ASSET_VERSION && !version) {
+        version = process.env.ASSET_VERSION;
+    }
+    if (!version) {
+        version = 'custom';
+    }
 
     const map = await convertContent(force, version);
     await createLinkFile(map);
