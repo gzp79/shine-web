@@ -3,6 +3,7 @@ export const config = {
 
     identityUrl: 'https://cloud.scytta.com',
     builderUrl: 'https://cloud.scytta.com',
+    builderWSUrl: 'https://ws.scytta.com',
     webUrl: 'https://scytta.com:4443',
     assetUrl: 'https://scytta.com:4443',
 

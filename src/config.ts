@@ -6,6 +6,7 @@ export interface Config {
 
     identityUrl: string;
     builderUrl: string;
+    builderWSUrl: string;
     webUrl: string;
     assetUrl: string;
 
