@@ -40,6 +40,7 @@
                 { title: 'Buttons', href: 'atoms/buttons' },
                 { title: 'Toggle', href: 'atoms/toggles' },
                 { title: 'Text Area', href: 'atoms/text-area' },
+                { title: 'Progress', href: 'atoms/progress' },
                 { title: 'Input Groups', href: 'atoms/input-groups' },
                 { title: 'ComboButtons', href: 'atoms/combo-buttons' }
             ]
@@ -64,6 +65,10 @@
                 { title: 'Active Sessions', href: 'features/account/active-sessions' },
                 { title: 'Active Tokens', href: 'features/account/active-tokens' }
             ]
+        },
+        {
+            title: 'Game',
+            items: [{ title: 'Game Canvas', href: 'features/game' }]
         }
     ].filter(Boolean) as MenuItem[];
 </script>

@@ -98,7 +98,7 @@
                 </div>
             {/if}
 
-            <div class="max-h-md min-h-3 w-full overflow-y-auto overflow-x-hidden flex justify-center">
+            <div class="max-h-mdv min-h-3 w-full overflow-y-auto overflow-x-hidden flex justify-center">
                 {#if children}
                     <div class={innerCls}>
                         {@render children()}

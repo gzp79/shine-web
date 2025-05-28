@@ -24,6 +24,7 @@ declare global {
 
     interface Window {
         turnstile?: TurnstileObject;
+        games?: string[];
     }
 }
 
