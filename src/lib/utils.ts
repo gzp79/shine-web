@@ -26,6 +26,14 @@ export class FetchError implements AppError {
     ) {}
 }
 
+export class OtherError implements AppError {
+    errorKind: ErrorKind = 'other';
+    constructor(
+        public message: string,
+        public detail?: unknown
+    ) {}
+}
+
 export class SchemaError implements AppError {
     errorKind: ErrorKind = 'schema';
 

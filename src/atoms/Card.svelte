@@ -66,7 +66,7 @@
             </Typography>
         {/if}
 
-        <div class="max-h-md min-h-3 overflow-y-auto overflow-x-hidden bg-inherit md:px-1">
+        <div class="max-h-mdv min-h-3 overflow-y-auto overflow-x-hidden bg-inherit md:px-1">
             {#if children}
                 <div class="min-h-min w-full px-1 md:px-4 {icon && caption && 'ps-2'}">
                     {@render children()}
