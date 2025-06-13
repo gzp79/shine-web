@@ -10,6 +10,11 @@ export const logResource = {
     warn: debug('warn:resources')
 };
 export const logUser = debug('log:user');
+export const logGame = {
+    log: debug('log:game'),
+    warn: debug('warn:game')
+};
+
 export const logI18n = debug('log:i18n');
 
 export const logDesigner = debug('log:design');

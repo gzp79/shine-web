@@ -91,7 +91,7 @@
             <div class="flex h-full items-center justify-center">
                 <ErrorCard caption={$t('account.failedToLoadUserInfo')} error={currentUserStore.error}>
                     {#snippet actions()}
-                        <Button onclick={() => currentUserStore.refresh()}>{$t('common.retry')}</Button>
+                        <Button onclick={() => currentUserStore.refresh({ force: true })}>{$t('common.retry')}</Button>
                     {/snippet}
                 </ErrorCard>
             </div>

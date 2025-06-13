@@ -130,7 +130,7 @@
         {:else if currentUserStore.isError}
             <ErrorCard caption={$t('account.failedToLoadUserInfo')} error={currentUserStore.error}>
                 {#snippet actions()}
-                    <Button onclick={() => currentUserStore.refresh()}>{$t('common.retry')}</Button>
+                    <Button onclick={() => currentUserStore.refresh({ force: true })}>{$t('common.retry')}</Button>
                 {/snippet}
             </ErrorCard>
         {:else}

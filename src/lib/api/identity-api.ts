@@ -104,11 +104,13 @@ class IdentityApi {
     async getCurrentUser(fetch: Fetch): Promise<CurrentUser> {
         logAPI('getCurrentUser...');
         const url = `${this.serviceUrl}/identity/api/auth/user/info?method=full`;
+        logAPI('getCurrentUser url', url);
         const response = await fetch(url, {
             method: 'GET',
             credentials: 'include',
             ...fetchCacheOption('no-store')
         });
+        logAPI('getCurrentUser response', response);
         if (response.ok) {
             const user = (await parseResponse(CurrentUserSchema, response)) as CurrentUser;
             logAPI('getCurrentUser completed,', user);

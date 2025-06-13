@@ -1,9 +1,18 @@
 <script lang="ts">
+    import { config } from '@config';
     import Box from '@atoms/Box.svelte';
-    import Game from '@features/game/Game.svelte';
+    import Game, { GAME_BASE_NAME } from '@features/game/Game.svelte';
     import Story from '../../_components/_Story.svelte';
 
-    const url = 'https://game.scytta.com/bb7f01d30bd74b1033cf93b31d197a4c5e8ec4145/shine-client_bg.wasm';
+    interface Props {
+        data: {
+            gameUrl: string;
+        };
+    }
+    let { data }: Props = $props();
+
+    let customVersion = $state('');
+    let url = $derived(customVersion ? `${config.assetUrl}/${customVersion}/${GAME_BASE_NAME}_bg.wasm` : data.gameUrl);
 </script>
 
 <Story variant="center">

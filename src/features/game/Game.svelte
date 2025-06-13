@@ -1,5 +1,31 @@
+<script lang="ts" module>
+    import { config } from '@config';
+    import { fetchError } from '@lib/utils';
+
+    export const GAME_BASE_NAME = 'shine-client';
+
+    export async function fetchLatestGameUrl(fetch: typeof globalThis.fetch): Promise<string> {
+        const targetBaseUrl = config.gameUrl;
+        logGame.log('fetchLatestGameUrl', targetBaseUrl);
+        const latestUrl = `${targetBaseUrl}/latest.json`;
+        const response = await fetch(latestUrl);
+
+        if (!response.ok) {
+            const error = await fetchError('Failed to fetch latest game version', response);
+            throw error;
+        }
+
+        const { version } = await response.json();
+        logGame.log('fetchLatestGameUrl version', version);
+
+        // Return the full URL to the WASM file
+        return `${targetBaseUrl}/${version}/${GAME_BASE_NAME}_bg.wasm`;
+    }
+</script>
+
 <script lang="ts">
     import { onMount, untrack } from 'svelte';
+    import { logGame } from '@lib/loggers';
     import { type AppError, OtherError } from '@lib/utils';
     import ProgressBar from '@atoms/ProgressBar.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';
@@ -12,11 +38,10 @@
 
     interface Props {
         readonly url: string;
-        readonly jsUrl?: string;
     }
 
-    const { url, jsUrl: jsUrlBase }: Props = $props();
-    const jsUrl = jsUrlBase ?? url.replace(/_bg\.wasm$/, '.js');
+    const { url }: Props = $props();
+    const jsUrl = url.replace(/_bg\.wasm$/, '.js');
 
     let id = $props.id();
 
@@ -115,6 +140,7 @@
 
     onMount(() => {
         const controller = new AbortController();
+
         fetchGame(url, controller.signal).catch((error) => {
             console.error('Error fetching game:', error);
         });
