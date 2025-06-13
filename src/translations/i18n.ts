@@ -29,7 +29,7 @@ const config: Config<Partial<Params>> = {
     loaders: [
         ...createLoader('common', 'common', [/.*/]),
         ...createLoader('validation', 'validation', [/.*/]),
-        ...createLoader('account', 'account', [/account|design\/.*/]),
+        ...createLoader('account', 'account', [/.*/]),
         ...createLoader('error', 'error'),
         ...createLoader('login', 'login', [/login|public\/email-login/])
     ]

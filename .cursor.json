@@ -1,0 +1,18 @@
+{
+    "mcp": {
+        "enabled": true,
+        "model": "gpt-4",
+        "temperature": 0.1,
+        "maxTokens": 4000,
+        "systemPrompt": "You are an AI assistant specialized in SvelteKit and Svelte 5 development. You understand the new runes syntax ($state, $derived, etc.) and SvelteKit's file-based routing system. Always use TypeScript and follow Svelte's best practices. Prefer runes over traditional reactive statements when possible.",
+        "fileTypes": {
+            ".svelte": true,
+            ".ts": true,
+            ".js": true
+        },
+        "contextSettings": {
+            "includePaths": ["src/**/*.svelte", "src/**/*.ts", "src/**/*.js", "svelte.config.js", "vite.config.ts"],
+            "excludePaths": ["node_modules", ".svelte-kit", "build", "static"]
+        }
+    }
+}

@@ -9,6 +9,7 @@ export interface Config {
     builderWSUrl: string;
     webUrl: string;
     assetUrl: string;
+    gameUrl: string;
 
     // when null, mock is disabled
     mocks?: string[];

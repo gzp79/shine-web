@@ -12,7 +12,8 @@
     //let errorStatus = $derived(page.url.searchParams.get('status'));
     let targetUrl = $derived(page.url.searchParams.get('redirectUrl'));
 
-    let redirectUrl = $derived.by(() => {
+    // For some error types, we want to automatically redirect the user
+    let autoRedirectUrl = $derived.by(() => {
         if (
             errorType === 'auth-login-required' ||
             errorType === 'auth-token-expired' ||
@@ -38,10 +39,10 @@
     });
 
     $effect(() => {
-        if (redirectUrl) {
-            logUser(`Redirecting to ${redirectUrl}`);
+        if (autoRedirectUrl) {
+            logUser(`Redirecting to ${autoRedirectUrl}`);
             {
-                goto(redirectUrl);
+                goto(autoRedirectUrl);
             }
         }
     });
@@ -56,7 +57,7 @@
     });
 </script>
 
-{#if !redirectUrl}
+{#if !autoRedirectUrl}
     <App>
         <AppContent>
             <ErrorCard error={{ errorKind: 'other', message }}>

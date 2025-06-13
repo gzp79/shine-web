@@ -10,7 +10,7 @@ import { config } from './src/generated/config';
 console.log(`Environment: (${config.environment})`);
 
 if (config.environment === 'dev') {
-    process.env.DEBUG = 'log:user, warn:*';
+    process.env.DEBUG = 'log:user, log:game, warn:*';
 }
 
 const additionalAssets = [];
