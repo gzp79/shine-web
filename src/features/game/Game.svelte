@@ -37,6 +37,7 @@
     }
 
     interface Props {
+        // The url of the GAME wasm file, it is not reactive!
         readonly url: string;
     }
 
