@@ -6,5 +6,5 @@
 </script>
 
 <AppContent class="w-full h-full items-center justify-center">
-    <Game url={data.gameUrl} />
+    <Game url={data.gameUrls.game} />
 </AppContent>

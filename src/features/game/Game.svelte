@@ -4,9 +4,9 @@
 
     export const GAME_BASE_NAME = 'shine-client';
 
-    export async function fetchLatestGameUrl(fetch: typeof globalThis.fetch): Promise<string> {
+    export async function fetchLatestGameUrls(fetch: typeof globalThis.fetch): Promise<Record<string, string>> {
         const targetBaseUrl = config.gameUrl;
-        logGame.log('fetchLatestGameUrl', targetBaseUrl);
+        logGame.log('gameUrl Base', targetBaseUrl);
         const latestUrl = `${targetBaseUrl}/latest.json`;
         const response = await fetch(latestUrl);
 
@@ -15,11 +15,18 @@
             throw error;
         }
 
-        const { version } = await response.json();
-        logGame.log('fetchLatestGameUrl version', version);
+        const { version, examples } = await response.json();
+        logGame.log('game version', version);
+        logGame.log('examples examples', examples);
 
-        // Return the full URL to the WASM file
-        return `${targetBaseUrl}/${version}/${GAME_BASE_NAME}_bg.wasm`;
+        let gameUrls: Record<string, string> = {
+            game: `${targetBaseUrl}/${version}/${GAME_BASE_NAME}`
+        };
+        for (const example of examples) {
+            gameUrls[example.name] = `${targetBaseUrl}/${version}/${example}`;
+        }
+
+        return gameUrls;
     }
 </script>
 
@@ -37,12 +44,15 @@
     }
 
     interface Props {
-        // The url of the GAME wasm file, it is not reactive!
+        // The base url of the GAME, it is not reactive!
         readonly url: string;
     }
 
     const { url }: Props = $props();
-    const jsUrl = url.replace(/_bg\.wasm$/, '.js');
+
+    //const externalUrl = `${url}.html`;
+    const wasmUrl = `${url}_bg.wasm`;
+    const jsUrl = `${url}.js`;
 
     let id = $props.id();
 
@@ -142,7 +152,7 @@
     onMount(() => {
         const controller = new AbortController();
 
-        fetchGame(url, controller.signal).catch((error) => {
+        fetchGame(wasmUrl, controller.signal).catch((error) => {
             console.error('Error fetching game:', error);
         });
 
