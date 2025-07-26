@@ -7,6 +7,7 @@
     import { t } from '$lib/i18n/i18n.svelte';
     import { logUser } from '$lib/loggers';
     import { type Snippet, onMount } from 'svelte';
+    import { SvelteURLSearchParams } from 'svelte/reactivity';
     import Button from '@atoms/Button.svelte';
     import LoadingCard from '@atoms/LoadingCard.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';
@@ -38,7 +39,7 @@
         const targetParams = page.url.searchParams;
         const hint = page.url.searchParams.get('hint') || '';
 
-        const params = new URLSearchParams();
+        const params = new SvelteURLSearchParams();
         if (targetPath.startsWith('/link')) {
             params.set('prompt', 'true');
             targetParams.set('silent', 'true');

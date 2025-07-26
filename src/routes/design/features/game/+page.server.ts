@@ -1,10 +1,10 @@
 import { redirect } from '@sveltejs/kit';
-import { fetchLatestGameUrl } from '@features/game/Game.svelte';
+import { fetchLatestGameUrls } from '@features/game/Game.svelte';
 
 export const load = async ({ fetch }: { fetch: typeof window.fetch }) => {
     try {
-        const gameUrl = await fetchLatestGameUrl(fetch);
-        return { gameUrl };
+        const gameUrls = await fetchLatestGameUrls(fetch);
+        return { gameUrls };
     } catch {
         throw redirect(303, '/error?redirectUrl=/design/features/game');
     }

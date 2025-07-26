@@ -1,32 +1,22 @@
 <script lang="ts">
     import Box from '@atoms/Box.svelte';
     import Stack from '@atoms/Stack.svelte';
-    import Game, { GAME_BASE_NAME } from '@features/game/Game.svelte';
+    import Game from '@features/game/Game.svelte';
     import { Select, settingsStore } from '../../_components';
     import Story from '../../_components/_Story.svelte';
 
     interface Props {
         data: {
-            gameUrl: string;
+            gameUrls: Record<string, string>;
         };
     }
     let { data }: Props = $props();
 
-    const examples = [
-        'camera_follow',
-        'camera_free',
-        'camera_look_at',
-        'camera_orbit',
-        'input_actions',
-        'input_pointer',
-        'none'
-    ];
+    const examples = Array.from(Object.keys(data.gameUrls)).filter((name) => name !== 'game');
 
-    let example1 = $state('camera_follow');
+    let example1 = $state(examples[0]);
     let example2 = $state('none');
-    let urls = $derived(
-        [example1, example2].map((x) => (x === 'none' ? [] : [data.gameUrl.replace(GAME_BASE_NAME, `${x}`)])).flat()
-    );
+    let urls = $derived([example1, example2].filter((x) => x !== 'none').map((x) => data.gameUrls[x]));
 
     settingsStore().set(settings);
 </script>

@@ -65,7 +65,7 @@
         }
 
         try {
-            const msg = (result as z.ZodError).errors[0]?.message;
+            const msg = (result as z.ZodError).message;
             const { token, ...args } = JSON.parse(msg);
             return $t(token, args);
         } catch {
