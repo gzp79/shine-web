@@ -7,8 +7,8 @@ export const DateStringSchema = z
     })
     .transform((str) => new Date(str));
 
-export const OptionalSchema = <T extends z.ZodTypeAny>(schema: T) =>
+export const OptionalSchema = <T extends z.ZodType>(schema: T) =>
     schema
-        .optional()
         .nullable()
-        .transform((value) => (value === null ? undefined : value));
+        .transform((value) => (value === null ? undefined : value))
+        .optional();

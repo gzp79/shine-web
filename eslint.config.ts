@@ -1,5 +1,5 @@
 import js from '@eslint/js';
-import stylisticTs from '@stylistic/eslint-plugin-ts';
+import stylistic from '@stylistic/eslint-plugin';
 import prettier from 'eslint-config-prettier';
 import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
@@ -14,7 +14,7 @@ export default [
     ...svelte.configs['flat/prettier'],
     {
         plugins: {
-            '@stylistic/ts': stylisticTs
+            '@stylistic': stylistic
         },
         languageOptions: {
             globals: {
@@ -36,7 +36,7 @@ export default [
                     ignoreRestSiblings: true
                 }
             ],
-            '@stylistic/ts/quotes': ['error', 'single']
+            '@stylistic/quotes': ['error', 'single']
         }
     },
     {

@@ -12,7 +12,7 @@
         text: string;
     };
 
-    let room = $derived(page.params.room);
+    let room = $derived(page.params.room || '');
     let isConnected = $state(false);
     let currentMessage = $state('');
     let history: ChatMessage[] = $state.raw([]);

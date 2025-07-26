@@ -15,15 +15,15 @@
             throw error;
         }
 
-        const { version, examples } = await response.json();
+        const { version, examples }: { version: string; examples: string[] } = await response.json();
         logGame.log('game version', version);
-        logGame.log('examples examples', examples);
+        logGame.log('examples', examples);
 
         let gameUrls: Record<string, string> = {
             game: `${targetBaseUrl}/${version}/${GAME_BASE_NAME}`
         };
         for (const example of examples) {
-            gameUrls[example.name] = `${targetBaseUrl}/${version}/${example}`;
+            gameUrls[example] = `${targetBaseUrl}/${version}/${example}`;
         }
 
         return gameUrls;

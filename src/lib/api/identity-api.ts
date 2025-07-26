@@ -84,7 +84,7 @@ const ActiveTokensSchema = z.object({
 });
 export type ActiveTokens = z.infer<typeof ActiveTokensSchema>;
 
-async function parseResponse<T extends z.AnyZodObject>(schema: T, response: Response): Promise<z.infer<T>> {
+async function parseResponse<T extends z.ZodObject>(schema: T, response: Response): Promise<z.infer<T>> {
     const data = await response.json();
     try {
         return schema.parse(data);
