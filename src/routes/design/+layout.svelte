@@ -25,6 +25,7 @@
                 { title: 'Colors', href: 'atoms/colors' },
                 { title: 'Typography', href: 'atoms/typography' },
                 { title: 'Icons', href: 'atoms/icons' },
+                { title: 'Assets', href: 'atoms/assets' },
                 { title: 'Boxes', href: 'atoms/boxes' },
                 { title: 'Stacks', href: 'atoms/stacks' },
                 { title: 'Grids', href: 'atoms/grids' },

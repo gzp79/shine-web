@@ -36,7 +36,8 @@ export default [
                     ignoreRestSiblings: true
                 }
             ],
-            '@stylistic/quotes': ['error', 'single']
+            '@stylistic/quotes': ['error', 'single'],
+            'svelte/no-navigation-without-resolve': ['warn']
         }
     },
     {

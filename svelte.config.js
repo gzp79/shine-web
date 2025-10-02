@@ -17,6 +17,15 @@ const config = {
             '@atoms': './src/atoms',
             '@components': './src/components',
             '@features': './src/features'
+        },
+        experimental: {
+            remoteFunctions: true
+        }
+    },
+
+    compilerOptions: {
+        experimental: {
+            async: true
         }
     }
 };

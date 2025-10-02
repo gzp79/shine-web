@@ -7,6 +7,7 @@ import debug from 'debug';
 export const logAPI = debug('log:api');
 export const logResource = {
     log: debug('log:resources'),
+    info: debug('info:resources'),
     warn: debug('warn:resources')
 };
 export const logUser = debug('log:user');
