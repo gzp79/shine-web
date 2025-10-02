@@ -91,7 +91,7 @@
         }
     });
 
-    const startGame = async (jsBlob: Blob, buffer: Uint8Array[]) => {
+    const startGame = async (jsBlob: Blob, buffer: Uint8Array<ArrayBuffer>[]) => {
         console.log('Importing JS');
         // loading the JS module through an object url makes it as distinct script and instantiates a new module scope
         jsModule = await import(/* @vite-ignore */ URL.createObjectURL(jsBlob));
@@ -100,7 +100,7 @@
         }
 
         console.log('Initializing game');
-        wasmModule = new Blob(buffer as BlobPart[], { type: 'application/wasm' });
+        wasmModule = new Blob(buffer, { type: 'application/wasm' });
         await jsModule.default(wasmModule.arrayBuffer());
 
         console.log('Starting game');
@@ -119,7 +119,7 @@
                 jsBlob = await response.blob();
             }
 
-            const wasmBuffer: Uint8Array[] = [];
+            const wasmBuffer = [];
             {
                 const response = await fetch(url, { signal });
                 if (response.status !== 200 || !response.body) {
@@ -137,9 +137,7 @@
                         break;
                     }
                     current += value.byteLength;
-                    wasmBuffer.push(
-                        new Uint8Array(value.buffer.slice(value.byteOffset, value.byteOffset + value.byteLength))
-                    );
+                    wasmBuffer.push(value);
                 }
             }
 
