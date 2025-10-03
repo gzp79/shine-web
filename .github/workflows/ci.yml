@@ -11,10 +11,6 @@ concurrency:
     group: ${{ github.workflow }}-${{ github.ref || github.run_id }}
     cancel-in-progress: true
 
-env:
-    BUCKET_LINK: https://ce847ac4c44fb11af63e62ba34ec40db.r2.cloudflarestorage.com
-    BUCKET_NAME: shine-assets
-
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -27,37 +23,32 @@ jobs:
               with:
                   submodules: recursive
 
+            - name: Setup pnpm
+              uses: pnpm/action-setup@v4
+              with:
+                  version: latest
+
             - name: Setup Node
               uses: actions/setup-node@v4
               with:
                   node-version: 22.x
-
-            - name: Setup AWS CLI
-              env:
-                  AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-                  AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-                  AWS_DEFAULT_REGION: auto
-              run: |
-                  aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
-                  aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
-                  aws configure set default.region "$AWS_DEFAULT_REGION"
+                  cache: 'pnpm'
 
             - name: Pre-build
               env:
                   ASSET_VERSION: ${{ github.sha }}
               run: |
-                  npm ci
-                  npm run mkcert
-                  npm run env:prod
-                  npm run build:assets
-                  npm run lint
-                  npm run check
+                  pnpm i
+                  pnpm run mkcert
+                  pnpm run env:prod
+                  pnpm run lint
+                  pnpm run check
 
             - name: Build
               env:
                   ASSET_VERSION: ${{ github.sha }}
               run: |
-                  npm run build
+                  pnpm run build
                   npx wrangler deploy --dry-run --outdir ./.svelte-kit/cloudflare-tmp
                   cp ./.svelte-kit/cloudflare-tmp/_worker.js ./.svelte-kit/cloudflare/_worker.js
 
@@ -76,21 +67,13 @@ jobs:
                   include-hidden-files: true
                   path: ./dist
 
-            # Upload the release artifact before test would modify anything
-            - name: Upload asset artifact
-              if: github.ref == 'refs/heads/master'
-              uses: actions/upload-artifact@v4
-              with:
-                  name: assets
-                  path: ./static-generated/assets
-
             # Create a preview
             - name: Upload preview site
               id: preview_deploy
               if: github.event_name == 'pull_request'
               uses: cloudflare/wrangler-action@v3
               with:
-                  wranglerVersion: '4.10.0'
+                  wranglerVersion: '4.42.0'
                   apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
                   accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
                   workingDirectory: ./dist
@@ -101,14 +84,6 @@ jobs:
                   DEPLOYMENT_URL: ${{ steps.preview_deploy.outputs.deployment-url }}
               run: |
                   echo "**Deployment url**: <${DEPLOYMENT_URL}>" >> $GITHUB_STEP_SUMMARY
-
-            # upload the artifact to the CloudFlare R2 asset bucket
-            - name: Upload preview assets
-              if: github.event_name == 'pull_request'
-              run: |
-                  aws s3 sync ./static-generated/assets s3://${BUCKET_NAME}/ \
-                      --endpoint-url=${BUCKET_LINK} \
-                      --cache-control "public, max-age=31536000, immutable"
 
     deploy:
         needs: build
@@ -124,39 +99,10 @@ jobs:
                   name: spa
                   path: ./dist
 
-            - name: Download asset artifacts
-              uses: actions/download-artifact@v4
-              with:
-                  name: assets
-                  path: ./assets
-
-            - name: Setup AWS CLI
-              env:
-                  AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
-                  AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
-                  AWS_DEFAULT_REGION: auto
-              run: |
-                  aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID"
-                  aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY"
-                  aws configure set default.region "$AWS_DEFAULT_REGION"
-
-            - name: Upload assets
-              run: |
-                  aws s3 sync ./assets s3://${BUCKET_NAME}/ \
-                      --endpoint-url=${BUCKET_LINK} \
-                      --cache-control "public, max-age=31536000, immutable"
-
-            - name: Upload latest.json
-              run: |
-                  echo '{ "version": "'${{ github.sha }}'" }' > ./latest.json
-                  aws s3 cp ./latest.json s3://${BUCKET_NAME}/latest.json \
-                      --endpoint-url=${BUCKET_LINK} \
-                      --cache-control "no-cache, no-store, must-revalidate"
-
             - name: Publish website to site
               uses: cloudflare/wrangler-action@v3
               with:
-                  wranglerVersion: '4.10.0'
+                  wranglerVersion: '4.42.0'
                   apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
                   accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
                   workingDirectory: ./dist

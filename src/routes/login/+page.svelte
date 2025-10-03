@@ -6,7 +6,6 @@
     import AppContent from '$lib/app/AppContent.svelte';
     import { t } from '$lib/i18n/i18n.svelte';
     import { logUser } from '$lib/loggers';
-    import { assets } from '@assets';
     import { config } from '@config';
     import Box from '@atoms/Box.svelte';
     import Button from '@atoms/Button.svelte';
@@ -23,14 +22,9 @@
     import Turnstile from '@components/Turnstile.svelte';
     import ValidatedTextArea from '@components/ValidatedTextArea.svelte';
     import { setCurrentUserStore } from '@features/account/currentUser.svelte';
+    import { getExternalLoginProviders } from '@features/account/providers.remote';
     import { providerIcon } from '@features/account/providers.svelte';
-
-    interface Props {
-        data: {
-            providers: string[];
-        };
-    }
-    let { data }: Props = $props();
+    import { getAssetUrls } from '@features/assets/assets.remote';
 
     let currentUserStore = setCurrentUserStore({
         load: () => identityApi.getCurrentUser(fetch),
@@ -84,7 +78,6 @@
     let waitLoading = $state(true);
     let showLoading = $derived(waitLoading || !captcha);
     let rememberMe = $state(true);
-    let providers = $state(data.providers.sort());
 
     let showEmailInput = $state(false);
     let email = $state('');
@@ -135,10 +128,12 @@
             </ErrorCard>
         {:else}
             <div class="relative flex flex-col h-full">
-                <div
-                    class="absolute pointer-events-none left-0 top-0 size-full bg-cover bg-center bg-no-repeat opacity-[0.25]"
-                    style="background-image: url('{assets.loginBackground}'), url('{config.assetUrl}/{assets.loginBackground_alt}');"
-                ></div>
+                {#await getAssetUrls(['loginBackground', 'loginBackground_alt']) then backgroundUrls}
+                    <div
+                        class="absolute pointer-events-none left-0 top-0 size-full bg-cover bg-center bg-no-repeat opacity-[0.25]"
+                        style="background-image: {backgroundUrls.map((url) => `url('${url}')`).join(', ')};"
+                    ></div>
+                {/await}
 
                 <Logo class="h-[20%] w-full shrink-0 fill-current p-4 text-on-surface" />
 
@@ -178,7 +173,7 @@
                                 >
                                     {$t('login.email')}
                                 </Button>
-                                {#each providers as provider (provider)}
+                                {#each await getExternalLoginProviders() as provider (provider)}
                                     <Button
                                         color="secondary"
                                         wide

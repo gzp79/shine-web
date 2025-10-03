@@ -1,6 +1,7 @@
 <script lang="ts">
     import { identityApi } from '$lib/api/identity-api';
     import AppContent from '$lib/app/AppContent.svelte';
+    import LoadingCard from '@atoms/LoadingCard.svelte';
     import Stack from '@atoms/Stack.svelte';
     import ActiveSessionsCard from '@features/account/ActiveSessionCard.svelte';
     import ActiveTokensCard from '@features/account/ActiveTokenCard.svelte';
@@ -9,14 +10,9 @@
     import { setActiveSessionStore } from '@features/account/activeSessionStore.svelte';
     import { setActiveTokenStore } from '@features/account/activeTokenStore.svelte';
     import { setLinkedIdentityStore } from '@features/account/linkedIdentityStore.svelte';
+    import { getExternalLoginProviders } from '@features/account/providers.remote';
 
-    interface Props {
-        data: {
-            providers: string[];
-        };
-    }
-    let { data }: Props = $props();
-
+    const getProviders = getExternalLoginProviders();
     let activeTokeStore = setActiveTokenStore({
         load: () => identityApi.getActiveTokens(),
         revoke: (tokenHash: string) => identityApi.revokeToken(tokenHash)
@@ -38,9 +34,13 @@
 
 <AppContent class="px-2 py-8">
     <Stack spacing={4} align="center">
-        <CurrentUserCard />
-        <ActiveSessionsCard />
-        <LinkedIdentitiesCard providers={data.providers} />
-        <ActiveTokensCard />
+        {#if getProviders.current}
+            <CurrentUserCard />
+            <ActiveSessionsCard />
+            <LinkedIdentitiesCard providers={getProviders.current} />
+            <ActiveTokensCard />
+        {:else}
+            <LoadingCard />
+        {/if}
     </Stack>
 </AppContent>

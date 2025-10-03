@@ -58,6 +58,10 @@
             items: [{ title: 'Mock test', href: 'utils/mock-test' }]
         },
         {
+            title: 'Assets',
+            items: [{ title: 'Assets', href: 'features/assets/assets' }]
+        },
+        {
             title: 'Account',
             items: [
                 { title: 'Current User Card', href: 'features/account/current-user' },
