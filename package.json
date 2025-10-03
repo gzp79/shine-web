@@ -25,7 +25,7 @@
         "format": "prettier --write .",
         "test:integration": "playwright test",
         "test:unit": "vitest",
-        "mkcert": "cd certificates && mkcert create-ca && mkcert create-cert --domains local-scytta.com"
+        "mkcert": "cd certificates && mkcert create-ca && mkcert create-cert --domains local.scytta.com"
     },
     "dependencies": {
         "@floating-ui/dom": "^1.7.2",

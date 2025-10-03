@@ -25,7 +25,6 @@
                 { title: 'Colors', href: 'atoms/colors' },
                 { title: 'Typography', href: 'atoms/typography' },
                 { title: 'Icons', href: 'atoms/icons' },
-                { title: 'Assets', href: 'atoms/assets' },
                 { title: 'Boxes', href: 'atoms/boxes' },
                 { title: 'Stacks', href: 'atoms/stacks' },
                 { title: 'Grids', href: 'atoms/grids' },
@@ -57,6 +56,10 @@
         config.environment === 'mock' && {
             title: 'Utils',
             items: [{ title: 'Mock test', href: 'utils/mock-test' }]
+        },
+        {
+            title: 'Assets',
+            items: [{ title: 'Assets', href: 'features/assets/assets' }]
         },
         {
             title: 'Account',

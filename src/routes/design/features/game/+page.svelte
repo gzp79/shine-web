@@ -2,33 +2,29 @@
     import Box from '@atoms/Box.svelte';
     import Stack from '@atoms/Stack.svelte';
     import Game from '@features/game/Game.svelte';
+    import { getGameUrls } from '@features/game/game.remote';
     import { Select, settingsStore } from '../../_components';
     import Story from '../../_components/_Story.svelte';
 
-    interface Props {
-        data: {
-            gameUrls: Record<string, string>;
-        };
-    }
-    let { data }: Props = $props();
+    const gameUrls = getGameUrls();
 
-    const examples = Array.from(Object.keys(data.gameUrls)).filter((name) => name !== 'game');
-
-    let example1 = $state(examples[0]);
+    let example1 = $state('none');
     let example2 = $state('none');
-    let urls = $derived([example1, example2].filter((x) => x !== 'none').map((x) => data.gameUrls[x]));
+
+    const options: [string, string][] = $derived([...Object.entries(gameUrls.current ?? {}), ['none', 'none']]);
+    const selection = $derived([example1, example2].filter((v) => v !== 'none'));
 
     settingsStore().set(settings);
 </script>
 
 {#snippet settings()}
-    <Select label="Example1" options={examples} bind:value={example1} />
-    <Select label="Example2" options={examples} bind:value={example2} />
+    <Select label="Example1" {options} bind:value={example1} />
+    <Select label="Example2" {options} bind:value={example2} />
 {/snippet}
 
 <Story variant="center">
     <Stack direction="row">
-        {#each urls as url (url)}
+        {#each selection as url (url)}
             <Box border>
                 <Game {url}></Game>
             </Box>

@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { getAssetUrl } from '@lib/assets.remote';
     import Typography from '@atoms/Typography.svelte';
-    import { Story } from '../../_components';
+    import { getAssetUrl } from '@features/assets/assets.remote';
+    import { Story } from '../../../_components';
 
     const assetUrl = getAssetUrl('loginBackground');
 </script>

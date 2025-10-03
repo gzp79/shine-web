@@ -183,10 +183,24 @@
             };
         return preloadData;
     });
+
+    // Detect different types of links to handle them appropriately
+    let linkType = $derived(() => {
+        if (!href) return 'none';
+        if (href.startsWith('#')) return 'hash';
+        if (href.startsWith('http://') || href.startsWith('https://') || href.startsWith('//')) return 'external';
+        if (href.startsWith('mailto:') || href.startsWith('tel:')) return 'protocol';
+        return 'internal';
+    });
+
     let elProps = $derived({
         ...(disabled ? {} : { href }),
         onclick,
         ...(href ? linkOptions : buttonOptions),
+        // Add data-sveltekit-reload for hash links and external links to prevent SvelteKit processing
+        ...(linkType() === 'hash' || linkType() === 'external' || linkType() === 'protocol'
+            ? { 'data-sveltekit-reload': true as const }
+            : {}),
         ...rest
     });
 </script>

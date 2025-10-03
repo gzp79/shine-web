@@ -52,7 +52,7 @@ export function vitePluginAssetConverter(): Plugin[] {
                 console.log('Building assets...');
 
                 return new Promise((resolve, reject) => {
-                    const child = spawn('pnpm', ['run', 'build:ui', '--out=../shine-web/static-generated/assets'], {
+                    const child = spawn('pnpm', ['run', 'convert:ui', '--out=../shine-web/static-generated/assets'], {
                         cwd: '../shine-assets',
                         stdio: 'inherit',
                         shell: true
@@ -99,6 +99,11 @@ export default defineConfig({
         https: https,
         port: parseInt(new URL(config.webUrl).port),
         host: new URL(config.webUrl).hostname,
+        strictPort: true,
+        hmr: {
+            clientPort: parseInt(new URL(config.webUrl).port),
+            port: parseInt(new URL(config.webUrl).port) + 1
+        },
         proxy: {}
     },
     preview: {
