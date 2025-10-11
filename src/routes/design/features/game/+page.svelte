@@ -1,5 +1,6 @@
 <script lang="ts">
     import Box from '@atoms/Box.svelte';
+    import Button from '@atoms/Button.svelte';
     import Stack from '@atoms/Stack.svelte';
     import Game from '@features/game/Game.svelte';
     import { getGameUrls } from '@features/game/game.remote';
@@ -11,8 +12,10 @@
     let example1 = $state('none');
     let example2 = $state('none');
 
-    const options: [string, string][] = $derived([...Object.entries(gameUrls.current ?? {}), ['none', 'none']]);
-    const selection = $derived([example1, example2].filter((v) => v !== 'none'));
+    const options: [string, string][] = $derived([
+        ...Object.entries(gameUrls.current ?? {}).filter(([key]) => key !== 'game'),
+        ['none', 'none']
+    ]);
 
     settingsStore().set(settings);
 </script>
@@ -22,11 +25,16 @@
     <Select label="Example2" {options} bind:value={example2} />
 {/snippet}
 
-<Story variant="center">
-    <Stack direction="row">
-        {#each selection as url (url)}
+<Story variant="full">
+    <Stack direction="column">
+        {#each [example1, example2] as url, index (index)}
             <Box border>
-                <Game {url}></Game>
+                {#if url !== 'none'}
+                    {#key `${url}-${index}`}
+                        <Game {url}></Game>
+                    {/key}
+                    <Button href={url + '.html'}>Open fullscreen</Button>
+                {/if}
             </Box>
         {/each}
     </Stack>

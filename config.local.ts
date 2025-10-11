@@ -1,5 +1,5 @@
 export const config = {
-    environment: 'dev',
+    environment: 'local',
 
     webUrl: 'https://local.scytta.com:4443',
     assetUrl: 'https://assets.local.scytta.com:4443',

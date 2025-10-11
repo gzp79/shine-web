@@ -27,7 +27,7 @@ class AssetService implements ResourceService<AssetLinks> {
     async load(): Promise<AssetLinks> {
         const version = await fetchLatestAssetVersion();
 
-        const assetManifestUrl = `${config.assetUrl}/${version}/ui/assets.json`;
+        const assetManifestUrl = `${config.assetUrl}/${version}/web/ui/assets.json`;
         logResource.info(`Loading asset manifest from ${assetManifestUrl}`);
         const response = await fetch(assetManifestUrl);
         if (!response.ok) {
