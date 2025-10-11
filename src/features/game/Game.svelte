@@ -6,8 +6,9 @@
 
     interface IGameContext {
         default: (wasm: Promise<ArrayBuffer>) => Promise<void>;
-        start_game: (canvasId: string) => void;
-        stop_game: () => void;
+        create_game: (canvasId: string) => Promise<void>;
+        start_game: () => void;
+        stop_game: () => Promise<void>;
     }
 
     interface Props {
@@ -62,7 +63,7 @@
         console.log('Importing JS');
         // loading the JS module through an object url makes it as distinct script and instantiates a new module scope
         jsModule = await import(/* @vite-ignore */ URL.createObjectURL(jsBlob));
-        if (!jsModule?.default || !jsModule?.start_game || !jsModule?.stop_game) {
+        if (!jsModule?.default || !jsModule?.create_game || !jsModule?.start_game || !jsModule?.stop_game) {
             throw new Error('WASM module does not export required functions');
         }
 
@@ -71,7 +72,8 @@
         await jsModule.default(wasmModule.arrayBuffer());
 
         console.log('Starting game');
-        jsModule.start_game(`#game-canvas-${id}`);
+        await jsModule.create_game(`#game-canvas-${id}`);
+        jsModule.start_game();
     };
 
     const fetchGame = async (url: string, signal: AbortSignal) => {

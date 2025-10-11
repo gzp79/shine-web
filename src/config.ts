@@ -3,8 +3,10 @@ import '@lib/prelude';
 
 export const GAME_BASE_NAME = 'shine-client';
 
+export type EnvironmentType = 'mock' | 'local' | 'dev' | 'prod';
+
 export interface Config {
-    environment: 'mock' | 'dev' | 'prod';
+    environment: EnvironmentType;
 
     identityUrl: string;
     builderUrl: string;
@@ -24,5 +26,5 @@ export interface Config {
 
 export const config: Config = {
     ...baseConfig,
-    environment: baseConfig.environment as 'mock' | 'dev' | 'prod'
+    environment: baseConfig.environment as EnvironmentType
 };

@@ -10,7 +10,7 @@ import { config } from './src/generated/config';
 // Determine the environment
 console.log(`Environment: (${config.environment})`);
 
-if (config.environment === 'dev') {
+if (['dev', 'local'].includes(config.environment)) {
     process.env.DEBUG = 'log:user, log:game, warn:*, info:*';
 }
 
@@ -52,11 +52,15 @@ export function vitePluginAssetConverter(): Plugin[] {
                 console.log('Building assets...');
 
                 return new Promise((resolve, reject) => {
-                    const child = spawn('pnpm', ['run', 'convert:ui', '--out=../shine-web/static-generated/assets'], {
-                        cwd: '../shine-assets',
-                        stdio: 'inherit',
-                        shell: true
-                    });
+                    const child = spawn(
+                        'pnpm',
+                        ['run', 'convert:web:ui', '--out=../shine-web/static-generated/assets'],
+                        {
+                            cwd: '../shine-assets',
+                            stdio: 'inherit',
+                            shell: true
+                        }
+                    );
 
                     child.on('close', (code) => {
                         if (code === 0) {
@@ -88,7 +92,7 @@ export function vitePluginAssetConverter(): Plugin[] {
 
 export default defineConfig({
     plugins: [
-        config.environment !== 'prod' ? vitePluginAssetConverter() : [],
+        ['local'].includes(config.environment) ? vitePluginAssetConverter() : [],
         tailwindcss(),
         sveltekit(),
         viteStaticCopy({
