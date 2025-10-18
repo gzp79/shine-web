@@ -108,14 +108,13 @@
     };
 
     onMount(() => {
-        /* eslint-disable @typescript-eslint/no-explicit-any */
+        /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
         const events: [boolean, string, any][] = [
             [isClick || isToggle, 'click', toggle],
             [isClick, 'keydown', cancelOnEscape],
             [isHover, 'mouseenter', show],
             [isHover, 'mouseleave', hide]
         ];
-        /* eslint-enable @typescript-eslint/no-explicit-any */
 
         if (trigger) {
             triggerEls = typeof trigger === 'string' ? [...document.querySelectorAll<HTMLElement>(trigger)] : [trigger];

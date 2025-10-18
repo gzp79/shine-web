@@ -5,7 +5,7 @@ export function maybeNull<T>(): Nullable<T> {
     return null;
 }
 
-type ErrorKind = 'fetch' | 'other' | 'schema';
+type ErrorKind = 'fetch' | 'other' | 'schema' | 'internal';
 
 // A interface for any ssr error that is captured and delegated to the client
 export interface AppError {
@@ -39,6 +39,15 @@ export class SchemaError implements AppError {
     constructor(public message: string) {}
 }
 
+export class InternalError implements AppError {
+    errorKind: ErrorKind = 'internal';
+
+    constructor(
+        public message: string,
+        public detail?: unknown
+    ) {}
+}
+
 // When building for CF, the cache is disabled and should not be set in the fetch options
 export function fetchCacheOption(cache: RequestCache): Partial<RequestInit> {
     if (browser) {
@@ -50,6 +59,12 @@ export function fetchCacheOption(cache: RequestCache): Partial<RequestInit> {
 export async function fetchError(message: string, response: Response): Promise<FetchError> {
     const body = await response.text();
     return new FetchError(message, { status: response.status, body });
+}
+
+export function assert(condition: boolean, message: string): asserts condition {
+    if (!condition) {
+        throw new InternalError('Assertion failed: ' + message);
+    }
 }
 
 export const async = {

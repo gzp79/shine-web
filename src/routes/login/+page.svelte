@@ -9,7 +9,6 @@
     import { config } from '@config';
     import Box from '@atoms/Box.svelte';
     import Button from '@atoms/Button.svelte';
-    import LoadingCard from '@atoms/LoadingCard.svelte';
     import Modal from '@atoms/Modal.svelte';
     import Stack from '@atoms/Stack.svelte';
     import Toggle from '@atoms/Toggle.svelte';
@@ -21,23 +20,20 @@
     import ErrorCard from '@components/ErrorCard.svelte';
     import Turnstile from '@components/Turnstile.svelte';
     import ValidatedTextArea from '@components/ValidatedTextArea.svelte';
-    import { setCurrentUserStore } from '@features/account/currentUser.svelte';
-    import { getExternalLoginProviders } from '@features/account/providers.remote';
+    import { setDefaultCurrentUserStore } from '@features/account/currentUser.svelte';
+    import { getExternalLoginProviders, getSanitizedReturnUrl } from '@features/account/providers.remote';
     import { providerIcon } from '@features/account/providers.svelte';
     import { getAssetUrls } from '@features/assets/assets.remote';
 
-    let currentUserStore = setCurrentUserStore({
-        load: () => identityApi.getCurrentUser(fetch),
-        startEmailConfirmation: () => identityApi.startEmailConfirmation(),
-        startEmailChange: (email: string) => identityApi.startEmailChange(email),
-        getLogoutUrl: (all: boolean, redirectUrl: string) => identityApi.getLogoutUrl(all, redirectUrl)
-    });
+    let currentUserStore = setDefaultCurrentUserStore();
 
     let prompt = $derived(page.url.searchParams.get('prompt'));
-    let redirectUrl = $derived.by(() => {
-        const target = page.url.searchParams.get('redirectUrl');
-        return target ? `${decodeURIComponent(target)}` : '/game';
-    });
+    const sanitizeURL = async (rawUrl: string): Promise<string> => {
+        const target = decodeURIComponent(rawUrl) ?? '/game';
+        return await getSanitizedReturnUrl(target);
+    };
+    let returnUrlPromise = $derived(sanitizeURL(page.url.searchParams.get('returnUrl') ?? ''));
+    let returnUrl = $derived(await returnUrlPromise);
 
     type HintInfo = {
         loginText?: string;
@@ -89,13 +85,13 @@
     $effect(() => {
         if (!prompt) {
             if (currentUserStore.isContent && currentUserStore.content.isAuthenticated) {
-                logUser(`Redirecting user with an active session to ${redirectUrl}`);
-                goto(redirectUrl);
+                logUser(`Redirecting user with an active session to ${returnUrl}`);
+                goto(returnUrl);
             } else {
                 // if we have no authenticated user, try the token flow
                 // if it fails user will land on the error page, that should be redirected to the login with a prompt
-                logUser(`Trying the remember me token with redirectUrl [${redirectUrl}]`);
-                window.location.href = identityApi.getTokenLoginUrl(redirectUrl);
+                logUser(`Trying the remember me token with returnUrl [${returnUrl}]`);
+                window.location.href = identityApi.getTokenLoginUrl(returnUrl);
             }
         } else {
             logUser('Prompt for login');
@@ -118,9 +114,7 @@
 
 <App>
     <AppContent>
-        {#if currentUserStore.isEmpty}
-            <LoadingCard label={$t('common.loading')} />
-        {:else if currentUserStore.isError}
+        {#if currentUserStore.isError}
             <ErrorCard caption={$t('account.failedToLoadUserInfo')} error={currentUserStore.error}>
                 {#snippet actions()}
                     <Button onclick={() => currentUserStore.refresh({ force: true })}>{$t('common.retry')}</Button>
@@ -178,12 +172,7 @@
                                         color="secondary"
                                         wide
                                         disabled={!captcha}
-                                        href={identityApi.getExternalLoginUrl(
-                                            provider,
-                                            rememberMe,
-                                            captcha,
-                                            redirectUrl
-                                        )}
+                                        href={identityApi.getExternalLoginUrl(provider, rememberMe, captcha, returnUrl)}
                                         startIcon={providerIcon(provider)}
                                         class="m-2"
                                     >
@@ -198,7 +187,7 @@
                         </div>
                     </div>
 
-                    {#if currentUserStore.content.isAuthenticated || extraInfo.allowGuest}
+                    {#if currentUserStore.isAuthenticated || extraInfo.allowGuest}
                         <div class="mx-2 h-[80%] w-0 self-center border-l border-on-surface hidden md:block"></div>
                         <div class="my-2 w-[80%] h-0 self-center border-t border-on-surface block md:hidden"></div>
 
@@ -206,11 +195,11 @@
                             class="flex flex-col gap-2 bg-gray-200 p-2 rounded shrink-0 items-center
                                     md:self-center"
                         >
-                            {#if currentUserStore.content.isAuthenticated}
+                            {#if currentUserStore.isAuthenticated}
                                 <Button
                                     color="secondary"
                                     disabled={!captcha}
-                                    href={redirectUrl}
+                                    href={returnUrl}
                                     startIcon={providerIcon('continue')}
                                     class="m-2"
                                 >
@@ -223,7 +212,7 @@
                                     variant="outline"
                                     size="sm"
                                     disabled={!captcha}
-                                    href={identityApi.getGuestLoginUrl(captcha, redirectUrl)}
+                                    href={identityApi.getGuestLoginUrl(captcha, returnUrl)}
                                     startIcon={providerIcon('guest')}
                                     class="m-2"
                                 >
@@ -263,7 +252,7 @@
                         <Button
                             color="secondary"
                             disabled={!isEmailValid}
-                            href={identityApi.getEmailLoginUrl(email, rememberMe, captcha, redirectUrl)}
+                            href={identityApi.getEmailLoginUrl(email, rememberMe, captcha, returnUrl)}
                         >
                             {$t('login.emailModalContinue')}
                         </Button>
