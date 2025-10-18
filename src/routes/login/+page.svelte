@@ -33,7 +33,6 @@
         return await getSanitizedReturnUrl(target);
     };
     let returnUrlPromise = $derived(sanitizeURL(page.url.searchParams.get('returnUrl') ?? ''));
-    let returnUrl = $derived(await returnUrlPromise);
 
     type HintInfo = {
         loginText?: string;
@@ -83,25 +82,29 @@
     };
 
     $effect(() => {
-        if (!prompt) {
-            if (currentUserStore.isContent && currentUserStore.content.isAuthenticated) {
-                logUser(`Redirecting user with an active session to ${returnUrl}`);
-                goto(returnUrl);
+        const flow = async () => {
+            const returnUrl = await returnUrlPromise;
+            if (!prompt) {
+                if (currentUserStore.isContent && currentUserStore.content.isAuthenticated) {
+                    logUser(`Redirecting user with an active session to ${returnUrl}`);
+                    goto(returnUrl);
+                } else {
+                    // if we have no authenticated user, try the token flow
+                    // if it fails user will land on the error page, that should be redirected to the login with a prompt
+                    logUser(`Trying the remember me token with returnUrl [${returnUrl}]`);
+                    window.location.href = identityApi.getTokenLoginUrl(returnUrl);
+                }
             } else {
-                // if we have no authenticated user, try the token flow
-                // if it fails user will land on the error page, that should be redirected to the login with a prompt
-                logUser(`Trying the remember me token with returnUrl [${returnUrl}]`);
-                window.location.href = identityApi.getTokenLoginUrl(returnUrl);
+                logUser('Prompt for login');
+                setTimeout(
+                    () => {
+                        waitLoading = false;
+                    },
+                    hasCaptcha ? 5000 : 1000
+                );
             }
-        } else {
-            logUser('Prompt for login');
-            setTimeout(
-                () => {
-                    waitLoading = false;
-                },
-                hasCaptcha ? 5000 : 1000
-            );
-        }
+        };
+        flow();
     });
 
     $effect(() => {
@@ -114,6 +117,8 @@
 
 <App>
     <AppContent>
+        {@const returnUrl = await returnUrlPromise}
+
         {#if currentUserStore.isError}
             <ErrorCard caption={$t('account.failedToLoadUserInfo')} error={currentUserStore.error}>
                 {#snippet actions()}
