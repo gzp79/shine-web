@@ -31,6 +31,7 @@ const config: Config<Partial<Params>> = {
         ...createLoader('validation', 'validation', [/.*/]),
         ...createLoader('account', 'account', [/.*/]),
         ...createLoader('error', 'error'),
+        ...createLoader('link', 'link', [/link\/.*/]),
         ...createLoader('login', 'login', [/login|public\/email-login/])
     ]
 };

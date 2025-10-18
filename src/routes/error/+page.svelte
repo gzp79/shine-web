@@ -10,10 +10,10 @@
 
     let errorType = $derived(page.url.searchParams.get('type'));
     //let errorStatus = $derived(page.url.searchParams.get('status'));
-    let targetUrl = $derived(page.url.searchParams.get('redirectUrl'));
+    let returnUrl = $derived(page.url.searchParams.get('returnUrl'));
 
     // For some error types, we want to automatically redirect the user
-    let autoRedirectUrl = $derived.by(() => {
+    let autoReturnUrl = $derived.by(() => {
         if (
             errorType === 'auth-login-required' ||
             errorType === 'auth-token-expired' ||
@@ -26,8 +26,8 @@
             if (errorType !== 'auth-login-required') {
                 params['hint'] = 'login-expired';
             }
-            if (targetUrl) {
-                params['target'] = encodeURIComponent(targetUrl);
+            if (returnUrl) {
+                params['target'] = encodeURIComponent(returnUrl);
             }
             const searchParams = new URLSearchParams(params);
             return `/login?${searchParams}`;
@@ -39,10 +39,10 @@
     });
 
     $effect(() => {
-        if (autoRedirectUrl) {
-            logUser(`Redirecting to ${autoRedirectUrl}`);
+        if (autoReturnUrl) {
+            logUser(`Redirecting to ${autoReturnUrl}`);
             {
-                goto(autoRedirectUrl);
+                goto(autoReturnUrl);
             }
         }
     });
@@ -57,12 +57,12 @@
     });
 </script>
 
-{#if !autoRedirectUrl}
+{#if !autoReturnUrl}
     <App>
         <AppContent>
             <ErrorCard error={{ errorKind: 'other', message }}>
                 {#snippet actions()}
-                    <Button color="primary" href={targetUrl || '/game'}>{$t('common.back')}</Button>
+                    <Button color="primary" href={returnUrl || '/game'}>{$t('common.back')}</Button>
                 {/snippet}
             </ErrorCard>
         </AppContent>

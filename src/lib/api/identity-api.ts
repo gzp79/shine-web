@@ -95,6 +95,23 @@ async function parseResponse<T extends z.ZodObject>(schema: T, response: Respons
     }
 }
 
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
+function makeBody(obj: any): { body: string; headers: { 'Content-Type': string } } {
+    return {
+        body: JSON.stringify(obj),
+        headers: { 'Content-Type': 'application/json' }
+    };
+}
+
+const TokenSchema = z.object({
+    kind: z.string(),
+    token: z.string(),
+    tokenHash: z.string(),
+    tokenType: z.string(),
+    expireAt: DateStringSchema
+});
+export type Token = z.infer<typeof TokenSchema>;
+
 class IdentityApi {
     constructor(
         public readonly serviceUrl: string,
@@ -293,6 +310,27 @@ class IdentityApi {
         logAPI('revokeToken completed');
     }
 
+    async createSingleAccessToken(): Promise<string> {
+        logAPI('createSingleAccessToken...');
+        const timeToLive = 10 * 60; // 10 minutes
+        const url = `${this.serviceUrl}/identity/api/auth/user/tokens`;
+        console.log('Creating single access token with URL:', url);
+        const response = await fetch(url, {
+            method: 'POST',
+            credentials: 'include',
+            ...fetchCacheOption('no-store'),
+            ...makeBody({ kind: 'singleAccess', timeToLive, bindToSite: false })
+        });
+        if (!response.ok) {
+            const error = await fetchError('Failed to createSingleAccessToken', response);
+            logAPI('createSingleAccessToken failed with error', error);
+            throw error;
+        }
+
+        const token = await parseResponse(TokenSchema, response);
+        return token.token;
+    }
+
     async startEmailConfirmation(): Promise<void> {
         logAPI('startEmailConfirmation...');
         const url = `${this.serviceUrl}/identity/api/auth/user/email/confirm`;
@@ -318,10 +356,7 @@ class IdentityApi {
             method: 'POST',
             credentials: 'include',
             ...fetchCacheOption('no-store'),
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email: newEmail })
+            ...makeBody({ email: newEmail })
         });
 
         if (!response.ok) {

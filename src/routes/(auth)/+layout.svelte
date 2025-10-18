@@ -29,7 +29,7 @@
     });
 
     // For links we ask for prompt always, but once the prompt is completed, a silent parameter is added to the link URL
-    // not to start en infinite loop of prompts
+    // not to start an infinite loop
     let isPromptForLink = $derived(
         page.url.pathname.startsWith('/link') && page.url.searchParams.get('silent') !== 'true'
     );
@@ -48,9 +48,9 @@
             }
         }
         if ([...targetParams.entries()].length > 0) {
-            params.set('target', `${targetPath}?${targetParams}`);
+            params.set('returnUrl', `${targetPath}?${targetParams}`);
         } else {
-            params.set('target', `${targetPath}`);
+            params.set('returnUrl', `${targetPath}`);
         }
 
         return `/login?${params.toString()}`;
