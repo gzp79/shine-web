@@ -1,5 +1,18 @@
+<script module lang="ts">
+    export type Hint = 'login-expired' | 'email-confirm' | 'email-change';
+
+    type HintInfo = {
+        loginText?: string;
+        allowGuest: boolean;
+    };
+    const hintTextToken: Record<string, HintInfo> = {
+        'login-expired': { loginText: 'login.info.loginExpired', allowGuest: true },
+        'email-confirm': { loginText: 'login.info.emailConfirm', allowGuest: false },
+        'email-change': { loginText: 'login.info.emailChange', allowGuest: false }
+    };
+</script>
+
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import { page } from '$app/state';
     import { identityApi } from '$lib/api/identity-api';
     import App from '$lib/app/App.svelte';
@@ -28,39 +41,18 @@
     let currentUserStore = setDefaultCurrentUserStore();
 
     let prompt = $derived(page.url.searchParams.get('prompt'));
-    const sanitizeURL = async (rawUrl: string): Promise<string> => {
-        const target = decodeURIComponent(rawUrl) ?? '/game';
-        return await getSanitizedReturnUrl(target);
-    };
-    let returnUrlPromise = $derived(sanitizeURL(page.url.searchParams.get('returnUrl') ?? ''));
+    let rawReturnUrl = $derived(decodeURIComponent(page.url.searchParams.get('returnUrl') ?? ''));
+    const returnUrl = $derived(getSanitizedReturnUrl(rawReturnUrl));
+    const externalProviders = getExternalLoginProviders();
+    const backgroundUrls = getAssetUrls(['loginBackground', 'loginBackground_alt']);
 
     type HintInfo = {
         loginText?: string;
         allowGuest: boolean;
     };
     let extraInfo: HintInfo = $derived.by(() => {
-        let hint = page.url.searchParams.get('hint') || '';
-        switch (hint) {
-            case 'login-expired':
-                return {
-                    loginText: $t('login.info.loginExpired'),
-                    allowGuest: true
-                };
-            case 'email-confirm':
-                return {
-                    loginText: $t('login.info.emailConfirm'),
-                    allowGuest: false
-                };
-            case 'email-change':
-                return {
-                    loginText: $t('login.info.emailChange'),
-                    allowGuest: false
-                };
-            default:
-                return {
-                    allowGuest: true
-                };
-        }
+        const hint = page.url.searchParams.get('hint') as Hint;
+        return hintTextToken[hint] ?? { allowGuest: true };
     });
 
     let hasCaptcha = !config.turnstile.disable;
@@ -71,7 +63,7 @@
     // when captcha is disabled use a test (site) key that always passes the server side validation
     let captcha = $state(hasCaptcha ? '' : '1x00000000000000000000AA');
     let waitLoading = $state(true);
-    let showLoading = $derived(waitLoading || !captcha);
+    let showLoading = $derived(waitLoading || !captcha || !returnUrl.current);
     let rememberMe = $state(true);
 
     let showEmailInput = $state(false);
@@ -82,29 +74,29 @@
     };
 
     $effect(() => {
-        const flow = async () => {
-            const returnUrl = await returnUrlPromise;
-            if (!prompt) {
-                if (currentUserStore.isContent && currentUserStore.content.isAuthenticated) {
-                    logUser(`Redirecting user with an active session to ${returnUrl}`);
-                    goto(returnUrl);
-                } else {
-                    // if we have no authenticated user, try the token flow
-                    // if it fails user will land on the error page, that should be redirected to the login with a prompt
-                    logUser(`Trying the remember me token with returnUrl [${returnUrl}]`);
-                    window.location.href = identityApi.getTokenLoginUrl(returnUrl);
-                }
+        if (!returnUrl.current) {
+            return;
+        }
+
+        if (!prompt) {
+            if (currentUserStore.isContent && currentUserStore.content.isAuthenticated) {
+                logUser(`Redirecting user with an active session to ${returnUrl.current}`);
+                window.location.href = returnUrl.current;
             } else {
-                logUser('Prompt for login');
-                setTimeout(
-                    () => {
-                        waitLoading = false;
-                    },
-                    hasCaptcha ? 5000 : 1000
-                );
+                // if we have no authenticated user, try the token flow
+                // if it fails user will land on the error page, that should be redirected to the login with a prompt
+                logUser(`Trying the remember me token with returnUrl [${returnUrl.current}]`);
+                window.location.href = identityApi.getTokenLoginUrl(returnUrl.current);
             }
-        };
-        flow();
+        } else {
+            logUser('Prompt for login');
+            setTimeout(
+                () => {
+                    waitLoading = false;
+                },
+                hasCaptcha ? 5000 : 1000
+            );
+        }
     });
 
     $effect(() => {
@@ -117,22 +109,20 @@
 
 <App>
     <AppContent>
-        {@const returnUrl = await returnUrlPromise}
-
-        {#if currentUserStore.isError}
-            <ErrorCard caption={$t('account.failedToLoadUserInfo')} error={currentUserStore.error}>
+        {#if currentUserStore.isError || returnUrl.error}
+            <ErrorCard caption={$t('account.failedToLoadUserInfo')} error={returnUrl.error || currentUserStore.error}>
                 {#snippet actions()}
                     <Button onclick={() => currentUserStore.refresh({ force: true })}>{$t('common.retry')}</Button>
                 {/snippet}
             </ErrorCard>
         {:else}
             <div class="relative flex flex-col h-full">
-                {#await getAssetUrls(['loginBackground', 'loginBackground_alt']) then backgroundUrls}
+                {#if backgroundUrls.current}
                     <div
                         class="absolute pointer-events-none left-0 top-0 size-full bg-cover bg-center bg-no-repeat opacity-[0.25]"
-                        style="background-image: {backgroundUrls.map((url) => `url('${url}')`).join(', ')};"
+                        style="background-image: {backgroundUrls.current.map((url) => `url('${url}')`).join(', ')};"
                     ></div>
-                {/await}
+                {/if}
 
                 <Logo class="h-[20%] w-full shrink-0 fill-current p-4 text-on-surface" />
 
@@ -146,7 +136,7 @@
                     >
                         <Typography variant="h1" class="hidden md:block">{$t('login.title')}</Typography>
                         {#if extraInfo.loginText}
-                            <Typography variant="h3" class="px-4">{extraInfo.loginText}</Typography>
+                            <Typography variant="h3" class="px-4">{$t(extraInfo.loginText)}</Typography>
                         {:else}
                             <Typography variant="h2" class="md:hidden">{$t('login.title')}</Typography>
                         {/if}
@@ -172,18 +162,25 @@
                                 >
                                     {$t('login.email')}
                                 </Button>
-                                {#each await getExternalLoginProviders() as provider (provider)}
-                                    <Button
-                                        color="secondary"
-                                        wide
-                                        disabled={!captcha}
-                                        href={identityApi.getExternalLoginUrl(provider, rememberMe, captcha, returnUrl)}
-                                        startIcon={providerIcon(provider)}
-                                        class="m-2"
-                                    >
-                                        {provider}
-                                    </Button>
-                                {/each}
+                                {#if externalProviders.current && returnUrl.current}
+                                    {#each externalProviders.current as provider (provider)}
+                                        <Button
+                                            color="secondary"
+                                            wide
+                                            disabled={!captcha}
+                                            href={identityApi.getExternalLoginUrl(
+                                                provider,
+                                                rememberMe,
+                                                captcha,
+                                                returnUrl.current
+                                            )}
+                                            startIcon={providerIcon(provider)}
+                                            class="m-2"
+                                        >
+                                            {provider}
+                                        </Button>
+                                    {/each}
+                                {/if}
                             </div>
                         </Box>
 
@@ -192,7 +189,7 @@
                         </div>
                     </div>
 
-                    {#if currentUserStore.isAuthenticated || extraInfo.allowGuest}
+                    {#if returnUrl.current && (currentUserStore.isAuthenticated || extraInfo.allowGuest)}
                         <div class="mx-2 h-[80%] w-0 self-center border-l border-on-surface hidden md:block"></div>
                         <div class="my-2 w-[80%] h-0 self-center border-t border-on-surface block md:hidden"></div>
 
@@ -204,7 +201,7 @@
                                 <Button
                                     color="secondary"
                                     disabled={!captcha}
-                                    href={returnUrl}
+                                    href={returnUrl.current}
                                     startIcon={providerIcon('continue')}
                                     class="m-2"
                                 >
@@ -217,7 +214,7 @@
                                     variant="outline"
                                     size="sm"
                                     disabled={!captcha}
-                                    href={identityApi.getGuestLoginUrl(captcha, returnUrl)}
+                                    href={identityApi.getGuestLoginUrl(captcha, returnUrl.current)}
                                     startIcon={providerIcon('guest')}
                                     class="m-2"
                                 >
@@ -257,7 +254,7 @@
                         <Button
                             color="secondary"
                             disabled={!isEmailValid}
-                            href={identityApi.getEmailLoginUrl(email, rememberMe, captcha, returnUrl)}
+                            href={identityApi.getEmailLoginUrl(email, rememberMe, captcha, returnUrl.current!)}
                         >
                             {$t('login.emailModalContinue')}
                         </Button>

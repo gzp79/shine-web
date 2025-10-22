@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import { page } from '$app/state';
     import App from '@lib/app/App.svelte';
     import AppContent from '@lib/app/AppContent.svelte';
@@ -7,13 +6,25 @@
     import { logUser } from '@lib/loggers';
     import Button from '@atoms/Button.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';
+    import type { Hint } from '../login/+page.svelte';
 
     let errorType = $derived(page.url.searchParams.get('type'));
     //let errorStatus = $derived(page.url.searchParams.get('status'));
-    let returnUrl = $derived(page.url.searchParams.get('returnUrl'));
 
-    // For some error types, we want to automatically redirect the user
-    let autoReturnUrl = $derived.by(() => {
+    type Handler = {
+        url: string;
+        message: string;
+        auto: boolean;
+    };
+    let handler: Handler = $derived.by(() => {
+        let returnUrl = page.url.searchParams.get('returnUrl');
+
+        const handler: Handler = {
+            url: '/game',
+            message: page.error?.message ?? '',
+            auto: false
+        };
+
         if (
             errorType === 'auth-login-required' ||
             errorType === 'auth-token-expired' ||
@@ -24,47 +35,44 @@
                 prompt: 'true'
             };
             if (errorType !== 'auth-login-required') {
-                params['hint'] = 'login-expired';
+                const hint: Hint = 'login-expired';
+                params['hint'] = hint;
             }
             if (returnUrl) {
-                params['target'] = encodeURIComponent(returnUrl);
+                params['returnUrl'] = encodeURIComponent(returnUrl);
             }
             const searchParams = new URLSearchParams(params);
-            return `/login?${searchParams}`;
+
+            handler.url = `/login?${searchParams}`;
+            handler.auto = errorType !== 'auth-error';
         } else if (errorType === 'auth-email-login') {
-            return 'public/email-login';
+            handler.url = 'public/email-login';
+            handler.auto = true;
+        } else if (errorType === 'auth-register-external-id-conflict') {
+            handler.url = '/account';
+            handler.message = $t('error.authRegisterExternalIdConflict');
+            handler.auto = false;
         }
 
-        return undefined;
+        return handler;
     });
 
     $effect(() => {
-        if (autoReturnUrl) {
-            logUser(`Redirecting to ${autoReturnUrl}`);
-            {
-                goto(autoReturnUrl);
-            }
-        }
-    });
-
-    let message = $derived.by(() => {
-        switch (errorType) {
-            case 'auth-register-external-id-conflict':
-                return $t('error.authRegisterExternalIdConflict');
-            default:
-                return page.error?.message ?? '';
+        if (handler.auto) {
+            logUser(`Redirecting to ${handler.url}`);
+            window.location.href = handler.url;
         }
     });
 </script>
 
-{#if !autoReturnUrl}
-    <App>
-        <AppContent>
-            <ErrorCard error={{ errorKind: 'other', message }}>
+<App>
+    <AppContent>
+        {#if !handler.auto}
+            <ErrorCard error={{ errorKind: 'other', message: handler.message }}>
                 {#snippet actions()}
-                    <Button color="primary" href={returnUrl || '/game'}>{$t('common.back')}</Button>
+                    <Button color="primary" href={handler.url}>{$t('common.back')}</Button>
                 {/snippet}
             </ErrorCard>
-        </AppContent>
-    </App>
-{/if}
+        {/if}
+    </AppContent>
+</App>
