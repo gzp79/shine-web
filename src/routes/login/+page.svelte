@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import { page } from '$app/state';
     import { identityApi } from '$lib/api/identity-api';
     import App from '$lib/app/App.svelte';
@@ -28,11 +27,17 @@
     let currentUserStore = setDefaultCurrentUserStore();
 
     let prompt = $derived(page.url.searchParams.get('prompt'));
-    const sanitizeURL = async (rawUrl: string): Promise<string> => {
+    let returnUrl = $derived.by(() => {
+        const rawUrl = page.url.searchParams.get('returnUrl') ?? '';
         const target = decodeURIComponent(rawUrl) ?? '/game';
-        return await getSanitizedReturnUrl(target);
-    };
-    let returnUrlPromise = $derived(sanitizeURL(page.url.searchParams.get('returnUrl') ?? ''));
+        const sanitizedURL = getSanitizedReturnUrl(target).current;
+        if (sanitizedURL) {
+            logUser(`Sanitized returnUrl: [${sanitizedURL}]`);
+        }
+        return sanitizedURL;
+    });
+
+    let providers = $derived(getExternalLoginProviders().current);
 
     type HintInfo = {
         loginText?: string;
@@ -71,7 +76,7 @@
     // when captcha is disabled use a test (site) key that always passes the server side validation
     let captcha = $state(hasCaptcha ? '' : '1x00000000000000000000AA');
     let waitLoading = $state(true);
-    let showLoading = $derived(waitLoading || !captcha);
+    let showLoading = $derived(waitLoading || !captcha || !returnUrl);
     let rememberMe = $state(true);
 
     let showEmailInput = $state(false);
@@ -82,12 +87,11 @@
     };
 
     $effect(() => {
-        const flow = async () => {
-            const returnUrl = await returnUrlPromise;
+        if (returnUrl !== undefined) {
             if (!prompt) {
                 if (currentUserStore.isContent && currentUserStore.content.isAuthenticated) {
                     logUser(`Redirecting user with an active session to ${returnUrl}`);
-                    goto(returnUrl);
+                    window.location.href = returnUrl;
                 } else {
                     // if we have no authenticated user, try the token flow
                     // if it fails user will land on the error page, that should be redirected to the login with a prompt
@@ -103,8 +107,7 @@
                     hasCaptcha ? 5000 : 1000
                 );
             }
-        };
-        flow();
+        }
     });
 
     $effect(() => {
@@ -117,8 +120,6 @@
 
 <App>
     <AppContent>
-        {@const returnUrl = await returnUrlPromise}
-
         {#if currentUserStore.isError}
             <ErrorCard caption={$t('account.failedToLoadUserInfo')} error={currentUserStore.error}>
                 {#snippet actions()}
@@ -172,18 +173,25 @@
                                 >
                                     {$t('login.email')}
                                 </Button>
-                                {#each await getExternalLoginProviders() as provider (provider)}
-                                    <Button
-                                        color="secondary"
-                                        wide
-                                        disabled={!captcha}
-                                        href={identityApi.getExternalLoginUrl(provider, rememberMe, captcha, returnUrl)}
-                                        startIcon={providerIcon(provider)}
-                                        class="m-2"
-                                    >
-                                        {provider}
-                                    </Button>
-                                {/each}
+                                {#if providers && returnUrl}
+                                    {#each providers as provider (provider)}
+                                        <Button
+                                            color="secondary"
+                                            wide
+                                            disabled={!captcha}
+                                            href={identityApi.getExternalLoginUrl(
+                                                provider,
+                                                rememberMe,
+                                                captcha,
+                                                returnUrl
+                                            )}
+                                            startIcon={providerIcon(provider)}
+                                            class="m-2"
+                                        >
+                                            {provider}
+                                        </Button>
+                                    {/each}
+                                {/if}
                             </div>
                         </Box>
 
@@ -212,7 +220,7 @@
                                 </Button>
                             {/if}
 
-                            {#if extraInfo.allowGuest}
+                            {#if extraInfo.allowGuest && returnUrl}
                                 <Button
                                     variant="outline"
                                     size="sm"
@@ -229,17 +237,16 @@
                 </div>
             </div>
 
-            {#if hasCaptcha}
-                <div class="hidden">
-                    <Turnstile siteKey={config.turnstile.siteKey} size="compact" bind:token={captcha} />
-                </div>
-            {/if}
-
-            <Modal isOpen={showLoading} class="bg-info text-on-info">
-                <Typography variant="h3">
-                    {$t('login.loadingCaptcha')}
-                    <Dots class="inline-block h-8 w-8" />
-                </Typography>
+            <Modal hideOnClose isOpen={showLoading} class="bg-info text-on-info">
+                <Stack>
+                    <Typography variant="h3">
+                        {$t('login.loadingCaptcha')}
+                        <Dots class="inline-block h-8 w-8" />
+                    </Typography>
+                    {#if hasCaptcha}
+                        <Turnstile siteKey={config.turnstile.siteKey} size="normal" bind:token={captcha} />
+                    {/if}
+                </Stack>
             </Modal>
 
             <Modal isOpen={!showLoading && showEmailInput} caption={$t('login.emailModalTitle')}>
@@ -257,7 +264,7 @@
                         <Button
                             color="secondary"
                             disabled={!isEmailValid}
-                            href={identityApi.getEmailLoginUrl(email, rememberMe, captcha, returnUrl)}
+                            href={identityApi.getEmailLoginUrl(email, rememberMe, captcha, returnUrl!)}
                         >
                             {$t('login.emailModalContinue')}
                         </Button>

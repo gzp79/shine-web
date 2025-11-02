@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { afterNavigate, goto } from '$app/navigation';
+    import { afterNavigate } from '$app/navigation';
     import { page } from '$app/state';
     import { identityApi } from '$lib/api/identity-api';
     import App from '$lib/app/App.svelte';
@@ -59,9 +59,9 @@
     $effect(() => {
         if (currentUserStore.isContent && !currentUserStore.content.isAuthenticated) {
             logUser('Login required');
-            goto(loginUrl);
+            window.location.href = loginUrl;
         } else if (isPromptForLink) {
-            goto(loginUrl);
+            window.location.href = loginUrl;
         }
     });
 
