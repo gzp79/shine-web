@@ -76,7 +76,7 @@
     // when captcha is disabled use a test (site) key that always passes the server side validation
     let captcha = $state(hasCaptcha ? '' : '1x00000000000000000000AA');
     let waitLoading = $state(true);
-    let showLoading = $derived(waitLoading || !captcha);
+    let showLoading = $derived(waitLoading || !captcha || !returnUrl);
     let rememberMe = $state(true);
 
     let showEmailInput = $state(false);
