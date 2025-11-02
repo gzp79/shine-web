@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import { page } from '$app/state';
     import App from '@lib/app/App.svelte';
     import AppContent from '@lib/app/AppContent.svelte';
@@ -42,7 +41,7 @@
         if (autoReturnUrl) {
             logUser(`Redirecting to ${autoReturnUrl}`);
             {
-                goto(autoReturnUrl);
+                window.location.href = autoReturnUrl;
             }
         }
     });

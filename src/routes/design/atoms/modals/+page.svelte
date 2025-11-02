@@ -6,6 +6,7 @@
     import Stack from '@atoms/Stack.svelte';
     import * as icons from '@atoms/icons/social';
     import { Story } from '../../_components';
+    import Separator from '../../_components/_Separator.svelte';
 
     let showModal1a = $state(false);
     let showModal1b = $state(false);
@@ -16,6 +17,8 @@
 
     let showModal2a = $state(false);
     let showModal2b = $state(false);
+
+    let showModal3a = $state(false);
 </script>
 
 <Story variant="center">
@@ -27,7 +30,10 @@
             <Button onclick={() => (showModal1d = true)}>No header</Button>
             <Button onclick={() => (showModal1e = true)}>Big content</Button>
             <Button onclick={() => (showModal1f = true)}>ButtonList</Button>
+            <Separator />
             <Button onclick={() => (showModal2a = true)}>Manual</Button>
+            <Separator />
+            <Button onclick={() => (showModal3a = true)}>Hidden</Button>
         </Stack>
 
         <Modal closeOnClickOutside closeOnEscape caption="Model" bind:isOpen={showModal1a}>
@@ -81,6 +87,11 @@
             >
                 Close All
             </Button>
+        </Modal>
+
+        <Modal closeOnClickOutside closeOnEscape hideOnClose caption="Hidden Model" bind:isOpen={showModal3a}>
+            This is the content<br />
+            Close with Escape or click outside
         </Modal>
     </Box>
 </Story>

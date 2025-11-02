@@ -4,13 +4,12 @@
     import { twMerge } from 'tailwind-merge';
     import Box from './Box.svelte';
     import { portal } from './Portal.svelte';
+    import Typography from './Typography.svelte';
     import { Cross } from './icons/common';
     import type { ElementProps } from './types';
 </script>
 
 <script lang="ts">
-    import Typography from './Typography.svelte';
-
     interface Props extends ElementProps {
         // Selector for the layer element containing the popper, defaults to document.body
         layer?: string;
@@ -19,6 +18,8 @@
         closeButton?: boolean;
         closeOnClickOutside?: boolean;
         closeOnEscape?: boolean;
+        // when enabled, the modal will not unmount on close, just hide
+        hideOnClose?: boolean;
         class?: string;
         children?: Snippet;
     }
@@ -29,6 +30,7 @@
         closeButton,
         closeOnClickOutside,
         closeOnEscape,
+        hideOnClose,
         class: innerClass,
         children
     }: Props = $props();
@@ -59,7 +61,13 @@
     });
 
     let modalClass = $derived(
-        twMerge('fixed inset-0 z-50', 'm-2', 'flex select-none items-center justify-center', 'backdrop-blur-sm')
+        twMerge(
+            'fixed inset-0 z-50',
+            'm-2',
+            'flex select-none items-center justify-center',
+            'backdrop-blur-sm',
+            hideOnClose && !isOpen && 'hidden'
+        )
     );
     let outerCls = $derived(
         twMerge(
@@ -74,7 +82,7 @@
     let innerCls = $derived(twMerge('min-h-min h-fit w-full p-4 flex flex-col', innerClass));
 </script>
 
-{#if isOpen}
+{#if isOpen || hideOnClose}
     <div use:portal={layer} class={modalClass} bind:this={background}>
         <Box border level={1} class={outerCls}>
             {#if closeButton || caption}
