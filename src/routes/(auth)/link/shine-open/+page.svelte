@@ -16,8 +16,7 @@
     {#await identityApi.createSingleAccessToken()}
         <LoadingCard />
     {:then token}
-        <Typography variant="h1" class="text-center">{$t('link.startingShine')}</Typography>
-        {redirect(`shine://open?token=${encodeURIComponent(token)}`)}
+        {redirect(`/public/mobile?token=${encodeURIComponent(token)}`)}
     {:catch error}
         <ErrorCard {error}>
             {#snippet actions()}
