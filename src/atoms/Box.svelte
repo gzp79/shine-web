@@ -23,6 +23,7 @@
 </script>
 
 <script lang="ts">
+    import { toSpacingClasses, type SpacingXY } from './types/spacing';
     import Typography from './Typography.svelte';
 
     interface Props extends ElementProps {
@@ -33,6 +34,8 @@
         compact?: boolean;
         level?: number;
         legend?: string | Legend;
+        padding?: SpacingXY;
+        margin?: SpacingXY;
         class?: string;
         children?: Snippet;
     }
@@ -45,6 +48,8 @@
         ghost,
         level,
         legend,
+        padding,
+        margin,
         class: className,
         children,
         ...rest
@@ -100,6 +105,9 @@
     });
     let legendText = $derived.by(() => (typeof legend === 'string' ? legend : legend?.text));
 
+    let paddingClass = $derived(toSpacingClasses(padding, { all: 'p', x: 'px', y: 'py' }));
+    let marginClass = $derived(toSpacingClasses(margin, { all: 'm', x: 'mx', y: 'my' }));
+
     let boxClass = $derived(
         twMerge(
             'rounded-lg',
@@ -108,6 +116,8 @@
             `text-${colors.fgColor}`,
             border && `border border-${colors.border}`,
             shadow && `shadow-md shadow-${colors.fgColor}`,
+            paddingClass,
+            marginClass,
             className
         )
     );

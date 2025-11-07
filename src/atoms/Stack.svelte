@@ -6,19 +6,25 @@
 </script>
 
 <script lang="ts">
-    type Spacing = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
+    import { toResponsiveClass, type ResponsiveProp } from './types/responsive-prop';
+    import { toSpacingClasses, type SpacingXY } from './types/spacing';
+
     type Direction = 'row' | 'column';
 
     interface Props extends ElementProps {
         direction?: 'row' | 'column' | ResponsiveProp<Direction>;
-        spacing?: Spacing | ResponsiveProp<Spacing>;
+        spacing?: SpacingXY;
         align?: 'start' | 'center' | 'end';
         justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
+        wrap?: boolean;
         class?: string;
         children?: Snippet;
     }
 
-    let { direction = 'column', spacing, align, justify, children, class: className, ...rest }: Props = $props();
+    let { direction = 'column', spacing, align, justify, wrap, children, class: className, ...rest }: Props =
+        $props();
+
+    let spacingClass = $derived(toSpacingClasses(spacing, { all: 'gap', x: 'gap-x', y: 'gap-y' }) ?? 'gap-2');
 
     let clsStack = twMerge([
         'flex',
@@ -27,9 +33,10 @@
                 (x) => `${m}${x}`
             )
         ),
-        spacing !== undefined ? toResponsiveClass(spacing, (m, spacing) => `${m}gap-${spacing}`) : 'gap-2',
+        spacingClass,
         align && `items-${align}`,
         justify && `justify-${justify}`,
+        wrap && 'flex-wrap',
         className
     ]);
 </script>
