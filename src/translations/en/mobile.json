@@ -1,5 +1,7 @@
 {
     "installApp": "Please install our application to continue",
+    "androidDescription": "Download our app from Google Play and enjoy the full experience on your Android device.",
+    "iosDescription": "Download our app from the App Store and enjoy the full experience on your iOS device.",
     "googlePlay": "Google Play",
     "appStore": "App Store"
 }
