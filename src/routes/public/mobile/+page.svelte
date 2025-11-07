@@ -1,0 +1,29 @@
+<script lang="ts">
+    import AppContent from '$lib/app/AppContent.svelte';
+    import { t } from '$lib/i18n/i18n.svelte';
+    import Grid from '@atoms/Grid.svelte';
+    import GridItem from '@atoms/GridItem.svelte';
+    import ImageButton from '@atoms/ImageButton.svelte';
+    import Stack from '@atoms/Stack.svelte';
+    import Typography from '@atoms/Typography.svelte';
+</script>
+
+<AppContent class="flex items-center justify-center h-full">
+    <Stack direction="column" spacing={8} class="justify-center items-center">
+        <Typography variant="h1" class="text-center">{$t('mobile.installApp')}</Typography>
+        <Grid columns={2} spacing={12}>
+            <GridItem class="max-w-sm">
+                <Stack direction="column">
+                    <Typography variant="text" class="text-justify">{$t('mobile.androidDescription')}</Typography>
+                    <ImageButton src="/assets/get_google_play.svg" alt={$t('mobile.googlePlay')} />
+                </Stack>
+            </GridItem>
+            <GridItem class="max-w-sm">
+                <Stack direction="column">
+                    <Typography variant="text" class="text-justify">{$t('mobile.iosDescription')}</Typography>
+                    <ImageButton src="/assets/get_app_store.svg" alt={$t('mobile.appStore')} disabled />
+                </Stack>
+            </GridItem>
+        </Grid>
+    </Stack>
+</AppContent>

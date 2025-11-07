@@ -10,18 +10,20 @@
         size?: Spans | ResponsiveProp<Spans>;
         start?: Spans | ResponsiveProp<Spans>;
         span?: Spans | ResponsiveProp<Spans>;
+        border?: boolean;
         class?: string;
 
         children: Snippet;
     }
 
-    let { size, start: offset, span, class: className, children }: Props = $props();
+    let { size, start: offset, span, border, class: className, children }: Props = $props();
 
     let itemClass = $derived(
         twMerge([
             size && toResponsiveClass(size, (m, size) => `${m}col-span-${size}`),
             offset && toResponsiveClass(offset, (m, offset) => `${m}col-start-${offset}`),
             span && toResponsiveClass(span, (m, span) => `${m}row-span-${span}`),
+            border && 'border',
             className
         ])
     );

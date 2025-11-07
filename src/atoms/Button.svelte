@@ -15,8 +15,8 @@
         highlight?: boolean;
         class?: string;
 
-        startIcon?: Component;
-        endIcon?: Component;
+        startIcon?: Component | string;
+        endIcon?: Component | string;
 
         onclick?: () => void;
         href?: string;
@@ -206,11 +206,15 @@
 </script>
 
 <svelte:element this={el} class={btnClass} bind:this={button} {...elProps}>
-    {#if StartIcon}
+    {#if typeof StartIcon === 'string'}
+        <img src={StartIcon} class={startIconClass} alt="" />
+    {:else if StartIcon}
         <StartIcon class={startIconClass} />
     {/if}
     {@render children?.()}
-    {#if EndIcon}
+    {#if typeof EndIcon === 'string'}
+        <img src={EndIcon} class={endIconClass} alt="" />
+    {:else if EndIcon}
         <EndIcon class={endIconClass} />
     {/if}
 </svelte:element>
