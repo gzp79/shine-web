@@ -1,13 +1,11 @@
 <script lang="ts" module>
-    export type Variant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'text' | 'footnote' | 'code' | 'legend';
-    export type Weight = 'normal' | 'emphasis' | 'bold';
-</script>
-
-<script lang="ts">
     import type { Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
 
-    interface Props {
+    export type Variant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'text' | 'footnote' | 'code' | 'legend';
+    export type Weight = 'normal' | 'emphasis' | 'bold';
+
+    export interface Props {
         variant: Variant;
         element?: string;
 
@@ -17,6 +15,9 @@
 
         children: Snippet;
     }
+</script>
+
+<script lang="ts">
     let { variant, element, underline, weight = 'normal', class: className, children }: Props = $props();
 
     let variantElement = {
