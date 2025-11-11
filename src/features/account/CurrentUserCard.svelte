@@ -3,8 +3,6 @@
     import { t } from '$lib/i18n/i18n.svelte';
     import { FetchError } from '$lib/utils';
     import Button from '@atoms/Button.svelte';
-    import Card from '@atoms/Card.svelte';
-    import ComboButton from '@atoms/ComboButton.svelte';
     import KeyValueTable from '@atoms/KeyValueTable.svelte';
     import LoadingCard from '@atoms/LoadingCard.svelte';
     import Modal from '@atoms/Modal.svelte';
@@ -12,6 +10,8 @@
     import Typography from '@atoms/Typography.svelte';
     import { Spinner } from '@atoms/icons/animated';
     import Warning from '@atoms/icons/common/_warning.svelte';
+    import ComboButton from '@atoms/inputs/ComboButton.svelte';
+    import Card from '@atoms/layouts/Card.svelte';
     import { EmailSchema } from '@atoms/types/validator';
     import Alert from '@components/Alert.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';

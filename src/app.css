@@ -232,6 +232,9 @@ Color helper:
     .icon-lg {
         @apply h-12 w-12;
     }
+    .icon-full {
+        @apply h-full max-h-full w-full max-w-full;
+    }
     .min-icon-xs {
         @apply min-h-4 min-w-4;
     }

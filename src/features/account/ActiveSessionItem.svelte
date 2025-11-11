@@ -3,9 +3,9 @@
     import { t } from '$lib/i18n/i18n.svelte';
     import { formatLocation } from '$lib/i18n/utils';
     import { UAParser } from 'ua-parser-js';
-    import Card from '@atoms/Card.svelte';
     import KeyValueTable from '@atoms/KeyValueTable.svelte';
     import * as clientIcons from '@atoms/icons/clients';
+    import Card from '@atoms/layouts/Card.svelte';
 
     interface Props {
         session: ActiveSession;

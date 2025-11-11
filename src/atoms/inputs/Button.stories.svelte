@@ -1,11 +1,11 @@
 <script context="module" lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
-    import Button from './Button.svelte';
-    import type { ActionColor, InputVariant, Size } from './types';
+    import Button from '@atoms/inputs/Button.svelte';
+    import type { ActionColor, InputVariant, Size } from '@atoms/types';
 
     const { Story } = defineMeta({
         component: Button,
-        title: 'Atoms/Button',
+        title: 'Atoms/Inputs/Button',
         tags: ['autodocs'],
         args: {
             color: 'primary' as ActionColor,
@@ -181,7 +181,7 @@
 
 <Story name="Color Variants Matrix" asChild>
     <div class="space-y-6">
-        {#each ['filled', 'outline', 'ghost'] as variant}
+        {#each ['filled', 'outline', 'ghost'] as variant (variant)}
             <div class="space-y-2">
                 <h3 class="text-lg font-semibold capitalize">{variant}</h3>
                 <div class="flex flex-wrap gap-2">

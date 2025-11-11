@@ -2,6 +2,18 @@ import { withThemeByDataAttribute } from '@storybook/addon-themes';
 import type { Preview, SvelteRenderer } from '@storybook/sveltekit';
 import '../src/app.css';
 
+// Override app.css styles that break Storybook scrolling
+if (typeof document !== 'undefined') {
+    const style = document.createElement('style');
+    style.textContent = `
+        body, #storybook-root {
+            overflow: auto !important;
+            height: auto !important;
+        }
+    `;
+    document.head.appendChild(style);
+}
+
 const preview: Preview = {
     parameters: {
         controls: {
@@ -16,6 +28,12 @@ const preview: Preview = {
             // 'error' - fail CI on a11y violations
             // 'off' - skip a11y checks entirely
             test: 'todo'
+        },
+
+        options: {
+            storySort: {
+                order: ['Atoms', ['Theme', 'Layouts', 'Inputs', 'Examples']]
+            }
         }
     },
     decorators: [

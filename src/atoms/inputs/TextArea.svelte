@@ -1,9 +1,9 @@
 <script lang="ts">
     import { getContext } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import type { BoxInfo } from './Box.svelte';
+    import type { BoxInfo } from '../layouts/Box.svelte';
+    import type { ActionColor, ElementProps, InputVariant, Size } from '../types';
     import type { GroupInfo } from './InputGroup.svelte';
-    import type { ActionColor, ElementProps, InputVariant, Size } from './types';
 
     interface Props extends ElementProps {
         rows?: 'single' | number | [number, number];

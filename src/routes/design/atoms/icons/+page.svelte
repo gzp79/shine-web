@@ -1,13 +1,13 @@
 <script lang="ts">
     import { type Component } from 'svelte';
     import Box from '@atoms/Box.svelte';
-    import Card from '@atoms/Card.svelte';
     import Typography from '@atoms/Typography.svelte';
     import { allIcons as animatedIcons } from '@atoms/icons/animated';
     import { allIcons as clientIcons } from '@atoms/icons/clients';
     import { allIcons as commonIcons } from '@atoms/icons/common';
     import { allIcons as flagIcons } from '@atoms/icons/flags';
     import { allIcons as socialIcons } from '@atoms/icons/social';
+    import Card from '@atoms/layouts/Card.svelte';
     import { type ActionColor, type Size, actionColorList, sizeList } from '@atoms/types';
     import { CheckBox, Select, Story, settingsStore } from '../../_components';
 

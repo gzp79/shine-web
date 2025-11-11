@@ -1,8 +1,8 @@
 <script lang="ts" module>
     import { type Snippet, getContext, setContext } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import type { BoxInfo } from './Box.svelte';
-    import type { ActionColor, ElementProps, InputVariant, Size } from './types';
+    import type { BoxInfo } from '../layouts/Box.svelte';
+    import type { ActionColor, ElementProps, InputVariant, Size } from '../types';
 
     export interface GroupInfo {
         size: Size;

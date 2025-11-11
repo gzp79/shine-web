@@ -2,8 +2,8 @@
     import { type Component, type Snippet, getContext } from 'svelte';
     import type { HTMLAttributes } from 'svelte/elements';
     import { twMerge } from 'tailwind-merge';
-    import type { BoxInfo } from './Box.svelte';
     import type { GroupInfo } from './InputGroup.svelte';
+    import type { BoxInfo } from './layouts/Box.svelte';
     import { type ActionColor, type ElementProps, type InputVariant, type Size } from './types';
 
     interface Props extends ElementProps {

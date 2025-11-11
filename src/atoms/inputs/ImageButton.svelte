@@ -2,8 +2,8 @@
     import { getContext } from 'svelte';
     import type { HTMLAttributes } from 'svelte/elements';
     import { twMerge } from 'tailwind-merge';
+    import type { ActionColor, ElementProps, Size } from '../types';
     import type { GroupInfo } from './InputGroup.svelte';
-    import type { ActionColor, ElementProps, Size } from './types';
 
     interface Props extends ElementProps {
         src: string;

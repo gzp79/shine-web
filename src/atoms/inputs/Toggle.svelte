@@ -1,6 +1,6 @@
 <script lang="ts">
     import { twMerge } from 'tailwind-merge';
-    import { type ActionColor, type Size } from './types';
+    import { type ActionColor, type Size } from '../types';
 
     interface Props {
         offLabel?: string;

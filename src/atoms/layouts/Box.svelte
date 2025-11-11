@@ -1,11 +1,9 @@
 <script lang="ts" module>
     import { type Snippet, getContext, setContext } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import type { ActionColor, ElementProps, Size } from './types';
-
-    export type Variant = {
-        color: ActionColor;
-    };
+    import Typography from '../Typography.svelte';
+    import type { ActionColor, ElementProps, Size } from '../types';
+    import { type Spacing, toSpacingClasses } from '../types/spacing';
 
     export type Legend = {
         text: string;
@@ -23,19 +21,17 @@
 </script>
 
 <script lang="ts">
-    import { toSpacingClasses, type SpacingXY } from './types/spacing';
-    import Typography from './Typography.svelte';
-
     interface Props extends ElementProps {
-        variant?: Variant;
+        color?: ActionColor;
         border?: boolean;
         shadow?: boolean;
         ghost?: boolean;
         compact?: boolean;
         level?: number;
         legend?: string | Legend;
-        padding?: SpacingXY;
-        margin?: SpacingXY;
+        padding?: Spacing;
+        margin?: Spacing;
+        overflow?: 'visible' | 'auto' | 'hidden' | 'scroll';
         class?: string;
         children?: Snippet;
     }
@@ -43,13 +39,14 @@
     let {
         border,
         shadow,
-        variant,
+        color,
         compact,
         ghost,
         level,
         legend,
         padding,
         margin,
+        overflow = 'auto',
         class: className,
         children,
         ...rest
@@ -64,13 +61,13 @@
     setContext('Box_colorIndex', colorIndex);
 
     let colors = $derived.by(() => {
-        if (variant) {
+        if (color) {
             return {
-                fgColor: 'on-' + variant.color,
-                fgColor1: variant.color + '-1',
-                fgColor2: variant.color + '-2',
-                bgColor: variant.color,
-                border: 'on-' + variant.color
+                fgColor: 'on-' + color,
+                fgColor1: color + '-1',
+                fgColor2: color + '-2',
+                bgColor: color,
+                border: 'on-' + color
             };
         } else {
             return {
@@ -111,11 +108,13 @@
     let boxClass = $derived(
         twMerge(
             'rounded-lg',
+            'min-w-0', // Allow Box to shrink in flex containers while staying full-width when standalone
             !compact && 'p-4',
             !ghost && `bg-${colors.bgColor}`,
             `text-${colors.fgColor}`,
             border && `border border-${colors.border}`,
             shadow && `shadow-md shadow-${colors.fgColor}`,
+            overflow && `overflow-${overflow}`,
             paddingClass,
             marginClass,
             className

@@ -1,12 +1,12 @@
 <script module lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
-    import Stack from './Stack.svelte';
-    import Toggle from './Toggle.svelte';
-    import type { ActionColor, Size } from './types';
+    import Toggle from '@atoms/inputs/Toggle.svelte';
+    import Stack from '@atoms/layouts/Stack.svelte';
+    import type { ActionColor, Size } from '@atoms/types';
 
     const { Story } = defineMeta({
         component: Toggle,
-        title: 'Atoms/Toggle',
+        title: 'Atoms/Inputs/Toggle',
         tags: ['autodocs'],
         args: {
             color: 'primary' as ActionColor,

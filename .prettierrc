@@ -19,6 +19,7 @@
     ],
     "importOrder": [
         "<THIRD_PARTY_MODULES>",
+        "^\\@storybook-ext/(.*)$",
         "^\\@config/(.*)$",
         "^\\@mocks/(.*)$",
         "^\\@generated/(.*)$",

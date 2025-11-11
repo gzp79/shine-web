@@ -4,9 +4,11 @@
 
     export type Variant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'text' | 'footnote' | 'code' | 'legend';
     export type Weight = 'normal' | 'emphasis' | 'bold';
+</script>
 
-    export interface Props {
-        variant: Variant;
+<script lang="ts">
+    interface Props {
+        variant?: Variant;
         element?: string;
 
         underline?: boolean;
@@ -15,10 +17,7 @@
 
         children: Snippet;
     }
-</script>
-
-<script lang="ts">
-    let { variant, element, underline, weight = 'normal', class: className, children }: Props = $props();
+    let { variant = 'text', element, underline, weight = 'normal', class: className, children }: Props = $props();
 
     let variantElement = {
         h1: 'h1',
@@ -41,7 +40,7 @@
         h4: `text-xl ${sharedHClasses}`,
         h5: `text-lg ${sharedHClasses}`,
         h6: `text-base ${sharedHClasses}`,
-        text: 'text-base',
+        text: 'text-base text-justify',
         footnote: 'text-sm',
         code: 'text-sm',
         legend: 'text-base'

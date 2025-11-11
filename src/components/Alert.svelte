@@ -4,8 +4,8 @@
 
 <script lang="ts">
     import type { Snippet } from 'svelte';
-    import Card, { type Variant as CardVariant } from '@atoms/Card.svelte';
     import * as icons from '@atoms/icons/common';
+    import Card, { type Variant as CardVariant } from '@atoms/layouts/Card.svelte';
     import type { ElementProps } from '@atoms/types';
 
     interface Props extends ElementProps {

@@ -3,7 +3,7 @@
     import { z } from 'zod';
     import Box from '@atoms/Box.svelte';
     import Stack from '@atoms/Stack.svelte';
-    import TextArea from '@atoms/TextArea.svelte';
+    import TextArea from '@atoms/inputs/TextArea.svelte';
     import { type ActionColor, type Size, actionColorList, sizeList } from '@atoms/types';
     import { EmailSchema, RangedIntegerSchema } from '@atoms/types/validator';
     import ValidatedTextArea from '@components/ValidatedTextArea.svelte';

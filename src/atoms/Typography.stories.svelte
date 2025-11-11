@@ -1,12 +1,12 @@
 <script context="module" lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
-    import { lorem } from '../routes/design/_components';
-    import Stack from './Stack.svelte';
-    import Typography, { type Props as TypographyProps, type Variant, type Weight } from './Typography.svelte';
+    import { lorem } from '@storybook-ext/lorem';
+    import Typography, { type Variant, type Weight } from '@atoms/Typography.svelte';
+    import Stack from '@atoms/layouts/Stack.svelte';
 
     const { Story } = defineMeta({
         component: Typography,
-        title: 'Atoms/Typography',
+        title: 'Atoms/Theme/Typography',
         tags: ['autodocs'],
         args: {
             variant: 'h1' as Variant

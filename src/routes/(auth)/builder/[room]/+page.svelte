@@ -3,9 +3,9 @@
     import { builderApi } from '$lib/api/builder-api';
     import { onMount } from 'svelte';
     import Button from '@atoms/Button.svelte';
-    import InputGroup from '@atoms/InputGroup.svelte';
-    import TextArea from '@atoms/TextArea.svelte';
     import Typography from '@atoms/Typography.svelte';
+    import InputGroup from '@atoms/inputs/InputGroup.svelte';
+    import TextArea from '@atoms/inputs/TextArea.svelte';
 
     type ChatMessage = {
         from: string;

@@ -1,7 +1,7 @@
 <script lang="ts" module>
     import { t } from '$lib/i18n/i18n.svelte';
     import { z } from 'zod';
-    import Typography from './Typography.svelte';
+    import Typography from '../Typography.svelte';
 
     export type ValidationResult =
         | { error: string }

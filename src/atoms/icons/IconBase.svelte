@@ -2,13 +2,13 @@
     import type { Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
     import TailwindClasses from '../TailwindClasses.svelte';
-    import type { ActionColor, Size } from '../types';
+    import type { ActionColor, IconSize } from '../types';
 
     export const TRANSPARENCY = 0.3;
 
     export interface IconProps {
         color?: ActionColor;
-        size?: Size;
+        size?: IconSize;
         disabled?: boolean;
         class?: string;
     }
@@ -20,12 +20,12 @@
         children: Snippet;
     }
 
-    let { color, size, disabled = false, class: className, viewBox, children }: Props = $props();
+    let { color, size = 'full', disabled = false, class: className, viewBox, children }: Props = $props();
     let svgClass = $derived(
         twMerge(
             color ? `stroke-on-${color}` : 'stroke-current',
             color ? `fill-on-${color}` : 'fill-current',
-            size ? `icon-${size}` : 'w-full h-full',
+            `icon-${size}`,
             disabled && '!opacity-30',
             //disabled && 'grayscale'
             className
@@ -37,7 +37,7 @@
     classList={[
         'stroke-surface stroke-primary stroke-info stroke-warning stroke-danger stroke-success',
         'fill-surface fill-primary fill-info fill-warning fill-danger fill-success',
-        'icon-xs icon-sm icon-md icon-lg'
+        'icon-xs icon-sm icon-md icon-lg icon-full'
     ]}
 />
 

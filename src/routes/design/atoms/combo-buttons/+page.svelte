@@ -1,7 +1,7 @@
 <script lang="ts">
     import { logDesigner } from '$lib/loggers';
     import Box from '@atoms/Box.svelte';
-    import ComboButton from '@atoms/ComboButton.svelte';
+    import ComboButton from '@atoms/inputs/ComboButton.svelte';
     import { range } from '@atoms/types';
     import { Story } from '../../_components';
 

@@ -1,8 +1,8 @@
 <script lang="ts">
     import type { Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import TailwindClasses from './TailwindClasses.svelte';
-    import { type ResponsiveProp, toResponsiveClass } from './types/responsive-prop';
+    import TailwindClasses from '../TailwindClasses.svelte';
+    import { type ResponsiveProp, toResponsiveClass } from '../types/responsive-prop';
 
     type Spans = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 'full';
 
@@ -19,13 +19,13 @@
     let { size, start: offset, span, border, class: className, children }: Props = $props();
 
     let itemClass = $derived(
-        twMerge([
+        twMerge(
             size && toResponsiveClass(size, (m, size) => `${m}col-span-${size}`),
             offset && toResponsiveClass(offset, (m, offset) => `${m}col-start-${offset}`),
             span && toResponsiveClass(span, (m, span) => `${m}row-span-${span}`),
             border && 'border',
             className
-        ])
+        )
     );
 </script>
 

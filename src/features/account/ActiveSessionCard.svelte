@@ -1,8 +1,8 @@
 <script lang="ts" module>
     import { t } from '$lib/i18n/i18n.svelte';
-    import Card from '@atoms/Card.svelte';
     import LoadingCard from '@atoms/LoadingCard.svelte';
     import Stack from '@atoms/Stack.svelte';
+    import Card from '@atoms/layouts/Card.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';
     import ActiveSessionItem from './ActiveSessionItem.svelte';
     import { getActiveSessionStore } from './activeSessionStore.svelte';

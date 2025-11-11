@@ -1,9 +1,9 @@
 <script lang="ts">
     import Box from '@atoms/Box.svelte';
     import Button from '@atoms/Button.svelte';
-    import InputGroup from '@atoms/InputGroup.svelte';
-    import TextArea from '@atoms/TextArea.svelte';
     import * as icons from '@atoms/icons/common';
+    import InputGroup from '@atoms/inputs/InputGroup.svelte';
+    import TextArea from '@atoms/inputs/TextArea.svelte';
     import { type InputVariant, actionColorList, sizeList } from '@atoms/types';
     import { CheckBox, Select, Story, settingsStore } from '../../_components';
 

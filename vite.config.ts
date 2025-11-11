@@ -1,10 +1,8 @@
-/// <reference types="vitest/config" />
-import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
+import * as vitestPlugin from '@storybook/addon-vitest/vitest-plugin';
 import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
 import { spawn } from 'child_process';
 import fs from 'fs';
-// Determine the environment
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { type Plugin } from 'vite';
@@ -128,7 +126,7 @@ export default defineConfig({
                 plugins: [
                     // The plugin will run tests for the stories defined in your Storybook config
                     // See options at: https://storybook.js.org/docs/next/writing-tests/integrations/vitest-addon#storybooktest
-                    storybookTest({
+                    vitestPlugin.storybookTest({
                         configDir: path.join(dirname, '.storybook')
                     })
                 ],

@@ -1,11 +1,11 @@
 <script module lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
+    import type { ActionColor, InputVariant, Size } from '../types';
     import TextArea from './TextArea.svelte';
-    import type { ActionColor, InputVariant, Size } from './types';
 
     const { Story } = defineMeta({
         component: TextArea,
-        title: 'Atoms/TextArea',
+        title: 'Atoms/Inputs/TextArea',
         tags: ['autodocs'],
         args: {
             variant: 'filled' as InputVariant,
@@ -171,7 +171,7 @@
 
 <Story name="Variant & Color Matrix" asChild>
     <div class="space-y-6">
-        {#each ['filled', 'outline', 'ghost'] as variant}
+        {#each ['filled', 'outline', 'ghost'] as variant (variant)}
             <div class="space-y-3">
                 <h3 class="text-sm font-semibold capitalize">{variant}</h3>
                 <div class="grid grid-cols-2 gap-3">

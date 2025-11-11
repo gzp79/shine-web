@@ -13,6 +13,9 @@ export type ActionColor = (typeof actionColorList)[number];
 export const sizeList = ['xs', 'sm', 'md', 'lg'];
 export type Size = (typeof sizeList)[number];
 
+export const iconSizeList = ['xs', 'sm', 'md', 'lg', 'full'];
+export type IconSize = (typeof iconSizeList)[number];
+
 export const inputVariantList = ['filled', 'outline', 'ghost'];
 export type InputVariant = (typeof inputVariantList)[number];
 

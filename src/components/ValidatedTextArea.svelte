@@ -1,8 +1,8 @@
 <script lang="ts">
     import { z } from 'zod';
-    import Stack from '@atoms/Stack.svelte';
-    import TextArea from '@atoms/TextArea.svelte';
-    import Validation, { type ValidationResult, isValidResult } from '@atoms/Validation.svelte';
+    import TextArea from '@atoms/inputs/TextArea.svelte';
+    import Validation, { type ValidationResult, isValidResult } from '@atoms/inputs/Validation.svelte';
+    import Stack from '@atoms/layouts/Stack.svelte';
     import type { ActionColor, ElementProps, InputVariant, Size } from '@atoms/types';
 
     interface Props extends ElementProps {
