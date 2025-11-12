@@ -32,7 +32,7 @@ const preview: Preview = {
 
         options: {
             storySort: {
-                order: ['Atoms', ['Theme', 'Layouts', 'Inputs', 'Examples']]
+                order: ['Atoms', ['Theme', 'Layouts', 'Inputs', 'Data', 'Examples']]
             }
         }
     },

@@ -13,6 +13,7 @@
             border: false,
             shadow: false,
             ghost: false,
+            width: undefined,
             compact: false,
             color: undefined,
             legend: undefined,
@@ -60,6 +61,15 @@
                 table: {
                     type: { summary: 'boolean' },
                     defaultValue: { summary: 'false' }
+                }
+            },
+            width: {
+                control: 'select',
+                options: ['small', 'big', 'fit', 'full'],
+                description: 'Width variant',
+                table: {
+                    type: { summary: 'Width' },
+                    defaultValue: { summary: 'fit' }
                 }
             },
             legend: {
@@ -204,39 +214,18 @@
     {/snippet}
 </Story>
 
-<Story name="Width Behavior">
-    {#snippet template(args)}
-        <div class="flex flex-col gap-4">
-            <Box {...args} border legend="Default (full width)">
-                <Typography variant="text">Box takes full width by default</Typography>
-            </Box>
-            <Box {...args} border legend="With Custom Width" class="w-64">
-                <Typography variant="text">Custom width via class prop</Typography>
-            </Box>
-            <div class="flex gap-4">
-                <Box {...args} border legend="In Flex Context" class="flex-1">
-                    <Typography variant="text">Grows in flex container</Typography>
-                </Box>
-                <Box {...args} border legend="Fixed Width" class="w-48">
-                    <Typography variant="text">Fixed width</Typography>
-                </Box>
-            </div>
-        </div>
-    {/snippet}
-</Story>
-
 <Story name="Overflow">
     {#snippet template(args)}
         {@const { overflow, ...otherArgs } = args}
         <div class="flex flex-col gap-4">
             <Box {...otherArgs} border legend="Auto Overflow" overflow="auto" class="max-h-32">
-                <Typography variant="text">{lorem}</Typography>
+                <Typography variant="text">{lorem.long}</Typography>
             </Box>
             <Box {...otherArgs} border legend="Hidden Overflow" overflow="hidden" class="max-h-32">
-                <Typography variant="text">{lorem.slice(0, 200)}</Typography>
+                <Typography variant="text">{lorem.long}</Typography>
             </Box>
             <Box {...otherArgs} border legend="Visible Overflow (Default)" class="max-h-32">
-                <Typography variant="text">{lorem.slice(0, 150)}</Typography>
+                <Typography variant="text">{lorem.long}</Typography>
             </Box>
         </div>
     {/snippet}

@@ -2,36 +2,50 @@
     import type { Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
     import TailwindClasses from '../TailwindClasses.svelte';
-    import { type Size } from '../types';
+    import { type ElementProps, type Size } from '../types';
 
-    interface Item {
+    export interface DescriptionListItem {
         key: string;
         value: string | Snippet;
+        valueClass?: string;
+        keyClass?: string;
+    }
+
+    interface Props extends ElementProps {
+        items: (DescriptionListItem | null)[];
+        size?: Size;
+        /** Whether the table should take full width of its container */
+        fullWidth?: boolean;
         class?: string;
     }
-    interface Props {
-        items: (Item | null)[];
-        size?: Size;
-    }
-    const { items, size = 'md' }: Props = $props();
 
-    const filteredItems = $derived(items.filter((x) => x !== null));
-    const tableClass = $derived(twMerge('table', `table-${size}`));
+    const { items, size = 'md', fullWidth = false, class: className, id, role }: Props = $props();
+
+    const filteredItems = $derived(items.filter((x) => x !== null) as DescriptionListItem[]);
+    const tableClass = $derived(
+        twMerge('table', fullWidth ? 'w-full table-fixed' : 'table-auto max-w-full', `table-${size}`, className)
+    );
 </script>
 
-<TailwindClasses classList={['table-xs table-sm table-md table-lg']} />
+<TailwindClasses classList={['table-xs', 'table-sm', 'table-md', 'table-lg']} />
 
-<table class={tableClass}>
+<table {id} {role} class={tableClass}>
+    <colgroup>
+        <col class="w-1/3" />
+        <col class="w-2/3" />
+    </colgroup>
     <tbody>
         {#each filteredItems as item (item.key)}
-            <tr class="border-none">
-                <th class="w-min-content text-nowrap">{item.key}</th>
+            <tr>
+                <th class={twMerge('truncate', item.keyClass)} title={item.key}>
+                    {item.key}
+                </th>
                 {#if typeof item.value === 'string'}
-                    <td class="w-full text-ellipsis">
-                        <span class={item.class}>{item.value}</span>
+                    <td class={twMerge('break-words', item.valueClass)}>
+                        {item.value}
                     </td>
                 {:else}
-                    <td class={twMerge('w-full text-ellipsis', item.class)}>
+                    <td class={twMerge('min-w-0', item.valueClass)}>
                         {@render item.value()}
                     </td>
                 {/if}

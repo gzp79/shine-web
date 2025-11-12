@@ -3,7 +3,7 @@
     import { t } from '$lib/i18n/i18n.svelte';
     import { formatLocation } from '$lib/i18n/utils';
     import Button from '@atoms/Button.svelte';
-    import KeyValueTable from '@atoms/KeyValueTable.svelte';
+    import KeyValueTable from '@atoms/data/KeyValueTable.svelte';
     import Card from '@atoms/layouts/Card.svelte';
     import { getActiveTokenStore } from './activeTokenStore.svelte';
 
@@ -27,7 +27,7 @@
             {
                 key: $t('account.tokenHash'),
                 value: token.tokenHash,
-                class: 'break-all'
+                valueClass: 'break-all'
             },
             {
                 key: $t('account.tokenKind'),
@@ -36,7 +36,7 @@
             {
                 key: $t('account.activeStatus'),
                 value: token.isExpired ? $t('account.expired') : $t('account.active'),
-                class: token.isExpired ? 'bg-warning text-on-warning px-1' : ''
+                valueClass: token.isExpired ? 'bg-warning text-on-warning px-1' : ''
             },
             {
                 key: $t('account.creationDate'),

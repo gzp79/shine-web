@@ -3,7 +3,7 @@
     import { t } from '$lib/i18n/i18n.svelte';
     import { formatLocation } from '$lib/i18n/utils';
     import { UAParser } from 'ua-parser-js';
-    import KeyValueTable from '@atoms/KeyValueTable.svelte';
+    import KeyValueTable from '@atoms/data/KeyValueTable.svelte';
     import * as clientIcons from '@atoms/icons/clients';
     import Card from '@atoms/layouts/Card.svelte';
 
@@ -61,7 +61,7 @@
             {
                 key: $t('account.sessionFingerprint'),
                 value: session.fingerprint,
-                class: 'break-all'
+                valueClass: 'break-all'
             },
             {
                 key: $t('account.userAgent'),

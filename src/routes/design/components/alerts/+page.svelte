@@ -1,6 +1,6 @@
 <script lang="ts">
     import Box from '@atoms/Box.svelte';
-    import KeyValueTable from '@atoms/KeyValueTable.svelte';
+    import KeyValueTable from '@atoms/data/KeyValueTable.svelte';
     import Stack from '@atoms/Stack.svelte';
     import Typography from '@atoms/Typography.svelte';
     import Alert from '@components/Alert.svelte';

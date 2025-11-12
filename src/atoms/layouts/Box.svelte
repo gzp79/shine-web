@@ -5,6 +5,8 @@
     import type { ActionColor, ElementProps, Size } from '../types';
     import { type Spacing, toSpacingClasses } from '../types/spacing';
 
+    export type Width = 'small' | 'big' | 'fit' | 'full';
+
     export type Legend = {
         text: string;
         color?: ActionColor;
@@ -27,6 +29,7 @@
         shadow?: boolean;
         ghost?: boolean;
         compact?: boolean;
+        width?: Width;
         level?: number;
         legend?: string | Legend;
         padding?: Spacing;
@@ -42,6 +45,7 @@
         color,
         compact,
         ghost,
+        width = 'fit',
         level,
         legend,
         padding,
@@ -105,10 +109,19 @@
     let paddingClass = $derived(toSpacingClasses(padding, { all: 'p', x: 'px', y: 'py' }));
     let marginClass = $derived(toSpacingClasses(margin, { all: 'm', x: 'mx', y: 'my' }));
 
+    const widthVariants: Record<Width, string> = {
+        fit: 'max-w-full w-fit',
+        small: 'max-w-sm w-full',
+        big: 'max-w-3xl w-full',
+        full: 'w-full'
+    };
+
     let boxClass = $derived(
         twMerge(
             'rounded-lg',
             'min-w-0', // Allow Box to shrink in flex containers while staying full-width when standalone
+            'min-h-min',
+            widthVariants[width],
             !compact && 'p-4',
             !ghost && `bg-${colors.bgColor}`,
             `text-${colors.fgColor}`,

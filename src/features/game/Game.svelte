@@ -1,7 +1,7 @@
 <script lang="ts">
     import { onMount, untrack } from 'svelte';
     import { type AppError, OtherError } from '@lib/utils';
-    import ProgressBar from '@atoms/ProgressBar.svelte';
+    import ProgressBar from '@atoms/data/ProgressBar.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';
 
     interface IGameContext {

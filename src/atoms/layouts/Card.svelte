@@ -3,10 +3,8 @@
     import { twMerge } from 'tailwind-merge';
     import Typography from '../Typography.svelte';
     import type { ActionColor, ElementProps } from '../types';
-    import Box from './Box.svelte';
+    import Box, { type Width } from './Box.svelte';
     import Stack from './Stack.svelte';
-
-    export type Width = 'small' | 'big' | 'fit' | 'full';
 </script>
 
 <script lang="ts">
@@ -22,14 +20,6 @@
 
     let { icon, caption, shadow, color, width = 'fit', children, actions }: Props = $props();
 
-    const widthVariants: Record<Width, string> = {
-        fit: 'max-w-full w-fit',
-        small: 'max-w-sm w-full',
-        big: 'max-w-3xl w-full',
-        full: 'w-full'
-    };
-
-    let boxClass = $derived(twMerge('min-h-min', widthVariants[width]));
     let iconClass = $derived(
         twMerge('flex shrink-0', 'h-12 w-12 md:w-12', 'self-center md:self-start items-center justify-center ')
     );
@@ -39,7 +29,7 @@
     let childClass = $derived(twMerge('max-h-mdv min-h-3 overflow-y-auto overflow-x-hidden', caption && 'md:ps-2'));
 </script>
 
-<Box compact border {color} {shadow} class={boxClass}>
+<Box compact border {color} {shadow} {width}>
     <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 0, md: 2 }} align="stretch" class="p-2">
         {#if icon}
             <div class={iconClass}>{@render icon()}</div>

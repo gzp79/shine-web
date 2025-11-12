@@ -3,7 +3,7 @@
     import { t } from '$lib/i18n/i18n.svelte';
     import { FetchError } from '$lib/utils';
     import Button from '@atoms/Button.svelte';
-    import KeyValueTable from '@atoms/KeyValueTable.svelte';
+    import KeyValueTable from '@atoms/data/KeyValueTable.svelte';
     import LoadingCard from '@atoms/LoadingCard.svelte';
     import Modal from '@atoms/Modal.svelte';
     import Stack from '@atoms/Stack.svelte';
@@ -149,8 +149,8 @@
             <KeyValueTable
                 size="xs"
                 items={[
-                    { key: $t('account.userName'), value: user.name, class: 'break-all' },
-                    { key: $t('account.userId'), value: user.userId, class: 'break-all' },
+                    { key: $t('account.userName'), value: user.name, valueClass: 'break-all' },
+                    { key: $t('account.userId'), value: user.userId, valueClass: 'break-all' },
                     { key: $t('account.email'), value: emailValue },
                     { key: $t('account.role'), value: user.roles.join(', ') },
                     {

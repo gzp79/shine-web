@@ -1,7 +1,7 @@
 <script lang="ts">
     import Box from '@atoms/Box.svelte';
-    import ProgressBar from '@atoms/ProgressBar.svelte';
     import Stack from '@atoms/Stack.svelte';
+    import ProgressBar from '@atoms/data/ProgressBar.svelte';
     import { actionColorList, sizeList } from '@atoms/types';
     import { Slider, Story, settingsStore } from '../../_components';
 
