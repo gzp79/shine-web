@@ -32,7 +32,20 @@ const preview: Preview = {
 
         options: {
             storySort: {
-                order: ['Atoms', ['Theme', 'Layouts', 'Inputs', 'Data', 'Examples']]
+                order: [
+                    'Atoms',
+                    [
+                        'Theme',
+                        ['Typography', 'Colors', 'Icons'],
+                        'Layouts',
+                        ['Box', 'Stack', 'Grid', 'Card', 'Popper', 'Modal'],
+                        'Inputs',
+                        //['Button'],
+                        'Data',
+                        ['ProgressBar', 'PropertyList'],
+                        'Examples'
+                    ]
+                ]
             }
         }
     },

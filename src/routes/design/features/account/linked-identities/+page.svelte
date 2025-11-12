@@ -3,7 +3,7 @@
     import { async } from '$lib/utils';
     import { v4 as uuid } from 'uuid';
     import Box from '@atoms/Box.svelte';
-    import ContextProvider from '@atoms/ContextProvider.svelte';
+    import ContextProvider from '@atoms/utilities/ContextProvider.svelte';
     import LinkedIdentityCard from '@features/account/LinkedIdentityCard.svelte';
     import { setLinkedIdentityStore } from '@features/account/linkedIdentityStore.svelte';
     import { Story } from '../../../_components';

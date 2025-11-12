@@ -4,7 +4,6 @@
     import { FetchError } from '$lib/utils';
     import Button from '@atoms/Button.svelte';
     import LoadingCard from '@atoms/LoadingCard.svelte';
-    import Modal from '@atoms/Modal.svelte';
     import Stack from '@atoms/Stack.svelte';
     import Typography from '@atoms/Typography.svelte';
     import KeyValueTable from '@atoms/data/PropertyList.svelte';
@@ -12,6 +11,7 @@
     import Warning from '@atoms/icons/common/_warning.svelte';
     import ComboButton from '@atoms/inputs/ComboButton.svelte';
     import Card from '@atoms/layouts/Card.svelte';
+    import Modal from '@atoms/layouts/Modal.svelte';
     import { EmailSchema } from '@atoms/types/validator';
     import Alert from '@components/Alert.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';

@@ -1,8 +1,8 @@
 <script lang="ts">
     import type { Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import TailwindClasses from '../TailwindClasses.svelte';
     import { type ElementProps, type Size } from '../types';
+    import TailwindClasses from '../utilities/TailwindClasses.svelte';
 
     export interface DescriptionListItem {
         key: string;

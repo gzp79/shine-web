@@ -3,10 +3,10 @@
     import { t } from '$lib/i18n/i18n.svelte';
     import Button from '@atoms/Button.svelte';
     import LoadingCard from '@atoms/LoadingCard.svelte';
-    import Modal from '@atoms/Modal.svelte';
     import Stack from '@atoms/Stack.svelte';
     import { Link } from '@atoms/icons/common';
     import Card from '@atoms/layouts/Card.svelte';
+    import Modal from '@atoms/layouts/Modal.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';
     import LinkedIdentityItem from './LinkedIdentityItem.svelte';
     import { getLinkedIdentityStore } from './linkedIdentityStore.svelte';

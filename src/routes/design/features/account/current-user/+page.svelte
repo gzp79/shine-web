@@ -4,8 +4,8 @@
     import { v4 as uuid } from 'uuid';
     import Box from '@atoms/Box.svelte';
     import Button from '@atoms/Button.svelte';
-    import ContextProvider from '@atoms/ContextProvider.svelte';
     import Stack from '@atoms/Stack.svelte';
+    import ContextProvider from '@atoms/utilities/ContextProvider.svelte';
     import CurrentUserCard from '@features/account/CurrentUserCard.svelte';
     import { type CurrentUserService, setCurrentUserStore } from '@features/account/currentUser.svelte';
     import { Story } from '../../../_components';

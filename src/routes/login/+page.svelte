@@ -8,12 +8,12 @@
     import { config } from '@config';
     import Box from '@atoms/Box.svelte';
     import Button from '@atoms/Button.svelte';
-    import Modal from '@atoms/Modal.svelte';
     import Stack from '@atoms/Stack.svelte';
     import Toggle from '@atoms/Toggle.svelte';
     import Typography from '@atoms/Typography.svelte';
     import Logo from '@atoms/icons/Logo.svelte';
     import { Dots } from '@atoms/icons/animated';
+    import Modal from '@atoms/layouts/Modal.svelte';
     import { afterBFCacheRestore } from '@atoms/types/bfcache';
     import { EmailSchema } from '@atoms/types/validator';
     import ErrorCard from '@components/ErrorCard.svelte';

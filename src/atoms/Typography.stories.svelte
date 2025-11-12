@@ -9,7 +9,9 @@
         title: 'Atoms/Theme/Typography',
         tags: ['autodocs'],
         args: {
-            variant: 'h1' as Variant
+            variant: 'h1' as Variant,
+            italic: false,
+            underline: false
         },
         argTypes: {
             variant: {
@@ -38,6 +40,14 @@
                     defaultValue: { summary: 'false' }
                 }
             },
+            italic: {
+                control: 'boolean',
+                description: 'Whether to italicize the text',
+                table: {
+                    type: { summary: 'boolean' },
+                    defaultValue: { summary: 'false' }
+                }
+            },
             element: {
                 control: 'text',
                 description: 'Override the HTML element',
@@ -45,7 +55,8 @@
                     type: { summary: 'string' },
                     defaultValue: { summary: 'auto (based on variant)' }
                 }
-            }
+            },
+            children: { table: { disable: true }, ref: { control: false } }
         }
     });
 </script>

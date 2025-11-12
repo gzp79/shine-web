@@ -13,11 +13,20 @@
 
         underline?: boolean;
         weight?: Weight;
+        italic?: boolean;
         class?: string;
 
         children: Snippet;
     }
-    let { variant = 'text', element, underline, weight = 'normal', class: className, children }: Props = $props();
+    let {
+        variant = 'text',
+        element,
+        underline,
+        weight = 'normal',
+        italic,
+        class: className,
+        children
+    }: Props = $props();
 
     let variantElement = {
         h1: 'h1',
@@ -54,7 +63,7 @@
 
     let el = $derived(element ?? variantElement[variant]);
     let textClass = $derived(
-        twMerge(variantClasses[variant], weightClasses[weight], underline && 'underline', className)
+        twMerge(variantClasses[variant], weightClasses[weight], underline && 'underline', italic && 'italic', className)
     );
 </script>
 

@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Component } from 'svelte';
-    import Popper from '../Popper.svelte';
     import * as icons from '../icons/common';
+    import Popper from '../layouts/Popper.svelte';
     import { type ActionColor, type Size } from '../types';
     import Button from './Button.svelte';
     import InputGroup from './InputGroup.svelte';

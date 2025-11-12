@@ -1,8 +1,9 @@
 <script lang="ts" module>
     import type { Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import TailwindClasses from '../TailwindClasses.svelte';
-    import type { ActionColor, IconSize } from '../types';
+    import type { ActionColor } from '../types';
+    import TailwindClasses from '../utilities/TailwindClasses.svelte';
+    import type { IconSize } from './types';
 
     export const TRANSPARENCY = 0.3;
 
