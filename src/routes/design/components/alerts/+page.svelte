@@ -1,8 +1,8 @@
 <script lang="ts">
     import Box from '@atoms/Box.svelte';
-    import KeyValueTable from '@atoms/data/KeyValueTable.svelte';
     import Stack from '@atoms/Stack.svelte';
     import Typography from '@atoms/Typography.svelte';
+    import KeyValueTable from '@atoms/data/PropertyList.svelte';
     import Alert from '@components/Alert.svelte';
     import { CheckBox, Story, settingsStore } from '../../_components';
 
