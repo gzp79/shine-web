@@ -1,70 +1,116 @@
 <script lang="ts">
-    import { getContext } from 'svelte';
+    import { type Component } from 'svelte';
     import type { HTMLAttributes } from 'svelte/elements';
     import { twMerge } from 'tailwind-merge';
-    import type { ActionColor, ElementProps, Size } from '../types';
-    import type { GroupInfo } from './InputGroup.svelte';
+    import { getBoxContext } from '../layouts/Box.svelte';
+    import { type ActionColor, type ElementProps } from '../types';
+    import { getInputGroupContext } from './InputGroup.svelte';
+    import {
+        type InputSize,
+        type InputVariant,
+        getGroupBorderClasses,
+        getGroupColorClasses,
+        getLinkType,
+        inputContentHeightClasses
+    } from './types';
 
     interface Props extends ElementProps {
-        src: string;
-        alt: string;
+        src: Component | string;
+        alt?: string;
         color?: ActionColor;
+        size?: InputSize;
+        wide?: boolean;
+        variant?: InputVariant;
         disabled?: boolean;
+        highlight?: boolean;
         class?: string;
 
         onclick?: () => void;
         href?: string;
         preload?: 'disable' | 'code' | 'hover' | 'eager';
-
-        button?: HTMLElement;
     }
 
     let {
         src,
-        alt,
+        alt = '',
         color: baseColor,
+        size: baseSize = 'md',
+        wide: baseWide,
+        variant: baseVariant = 'filled',
+        highlight = false,
         disabled = false,
         class: className,
         onclick,
         href,
         preload,
-        button = $bindable(),
         ...rest
     }: Props = $props();
 
-    // Hidden Dependency (InputGroup):
-    let group: GroupInfo = getContext('InputGroup_props');
+    let groupInfo = getInputGroupContext();
+    let boxInfo = getBoxContext();
 
-    let color = $derived(group?.color ?? baseColor);
+    let color = $derived(groupInfo?.color ?? baseColor);
     let colorWithFallback = $derived(color ?? 'primary');
+    let size = $derived(groupInfo?.size ?? baseSize);
+    let variant = $derived(groupInfo?.variant ?? baseVariant);
+    let wide = $derived(groupInfo ? (baseWide === undefined ? groupInfo.wide : baseWide) : baseWide);
 
-    const sizeMods: Record<Size, string> = {
-        xs: 'px-2 py-1.5',
-        sm: 'px-3 py-2',
-        md: 'px-4 py-3',
-        lg: 'px-5 py-4'
+    let paddingClasses: Record<InputSize, string> = {
+        xs: 'p-0.5',
+        sm: 'p-0.5',
+        md: 'p-1',
+        lg: 'p-2'
     };
 
     const btnClass = $derived(
         twMerge(
-            'inline-flex items-center justify-center',
+            'inline-flex items-center justify-center text-center whitespace-nowrap',
 
-            // Border styling when in a group
-            group && [
-                `border-on-${colorWithFallback}`,
-                group.vertical
-                    ? 'first:border-t-2 last:border-b-2 border-x-2 border-t-2 first:rounded-t-lg last:rounded-b-lg'
-                    : 'first:border-s-2 last:border-e-2 border-y-2 border-s-2 first:rounded-s-lg last:rounded-e-lg'
+            groupInfo && [
+                ...getGroupBorderClasses(
+                    groupInfo.vertical,
+                    variant,
+                    variant === 'outline' && boxInfo && !color ? boxInfo.border : `on-${colorWithFallback}`
+                ),
+                ...getGroupColorClasses(
+                    variant,
+                    disabled,
+                    colorWithFallback,
+                    boxInfo && !color ? boxInfo.fgColor : `on-${colorWithFallback}`
+                ),
+                'self-stretch',
+                groupInfo.vertical && 'w-full',
+                !groupInfo.vertical && (wide ? 'w-full' : 'w-fit h-fit')
             ],
 
-            // Sizing and layout
-            group && ['self-stretch', group.vertical ? 'w-full' : 'h-full'],
-            group && sizeMods[group.size],
+            !groupInfo && [
+                variant === 'filled' && [
+                    `bg-${colorWithFallback}`,
+                    `text-on-${colorWithFallback}`,
+                    `border-on-${colorWithFallback}`,
+                    !disabled && 'hover:highlight'
+                ],
+                variant === 'outline' && [
+                    boxInfo && !color ? `text-${boxInfo.fgColor}` : `text-on-${colorWithFallback}`,
+                    boxInfo && !color ? `border-${boxInfo.border}` : `border-on-${colorWithFallback}`,
+                    !disabled && 'hover:highlight-backdrop'
+                ],
+                variant === 'ghost' && [
+                    boxInfo && !color ? `text-${boxInfo.fgColor}` : `text-on-${colorWithFallback}`,
+                    'border-transparent',
+                    !disabled && 'hover:highlight-backdrop'
+                ],
 
-            !disabled && !group && 'active:scale-95',
-            !disabled && 'hover:opacity-80 transition-opacity',
-            disabled && '!opacity-30 !cursor-not-allowed',
+                'border-2',
+                !disabled && 'active:scale-95',
+                disabled && '!opacity-30 !cursor-not-allowed',
+                wide ? 'min-w-full justify-center' : 'w-fit h-fit',
+                'rounded-lg'
+            ],
 
+            inputContentHeightClasses[size],
+            variant !== 'ghost' && paddingClasses[size],
+            highlight && 'highlight',
             className
         )
     );
@@ -98,29 +144,24 @@
         return preloadData;
     });
 
-    // Detect different types of links to handle them appropriately
-    let linkType = $derived(() => {
-        if (!href) return 'none';
-        if (href.startsWith('#')) return 'hash';
-        if (href.startsWith('http://') || href.startsWith('https://') || href.startsWith('//')) return 'external';
-        if (href.startsWith('mailto:') || href.startsWith('tel:')) return 'protocol';
-        return 'internal';
-    });
-
+    let linkType = $derived(getLinkType(href));
     let elProps = $derived({
-        ...(disabled ? {} : { href }),
-        onclick,
+        ...(disabled || !href ? {} : { href }),
+        ...(onclick ? { onclick } : {}),
         ...(href ? linkOptions : buttonOptions),
         // Add data-sveltekit-reload for hash links and external links to prevent SvelteKit processing
-        ...(linkType() === 'hash' || linkType() === 'external' || linkType() === 'protocol'
+        ...(linkType === 'hash' || linkType === 'external' || linkType === 'protocol'
             ? { 'data-sveltekit-reload': true as const }
             : {}),
         ...rest
     });
-
-    const imgClass = $derived(group ? (group.vertical ? 'w-full h-auto' : 'h-full w-auto') : 'h-full w-auto');
 </script>
 
-<svelte:element this={el} class={btnClass} bind:this={button} {...elProps}>
-    <img {src} {alt} class={imgClass} />
+<svelte:element this={el} class={btnClass} {...elProps}>
+    {#if typeof src === 'string'}
+        <img {src} {alt} class="h-full w-auto object-contain" />
+    {:else}
+        {@const Icon = src}
+        <Icon {alt} class="h-full w-auto object-contain" />
+    {/if}
 </svelte:element>

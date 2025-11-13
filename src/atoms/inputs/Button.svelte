@@ -2,13 +2,20 @@
     import { type Component, type Snippet, getContext } from 'svelte';
     import type { HTMLAttributes } from 'svelte/elements';
     import { twMerge } from 'tailwind-merge';
-    import type { GroupInfo } from './InputGroup.svelte';
-    import type { BoxInfo } from './layouts/Box.svelte';
-    import { type ActionColor, type ElementProps, type InputVariant, type Size } from './types';
+    import { getBoxContext } from '../layouts/Box.svelte';
+    import { type ActionColor, type ElementProps } from '../types';
+    import { getInputGroupContext } from './InputGroup.svelte';
+    import {
+        type InputSize,
+        type InputVariant,
+        getGroupBorderClasses,
+        getGroupColorClasses,
+        getLinkType
+    } from './types';
 
     interface Props extends ElementProps {
         color?: ActionColor;
-        size?: Size;
+        size?: InputSize;
         wide?: boolean;
         variant?: InputVariant;
         disabled?: boolean;
@@ -23,12 +30,11 @@
         preload?: 'disable' | 'code' | 'hover' | 'eager';
 
         children?: Snippet;
-        button?: HTMLElement;
     }
 
     let {
-        startIcon: StartIcon,
-        endIcon: EndIcon,
+        startIcon,
+        endIcon,
         color: baseColor,
         size: baseSize = 'md',
         wide: baseWide,
@@ -40,28 +46,25 @@
         href,
         preload,
         children,
-        button = $bindable(),
         ...rest
     }: Props = $props();
 
-    // Hidden Dependency (InputGroup):
-    let group: GroupInfo = getContext('InputGroup_props');
-    // Hidden Dependency (Box):
-    let box: BoxInfo = getContext('Box_props');
+    let groupInfo = getInputGroupContext();
+    let box = getBoxContext();
 
-    let color = $derived(group?.color ?? baseColor);
+    let color = $derived(groupInfo?.color ?? baseColor);
     let colorWithFallback = $derived(color ?? 'primary');
-    let size = $derived(group?.size ?? baseSize);
-    let variant = $derived(group?.variant ?? baseVariant);
-    let wide = $derived(group ? (baseWide === undefined ? group.wide : baseWide) : baseWide);
+    let size = $derived(groupInfo?.size ?? baseSize);
+    let variant = $derived(groupInfo?.variant ?? baseVariant);
+    let wide = $derived(groupInfo ? (baseWide === undefined ? groupInfo.wide : baseWide) : baseWide);
 
-    const sizeMods: Record<Size, string> = {
+    const sizeMods: Record<InputSize, string> = {
         xs: 'text-sm leading-none px-2 py-1.5',
         sm: 'text-base leading-none px-3 py-2',
         md: 'text-base leading-none px-4 py-3',
         lg: 'text-lg leading-none px-5 py-4'
     };
-    const sizeModsIconOnly: Record<Size, string> = {
+    const sizeModsIconOnly: Record<InputSize, string> = {
         xs: 'p-1',
         sm: 'p-2',
         md: 'p-2',
@@ -79,19 +82,19 @@
         md: 'pe-4',
         lg: 'pe-5'
     };
-    const startIconMargin: Record<Size, string> = {
+    const startIconMargin: Record<InputSize, string> = {
         xs: 'me-0.5',
         sm: 'me-1',
         md: 'me-1.5',
         lg: 'me-3'
     };
-    const endIconMargin: Record<Size, string> = {
+    const endIconMargin: Record<InputSize, string> = {
         xs: 'ms-0.5',
         sm: 'ms-1',
         md: 'ms-1.5',
         lg: 'ms-3'
     };
-    const iconSize: Record<Size, string> = {
+    const iconSize: Record<InputSize, string> = {
         xs: 'w-4 h-4',
         sm: 'w-5 h-5',
         md: 'w-8 h-8',
@@ -102,51 +105,52 @@
         twMerge(
             'inline-flex items-center justify-center text-center whitespace-nowrap',
 
-            variant === 'filled' && [
-                `bg-${colorWithFallback} text-on-${colorWithFallback} border-on-${colorWithFallback}`,
-                !group && 'border-2',
-                group &&
-                    (group.vertical
-                        ? 'first:border-t-2 last:border-b-2 border-x-2 border-t-2 first:rounded-t-lg last:rounded-b-lg '
-                        : 'first:border-s-2 last:border-e-2 border-y-2 border-s-2 first:rounded-s-lg last:rounded-e-lg'),
-                !disabled && !group && 'active:scale-95',
-                !disabled && 'hover:highlight'
-            ],
-            variant === 'outline' && [
-                box && !color
-                    ? `text-${box.fgColor} border-${box.border}`
-                    : `text-on-${colorWithFallback} border-on-${colorWithFallback}`,
-                !group && 'border-2',
-                group &&
-                    (group.vertical
-                        ? 'first:border-t-2 last:border-b-2 border-x-2 border-t-2 first:rounded-t-lg last:rounded-b-lg '
-                        : 'first:border-s-2 last:border-e-2 border-y-2 border-s-2 first:rounded-s-lg last:rounded-e-lg'),
-                !disabled && !group && 'active:scale-95',
-                !disabled && 'hover:highlight-backdrop'
-            ],
-            variant === 'ghost' && [
-                box && !color ? `text-${box.fgColor}` : `text-on-${colorWithFallback}`,
-                !group && 'border-2 border-transparent',
-                group &&
-                    (group.vertical
-                        ? 'border-2 border-transparent first:rounded-t-lg last:rounded-b-lg '
-                        : 'border-2 border-transparent first:rounded-s-lg last:rounded-e-lg'),
-                !disabled && !group && 'active:scale-95',
-                !disabled && 'hover:highlight-backdrop'
-            ],
-
-            !group && ['m-1', wide ? 'min-w-full justify-center' : 'w-fit h-fit', 'rounded-full'],
-            group && [
+            groupInfo && [
+                ...getGroupBorderClasses(
+                    groupInfo.vertical,
+                    variant,
+                    variant === 'outline' && box && !color ? box.border : `on-${colorWithFallback}`
+                ),
+                ...getGroupColorClasses(
+                    variant,
+                    disabled,
+                    colorWithFallback,
+                    box && !color ? box.fgColor : `on-${colorWithFallback}`
+                ),
                 'self-stretch',
-                group.vertical && ['w-full', wide && 'justify-between'],
-                !group.vertical && (wide ? 'w-full' : 'w-fit')
+                groupInfo.vertical && ['w-full', wide && 'justify-evenly'],
+                !groupInfo.vertical && [wide ? 'w-full' : 'w-fit']
             ],
 
-            children && [sizeMods[size], StartIcon && startIconPadding[size], EndIcon && endIconPadding[size]],
+            !groupInfo && [
+                variant === 'filled' && [
+                    `bg-${colorWithFallback}`,
+                    `text-on-${colorWithFallback}`,
+                    `border-on-${colorWithFallback}`,
+                    !disabled && 'hover:highlight'
+                ],
+                variant === 'outline' && [
+                    box && !color ? `text-${box.fgColor}` : `text-on-${colorWithFallback}`,
+                    box && !color ? `border-${box.border}` : `border-on-${colorWithFallback}`,
+                    !disabled && 'hover:highlight-backdrop'
+                ],
+                variant === 'ghost' && [
+                    box && !color ? `text-${box.fgColor}` : `text-on-${colorWithFallback}`,
+                    'border-transparent',
+                    !disabled && 'hover:highlight-backdrop'
+                ],
+
+                'border-2',
+                !disabled && 'active:scale-95',
+                disabled && '!opacity-30 !cursor-not-allowed',
+                wide ? 'min-w-full justify-center' : 'w-fit h-fit',
+                'rounded-full'
+            ],
+
+            children && [sizeMods[size], startIcon && startIconPadding[size], endIcon && endIconPadding[size]],
             !children && sizeModsIconOnly[size],
 
             highlight && 'highlight',
-            disabled && '!opacity-30 !cursor-not-allowed',
 
             className
         )
@@ -184,37 +188,31 @@
         return preloadData;
     });
 
-    // Detect different types of links to handle them appropriately
-    let linkType = $derived(() => {
-        if (!href) return 'none';
-        if (href.startsWith('#')) return 'hash';
-        if (href.startsWith('http://') || href.startsWith('https://') || href.startsWith('//')) return 'external';
-        if (href.startsWith('mailto:') || href.startsWith('tel:')) return 'protocol';
-        return 'internal';
-    });
-
+    let linkType = $derived(getLinkType(href));
     let elProps = $derived({
-        ...(disabled ? {} : { href }),
-        onclick,
+        ...(disabled || !href ? {} : { href }),
+        ...(onclick ? { onclick } : {}),
         ...(href ? linkOptions : buttonOptions),
         // Add data-sveltekit-reload for hash links and external links to prevent SvelteKit processing
-        ...(linkType() === 'hash' || linkType() === 'external' || linkType() === 'protocol'
+        ...(linkType === 'hash' || linkType === 'external' || linkType === 'protocol'
             ? { 'data-sveltekit-reload': true as const }
             : {}),
         ...rest
     });
 </script>
 
-<svelte:element this={el} class={btnClass} bind:this={button} {...elProps}>
-    {#if typeof StartIcon === 'string'}
-        <img src={StartIcon} class={startIconClass} alt="" />
-    {:else if StartIcon}
-        <StartIcon class={startIconClass} />
+<svelte:element this={el} class={btnClass} {...elProps}>
+    {#if typeof startIcon === 'string'}
+        <img src={startIcon} class={startIconClass} alt="" />
+    {:else if startIcon}
+        {@const StartIcon = startIcon}
+        <StartIcon {size} class={startIconClass} />
     {/if}
     {@render children?.()}
-    {#if typeof EndIcon === 'string'}
-        <img src={EndIcon} class={endIconClass} alt="" />
-    {:else if EndIcon}
-        <EndIcon class={endIconClass} />
+    {#if typeof endIcon === 'string'}
+        <img src={endIcon} class={endIconClass} alt="" />
+    {:else if endIcon}
+        {@const EndIcon = endIcon}
+        <EndIcon {size} class={endIconClass} />
     {/if}
 </svelte:element>

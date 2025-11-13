@@ -1,10 +1,10 @@
 <script module lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
+    import KeyValueTable, { type DescriptionListItem } from '@atoms/data/PropertyList.svelte';
     import Button from '@atoms/inputs/Button.svelte';
     import Box from '@atoms/layouts/Box.svelte';
     import Stack from '@atoms/layouts/Stack.svelte';
     import type { Size } from '@atoms/types';
-    import KeyValueTable, { type DescriptionListItem } from './PropertyList.svelte';
 
     const { Story } = defineMeta({
         component: KeyValueTable,

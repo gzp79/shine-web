@@ -1,7 +1,7 @@
 <script module lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
-    import type { ActionColor, InputVariant, Size } from '../types';
-    import TextArea from './TextArea.svelte';
+    import TextArea from '@atoms/inputs/TextArea.svelte';
+    import type { ActionColor, InputVariant, Size } from '@atoms/types';
 
     const { Story } = defineMeta({
         component: TextArea,

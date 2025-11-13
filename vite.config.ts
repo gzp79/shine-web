@@ -1,6 +1,7 @@
 import * as vitestPlugin from '@storybook/addon-vitest/vitest-plugin';
 import { sveltekit } from '@sveltejs/kit/vite';
 import tailwindcss from '@tailwindcss/vite';
+import { playwright } from '@vitest/browser-playwright';
 import { spawn } from 'child_process';
 import fs from 'fs';
 import path from 'node:path';
@@ -132,17 +133,15 @@ export default defineConfig({
                 ],
                 test: {
                     name: 'storybook',
+                    // Enable browser mode
                     browser: {
                         enabled: true,
+                        // Make sure to install Playwright
+                        provider: playwright({}),
                         headless: true,
-                        provider: 'playwright',
-                        instances: [
-                            {
-                                browser: 'chromium'
-                            }
-                        ]
+                        instances: [{ browser: 'chromium' }]
                     },
-                    setupFiles: ['.storybook/vitest.setup.ts']
+                    setupFiles: ['./.storybook/vitest.setup.ts']
                 }
             }
         ]

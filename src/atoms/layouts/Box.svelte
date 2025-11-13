@@ -1,8 +1,8 @@
-<script lang="ts" module>
-    import { type Snippet, getContext, setContext } from 'svelte';
+<script module lang="ts">
+    import { type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
     import Typography from '../Typography.svelte';
-    import type { ActionColor, ElementProps, Size } from '../types';
+    import { type ActionColor, type ElementProps, type Size, createContext } from '../types';
     import { type Spacing, toSpacingClasses } from '../types/spacing';
 
     export type Width = 'small' | 'big' | 'fit' | 'full';
@@ -20,6 +20,11 @@
         fgColor2: string;
         border: string;
     }
+    const [getBoxContext, setBoxContext] = createContext<BoxInfo>('Box');
+    export { getBoxContext };
+
+    const [getBoxNestingLevel, setBoxNestingLevel] = createContext<number>('BoxNestingLevel');
+    const [getBoxColorIndex, setBoxColorIndex] = createContext<number>('BoxColorIndex');
 </script>
 
 <script lang="ts">
@@ -58,11 +63,11 @@
 
     const colorRotation = ['container', 'sub-container', 'surface'];
 
-    let nestingLevel: number = (getContext<number>('Box_nestingLevel') ?? -1) + 1;
-    let colorIndex: number = level ?? ((getContext<number>('Box_colorIndex') ?? -1) + 1) % colorRotation.length;
+    let nestingLevel: number = (getBoxNestingLevel() ?? -1) + 1;
+    let colorIndex: number = level ?? ((getBoxColorIndex() ?? -1) + 1) % colorRotation.length;
 
-    setContext('Box_nestingLevel', nestingLevel);
-    setContext('Box_colorIndex', colorIndex);
+    setBoxNestingLevel(nestingLevel);
+    setBoxColorIndex(colorIndex);
 
     let colors = $derived.by(() => {
         if (color) {
@@ -93,7 +98,7 @@
         context.bgColor = colors.bgColor;
         context.border = colors.border;
     });
-    setContext('Box_props', context);
+    setBoxContext(context);
 
     let legendClass = $derived.by(() => {
         let size = 'text-md';

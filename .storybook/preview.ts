@@ -40,7 +40,7 @@ const preview: Preview = {
                         'Layouts',
                         ['Box', 'Stack', 'Grid', 'Card', 'Popper', 'Modal'],
                         'Inputs',
-                        //['Button'],
+                        ['Button', 'ImageButton'],
                         'Data',
                         ['ProgressBar', 'PropertyList'],
                         'Examples'

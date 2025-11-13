@@ -1,29 +1,46 @@
 <script lang="ts" module>
-    import { type Snippet, getContext, setContext } from 'svelte';
+    import { type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import type { BoxInfo } from '../layouts/Box.svelte';
-    import type { ActionColor, ElementProps, InputVariant, Size } from '../types';
+    import { getBoxContext } from '../layouts/Box.svelte';
+    import { type ActionColor, type ElementProps, createContext } from '../types';
+    import type { InputSize, InputVariant } from './types';
 
+    /**
+     * Context information provided by InputGroup to its children.
+     * Children can access this via getContext('InputGroup_props').
+     */
     export interface GroupInfo {
-        size: Size;
+        /** Size for all inputs in the group */
+        size: InputSize;
+        /** Color for all inputs in the group */
         color?: ActionColor;
+        /** Whether inputs should take full width */
         wide?: boolean;
+        /** Whether inputs are stacked vertically */
         vertical: boolean;
+        /** Visual variant for all inputs in the group */
         variant: InputVariant;
     }
+    const [getInputGroupContext, setInputGroupContext] = createContext<GroupInfo>('InputGroup');
+    export { getInputGroupContext };
 </script>
 
 <script lang="ts">
     interface Props extends ElementProps {
-        size?: Size;
+        /** Size for all inputs in the group. Default: 'md' */
+        size?: InputSize;
+        /** Color for all inputs in the group. Inherits from Box if not specified */
         color?: ActionColor;
+        /** Stack inputs vertically instead of horizontally. Default: false */
         vertical?: boolean;
-        wide?: boolean;
+        /** Visual variant for all inputs in the group. Default: 'filled' */
         variant?: InputVariant;
+        /** Make inputs take full width. Default: false */
+        wide?: boolean;
+        /** Additional CSS classes */
         class?: string;
+        /** Child inputs to be grouped */
         children: Snippet;
-        element?: string;
-        div?: HTMLElement;
     }
 
     let {
@@ -31,33 +48,44 @@
         color: baseColor,
         vertical = false,
         variant = 'filled',
-        wide,
+        wide = false,
         class: className,
-        element = 'div',
         children,
-        div = $bindable(),
         ...rest
     }: Props = $props();
 
-    // Hidden Dependency (Box):
-    let box: BoxInfo = getContext('Box_props');
+    let boxInfo = getBoxContext();
 
-    let colorWithFallback = $derived(baseColor ?? 'primary');
+    // Compute effective color with fallback chain: baseColor -> boxInfo.fgColor -> 'primary'
+    let effectiveColor = $derived.by(() => {
+        if (variant === 'filled') {
+            return baseColor ?? 'primary';
+        }
+        return baseColor ?? boxInfo?.fgColor ?? 'primary';
+    });
 
-    // convert props into state, so it can be updated and children reactively
-    let context = $state({} as GroupInfo);
+    // Create reactive context for children
+    let context = $state<GroupInfo>({
+        size,
+        color: effectiveColor,
+        vertical,
+        variant,
+        wide
+    });
     $effect(() => {
         context.size = size;
-        context.color = variant === 'filled' ? colorWithFallback : (baseColor ?? box?.fgColor ?? colorWithFallback);
+        context.color = effectiveColor;
         context.vertical = vertical;
         context.variant = variant;
         context.wide = wide;
     });
-    setContext('InputGroup_props', context);
+    setInputGroupContext(context);
 
-    let divClass = $derived(twMerge('inline-flex', vertical && 'flex-col', wide && 'w-full', className));
+    let containerClass = $derived(
+        twMerge('inline-flex', vertical ? 'flex-col' : 'flex-row', wide && 'w-full', className)
+    );
 </script>
 
-<svelte:element this={element} class={divClass} bind:this={div} {...rest}>
+<div class={containerClass} {...rest}>
     {@render children()}
-</svelte:element>
+</div>

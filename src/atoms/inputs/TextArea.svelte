@@ -1,9 +1,10 @@
 <script lang="ts">
     import { getContext } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import type { BoxInfo } from '../layouts/Box.svelte';
-    import type { ActionColor, ElementProps, InputVariant, Size } from '../types';
+    import { getBoxContext } from '../layouts/Box.svelte';
+    import type { ActionColor, ElementProps } from '../types';
     import type { GroupInfo } from './InputGroup.svelte';
+    import type { InputSize, InputVariant } from './types';
 
     interface Props extends ElementProps {
         rows?: 'single' | number | [number, number];
@@ -12,7 +13,7 @@
 
         variant?: InputVariant;
         color?: ActionColor;
-        size?: Size;
+        size?: InputSize;
         resizable?: boolean;
         disabled?: boolean;
         class?: string;
@@ -35,7 +36,7 @@
         onBlur
     }: Props = $props();
 
-    const sizeMods: Record<Size, string> = {
+    const sizeMods: Record<InputSize, string> = {
         xs: 'text-sm leading-none px-2 py-1.5',
         sm: 'text-base leading-none px-3 py-2',
         md: 'text-base leading-none px-4 py-3',
@@ -45,7 +46,7 @@
     // Hidden Dependency (InputGroup):
     let group: GroupInfo = getContext('InputGroup_props');
     // Hidden Dependency (Box):
-    let box: BoxInfo = getContext('Box_props');
+    let box = getBoxContext();
 
     let color = $derived(group?.color ?? baseColor);
     let colorWithFallback = $derived(color ?? 'primary');

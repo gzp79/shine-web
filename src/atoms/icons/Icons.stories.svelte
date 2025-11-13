@@ -6,9 +6,10 @@
     import { allIcons as commonIcons } from '@atoms/icons/common';
     import { allIcons as flagIcons } from '@atoms/icons/flags';
     import { allIcons as socialIcons } from '@atoms/icons/social';
+    import type { IconSize } from '@atoms/icons/types';
     import Box from '@atoms/layouts/Box.svelte';
     import Stack from '@atoms/layouts/Stack.svelte';
-    import type { ActionColor, IconSize } from '@atoms/types';
+    import type { ActionColor } from '@atoms/types';
 
     const { Story } = defineMeta({
         title: 'Atoms/Theme/Icons',

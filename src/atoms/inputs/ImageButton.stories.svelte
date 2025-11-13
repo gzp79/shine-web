@@ -2,31 +2,48 @@
     import { defineMeta } from '@storybook/addon-svelte-csf';
     import { action } from 'storybook/actions';
     import Typography from '@atoms/Typography.svelte';
-    import { Dots } from '@atoms/icons/animated';
     import { Check } from '@atoms/icons/common';
-    import Button from '@atoms/inputs/Button.svelte';
+    import { Google } from '@atoms/icons/social';
+    import ImageButton from '@atoms/inputs/ImageButton.svelte';
     import InputGroup from '@atoms/inputs/InputGroup.svelte';
-    import { type InputSize, type InputVariant, inputSizeList, inputVariantList } from '@atoms/inputs/types';
+    import { type InputVariant, inputSizeList, inputVariantList } from '@atoms/inputs/types';
     import Box from '@atoms/layouts/Box.svelte';
     import Stack from '@atoms/layouts/Stack.svelte';
     import { type ActionColor, actionColorList } from '@atoms/types';
 
     const { Story } = defineMeta({
-        component: Button,
-        title: 'Atoms/Inputs/Button',
+        component: ImageButton,
+        title: 'Atoms/Inputs/ImageButton',
         tags: ['autodocs'],
         args: {
+            src: '/assets/get_google_play.svg',
+            alt: 'Placeholder',
             color: 'primary' as ActionColor,
-            size: 'md' as InputSize,
+            size: 'md',
             variant: 'filled' as InputVariant,
             wide: false,
             disabled: false,
             highlight: false
         },
         argTypes: {
+            src: {
+                control: 'text',
+                description: 'Image source URL',
+                table: {
+                    type: { summary: 'string' }
+                }
+            },
+            alt: {
+                control: 'text',
+                description: 'Image alt text',
+                table: {
+                    type: { summary: 'string' },
+                    defaultValue: { summary: '""' }
+                }
+            },
             color: {
                 control: 'select',
-                options: actionColorList,
+                options: ['primary', 'secondary', 'info', 'warning', 'danger', 'success'] satisfies ActionColor[],
                 description: 'Button color',
                 table: {
                     type: { summary: 'ActionColor' },
@@ -38,7 +55,7 @@
                 options: inputSizeList,
                 description: 'Button size',
                 table: {
-                    type: { summary: 'Size' },
+                    type: { summary: 'InputSize' },
                     defaultValue: { summary: 'md' }
                 }
             },
@@ -77,19 +94,18 @@
             },
             href: { table: { disable: true }, ref: { control: false } },
             onclick: { table: { disable: true }, ref: { control: false } },
-            startIcon: { table: { disable: true }, ref: { control: false } },
-            endIcon: { table: { disable: true }, ref: { control: false } },
             preload: { table: { disable: true }, ref: { control: false } },
-            children: { table: { disable: true }, ref: { control: false } },
             id: { table: { disable: true }, ref: { control: false } },
             role: { table: { disable: true }, ref: { control: false } }
         }
     });
 
     const href = 'https://example.com';
+    const pngImage = 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_92x30dp.png';
+    const svgImage = '/assets/get_google_play.svg';
 </script>
 
-<Story name="Default">Click Me</Story>
+<Story name="Default" />
 
 <Story name="All Colors">
     {#snippet template(args)}
@@ -98,9 +114,10 @@
             {#each actionColorList as color (color)}
                 <Stack direction="row" align="center">
                     <Typography class="w-20">{color}</Typography>
-                    <Button {...otherArgs} startIcon={Check} {color}>Click Me</Button>
-                    <Button {...otherArgs} startIcon={Check} {color}>Click Me</Button>
-                    <Button {...otherArgs} {color}>Click Me</Button>
+                    <ImageButton {...otherArgs} {color} src={pngImage} />
+                    <ImageButton {...otherArgs} {color} src={svgImage} />
+                    <ImageButton {...otherArgs} {color} src={Google} />
+                    <ImageButton {...otherArgs} {color} src={Check} />
                 </Stack>
             {/each}
         </Stack>
@@ -113,10 +130,11 @@
         <Stack>
             {#each inputSizeList as size (size)}
                 <Stack direction="row" align="center">
-                    <Typography class="w-8">{size}</Typography>
-                    <Button {...otherArgs} startIcon={Check} {size} />
-                    <Button {...otherArgs} startIcon={Check} {size}>Click Me</Button>
-                    <Button {...otherArgs} {size}>Click Me</Button>
+                    <Typography class="w-16">{size}</Typography>
+                    <ImageButton {...otherArgs} {size} src={pngImage} />
+                    <ImageButton {...otherArgs} {size} src={svgImage} />
+                    <ImageButton {...otherArgs} {size} src={Google} />
+                    <ImageButton {...otherArgs} {size} src={Check} />
                 </Stack>
             {/each}
         </Stack>
@@ -130,33 +148,38 @@
             {#each inputVariantList as variant (variant)}
                 <Stack direction="row" align="center">
                     <Typography class="w-16">{variant}</Typography>
-                    <Button {...otherArgs} startIcon={Check} {variant} />
-                    <Button {...otherArgs} startIcon={Check} {variant}>Click Me</Button>
-                    <Button {...otherArgs} {variant}>Click Me</Button>
+                    <ImageButton {...otherArgs} {variant} src={pngImage} />
+                    <ImageButton {...otherArgs} {variant} src={svgImage} />
+                    <ImageButton {...otherArgs} {variant} src={Google} />
+                    <ImageButton {...otherArgs} {variant} src={Check} />
                 </Stack>
             {/each}
         </Stack>
     {/snippet}
 </Story>
 
-<Story name="With Icons">
+<Story name="Action Types">
     {#snippet template(args)}
         <Stack>
-            <Button {...args} startIcon={Check}>Done</Button>
-            <Button {...args} endIcon={Dots}>Loading...</Button>
-            <Button {...args} startIcon={Check} endIcon={Dots}>Download</Button>
-        </Stack>
-    {/snippet}
-</Story>
+            <Stack direction="row" align="center">
+                <Typography class="w-26">No action</Typography>
+                <ImageButton {...args} src={svgImage} />
+            </Stack>
 
-<Story name="Action types">
-    {#snippet template(args)}
-        {@const { children, ...otherArgs } = args}
-        <Stack>
-            <Button {...otherArgs}>No action</Button>
-            <Button {...otherArgs} {href}>HRef action</Button>
-            <Button {...otherArgs} onclick={action('clicked')}>OnClick action</Button>
-            <Button {...otherArgs} {href} onclick={action('clicked')}>HRef and OnClick action</Button>
+            <Stack direction="row" align="center">
+                <Typography class="w-26">href</Typography>
+                <ImageButton {...args} src={svgImage} {href} />
+            </Stack>
+
+            <Stack direction="row" align="center">
+                <Typography class="w-26">onclick</Typography>
+                <ImageButton {...args} src={svgImage} onclick={action('clicked')} />
+            </Stack>
+
+            <Stack direction="row" align="center">
+                <Typography class="w-26">href + onclick</Typography>
+                <ImageButton {...args} src={svgImage} {href} onclick={action('clicked')} />
+            </Stack>
         </Stack>
     {/snippet}
 </Story>
@@ -169,26 +192,41 @@
             <Box padding={4}>
                 <Stack>
                     <Typography>Level 0 - Container</Typography>
-                    <Button {...otherArgs}>Click Me</Button>
-                    <Button {...otherArgs} color="info" startIcon={Check}>Info</Button>
+                    <Stack direction="row" wrap>
+                        <ImageButton {...otherArgs} src={pngImage} />
+                        <ImageButton {...otherArgs} src={svgImage} />
+                        <ImageButton {...otherArgs} src={Google} />
+                        <ImageButton {...otherArgs} src={Check} />
+                    </Stack>
 
                     <Box padding={4}>
                         <Stack>
                             <Typography>Level 1 - Sub-Container</Typography>
-                            <Button {...otherArgs}>Click Me</Button>
-                            <Button {...otherArgs} color="info" startIcon={Check}>Info</Button>
+                            <Stack direction="row" wrap>
+                                <ImageButton {...otherArgs} src={pngImage} />
+                                <ImageButton {...otherArgs} src={svgImage} />
+                                <ImageButton {...otherArgs} src={Google} />
+                                <ImageButton {...otherArgs} src={Check} />
+                            </Stack>
 
                             <Box padding={4}>
                                 <Stack>
                                     <Typography>Level 2 - Surface</Typography>
-                                    <Button {...otherArgs}>Click Me</Button>
-                                    <Button {...otherArgs} color="info" startIcon={Check}>Info</Button>
-
+                                    <Stack direction="row" wrap>
+                                        <ImageButton {...otherArgs} src={pngImage} />
+                                        <ImageButton {...otherArgs} src={svgImage} />
+                                        <ImageButton {...otherArgs} src={Google} />
+                                        <ImageButton {...otherArgs} src={Check} />
+                                    </Stack>
                                     <Box padding={4}>
                                         <Stack>
                                             <Typography>Level 3 - Container (Cycles)</Typography>
-                                            <Button {...otherArgs}>Click Me</Button>
-                                            <Button {...otherArgs} color="info" startIcon={Check}>Info</Button>
+                                            <Stack direction="row" wrap>
+                                                <ImageButton {...otherArgs} src={pngImage} />
+                                                <ImageButton {...otherArgs} src={svgImage} />
+                                                <ImageButton {...otherArgs} src={Google} />
+                                                <ImageButton {...otherArgs} src={Check} />
+                                            </Stack>
                                         </Stack>
                                     </Box>
                                 </Stack>
@@ -203,8 +241,10 @@
                 <Box color="danger">
                     <Stack>
                         <Typography>Danger Box</Typography>
-                        <Button {...otherArgs}>Click Me</Button>
-                        <Button {...otherArgs} color="info" startIcon={Check}>Info</Button>
+                        <ImageButton {...otherArgs} src={pngImage} />
+                        <ImageButton {...otherArgs} src={svgImage} />
+                        <ImageButton {...otherArgs} src={Google} />
+                        <ImageButton {...otherArgs} src={Check} />
                     </Stack>
                 </Box>
             </Stack>
@@ -218,38 +258,44 @@
         <Stack>
             <Typography variant="h4">Filled Variant</Typography>
             <InputGroup {size} {color} variant="filled">
-                <Button {...otherArgs}>First</Button>
-                <Button {...otherArgs}>Second</Button>
-                <Button {...otherArgs}>Third</Button>
+                <ImageButton {...otherArgs} src={pngImage} />
+                <ImageButton {...otherArgs} src={svgImage} />
+                <ImageButton {...otherArgs} src={Google} />
+                <ImageButton {...otherArgs} src={Check} />
             </InputGroup>
 
             <Typography variant="h4">Outline Variant</Typography>
             <InputGroup {size} {color} variant="outline">
-                <Button {...otherArgs}>First</Button>
-                <Button {...otherArgs}>Second</Button>
-                <Button {...otherArgs}>Third</Button>
+                <ImageButton {...otherArgs} src={pngImage} />
+                <ImageButton {...otherArgs} src={svgImage} />
+                <ImageButton {...otherArgs} src={Google} />
+                <ImageButton {...otherArgs} src={Check} />
             </InputGroup>
 
             <Typography variant="h4">Ghost Variant</Typography>
             <InputGroup {size} {color} variant="ghost">
-                <Button {...otherArgs}>First</Button>
-                <Button {...otherArgs}>Second</Button>
-                <Button {...otherArgs}>Third</Button>
+                <ImageButton {...otherArgs} src={pngImage} />
+                <ImageButton {...otherArgs} src={svgImage} />
+                <ImageButton {...otherArgs} src={Google} />
+                <ImageButton {...otherArgs} src={Check} />
             </InputGroup>
 
             <Typography variant="h4">With Icons</Typography>
             <InputGroup {size} {color} {variant}>
-                <Button {...otherArgs} startIcon={Check}>Done</Button>
-                <Button {...otherArgs}>Middle</Button>
-                <Button {...otherArgs} endIcon={Dots}>Loading</Button>
+                <ImageButton {...otherArgs} src={pngImage} />
+                <ImageButton {...otherArgs} src={svgImage} />
+                <ImageButton {...otherArgs} src={Google} />
+                <ImageButton {...otherArgs} src={Check} />
             </InputGroup>
 
             <Typography variant="h4">All Sizes</Typography>
-            <Stack direction="row" align="center">
+            <Stack>
                 {#each inputSizeList as size (size)}
                     <InputGroup {size} {color} {variant}>
-                        <Button {...otherArgs}>{size.toUpperCase()}</Button>
-                        <Button {...otherArgs}>{size.toUpperCase()}</Button>
+                        <ImageButton {...otherArgs} src={pngImage} />
+                        <ImageButton {...otherArgs} src={svgImage} />
+                        <ImageButton {...otherArgs} src={Google} />
+                        <ImageButton {...otherArgs} src={Check} />
                     </InputGroup>
                 {/each}
             </Stack>
@@ -264,36 +310,30 @@
             <Stack>
                 <Typography variant="h4">Filled Variant</Typography>
                 <InputGroup {size} {color} variant="filled" vertical>
-                    <Button {...otherArgs}>First</Button>
-                    <Button {...otherArgs}>Second</Button>
-                    <Button {...otherArgs}>Third</Button>
+                    <ImageButton {...otherArgs} src={pngImage} />
+                    <ImageButton {...otherArgs} src={svgImage} />
+                    <ImageButton {...otherArgs} src={Google} />
+                    <ImageButton {...otherArgs} src={Check} />
                 </InputGroup>
             </Stack>
 
             <Stack>
                 <Typography variant="h4">Outline Variant</Typography>
                 <InputGroup {size} {color} variant="outline" vertical>
-                    <Button {...otherArgs}>First</Button>
-                    <Button {...otherArgs}>Second</Button>
-                    <Button {...otherArgs}>Third</Button>
+                    <ImageButton {...otherArgs} src={pngImage} />
+                    <ImageButton {...otherArgs} src={svgImage} />
+                    <ImageButton {...otherArgs} src={Google} />
+                    <ImageButton {...otherArgs} src={Check} />
                 </InputGroup>
             </Stack>
 
             <Stack>
                 <Typography variant="h4">Ghost Variant</Typography>
                 <InputGroup {size} {color} variant="ghost" vertical>
-                    <Button {...otherArgs}>First</Button>
-                    <Button {...otherArgs}>Second</Button>
-                    <Button {...otherArgs}>Third</Button>
-                </InputGroup>
-            </Stack>
-
-            <Stack>
-                <Typography variant="h4">With Icons</Typography>
-                <InputGroup {size} {color} {variant} vertical>
-                    <Button {...otherArgs} startIcon={Check}>Done</Button>
-                    <Button {...otherArgs} startIcon={Check} endIcon={Dots}>Middle</Button>
-                    <Button {...otherArgs} endIcon={Dots}>Loading</Button>
+                    <ImageButton {...otherArgs} src={pngImage} />
+                    <ImageButton {...otherArgs} src={svgImage} />
+                    <ImageButton {...otherArgs} src={Google} />
+                    <ImageButton {...otherArgs} src={Check} />
                 </InputGroup>
             </Stack>
         </Stack>

@@ -1,9 +1,9 @@
 <script context="module" lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
+    import { lorem } from '@storybook-ext/lorem';
     import Typography from '@atoms/Typography.svelte';
     import Box from '@atoms/layouts/Box.svelte';
     import type { ActionColor } from '@atoms/types';
-    import { lorem } from '../../storybook/lorem';
 
     const { Story } = defineMeta({
         component: Box,

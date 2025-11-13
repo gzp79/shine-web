@@ -1,15 +1,13 @@
 <script context="module" lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
-    import type { Component, Snippet } from 'svelte';
+    import type { Snippet } from 'svelte';
     import MediaSizeIndicator from '@storybook-ext/MediaSizeIndicator.svelte';
+    import { lorem } from '@storybook-ext/lorem';
     import Typography from '@atoms/Typography.svelte';
     import { Info, Warning } from '@atoms/icons/common';
-    import { Gitlab, Google } from '@atoms/icons/social';
-    import Discord from '@atoms/icons/social/_discord.svelte';
+    import { Google } from '@atoms/icons/social';
     import Button from '@atoms/inputs/Button.svelte';
     import Card from '@atoms/layouts/Card.svelte';
-    import Stack from '@atoms/layouts/Stack.svelte';
-    import { lorem } from '../../storybook/lorem';
 
     const { Story } = defineMeta({
         component: Card,

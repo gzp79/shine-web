@@ -1,11 +1,9 @@
 import type { StorybookConfig } from '@storybook/sveltekit';
-import path from 'path';
 
 const config: StorybookConfig = {
     stories: ['../src/**/*.mdx', '../src/**/*.stories.@(js|ts|svelte)'],
     addons: [
         '@storybook/addon-svelte-csf',
-        '@chromatic-com/storybook',
         '@storybook/addon-docs',
         '@storybook/addon-a11y',
         '@storybook/addon-vitest',
@@ -14,6 +12,7 @@ const config: StorybookConfig = {
     framework: {
         name: '@storybook/sveltekit',
         options: {}
-    }
+    },
+    staticDirs: ['../static', '../static-generated']
 };
 export default config;

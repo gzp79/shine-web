@@ -1,10 +1,10 @@
 <script module lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
+    import { lorem } from '@storybook-ext/lorem';
     import Typography from '@atoms/Typography.svelte';
     import Button from '@atoms/inputs/Button.svelte';
     import Modal, { type ModalWidth } from '@atoms/layouts/Modal.svelte';
     import Stack from '@atoms/layouts/Stack.svelte';
-    import { lorem } from '../../storybook/lorem';
 
     const { Story } = defineMeta({
         component: Modal,

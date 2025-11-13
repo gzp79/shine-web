@@ -17,7 +17,7 @@
         children: Snippet;
     }
 
-    let { size, disabled = false, class: className, viewBox, children }: Props = $props();
+    let { size = 'full', disabled = false, class: className, viewBox, children }: Props = $props();
     let svgClass = $derived(
         twMerge(
             size ? `icon-${size}` : 'w-auto h-full',
