@@ -24,53 +24,73 @@
 
 <script lang="ts">
     interface Props {
-        //#region Mount-time only properties
-        /** Selector for the trigger element(s) */
+        /**
+         * Selector for the trigger element(s).
+         * @readonly - Not reactive: evaluated once on mount, do not bind dynamically.
+         */
         trigger?: HTMLElement | string;
-        /** Selector for the reference element, defaults to the first trigger element */
+        /**
+         * Selector for the reference element, defaults to the first trigger element.
+         * @readonly - Not reactive: evaluated once on mount, do not bind dynamically.
+         */
         reference?: HTMLElement | string;
-        /** Selector for the layer element containing the popper, defaults to document.body */
+        /**
+         * Selector for the layer element containing the popper, defaults to document.body.
+         * @readonly - Not reactive: evaluated once on mount, do not bind dynamically.
+         */
         layer?: string;
-        /** What should trigger the popper to open */
-        behavior?: Behavior;
-        /** Whether to include content clicks in the "safe zone" */
-        includeContent?: boolean;
-        /** Placement of the popper relative to the reference element */
-        placement?: Placement;
-        //#endregion
 
-        //#region Reactive properties
-        /** Align the width of the popper to the reference element */
+        /** What should trigger the popper to open. */
+        behavior?: Behavior;
+        /** Whether to include content clicks in the "safe zone". */
+        includeContent?: boolean;
+        /** Placement of the popper relative to the reference element. */
+        placement?: Placement;
+        /** Align the width of the popper to the reference element, so that the popper is at least as wide as the reference element. */
         alignWidth?: boolean;
         /** Offset distance from the reference element */
         offset?: number;
-        //#endregion
 
-        //#region Bindable properties
         /** In/Out state indicating whether the popper is open */
         open?: boolean;
-        //#endregion
 
         /** Children elements */
         children: Snippet;
     }
     let {
-        trigger,
-        reference,
-        layer = '#popper',
+        trigger: triggerProp,
+        reference: referenceProp,
+        layer: layerProp = '#popper',
         behavior = 'click',
         includeContent = false,
         placement = 'top',
         alignWidth = false,
         offset = 4,
-        open: isOpen = $bindable(false),
+        open = $bindable(false),
         children
     }: Props = $props();
 
+    const trigger = triggerProp;
+    const reference = referenceProp;
+    const layer = layerProp;
+    if (import.meta.env.DEV) {
+        $effect(() => {
+            if (triggerProp !== trigger) {
+                console.warn('Popper: trigger prop changed after mount - this has no effect');
+            }
+            if (referenceProp !== reference) {
+                console.warn('Popper: reference prop changed after mount - this has no effect');
+            }
+            if (layerProp !== layer) {
+                console.warn('Popper: layer prop changed after mount - this has no effect');
+            }
+        });
+    }
+
     // Derived behavior flags
-    const isClick = behavior === 'click';
-    const isToggle = behavior === 'toggle';
-    const isHover = behavior === 'hover';
+    const isClick = $derived(behavior === 'click');
+    const isToggle = $derived(behavior === 'toggle');
+    const isHover = $derived(behavior === 'hover');
     //const isManual = $derived(behavior === 'manual');
 
     // State variables
@@ -81,21 +101,21 @@
     let autoUpdateCleanup: null | (() => void) = null;
     let width = $state(0);
 
-    const divClass = $derived(twMerge('fixed left-0 top-0 z-40', !isOpen ? 'hidden' : 'block'));
+    const divClass = $derived(twMerge('fixed left-0 top-0 z-40', !open ? 'hidden' : 'block'));
     const divStyle = $derived(alignWidth ? `min-width: ${width}px;` : '');
 
     // Actions
     const show = () => {
-        isOpen = true;
+        open = true;
     };
 
     const hide = () => {
-        isOpen = false;
+        open = false;
     };
 
     const toggle = (event: MouseEvent) => {
         event.stopPropagation();
-        if (isOpen) hide();
+        if (open) hide();
         else show();
     };
 
@@ -145,8 +165,6 @@
 
             // Hide if reference is hidden, escaped, or partially clipped
             const hideData = middlewareData.hide;
-            console.log('Popper hide data:', hideData?.referenceHiddenOffsets);
-
             if (hideData?.referenceHidden || hideData?.escaped) {
                 hide();
             }
@@ -209,7 +227,7 @@
     });
 
     $effect(() => {
-        if (isOpen) {
+        if (open) {
             if (isClick) window.addEventListener('click', handleClickOutside);
             if (isHover && includeContent) contentEl?.addEventListener('mouseleave', handleMouseLeave);
             autoUpdateCleanup?.(); // just in case

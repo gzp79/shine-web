@@ -4,9 +4,9 @@
     import AppContent from '$lib/app/AppContent.svelte';
     import { t } from '$lib/i18n/i18n.svelte';
     import Button from '@atoms/Button.svelte';
-    import LoadingCard from '@atoms/LoadingCard.svelte';
     import Typography from '@atoms/Typography.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';
+    import LoadingCard from '@components/LoadingCard.svelte';
     import { getCurrentUserStore } from '@features/account/currentUser.svelte';
 
     let currentUserStore = getCurrentUserStore();

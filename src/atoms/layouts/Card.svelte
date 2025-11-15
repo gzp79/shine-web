@@ -1,14 +1,16 @@
-<script lang="ts" module>
+<script module lang="ts">
     import { type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
     import Typography from '../Typography.svelte';
-    import type { ActionColor, ElementProps } from '../types';
+    import type { ActionColor } from '../types';
     import Box, { type Width } from './Box.svelte';
     import Stack from './Stack.svelte';
+
+    export { type Width };
 </script>
 
 <script lang="ts">
-    interface Props extends ElementProps {
+    interface Props {
         caption?: string;
         shadow?: boolean;
         color?: ActionColor;
@@ -21,16 +23,16 @@
     let { icon, caption, shadow, color, width = 'fit', children, actions }: Props = $props();
 
     let iconClass = $derived(
-        twMerge('flex shrink-0', 'h-12 w-12 md:w-12', 'self-center md:self-start items-center justify-center ')
+        twMerge('flex shrink-0', 'h-12 w-12 sm:w-12', 'self-center sm:self-start items-center justify-center ')
     );
     let captionClass = $derived(
-        twMerge('p-2 md:ps-0 overflow-hidden text-ellipsis', icon ? 'text-center md:text-start' : 'text-center')
+        twMerge('p-2 sm:ps-0 overflow-hidden text-ellipsis', icon ? 'text-center sm:text-start' : 'text-center')
     );
-    let childClass = $derived(twMerge('max-h-mdv min-h-3 overflow-y-auto overflow-x-hidden', caption && 'md:ps-2'));
+    let childClass = $derived(twMerge('max-h-smv min-h-3 overflow-y-auto overflow-x-hidden', caption && 'sm:ps-2'));
 </script>
 
 <Box compact border {color} {shadow} {width}>
-    <Stack direction={{ xs: 'column', md: 'row' }} spacing={{ xs: 0, md: 2 }} align="stretch" class="p-2">
+    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 0, sm: 2 }} align="stretch" class="p-2">
         {#if icon}
             <div class={iconClass}>{@render icon()}</div>
         {/if}

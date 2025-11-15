@@ -2,8 +2,8 @@
     import { identityApi } from '$lib/api/identity-api';
     import AppContent from '$lib/app/AppContent.svelte';
     import Button from '@atoms/Button.svelte';
-    import LoadingCard from '@atoms/LoadingCard.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';
+    import LoadingCard from '@components/LoadingCard.svelte';
 
     function redirect(url: string) {
         window.location.href = url;

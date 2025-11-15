@@ -12,7 +12,7 @@
         tags: ['autodocs'],
         args: {
             size: 'md' as Size,
-            fullWidth: false
+            wide: false
         },
         argTypes: {
             size: {
@@ -24,7 +24,7 @@
                     defaultValue: { summary: 'md' }
                 }
             },
-            fullWidth: {
+            wide: {
                 control: 'boolean',
                 description: 'Whether the table should take full width of its container',
                 table: {
@@ -186,7 +186,7 @@
         {#snippet innerTable()}
             <Box border>
                 <KeyValueTable
-                    size="xs"
+                    size="lg"
                     items={[
                         { key: 'Nested 1', value: 'Value A' },
                         { key: 'Nested 2', value: 'Value B' },

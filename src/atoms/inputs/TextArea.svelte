@@ -1,10 +1,9 @@
 <script lang="ts">
-    import { getContext } from 'svelte';
     import { twMerge } from 'tailwind-merge';
     import { getBoxContext } from '../layouts/Box.svelte';
     import type { ActionColor, ElementProps } from '../types';
-    import type { GroupInfo } from './InputGroup.svelte';
-    import type { InputSize, InputVariant } from './types';
+    import { getInputGroupContext } from './InputGroup.svelte';
+    import { type InputSize, type InputVariant, getGroupBorderClasses, getGroupColorClasses } from './types';
 
     interface Props extends ElementProps {
         rows?: 'single' | number | [number, number];
@@ -43,47 +42,71 @@
         lg: 'text-lg leading-none px-5 py-4'
     };
 
-    // Hidden Dependency (InputGroup):
-    let group: GroupInfo = getContext('InputGroup_props');
-    // Hidden Dependency (Box):
-    let box = getBoxContext();
+    let groupInfo = getInputGroupContext();
+    let boxInfo = getBoxContext();
 
-    let color = $derived(group?.color ?? baseColor);
+    let color = $derived(groupInfo?.color ?? baseColor);
     let colorWithFallback = $derived(color ?? 'primary');
-    let size = $derived(group?.size ?? baseSize);
-    let variant = $derived(group?.variant ?? baseVariant);
+    let size = $derived(groupInfo?.size ?? baseSize);
+    let variant = $derived(groupInfo?.variant ?? baseVariant);
 
     const txtClass = $derived(
         twMerge(
             ['block', 'w-full', 'h-fit-content'],
-            !resizable && 'resize-none',
+            groupInfo && [
+                ...getGroupBorderClasses(
+                    groupInfo.vertical,
+                    variant,
+                    variant === 'outline' && boxInfo && !color ? boxInfo.border : `on-${colorWithFallback}`
+                ),
+                ...getGroupColorClasses(
+                    variant,
+                    disabled ?? false,
+                    colorWithFallback,
+                    boxInfo && !color ? boxInfo.fgColor : `on-${colorWithFallback}`
+                ),
+                variant === 'filled' && `placeholder:text-${colorWithFallback}-2`,
+                variant === 'outline' && [
+                    boxInfo && !color
+                        ? `placeholder:text-${boxInfo.fgColor2}`
+                        : `placeholder:text-${colorWithFallback}-2`
+                ],
+                variant === 'ghost' && [
+                    boxInfo && !color
+                        ? `placeholder:text-${boxInfo.fgColor2}`
+                        : `placeholder:text-${colorWithFallback}-2`
+                ],
+                resizable ? (groupInfo.vertical ? 'resize-y' : 'resize-x') : 'resize-none'
+            ],
 
-            variant === 'filled' && [
-                `bg-${colorWithFallback} text-on-${colorWithFallback} placeholder:text-${colorWithFallback}-2 border-on-${colorWithFallback}`,
-                !group && ['rounded-lg', 'border-2'],
-                group &&
-                    (group.vertical
-                        ? 'first:border-t-2 last:border-b-2 border-x-2 border-t-2 first:rounded-t-lg last:rounded-b-lg'
-                        : 'first:border-s-2 last:border-e-2 border-y-2 border-s-2 first:rounded-s-lg last:rounded-e-lg'),
-                !disabled && 'hover:highlight'
-            ],
-            variant === 'outline' && [
-                box && !color
-                    ? `text-${box.fgColor} placeholder:text-${box.fgColor2} border-${box.border}`
-                    : `text-on-${colorWithFallback} placeholder:text-${colorWithFallback}-2 border-on-${colorWithFallback}`,
-                !group && ['rounded-lg', 'border-2'],
-                group &&
-                    (group.vertical
-                        ? 'first:border-t-2 last:border-b-2 border-x-2 border-t-2 first:rounded-t-lg last:rounded-b-lg'
-                        : 'first:border-s-2 last:border-e-2 border-y-2 border-s-2 first:rounded-s-lg last:rounded-e-lg'),
-                !disabled && 'hover:highlight-backdrop'
-            ],
-            variant === 'ghost' && [
-                box && !color
-                    ? `text-${box.fgColor} placeholder:text-${box.fgColor2}`
-                    : `text-on-${colorWithFallback} placeholder:text-${colorWithFallback}-2`,
-                !group && ['rounded-lg', 'border-2', 'border-transparent'],
-                !disabled && 'hover:highlight-backdrop'
+            !groupInfo && [
+                variant === 'filled' && [
+                    `bg-${colorWithFallback}`,
+                    `text-on-${colorWithFallback}`,
+                    `placeholder:text-${colorWithFallback}-2`,
+                    `border-on-${colorWithFallback}`,
+                    disabled ? '!opacity-30 !cursor-not-allowed' : 'hover:highlight'
+                ],
+                variant === 'outline' && [
+                    boxInfo && !color ? `text-${boxInfo.fgColor}` : `text-on-${colorWithFallback}`,
+                    boxInfo && !color
+                        ? `placeholder:text-${boxInfo.fgColor2}`
+                        : `placeholder:text-${colorWithFallback}-2`,
+                    boxInfo && !color ? `border-${boxInfo.border}` : `border-on-${colorWithFallback}`,
+                    disabled ? '!opacity-30 !cursor-not-allowed' : 'hover:highlight-backdrop'
+                ],
+                variant === 'ghost' && [
+                    boxInfo && !color ? `text-${boxInfo.fgColor}` : `text-on-${colorWithFallback}`,
+                    boxInfo && !color
+                        ? `placeholder:text-${boxInfo.fgColor2}`
+                        : `placeholder:text-${colorWithFallback}-2`,
+                    'border-transparent',
+                    disabled ? '!opacity-30 !cursor-not-allowed' : 'hover:highlight-backdrop'
+                ],
+
+                'rounded-lg',
+                'border-2',
+                resizable ? 'resize' : 'resize-none'
             ],
 
             sizeMods[size],

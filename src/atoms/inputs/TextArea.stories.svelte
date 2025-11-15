@@ -1,7 +1,13 @@
 <script module lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
+    import { action } from 'storybook/actions';
+    import Typography from '@atoms/Typography.svelte';
+    import InputGroup from '@atoms/inputs/InputGroup.svelte';
     import TextArea from '@atoms/inputs/TextArea.svelte';
-    import type { ActionColor, InputVariant, Size } from '@atoms/types';
+    import { type InputVariant, inputSizeList, inputVariantList } from '@atoms/inputs/types';
+    import Box from '@atoms/layouts/Box.svelte';
+    import Stack from '@atoms/layouts/Stack.svelte';
+    import { type ActionColor, type Size, actionColorList } from '@atoms/types';
 
     const { Story } = defineMeta({
         component: TextArea,
@@ -11,7 +17,7 @@
             variant: 'filled' as InputVariant,
             color: 'primary' as ActionColor,
             size: 'md' as Size,
-            rows: 3
+            placeholder: 'Enter some text...'
         },
         argTypes: {
             variant: {
@@ -42,10 +48,11 @@
                 }
             },
             rows: {
-                control: 'number',
-                description: 'Number of rows (or "single" for single line)',
+                control: { type: 'select' },
+                options: [undefined, 'single', 1, 2, 3, 4, 5, 8, 10],
+                description: 'Number of rows or "single" for single line input',
                 table: {
-                    type: { summary: 'number | "single" | [number, number]' },
+                    type: { summary: 'number | "single" | [number, number] | undefined' },
                     defaultValue: { summary: 'undefined' }
                 }
             },
@@ -72,117 +79,215 @@
                     type: { summary: 'boolean' },
                     defaultValue: { summary: 'false' }
                 }
-            }
+            },
+            text: { table: { disable: true }, ref: { control: false } },
+            onEnter: { table: { disable: true }, ref: { control: false } },
+            onBlur: { table: { disable: true }, ref: { control: false } },
+            id: { table: { disable: true }, ref: { control: false } },
+            role: { table: { disable: true }, ref: { control: false } }
         }
     });
+
+    let text = $state('');
 </script>
 
-<Story name="Default">
-    {#snippet template(args)}
-        <TextArea {...args} placeholder="Enter your text here..." />
-    {/snippet}
-</Story>
-
-<Story name="All Variants">
-    {#snippet template(args)}
-        {@const { variant, ...otherArgs } = args}
-        <div class="space-y-3">
-            <TextArea {...otherArgs} variant="filled" placeholder="Filled variant" />
-            <TextArea {...otherArgs} variant="outline" placeholder="Outline variant" />
-            <TextArea {...otherArgs} variant="ghost" placeholder="Ghost variant" />
-        </div>
-    {/snippet}
-</Story>
+<Story name="Default" />
 
 <Story name="All Colors">
     {#snippet template(args)}
-        {@const { color, ...otherArgs } = args}
-        <div class="space-y-3">
-            <TextArea {...otherArgs} color="primary" placeholder="Primary color" />
-            <TextArea {...otherArgs} color="secondary" placeholder="Secondary color" />
-            <TextArea {...otherArgs} color="info" placeholder="Info color" />
-            <TextArea {...otherArgs} color="warning" placeholder="Warning color" />
-            <TextArea {...otherArgs} color="danger" placeholder="Danger color" />
-            <TextArea {...otherArgs} color="success" placeholder="Success color" />
-        </div>
+        {@const { color, placeholder, ...otherArgs } = args}
+        <Stack>
+            {#each actionColorList as color (color)}
+                <TextArea {...otherArgs} {color} placeholder={`Color ${color}`} />
+            {/each}
+        </Stack>
     {/snippet}
 </Story>
 
 <Story name="All Sizes">
     {#snippet template(args)}
-        {@const { size, ...otherArgs } = args}
-        <div class="space-y-3">
-            <TextArea {...otherArgs} size="xs" placeholder="Extra Small" />
-            <TextArea {...otherArgs} size="sm" placeholder="Small" />
-            <TextArea {...otherArgs} size="md" placeholder="Medium" />
-            <TextArea {...otherArgs} size="lg" placeholder="Large" />
-        </div>
+        {@const { size, placeholder, ...otherArgs } = args}
+        <Stack>
+            {#each inputSizeList as size (size)}
+                <TextArea {...otherArgs} {size} placeholder={`Size ${size}`} />
+            {/each}
+        </Stack>
     {/snippet}
 </Story>
 
-<Story name="Single Line Mode">
+<Story name="All Variants">
     {#snippet template(args)}
-        {@const { ...otherArgs } = args}
-        <div class="space-y-3">
-            <TextArea {...otherArgs} rows="single" placeholder="Acts like an input field" />
-            <TextArea {...otherArgs} rows="single" variant="outline" placeholder="Single line outline" />
-            <TextArea {...otherArgs} rows="single" variant="ghost" placeholder="Single line ghost" />
-        </div>
+        {@const { variant, placeholder, ...otherArgs } = args}
+        <Stack>
+            {#each inputVariantList as variant (variant)}
+                <TextArea {...otherArgs} {variant} placeholder={`Filled ${variant}`} />
+            {/each}
+        </Stack>
     {/snippet}
 </Story>
 
-<Story name="Different Row Counts">
+<Story name="Line Modes">
     {#snippet template(args)}
-        {@const { rows, ...otherArgs } = args}
-        <div class="space-y-3">
+        {@const { row, resizable, placeholder, ...otherArgs } = args}
+        <Stack>
+            <TextArea {...otherArgs} rows="single" placeholder="Single line" />
             <TextArea {...otherArgs} rows={2} placeholder="2 rows" />
             <TextArea {...otherArgs} rows={4} placeholder="4 rows" />
             <TextArea {...otherArgs} rows={8} placeholder="8 rows" />
-        </div>
-    {/snippet}
-</Story>
-
-<Story name="Resizable">
-    {#snippet template(args)}
-        {@const { ...otherArgs } = args}
-        <div class="space-y-3">
-            <div class="space-y-2">
-                <p class="text-sm font-semibold">Not Resizable (default)</p>
-                <TextArea {...otherArgs} resizable={false} placeholder="Cannot be resized" />
-            </div>
-            <div class="space-y-2">
-                <p class="text-sm font-semibold">Resizable</p>
-                <TextArea {...otherArgs} resizable={true} placeholder="Can be resized by dragging corner" />
-            </div>
-        </div>
+            <TextArea {...otherArgs} resizable placeholder="unlimited, resizable" />
+        </Stack>
     {/snippet}
 </Story>
 
 <Story name="States">
     {#snippet template(args)}
-        {@const { ...otherArgs } = args}
-        <div class="space-y-3">
+        {@const { disabled, placeholder, ...otherArgs } = args}
+        <Stack>
             <TextArea {...otherArgs} placeholder="Normal state" />
             <TextArea {...otherArgs} disabled placeholder="Disabled state" />
             <TextArea {...otherArgs} text="Pre-filled text" />
-        </div>
+        </Stack>
     {/snippet}
 </Story>
 
-<Story name="Variant & Color Matrix" asChild>
-    <div class="space-y-6">
-        {#each ['filled', 'outline', 'ghost'] as variant (variant)}
-            <div class="space-y-3">
-                <h3 class="text-sm font-semibold capitalize">{variant}</h3>
-                <div class="grid grid-cols-2 gap-3">
-                    <TextArea {variant} color="primary" placeholder="Primary" rows={2} />
-                    <TextArea {variant} color="secondary" placeholder="Secondary" rows={2} />
-                    <TextArea {variant} color="info" placeholder="Info" rows={2} />
-                    <TextArea {variant} color="warning" placeholder="Warning" rows={2} />
-                    <TextArea {variant} color="danger" placeholder="Danger" rows={2} />
-                    <TextArea {variant} color="success" placeholder="Success" rows={2} />
-                </div>
-            </div>
-        {/each}
-    </div>
+<Story name="Action Types">
+    {#snippet template(args)}
+        <TextArea
+            {...args}
+            bind:text={
+                () => text,
+                (value) => {
+                    text = value;
+                    action('text changed')(value);
+                }
+            }
+            onblur={() => action('blurred')}
+        />
+    {/snippet}
+</Story>
+
+<Story name="In Box">
+    {#snippet template(args)}
+        {@const { ...otherArgs } = args}
+        <Stack>
+            <Typography variant="h4">Nested Boxes - Auto Color Inheritance</Typography>
+            <Box padding={4}>
+                <Stack>
+                    <Typography>Level 0 - Container</Typography>
+                    <Stack direction="row" wrap>
+                        <TextArea {...otherArgs} />
+                    </Stack>
+
+                    <Box padding={4}>
+                        <Stack>
+                            <Typography>Level 1 - Sub-Container</Typography>
+                            <Stack direction="row" wrap>
+                                <TextArea {...otherArgs} />
+                            </Stack>
+
+                            <Box padding={4}>
+                                <Stack>
+                                    <Typography>Level 2 - Surface</Typography>
+                                    <Stack direction="row" wrap>
+                                        <TextArea {...otherArgs} />
+                                    </Stack>
+                                    <Box padding={4}>
+                                        <Stack>
+                                            <Typography>Level 3 - Container (Cycles)</Typography>
+                                            <Stack direction="row" wrap>
+                                                <TextArea {...otherArgs} />
+                                            </Stack>
+                                        </Stack>
+                                    </Box>
+                                </Stack>
+                            </Box>
+                        </Stack>
+                    </Box>
+                </Stack>
+            </Box>
+
+            <Typography variant="h4">Colored Boxes</Typography>
+            <Stack direction="row">
+                <Box color="danger">
+                    <Stack>
+                        <Typography>Danger Box</Typography>
+                        <TextArea {...otherArgs} />
+                    </Stack>
+                </Box>
+            </Stack>
+        </Stack>
+    {/snippet}
+</Story>
+
+<Story name="In Horizontal Group">
+    {#snippet template(args)}
+        {@const { size, variant, color, ...otherArgs } = args}
+        <Stack>
+            <Typography variant="h4">Filled Variant</Typography>
+            <InputGroup {size} {color} variant="filled">
+                <TextArea {...otherArgs} />
+                <TextArea {...otherArgs} rows="single" />
+                <TextArea {...otherArgs} />
+            </InputGroup>
+
+            <Typography variant="h4">Outline Variant</Typography>
+            <InputGroup {size} {color} variant="outline">
+                <TextArea {...otherArgs} />
+                <TextArea {...otherArgs} rows="single" />
+                <TextArea {...otherArgs} />
+            </InputGroup>
+
+            <Typography variant="h4">Ghost Variant</Typography>
+            <InputGroup {size} {color} variant="ghost">
+                <TextArea {...otherArgs} />
+                <TextArea {...otherArgs} rows="single" />
+                <TextArea {...otherArgs} />
+            </InputGroup>
+
+            <Typography variant="h4">All Sizes</Typography>
+            <Stack>
+                {#each inputSizeList as size (size)}
+                    <InputGroup {size} {color} {variant}>
+                        <TextArea {...otherArgs} />
+                        <TextArea {...otherArgs} rows="single" />
+                        <TextArea {...otherArgs} />
+                    </InputGroup>
+                {/each}
+            </Stack>
+        </Stack>
+    {/snippet}
+</Story>
+
+<Story name="In Vertical Group">
+    {#snippet template(args)}
+        {@const { size, variant, color, ...otherArgs } = args}
+        <Stack direction="row" spacing={8} wrap>
+            <Stack>
+                <Typography variant="h4">Filled Variant</Typography>
+                <InputGroup {size} {color} variant="filled" vertical>
+                    <TextArea {...otherArgs} />
+                    <TextArea {...otherArgs} rows="single" />
+                    <TextArea {...otherArgs} />
+                </InputGroup>
+            </Stack>
+
+            <Stack>
+                <Typography variant="h4">Outline Variant</Typography>
+                <InputGroup {size} {color} variant="outline" vertical>
+                    <TextArea {...otherArgs} />
+                    <TextArea {...otherArgs} rows="single" />
+                    <TextArea {...otherArgs} />
+                </InputGroup>
+            </Stack>
+
+            <Stack>
+                <Typography variant="h4">Ghost Variant</Typography>
+                <InputGroup {size} {color} variant="ghost" vertical>
+                    <TextArea {...otherArgs} />
+                    <TextArea {...otherArgs} rows="single" />
+                    <TextArea {...otherArgs} />
+                </InputGroup>
+            </Stack>
+        </Stack>
+    {/snippet}
 </Story>

@@ -15,11 +15,11 @@
         items: (DescriptionListItem | null)[];
         size?: Size;
         /** Whether the table should take full width of its container */
-        fullWidth?: boolean;
+        wide?: boolean;
         class?: string;
     }
 
-    const { items, size = 'md', fullWidth = false, class: className, id, role }: Props = $props();
+    const { items, size = 'md', wide: fullWidth = false, class: className, id, role }: Props = $props();
 
     const filteredItems = $derived(items.filter((x) => x !== null) as DescriptionListItem[]);
     const tableClass = $derived(
@@ -45,7 +45,7 @@
                         {item.value}
                     </td>
                 {:else}
-                    <td class={twMerge('min-w-0', item.valueClass)}>
+                    <td class={twMerge('break-words min-w-0', item.valueClass)}>
                         {@render item.value()}
                     </td>
                 {/if}

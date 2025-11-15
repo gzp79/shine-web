@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Component } from 'svelte';
-    import * as icons from '../icons/common';
+    import { DropDown } from '../icons/common';
     import Popper from '../layouts/Popper.svelte';
     import { type ActionColor, type Size } from '../types';
     import Button from './Button.svelte';
@@ -22,25 +22,19 @@
     }
     let { items, current = $bindable(0), color = 'primary', disabled, size, wide }: Props = $props();
 
-    let reference = $state<HTMLElement>();
-    let trigger = $state<HTMLElement>();
+    const id = $props.id();
     let currentItem = $derived(items[current]);
 </script>
 
-<InputGroup {color} {wide} {size} bind:div={reference}>
+<InputGroup {color} {wide} {size} id={`ref-${id}`}>
     <Button endIcon={currentItem.icon} onclick={() => currentItem.onclick?.()} href={currentItem.href} {disabled}>
         {currentItem.caption}
     </Button>
-    <Button bind:button={trigger} endIcon={icons.DropDown} />
+    <Button endIcon={DropDown} id={`trigger-${id}`} wide={false} {disabled} />
 </InputGroup>
-<Popper
-    behavior="click"
-    alignWidth
-    display="flex flex-col rounded-lg border max-h-96 overflow-y-auto"
-    {trigger}
-    {reference}
->
-    <InputGroup {color} vertical {size}>
+
+<Popper behavior="click" alignWidth trigger={`#trigger-${id}`} reference={`#ref-${id}`}>
+    <InputGroup {color} vertical wide {size}>
         {#each items as item, index (item.caption)}
             <Button endIcon={item.icon} onclick={() => (current = index)}>{item.caption}</Button>
         {/each}

@@ -3,7 +3,6 @@
     import { t } from '$lib/i18n/i18n.svelte';
     import { FetchError } from '$lib/utils';
     import Button from '@atoms/Button.svelte';
-    import LoadingCard from '@atoms/LoadingCard.svelte';
     import Stack from '@atoms/Stack.svelte';
     import Typography from '@atoms/Typography.svelte';
     import KeyValueTable from '@atoms/data/PropertyList.svelte';
@@ -15,6 +14,7 @@
     import { EmailSchema } from '@atoms/types/validator';
     import Alert from '@components/Alert.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';
+    import LoadingCard from '@components/LoadingCard.svelte';
     import ValidatedTextArea from '@components/ValidatedTextArea.svelte';
     import { getCurrentUserStore } from './currentUser.svelte';
 

@@ -4,6 +4,9 @@ import { getContext, hasContext, setContext } from 'svelte';
 export interface ElementProps {
     id?: string;
     role?: string;
+
+    // for any other custom attributes
+    [key: string]: unknown;
 }
 
 export const containerColorList = ['surface', 'container', 'sub-container'];

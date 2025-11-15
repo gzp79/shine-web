@@ -9,8 +9,8 @@
     import { type Snippet, onMount } from 'svelte';
     import { SvelteURLSearchParams } from 'svelte/reactivity';
     import Button from '@atoms/Button.svelte';
-    import LoadingCard from '@atoms/LoadingCard.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';
+    import LoadingCard from '@components/LoadingCard.svelte';
     import { setCurrentUserStore } from '@features/account/currentUser.svelte';
 
     interface Props {

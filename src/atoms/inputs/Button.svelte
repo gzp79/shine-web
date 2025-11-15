@@ -50,7 +50,7 @@
     }: Props = $props();
 
     let groupInfo = getInputGroupContext();
-    let box = getBoxContext();
+    let boxInfo = getBoxContext();
 
     let color = $derived(groupInfo?.color ?? baseColor);
     let colorWithFallback = $derived(color ?? 'primary');
@@ -109,13 +109,13 @@
                 ...getGroupBorderClasses(
                     groupInfo.vertical,
                     variant,
-                    variant === 'outline' && box && !color ? box.border : `on-${colorWithFallback}`
+                    variant === 'outline' && boxInfo && !color ? boxInfo.border : `on-${colorWithFallback}`
                 ),
                 ...getGroupColorClasses(
                     variant,
                     disabled,
                     colorWithFallback,
-                    box && !color ? box.fgColor : `on-${colorWithFallback}`
+                    boxInfo && !color ? boxInfo.fgColor : `on-${colorWithFallback}`
                 ),
                 'self-stretch',
                 groupInfo.vertical && ['w-full', wide && 'justify-evenly'],
@@ -130,12 +130,12 @@
                     !disabled && 'hover:highlight'
                 ],
                 variant === 'outline' && [
-                    box && !color ? `text-${box.fgColor}` : `text-on-${colorWithFallback}`,
-                    box && !color ? `border-${box.border}` : `border-on-${colorWithFallback}`,
+                    boxInfo && !color ? `text-${boxInfo.fgColor}` : `text-on-${colorWithFallback}`,
+                    boxInfo && !color ? `border-${boxInfo.border}` : `border-on-${colorWithFallback}`,
                     !disabled && 'hover:highlight-backdrop'
                 ],
                 variant === 'ghost' && [
-                    box && !color ? `text-${box.fgColor}` : `text-on-${colorWithFallback}`,
+                    boxInfo && !color ? `text-${boxInfo.fgColor}` : `text-on-${colorWithFallback}`,
                     'border-transparent',
                     !disabled && 'hover:highlight-backdrop'
                 ],
