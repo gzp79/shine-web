@@ -1,6 +1,6 @@
 <script lang="ts">
-    import QuickConfig from '$lib/app/QuickConfig.svelte';
     import { config } from '@config';
+    import QuickConfig from '@lib/app/QuickConfig.svelte';
     import Box from '@atoms/Box.svelte';
     import Typography from '@atoms/Typography.svelte';
     import { Hamburger } from '@atoms/icons/common';

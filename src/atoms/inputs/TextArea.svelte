@@ -53,6 +53,10 @@
     const txtClass = $derived(
         twMerge(
             ['block', 'w-full', 'h-fit-content'],
+            'focus-visible:outline-none',
+            'focus-visible:ring-2',
+            'focus-visible:ring-inset',
+            `focus-visible:ring-${colorWithFallback}-2`,
             groupInfo && [
                 ...getGroupBorderClasses(
                     groupInfo.vertical,

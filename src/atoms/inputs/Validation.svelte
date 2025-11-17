@@ -1,7 +1,8 @@
 <script lang="ts" module>
-    import { t } from '$lib/i18n/i18n.svelte';
     import { z } from 'zod';
+    import { t } from '@lib/i18n/i18n.svelte';
     import Typography from '../Typography.svelte';
+    import { parseValidationMessage } from '../types/validation-messages';
 
     export type ValidationResult =
         | { error: string }
@@ -64,13 +65,27 @@
             return result.info;
         }
 
-        try {
-            const msg = (result as z.ZodError).message[0];
-            const { token, ...args } = JSON.parse(msg);
-            return $t(token, args);
-        } catch {
+        // Handle ZodError with validation message helpers
+        const zodError = result as z.ZodError;
+        const firstMessage = zodError.issues[0]?.message;
+
+        if (!firstMessage) {
             return $t('validation.invalidInput');
         }
+
+        // Try to parse as a ValidationMessage
+        const validationMsg = parseValidationMessage(firstMessage);
+        if (validationMsg) {
+            if (validationMsg.type === 'token') {
+                return $t(validationMsg.token, validationMsg.args);
+            } else {
+                return validationMsg.message;
+            }
+        }
+
+        // Fallback: use the raw message if it's not JSON
+        // This maintains backward compatibility with plain string messages
+        return firstMessage || $t('validation.invalidInput');
     });
 </script>
 

@@ -1,14 +1,12 @@
-<script lang="ts" module>
-    import { t } from '$lib/i18n/i18n.svelte';
-    import Stack from '@atoms/Stack.svelte';
+<script lang="ts">
+    import { t } from '@lib/i18n/i18n.svelte';
     import Card from '@atoms/layouts/Card.svelte';
+    import Stack from '@atoms/layouts/Stack.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';
     import LoadingCard from '@components/LoadingCard.svelte';
     import ActiveSessionItem from './ActiveSessionItem.svelte';
     import { getActiveSessionStore } from './activeSessionStore.svelte';
-</script>
 
-<script lang="ts">
     const sessionStore = getActiveSessionStore();
     sessionStore.refresh();
 </script>

@@ -1,7 +1,7 @@
 <script lang="ts">
-    import type { ActiveToken } from '$lib/api/identity-api';
-    import { async } from '$lib/utils';
     import { v4 as uuid } from 'uuid';
+    import type { ActiveToken } from '@lib/api/identity-api';
+    import { async } from '@lib/utils';
     import Box from '@atoms/Box.svelte';
     import ContextProvider from '@atoms/utilities/ContextProvider.svelte';
     import ActiveTokenCard from '@features/account/ActiveTokenCard.svelte';

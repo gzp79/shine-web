@@ -1,6 +1,10 @@
-import { withThemeByDataAttribute } from '@storybook/addon-themes';
-import type { Preview, SvelteRenderer } from '@storybook/sveltekit';
+import type { Preview } from '@storybook/sveltekit';
 import '../src/app.css';
+import { type Theme, themeList } from '../src/lib/theme/theme.svelte';
+import { i18n } from '../src/translations/i18n';
+import lang from '../src/translations/lang.json';
+
+i18n.loadTranslations('en', '/');
 
 // Override app.css styles that break Storybook scrolling
 if (typeof document !== 'undefined') {
@@ -40,25 +44,69 @@ const preview: Preview = {
                         'Layouts',
                         ['Box', 'Stack', 'Grid', 'Card', 'Popper', 'Modal'],
                         'Inputs',
-                        ['Button', 'ImageButton'],
+                        ['Button', 'ImageButton', 'Toggle', 'TextArea', 'ValidatedTextArea', 'ComboButton'],
                         'Data',
                         ['ProgressBar', 'PropertyList'],
                         'Examples'
-                    ]
+                    ],
+                    'Components',
+                    ['Alert', 'LoadingCard', 'ErrorCard']
                 ]
             }
         }
     },
+    globalTypes: {
+        locale: {
+            description: 'Internationalization locale',
+            defaultValue: 'en',
+            toolbar: {
+                icon: 'globe',
+                items: Object.entries(lang).map(([code, name]) => ({
+                    value: code,
+                    title: name
+                })),
+                showName: true,
+                dynamicTitle: true
+            }
+        },
+        theme: {
+            description: 'Theme',
+            defaultValue: 'system',
+            toolbar: {
+                icon: 'mirror',
+                items: themeList.map((t) => ({
+                    value: t,
+                    title: t.charAt(0).toUpperCase() + t.slice(1)
+                })),
+                showName: true,
+                dynamicTitle: true
+            }
+        }
+    },
     decorators: [
-        withThemeByDataAttribute<SvelteRenderer>({
-            themes: {
-                light: 'light',
-                dark: 'dark',
-                system: ''
-            },
-            defaultTheme: 'light',
-            attributeName: 'data-theme'
-        })
+        (story, context) => {
+            // Handle locale changes
+            const locale = context.globals.locale || 'en';
+            i18n.setLocale(locale);
+            i18n.loadTranslations(locale, '/');
+
+            // Handle theme changes
+            const selectedTheme = (context.globals.theme || 'system') as Theme;
+            if (typeof document !== 'undefined') {
+                if (selectedTheme === 'system') {
+                    document.documentElement.removeAttribute('data-theme');
+                } else {
+                    document.documentElement.setAttribute('data-theme', selectedTheme);
+                }
+
+                const docsStories = document.querySelectorAll('.docs-story');
+                docsStories.forEach((element) => {
+                    element.classList.add('bg-surface');
+                });
+            }
+
+            return story();
+        }
     ]
 };
 

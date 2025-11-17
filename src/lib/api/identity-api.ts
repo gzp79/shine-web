@@ -2,7 +2,7 @@ import { config } from '@config';
 import { z } from 'zod';
 import { logAPI } from '@lib/loggers';
 import { type Fetch, SchemaError, fetchCacheOption, fetchError } from '@lib/utils';
-import { DateStringSchema, OptionalSchema } from './schema-helpers';
+import { DateStringSchema, OptionalSchema } from '@atoms/types/validator';
 
 const ProviderSchema = z.object({
     providers: z.array(z.string())
@@ -29,6 +29,22 @@ const CurrentUserSchema = z.object({
     details: CurrentUserDetailsSchema
 });
 export type CurrentUser = z.infer<typeof CurrentUserSchema> & { isAuthenticated: boolean };
+export const unauthenticatedUser: CurrentUser = {
+    isAuthenticated: false,
+
+    userId: '',
+    name: '',
+    isEmailConfirmed: false,
+    isLinked: false,
+    roles: [],
+    sessionLength: 0,
+    remainingSessionTime: 0,
+    details: {
+        kind: 'user',
+        createdAt: new Date(),
+        email: undefined
+    }
+};
 
 const LinkedIdentitySchema = z.object({
     //userId: string,
@@ -135,21 +151,7 @@ class IdentityApi {
             return user;
         } else if (response.status == 401) {
             logAPI('getCurrentUser failed with 401');
-            return {
-                userId: '',
-                name: '',
-                isEmailConfirmed: false,
-                isLinked: false,
-                isAuthenticated: false,
-                roles: [],
-                sessionLength: 0,
-                remainingSessionTime: 0,
-                details: {
-                    kind: 'user',
-                    createdAt: new Date(),
-                    email: undefined
-                }
-            };
+            return unauthenticatedUser;
         } else {
             const error = await fetchError('Failed to getCurrentUser', response);
             logAPI('getCurrentUser failed with error', error);

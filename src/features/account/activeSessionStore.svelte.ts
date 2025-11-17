@@ -1,5 +1,5 @@
 import { getContext, setContext } from 'svelte';
-import { type ActiveSession } from '@lib/api/identity-api';
+import { type ActiveSession, identityApi } from '@lib/api/identity-api';
 import { type ResourceService, ResourceStore } from '@atoms/types/resource.svelte';
 
 export type ActiveSessionService = ResourceService<ActiveSession[]>;
@@ -10,14 +10,20 @@ const contextKey = Symbol('activeSessionStore');
 
 export function setActiveSessionStore(dataService: ActiveSessionService): ActiveSessionStore {
     const store = new ActiveSessionStore(dataService);
-    setContext(contextKey, () => store);
+    setContext(contextKey, store);
     return store;
 }
 
+export function setDefaultActiveSessionStore(): ActiveSessionStore {
+    return setActiveSessionStore({
+        load: () => identityApi.getActiveSessions()
+    });
+}
+
 export function getActiveSessionStore(): ActiveSessionStore {
-    const store = getContext<() => ActiveSessionStore>(contextKey);
+    const store = getContext<ActiveSessionStore>(contextKey);
     if (!store) {
         throw new Error('ActiveSessionStore not found, missing call to setActiveSessionStore');
     }
-    return store();
+    return store;
 }

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import AppContent from '$lib/app/AppContent.svelte';
+    import AppContent from '@lib/app/AppContent.svelte';
     import Game from '@features/game/Game.svelte';
     import { getGameUrls } from '@features/game/game.remote';
 

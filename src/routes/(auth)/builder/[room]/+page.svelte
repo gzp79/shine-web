@@ -1,7 +1,7 @@
 <script lang="ts">
     import { page } from '$app/state';
-    import { builderApi } from '$lib/api/builder-api';
     import { onMount } from 'svelte';
+    import { builderApi } from '@lib/api/builder-api';
     import Button from '@atoms/Button.svelte';
     import Typography from '@atoms/Typography.svelte';
     import InputGroup from '@atoms/inputs/InputGroup.svelte';

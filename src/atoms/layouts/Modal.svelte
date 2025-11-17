@@ -1,7 +1,7 @@
 <script lang="ts" module>
-    import type { Nullable } from '$lib/utils';
     import { type Snippet, onMount } from 'svelte';
     import { twMerge } from 'tailwind-merge';
+    import type { Nullable } from '@lib/utils';
     import Typography from '../Typography.svelte';
     import { Cross } from '../icons/common';
     import type { ElementProps } from '../types';

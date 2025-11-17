@@ -1,6 +1,6 @@
 <script lang="ts">
-    import App from '$lib/app/App.svelte';
-    import AppContent from '$lib/app/AppContent.svelte';
+    import App from '@lib/app/App.svelte';
+    import AppContent from '@lib/app/AppContent.svelte';
     import Button from '@atoms/Button.svelte';
 </script>
 

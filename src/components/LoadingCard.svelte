@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { t } from '$lib/i18n/i18n.svelte';
+    import { t } from '@lib/i18n/i18n.svelte';
     import Typography, { type Variant } from '@atoms/Typography.svelte';
     import { Ball, Dots, Infinite, Ring, Spinner } from '@atoms/icons/animated';
     import type { Size } from '@atoms/types';

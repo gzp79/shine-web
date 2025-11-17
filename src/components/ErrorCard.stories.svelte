@@ -1,7 +1,7 @@
 <script context="module" lang="ts">
-    import { FetchError, InternalError, OtherError, SchemaError } from '$lib/utils';
     import { defineMeta } from '@storybook/addon-svelte-csf';
     import { action } from 'storybook/actions';
+    import { InternalError, OtherError } from '@lib/utils';
     import Typography from '@atoms/Typography.svelte';
     import Button from '@atoms/inputs/Button.svelte';
     import Stack from '@atoms/layouts/Stack.svelte';

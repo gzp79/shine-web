@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { themeStore } from '$lib/theme/theme.svelte';
+    import { themeStore } from '@lib/theme/theme.svelte';
     import { type ActionColor, type ContainerColor } from '@atoms/types';
 
     interface Props {

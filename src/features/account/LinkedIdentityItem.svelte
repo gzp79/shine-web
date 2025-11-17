@@ -1,6 +1,6 @@
 <script lang="ts">
-    import type { LinkedIdentity } from '$lib/api/identity-api';
-    import { t } from '$lib/i18n/i18n.svelte';
+    import type { LinkedIdentity } from '@lib/api/identity-api';
+    import { t } from '@lib/i18n/i18n.svelte';
     import Button from '@atoms/Button.svelte';
     import KeyValueTable from '@atoms/data/PropertyList.svelte';
     import * as social from '@atoms/icons/social';

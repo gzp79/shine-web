@@ -1,5 +1,5 @@
 <script lang="ts" module>
-    import type { Fetch } from '$lib/utils';
+    import type { Fetch } from '@lib/utils';
     import Typography from '@atoms/Typography.svelte';
     import Card from '@atoms/layouts/Card.svelte';
     import Alert from '@components/Alert.svelte';

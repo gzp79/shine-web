@@ -67,6 +67,7 @@
     // Create reactive context for children
     let context = $state<GroupInfo>({
         size,
+        //svelte-ignore state_referenced_locally
         color: effectiveColor,
         vertical,
         variant,

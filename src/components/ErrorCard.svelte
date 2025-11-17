@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { t } from '$lib/i18n/i18n.svelte';
-    import type { AppError } from '$lib/utils';
     import type { Snippet } from 'svelte';
+    import { t } from '@lib/i18n/i18n.svelte';
+    import type { AppError } from '@lib/utils';
     import Typography from '@atoms/Typography.svelte';
     import Box from '@atoms/layouts/Box.svelte';
     import Stack from '@atoms/layouts/Stack.svelte';
@@ -84,7 +84,7 @@
                                     d="M9 5l7 7-7 7"
                                 />
                             </svg>
-                            {$t('common.details') || 'Details'}
+                            {$t('error.details') || 'Details'}
                         </span>
                     </summary>
 

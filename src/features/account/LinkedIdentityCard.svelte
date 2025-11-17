@@ -1,6 +1,6 @@
 <script lang="ts" module>
     import { page } from '$app/state';
-    import { t } from '$lib/i18n/i18n.svelte';
+    import { t } from '@lib/i18n/i18n.svelte';
     import Button from '@atoms/Button.svelte';
     import Stack from '@atoms/Stack.svelte';
     import { Link } from '@atoms/icons/common';

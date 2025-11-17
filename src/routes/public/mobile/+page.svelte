@@ -1,6 +1,6 @@
 <script lang="ts">
-    import AppContent from '$lib/app/AppContent.svelte';
-    import { t } from '$lib/i18n/i18n.svelte';
+    import AppContent from '@lib/app/AppContent.svelte';
+    import { t } from '@lib/i18n/i18n.svelte';
     import GridItem from '@atoms/GridItem.svelte';
     import Stack from '@atoms/Stack.svelte';
     import Typography from '@atoms/Typography.svelte';

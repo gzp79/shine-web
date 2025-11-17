@@ -33,7 +33,7 @@
     <Button endIcon={DropDown} id={`trigger-${id}`} wide={false} {disabled} />
 </InputGroup>
 
-<Popper behavior="click" alignWidth trigger={`#trigger-${id}`} reference={`#ref-${id}`}>
+<Popper behavior="click" alignWidth placement="bottom" trigger={`#trigger-${id}`} reference={`#ref-${id}`}>
     <InputGroup {color} vertical wide {size}>
         {#each items as item, index (item.caption)}
             <Button endIcon={item.icon} onclick={() => (current = index)}>{item.caption}</Button>

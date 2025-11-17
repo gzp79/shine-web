@@ -31,7 +31,7 @@ export function simpleHash(str: string): string {
 }
 
 /// Creates a Svelte context with a unique key based on the provided name.
-/// Similar to svelete's built-in context functions, but getter returns undefined if the context is not set.
+/// Similar to svelte's built-in context functions, but getter returns undefined if the context is not set.
 export function createContext<T>(name: string): [() => T | undefined, (context: T) => void] {
     const key = Symbol(name);
 

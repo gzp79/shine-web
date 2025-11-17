@@ -87,7 +87,9 @@
             role: { table: { disable: true }, ref: { control: false } }
         }
     });
+</script>
 
+<script lang="ts">
     let text = $state('');
 </script>
 

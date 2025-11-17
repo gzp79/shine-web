@@ -1,5 +1,5 @@
 <script>
-    import AppContent from '$lib/app/AppContent.svelte';
+    import AppContent from '@lib/app/AppContent.svelte';
     import Button from '@atoms/Button.svelte';
 </script>
 
