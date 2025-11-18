@@ -1,9 +1,9 @@
 <script lang="ts">
     import type { LinkedIdentity } from '@lib/api/identity-api';
     import { t } from '@lib/i18n/i18n.svelte';
-    import Button from '@atoms/Button.svelte';
-    import KeyValueTable from '@atoms/data/PropertyList.svelte';
+    import PropertyList from '@atoms/data/PropertyList.svelte';
     import * as social from '@atoms/icons/social';
+    import Button from '@atoms/inputs/Button.svelte';
     import Card from '@atoms/layouts/Card.svelte';
     import { getLinkedIdentityStore } from './linkedIdentityStore.svelte';
 
@@ -13,8 +13,7 @@
     const { identity }: Props = $props();
 
     const identityStore = getLinkedIdentityStore();
-
-    const ProviderImage = $derived.by(() => {
+    const providerImage = $derived.by(() => {
         switch (identity.provider) {
             case 'twitter':
                 return social.Twitter;
@@ -36,10 +35,11 @@
 
 <Card width="full">
     {#snippet icon()}
+        {@const ProviderImage = providerImage}
         <ProviderImage />
     {/snippet}
 
-    <KeyValueTable
+    <PropertyList
         size="xs"
         items={[
             {

@@ -7,7 +7,7 @@
     import Stack from '@atoms/layouts/Stack.svelte';
 
     const { Story } = defineMeta({
-        title: 'Atoms/Examples'
+        title: 'Examples'
     });
 </script>
 

@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/sveltekit';
+import { type Theme, themeList } from '@lib/theme/theme.svelte';
 import '../src/app.css';
-import { type Theme, themeList } from '../src/lib/theme/theme.svelte';
-import { i18n } from '../src/translations/i18n';
+import { i18n } from '../src/lib/i18n/i18n';
 import lang from '../src/translations/lang.json';
 
 i18n.loadTranslations('en', '/');
@@ -50,7 +50,9 @@ const preview: Preview = {
                         'Examples'
                     ],
                     'Components',
-                    ['Alert', 'LoadingCard', 'ErrorCard']
+                    ['Alert', 'LoadingCard', 'ErrorCard'],
+                    'Features',
+                    ['Account', ['CurrentUserCard', 'ActiveSessionCard', 'ActiveTokenCard', 'LinkedIdentityCard']]
                 ]
             }
         }

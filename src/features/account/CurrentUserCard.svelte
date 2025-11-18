@@ -20,6 +20,7 @@
 
     // Initialize store and trigger refresh on mount
     const currentUserStore = getCurrentUserStore();
+    currentUserStore.refresh();
 
     const service = $derived(currentUserStore.service);
     const user = $derived(currentUserStore.isAuthenticated ? currentUserStore.content : null);
@@ -101,11 +102,7 @@
     }
 
     $effect(() => {
-        // on mount, refresh user info
-        currentUserStore.refresh();
-    });
-    $effect(() => {
-        // when user changes, reset email status
+        // when user changes, reset email status and close modal
         let _ = currentUserStore.content;
         emailStatus = 'none';
     });

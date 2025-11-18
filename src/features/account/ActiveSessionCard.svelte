@@ -11,7 +11,7 @@
     sessionStore.refresh();
 </script>
 
-<Card caption={$t('account.activeSessions')}>
+<Card width="big" caption={$t('account.activeSessions')}>
     {#if sessionStore.isEmpty}
         <LoadingCard />
     {:else if sessionStore.isError}

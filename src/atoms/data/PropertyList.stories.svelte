@@ -1,13 +1,13 @@
 <script module lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
-    import KeyValueTable, { type DescriptionListItem } from '@atoms/data/PropertyList.svelte';
+    import PropertyList, { type DescriptionListItem } from '@atoms/data/PropertyList.svelte';
     import Button from '@atoms/inputs/Button.svelte';
     import Box from '@atoms/layouts/Box.svelte';
     import Stack from '@atoms/layouts/Stack.svelte';
     import type { Size } from '@atoms/types';
 
     const { Story } = defineMeta({
-        component: KeyValueTable,
+        component: PropertyList,
         title: 'Atoms/Data/PropertyList',
         tags: ['autodocs'],
         args: {
@@ -71,16 +71,16 @@
     {#snippet template(args)}
         <Stack>
             <Box border width="fit" legend="Extra Small (xs)">
-                <KeyValueTable {...args} items={basicItems} size="xs" />
+                <PropertyList {...args} items={basicItems} size="xs" />
             </Box>
             <Box border legend="Small (sm)">
-                <KeyValueTable {...args} items={basicItems} size="sm" />
+                <PropertyList {...args} items={basicItems} size="sm" />
             </Box>
             <Box border legend="Medium (md)">
-                <KeyValueTable {...args} items={basicItems} size="md" />
+                <PropertyList {...args} items={basicItems} size="md" />
             </Box>
             <Box border legend="Large (lg)">
-                <KeyValueTable {...args} items={basicItems} size="lg" />
+                <PropertyList {...args} items={basicItems} size="lg" />
             </Box>
         </Stack>
     {/snippet}
@@ -97,7 +97,7 @@
         {/snippet}
 
         <Box border width="fit">
-            <KeyValueTable
+            <PropertyList
                 {...args}
                 items={[
                     { key: 'Username', value: 'john_doe' },
@@ -113,7 +113,7 @@
 <Story name="With Custom Classes">
     {#snippet template(args)}
         <Box border>
-            <KeyValueTable
+            <PropertyList
                 {...args}
                 items={[
                     { key: 'Name', value: 'John Doe' },
@@ -141,9 +141,11 @@
 
 <Story name="Long Content">
     {#snippet template(args)}
+        {@const { wide, ...otherArgs } = args}
         <Box border width="small">
-            <KeyValueTable
-                {...args}
+            <PropertyList
+                wide
+                {...otherArgs}
                 items={[
                     {
                         key: 'Short key',
@@ -166,7 +168,7 @@
 <Story name="Null Filtering">
     {#snippet template(args)}
         <Box border>
-            <KeyValueTable
+            <PropertyList
                 {...args}
                 items={[
                     null,
@@ -185,8 +187,8 @@
     {#snippet template(args)}
         {#snippet innerTable()}
             <Box border>
-                <KeyValueTable
-                    size="lg"
+                <PropertyList
+                    size="xs"
                     items={[
                         { key: 'Nested 1', value: 'Value A' },
                         { key: 'Nested 2', value: 'Value B' },
@@ -201,7 +203,7 @@
         {/snippet}
 
         <Box border>
-            <KeyValueTable
+            <PropertyList
                 {...args}
                 items={[
                     { key: 'Simple', value: 'Top level value' },
@@ -230,7 +232,7 @@
 
         <Box border width="small">
             <h3 class="mb-4 text-lg font-semibold">User Profile</h3>
-            <KeyValueTable
+            <PropertyList
                 {...args}
                 size="sm"
                 items={[

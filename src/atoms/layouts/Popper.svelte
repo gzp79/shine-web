@@ -6,7 +6,7 @@
     import type { Nullable } from '@lib/utils';
     import { portal } from '../utilities/Portal.svelte';
 
-    export type Behavior = 'click' | 'toggle' | 'hover' | 'manual';
+    export type Behavior = 'click' | 'hover' | 'manual';
     export type Placement =
         | 'top'
         | 'top-start'
@@ -20,6 +20,77 @@
         | 'right'
         | 'right-start'
         | 'right-end';
+
+    // Global registry for managing multiple popper instances per layer
+    class PopperRegistry {
+        private layers = new Map<string, Set<{ hide: () => void; isOpen: () => boolean }>>();
+        private escapeListenerAttached = false;
+
+        register(layer: string, popper: { hide: () => void; isOpen: () => boolean }) {
+            if (!this.layers.has(layer)) {
+                this.layers.set(layer, new Set());
+            }
+            this.layers.get(layer)!.add(popper);
+            this.attachEscapeListener();
+        }
+
+        unregister(layer: string, popper: { hide: () => void; isOpen: () => boolean }) {
+            const layerPoppers = this.layers.get(layer);
+            if (layerPoppers) {
+                layerPoppers.delete(popper);
+                if (layerPoppers.size === 0) {
+                    this.layers.delete(layer);
+                }
+            }
+            if (this.layers.size === 0) {
+                this.detachEscapeListener();
+            }
+        }
+
+        closeOthers(layer: string, currentPopper: { hide: () => void; isOpen: () => boolean }) {
+            const layerPoppers = this.layers.get(layer);
+            if (layerPoppers) {
+                layerPoppers.forEach((popper) => {
+                    if (popper !== currentPopper && popper.isOpen()) {
+                        popper.hide();
+                    }
+                });
+            }
+        }
+
+        private handleEscape = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                // Find the last opened popper across all layers and close only that one
+                type PopperInstance = { hide: () => void; isOpen: () => boolean };
+                let lastOpenPopper: PopperInstance | null = null;
+
+                for (const poppers of this.layers.values()) {
+                    const openPoppers = Array.from(poppers).filter((p) => p.isOpen());
+                    if (openPoppers.length > 0) {
+                        lastOpenPopper = openPoppers[openPoppers.length - 1];
+                    }
+                }
+
+                lastOpenPopper?.hide();
+            }
+        };
+
+        private attachEscapeListener() {
+            if (!this.escapeListenerAttached) {
+                window.addEventListener('keydown', this.handleEscape);
+                this.escapeListenerAttached = true;
+            }
+        }
+
+        private detachEscapeListener() {
+            if (this.escapeListenerAttached) {
+                window.removeEventListener('keydown', this.handleEscape);
+                this.escapeListenerAttached = false;
+            }
+        }
+    }
+
+    const popperRegistry = new PopperRegistry();
 </script>
 
 <script lang="ts">
@@ -39,9 +110,15 @@
          * @readonly - Not reactive: evaluated once on mount, do not bind dynamically.
          */
         layer?: string;
-
-        /** What should trigger the popper to open. */
+        /**
+         * What should trigger the popper to open.
+         * - 'click': Click to open/close, closes other poppers in the same layer when opening
+         * - 'hover': Open on mouseenter, close on mouseleave
+         * - 'manual': Programmatic control only via the open prop
+         * @readonly - Not reactive: evaluated once on mount, do not bind dynamically.
+         */
         behavior?: Behavior;
+
         /** Whether to include content clicks in the "safe zone". */
         includeContent?: boolean;
         /** Placement of the popper relative to the reference element. */
@@ -61,7 +138,7 @@
         trigger: triggerProp,
         reference: referenceProp,
         layer: layerProp = '#popper',
-        behavior = 'click',
+        behavior: behaviorProp = 'click',
         includeContent = false,
         placement = 'top',
         alignWidth = false,
@@ -73,6 +150,7 @@
     const trigger = triggerProp;
     const reference = referenceProp;
     const layer = layerProp;
+    const behavior = behaviorProp;
     if (import.meta.env.DEV) {
         $effect(() => {
             if (triggerProp !== trigger) {
@@ -84,12 +162,14 @@
             if (layerProp !== layer) {
                 console.warn('Popper: layer prop changed after mount - this has no effect');
             }
+            if (behaviorProp !== behavior) {
+                console.warn('Popper: behavior prop changed after mount - this has no effect');
+            }
         });
     }
 
     // Derived behavior flags
     const isClick = $derived(behavior === 'click');
-    const isToggle = $derived(behavior === 'toggle');
     const isHover = $derived(behavior === 'hover');
     //const isManual = $derived(behavior === 'manual');
 
@@ -106,6 +186,9 @@
 
     // Actions
     const show = () => {
+        if (isClick) {
+            popperRegistry.closeOthers(layer, { hide, isOpen: () => open });
+        }
         open = true;
     };
 
@@ -117,12 +200,6 @@
         event.stopPropagation();
         if (open) hide();
         else show();
-    };
-
-    const cancelOnEscape = (event: KeyboardEvent) => {
-        if (event.key === 'Escape') {
-            hide();
-        }
     };
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -172,11 +249,12 @@
     };
 
     onMount(() => {
+        // Register this popper instance
+        popperRegistry.register(layer, { hide, isOpen: () => open });
+
         /* eslint-disable-next-line @typescript-eslint/no-explicit-any */
         const events: [boolean, string, any][] = [
-            [isToggle, 'click', toggle],
             [isClick, 'click', toggle],
-            [isClick, 'keydown', cancelOnEscape],
             [isHover, 'mouseenter', show],
             [isHover, 'mouseleave', handleMouseLeave]
         ];
@@ -213,6 +291,9 @@
         });
 
         return () => {
+            // Unregister this popper instance
+            popperRegistry.unregister(layer, { hide, isOpen: () => open });
+
             // Detach event listeners from the trigger elements
             triggerEls.forEach((element: HTMLElement) => {
                 if (element) {

@@ -9,13 +9,12 @@
     const { Story } = defineMeta({
         component: Modal,
         title: 'Atoms/Layouts/Modal',
-        tags: ['autodocs'],
         args: {
             caption: 'Caption',
             closeButton: true,
-            closeOnClickOutside: false,
-            closeOnEscape: false,
-            width: 'big'
+            closeOnClickOutside: true,
+            closeOnEscape: true,
+            width: 'fit'
         },
         argTypes: {
             caption: {
@@ -76,7 +75,6 @@
     let open0 = $state(false);
     let open1 = $state(false);
     let open2 = $state(false);
-    let open3 = $state(false);
 </script>
 
 <Story name="Default">
@@ -103,28 +101,43 @@
     {/snippet}
 </Story>
 
-<Story name="Nested Modals">
+<Story name="Multiple Modals">
     {#snippet template(args)}
-        <Typography>
-            Nested modals work by opening a second modal while the first is still open. Each modal has its own z-index
-            layer.
-        </Typography>
-        <Typography>Use separate isOpen state for each modal to control them independently.</Typography>
-        <Button onclick={() => (open0 = true)}>Open Modal</Button>
+        {@const { caption, closeOnEscape, closeOnClickOutside, ...otherArgs } = args}
+        <Button onclick={() => (open0 = true)}>Open First</Button>
+        <Button onclick={() => (open1 = true)}>Open Second</Button>
+        <Button onclick={() => (open2 = true)}>Open Third</Button>
 
-        <Modal {...args} bind:open={open0} class="top-5">
+        <Modal caption="First Modal" closeOnEscape={true} closeOnClickOutside={true} {...otherArgs} bind:open={open0}>
             <Stack spacing={4}>
                 <Typography class="h-32">This is the first modal</Typography>
-                <Button variant="outline" onclick={() => (open0 = !open0)}>Toggle first</Button>
-                <Button variant="outline" onclick={() => (open1 = !open1)}>Toggle second</Button>
+                <Typography>Closes on escape.</Typography>
+                <Typography>Closes on click outside.</Typography>
+                <Button variant="outline" onclick={() => (open0 = !open0)}>Toggle First</Button>
+                <Button variant="outline" onclick={() => (open1 = !open1)}>Toggle Second</Button>
+                <Button variant="outline" onclick={() => (open2 = !open2)}>Toggle Third</Button>
             </Stack>
         </Modal>
 
-        <Modal {...args} bind:open={open1}>
+        <Modal caption="Second Modal" closeOnEscape={true} closeOnClickOutside={false} {...otherArgs} bind:open={open1}>
             <Stack spacing={4}>
                 <Typography>This is the second modal.</Typography>
-                <Button variant="outline" onclick={() => (open0 = !open0)}>Toggle first</Button>
-                <Button variant="outline" onclick={() => (open1 = !open1)}>Toggle second</Button>
+                <Typography>Closes on escape</Typography>
+                <Typography>Does not close on click outside</Typography>
+                <Button variant="outline" onclick={() => (open0 = !open0)}>Toggle First</Button>
+                <Button variant="outline" onclick={() => (open1 = !open1)}>Toggle Second</Button>
+                <Button variant="outline" onclick={() => (open2 = !open2)}>Toggle Third</Button>
+            </Stack>
+        </Modal>
+
+        <Modal caption="Third Modal" closeOnEscape={false} closeOnClickOutside={false} {...otherArgs} bind:open={open2}>
+            <Stack spacing={4}>
+                <Typography>This is the third modal.</Typography>
+                <Typography>Does not close on escape</Typography>
+                <Typography>Does not close on click outside</Typography>
+                <Button variant="outline" onclick={() => (open0 = !open0)}>Toggle First</Button>
+                <Button variant="outline" onclick={() => (open1 = !open1)}>Toggle Second</Button>
+                <Button variant="outline" onclick={() => (open2 = !open2)}>Toggle Third</Button>
             </Stack>
         </Modal>
     {/snippet}

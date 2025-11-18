@@ -46,7 +46,7 @@
     }
 </script>
 
-<script>
+<script lang="ts">
     interface Props {
         target?: string | HTMLElement;
         children: Snippet;

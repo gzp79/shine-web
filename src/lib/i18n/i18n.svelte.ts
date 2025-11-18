@@ -3,7 +3,7 @@ import { browser } from '$app/environment';
 import { type Cookies } from '@sveltejs/kit';
 import { logI18n } from '@lib/loggers';
 import { type Nullable, getCookie, setCookie } from '@lib/utils';
-import { i18n } from '../../translations/i18n';
+import { i18n } from './i18n';
 
 /* cspell: enable */
 

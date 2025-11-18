@@ -13,7 +13,7 @@
     tokenStore.refresh();
 </script>
 
-<Card caption={$t('account.activeTokens')}>
+<Card width="big" caption={$t('account.activeTokens')}>
     {#if tokenStore.isEmpty}
         <LoadingCard />
     {:else if tokenStore.isError}

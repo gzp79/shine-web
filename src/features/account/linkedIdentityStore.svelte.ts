@@ -1,5 +1,5 @@
 import { getContext, setContext } from 'svelte';
-import { type LinkedIdentity } from '@lib/api/identity-api';
+import { type LinkedIdentity, identityApi } from '@lib/api/identity-api';
 import { type ResourceService, ResourceStore } from '@atoms/types/resource.svelte';
 
 export interface LinkedIdentityService extends ResourceService<LinkedIdentity[]> {
@@ -25,14 +25,22 @@ const contextKey = Symbol('linkedIdentityStore');
 
 export function setLinkedIdentityStore(dataService: LinkedIdentityService): LinkedIdentityStore {
     const store = new LinkedIdentityStore(dataService);
-    setContext(contextKey, () => store);
+    setContext(contextKey, store);
     return store;
 }
 
+export function setDefaultLinkedIdentityStore(): LinkedIdentityStore {
+    return setLinkedIdentityStore({
+        load: () => identityApi.getLinkedIdentities(),
+        unlink: (provider: string, providerUserId: string) => identityApi.unlinkIdentity(provider, providerUserId),
+        getLinkUrl: (provider: string, redirect: string) => identityApi.getExternalLinkUrl(provider, redirect)
+    });
+}
+
 export function getLinkedIdentityStore(): LinkedIdentityStore {
-    const store = getContext<() => LinkedIdentityStore>(contextKey);
+    const store = getContext<LinkedIdentityStore>(contextKey);
     if (!store) {
-        throw new Error('ActiveTokenStore not found, missing call to setActiveTokenStore');
+        throw new Error('LinkedIdentityStore not found, missing call to setLinkedIdentityStore');
     }
-    return store();
+    return store;
 }

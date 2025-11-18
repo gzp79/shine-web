@@ -124,7 +124,7 @@
             width of the container
         </Typography>
         <Typography variant="text">
-            {lorem}
+            {lorem.long}
         </Typography>
     </Stack>
 </Story>

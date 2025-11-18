@@ -1,7 +1,7 @@
 /* cspell: disable */
 import { dev } from '$app/environment';
 import I18N, { type Config, type Modifier, type Parser } from 'sveltekit-i18n';
-import lang from '../translations/lang.json';
+import lang from '../../translations/lang.json';
 
 /* cspell: enable */
 
@@ -14,7 +14,7 @@ function createLoader(path: string, key: string, routes?: RegExp[]) {
             locale: locale,
             key: key,
             routes: routes ?? [`/${key}`],
-            loader: async () => (await import(`./${locale}/${path}.json`)).default
+            loader: async () => (await import(`../../translations/${locale}/${path}.json`)).default
         };
     });
 }

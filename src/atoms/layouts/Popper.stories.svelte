@@ -24,18 +24,17 @@
     const { Story } = defineMeta({
         component: Popper,
         title: 'Atoms/Layouts/Popper',
-        tags: ['autodocs'],
         args: {
             behavior: 'click',
             includeContent: false,
-            placement: 'top',
+            placement: 'bottom',
             alignWidth: false,
-            offset: 4
+            offset: 0
         },
         argTypes: {
             behavior: {
                 control: 'select',
-                options: ['click', 'toggle', 'hover', 'manual'] satisfies Behavior[],
+                options: ['click', 'hover', 'manual'] satisfies Behavior[],
                 description: 'What should trigger the popper to open',
                 table: {
                     type: { summary: 'Behavior' },
@@ -89,8 +88,6 @@
         switch (behavior) {
             case 'click':
                 return 'Click Behavior';
-            case 'toggle':
-                return 'Toggle Behavior';
             case 'hover':
                 return 'Hover Behavior';
             case 'manual':
@@ -103,67 +100,69 @@
 
 <Story name="Default">
     {#snippet template(args)}
-        {@const { children, behavior, ...otherArgs } = args}
-        <Box border width="full" overflow="auto" class="min-h-[300px] max-h-[300px]">
-            <Stack align="center">
-                <div class="h-[400px] flex items-start">
-                    <Typography>↓ Scroll down to the button...</Typography>
-                </div>
+        {#key args.behavior}
+            {@const { children, behavior, ...otherArgs } = args}
+            <Box border width="full" overflow="auto" class="min-h-[300px] max-h-[300px]">
+                <Stack align="center">
+                    <div class="h-[400px] flex items-start">
+                        <Typography>↓ Scroll down to the button...</Typography>
+                    </div>
 
-                <Box border>
-                    {#key behavior}
-                        <Button onclick={() => (manualOpen = true)}>{behaviorToTitle(behavior)}</Button>
-                        <Popper {behavior} bind:open={manualOpen} {...otherArgs}>
-                            <Box border shadow>
-                                <Typography variant="h1">Popper content</Typography>
-                                <Typography>This popper opens on {behavior}.</Typography>
-                                <Typography>Click outside to close.</Typography>
-                                <Typography variant="footnote">Try scrolling!</Typography>
-                                {#if behavior === 'manual'}
-                                    <Button onclick={() => (manualOpen = false)}>Close</Button>
-                                {/if}
-                            </Box>
-                        </Popper>
-                    {/key}
-                </Box>
+                    <Box border>
+                        {#key behavior}
+                            <Button onclick={() => (manualOpen = true)}>{behaviorToTitle(behavior)}</Button>
+                            <Popper {behavior} bind:open={manualOpen} {...otherArgs}>
+                                <Box border shadow>
+                                    <Typography variant="h1">Popper content</Typography>
+                                    <Typography>This popper opens on {behavior}.</Typography>
+                                    <Typography>Click outside to close.</Typography>
+                                    <Typography variant="footnote">Try scrolling!</Typography>
+                                    {#if behavior === 'manual'}
+                                        <Button onclick={() => (manualOpen = false)}>Close</Button>
+                                    {/if}
+                                </Box>
+                            </Popper>
+                        {/key}
+                    </Box>
 
-                <div class="h-[400px] flex items-end">
-                    <Typography>↑ End of scroll area</Typography>
-                </div>
-            </Stack>
-        </Box>
+                    <div class="h-[400px] flex items-end">
+                        <Typography>↑ End of scroll area</Typography>
+                    </div>
+                </Stack>
+            </Box>
+        {/key}
     {/snippet}
 </Story>
 
-<!-- <Story name="Dropdown Menu">
+<Story name="Multiple Poppers">
     {#snippet template(args)}
-        {@const { trigger, reference, ...otherArgs } = args}
-        <div class="h-[400px] overflow-auto border-2 border-dashed border-gray-300 p-4">
-            <div class="h-[100px] flex items-center justify-center bg-gray-50">
-                <p class="text-sm text-gray-500">Scroll to see behavior</p>
-            </div>
+        {#key args.behavior}
+            {@const { children, ...otherArgs } = args}
+            <Stack align="center" gap={4}>
+                <div class="flex gap-8 items-center justify-center">
+                    <Box border>
+                        <Button>First Popper</Button>
+                        <Popper behavior="click" placement="top" {...otherArgs}>
+                            <Box border shadow>
+                                <Typography variant="h3">First Popper</Typography>
+                                <Typography>This is the first popper content.</Typography>
+                            </Box>
+                        </Popper>
+                    </Box>
 
-            <Box border class="my-4">
-                <InputGroup id="dropDownMenu">
-                    <Button>Actions</Button>
-                    <Button id="dropDownMenuTrigger" startIcon={icons.DropDown} />
-                </InputGroup>
-                <Popper
-                    alignWidth
-                    display="flex flex-col rounded-lg border bg-base-100 shadow-lg"
-                    trigger="#dropDownMenuTrigger"
-                    reference="#dropDownMenu"
-                    {...otherArgs}
-                >
-                    <InputGroup vertical>
-                        <Button wide color="info">Edit Profile</Button>
-                        <Button wide color="warning">Settings</Button>
-                        <Button wide color="danger">Logout</Button>
-                    </InputGroup>
-                </Popper>
-            </Box>
+                    <Box border>
+                        <Button>Second Popper</Button>
+                        <Popper behavior="click" placement="bottom" {...otherArgs}>
+                            <Box border shadow>
+                                <Typography variant="h3">Second Popper</Typography>
+                                <Typography>This is the second popper content.</Typography>
+                            </Box>
+                        </Popper>
+                    </Box>
+                </div>
 
-            <div class="h-[100px]"></div>
-        </div>
+                <div class="h-[200px]"></div>
+            </Stack>
+        {/key}
     {/snippet}
-</Story> -->
+</Story>
