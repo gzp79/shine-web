@@ -4,11 +4,11 @@
     import { type Snippet, onMount } from 'svelte';
     import { SvelteURLSearchParams } from 'svelte/reactivity';
     import { identityApi } from '@lib/api/identity-api';
-    import App from '@lib/app/App.svelte';
-    import AppContent from '@lib/app/AppContent.svelte';
+    import App from '@components/App.svelte';
+    import AppContent from '@components/AppContent.svelte';
     import { t } from '@lib/i18n/i18n.svelte';
     import { logUser } from '@lib/loggers';
-    import Button from '@atoms/Button.svelte';
+    import Button from '@atoms/inputs/Button.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';
     import LoadingCard from '@components/LoadingCard.svelte';
     import { setCurrentUserStore } from '@features/account/currentUserStore.svelte';

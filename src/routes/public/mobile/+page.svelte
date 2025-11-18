@@ -1,11 +1,11 @@
 <script lang="ts">
-    import AppContent from '@lib/app/AppContent.svelte';
+    import AppContent from '@components/AppContent.svelte';
     import { t } from '@lib/i18n/i18n.svelte';
     import GridItem from '@atoms/GridItem.svelte';
-    import Stack from '@atoms/Stack.svelte';
     import Typography from '@atoms/Typography.svelte';
     import ImageButton from '@atoms/inputs/ImageButton.svelte';
     import Grid from '@atoms/layouts/Grid.svelte';
+    import Stack from '@atoms/layouts/Stack.svelte';
 </script>
 
 <AppContent class="flex items-center justify-center h-full">

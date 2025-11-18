@@ -2,7 +2,7 @@
     import { defineMeta } from '@storybook/addon-svelte-csf';
     import { action } from 'storybook/actions';
     import Typography from '@atoms/Typography.svelte';
-    import { Check } from '@atoms/icons/common';
+    import { Check, Hamburger } from '@atoms/icons/common';
     import { Google } from '@atoms/icons/social';
     import ImageButton from '@atoms/inputs/ImageButton.svelte';
     import InputGroup from '@atoms/inputs/InputGroup.svelte';
@@ -134,7 +134,7 @@
                     <ImageButton {...otherArgs} {size} src={pngImage} />
                     <ImageButton {...otherArgs} {size} src={svgImage} />
                     <ImageButton {...otherArgs} {size} src={Google} />
-                    <ImageButton {...otherArgs} {size} src={Check} />
+                    <ImageButton {...otherArgs} {size} src={Hamburger} />
                 </Stack>
             {/each}
         </Stack>

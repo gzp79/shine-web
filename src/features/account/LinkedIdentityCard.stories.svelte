@@ -48,11 +48,11 @@
         args: {
             service: mockDataService,
             providers: availableProviders
-        } as any,
+        },
         argTypes: {
-            service: { control: false },
-            providers: { control: false }
-        } as any,
+            service: { table: { disable: true } },
+            providers: { table: { disable: true } }
+        },
         decorators: [
             ((story: any, context: any) => {
                 const args = context.args;

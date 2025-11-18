@@ -2,29 +2,30 @@
     import { page } from '$app/state';
     import { config } from '@config';
     import { identityApi } from '@lib/api/identity-api';
-    import App from '@lib/app/App.svelte';
-    import AppContent from '@lib/app/AppContent.svelte';
+    import App from '@components/App.svelte';
+    import AppContent from '@components/AppContent.svelte';
     import { t } from '@lib/i18n/i18n.svelte';
     import { logUser } from '@lib/loggers';
-    import Box from '@atoms/Box.svelte';
-    import Button from '@atoms/Button.svelte';
-    import Stack from '@atoms/Stack.svelte';
-    import Toggle from '@atoms/Toggle.svelte';
     import Typography from '@atoms/Typography.svelte';
     import Logo from '@atoms/icons/Logo.svelte';
     import { Dots } from '@atoms/icons/animated';
+    import Button from '@atoms/inputs/Button.svelte';
+    import Toggle from '@atoms/inputs/Toggle.svelte';
+    import ValidatedTextArea from '@atoms/inputs/ValidatedTextArea.svelte';
+    import Box from '@atoms/layouts/Box.svelte';
     import Modal from '@atoms/layouts/Modal.svelte';
+    import Stack from '@atoms/layouts/Stack.svelte';
     import { afterBFCacheRestore } from '@atoms/types/bfcache';
     import { EmailSchema } from '@atoms/types/validator';
     import ErrorCard from '@components/ErrorCard.svelte';
     import Turnstile from '@components/Turnstile.svelte';
-    import ValidatedTextArea from '@components/ValidatedTextArea.svelte';
     import { setDefaultCurrentUserStore } from '@features/account/currentUserStore.svelte';
     import { getExternalLoginProviders, getSanitizedReturnUrl } from '@features/account/providers.remote';
     import { providerIcon } from '@features/account/providers.svelte';
     import { getAssetUrls } from '@features/assets/assets.remote';
 
     let currentUserStore = setDefaultCurrentUserStore();
+    currentUserStore.refresh();
 
     let prompt = $derived(page.url.searchParams.get('prompt'));
     let returnUrl = $derived.by(() => {
@@ -110,9 +111,6 @@
         }
     });
 
-    $effect(() => {
-        currentUserStore.refresh();
-    });
     afterBFCacheRestore(() => {
         currentUserStore.refresh({ force: true });
     });

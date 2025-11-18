@@ -53,10 +53,10 @@
         title: 'Features/Account/ActiveSessionCard',
         args: {
             service: mockDataService
-        } as any,
+        },
         argTypes: {
-            service: { control: false }
-        } as any,
+            service: { table: { disable: true } }
+        },
         decorators: [
             ((story: any, context: any) => {
                 const args = context.args;

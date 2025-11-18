@@ -39,9 +39,9 @@
         title: 'Features/Account/CurrentUserCard',
         args: {
             service: mockDataService
-        } as any,
+        },
         argTypes: {
-            service: { control: false }
+            service: { table: { disable: true } }
         },
         decorators: [
             ((story: any, context: any) => {

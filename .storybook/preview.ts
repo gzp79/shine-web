@@ -50,7 +50,7 @@ const preview: Preview = {
                         'Examples'
                     ],
                     'Components',
-                    ['Alert', 'LoadingCard', 'ErrorCard'],
+                    ['App', 'Alert', 'LoadingCard', 'ErrorCard'],
                     'Features',
                     ['Account', ['CurrentUserCard', 'ActiveSessionCard', 'ActiveTokenCard', 'LinkedIdentityCard']]
                 ]

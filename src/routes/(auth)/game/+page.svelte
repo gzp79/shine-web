@@ -1,6 +1,6 @@
 <script>
-    import AppContent from '@lib/app/AppContent.svelte';
-    import Button from '@atoms/Button.svelte';
+    import AppContent from '@components/AppContent.svelte';
+    import Button from '@atoms/inputs/Button.svelte';
 </script>
 
 <AppContent class="flex flex-col items-center justify-center">

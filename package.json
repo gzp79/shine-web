@@ -27,7 +27,7 @@
         "test:unit": "vitest",
         "mkcert": "cd certificates && mkcert create-ca && mkcert create-cert --domains local.scytta.com",
         "storybook": "storybook dev -p 6006",
-        "build-storybook": "storybook build"
+        "storybook:build": "storybook build"
     },
     "dependencies": {
         "@floating-ui/dom": "^1.7.4",

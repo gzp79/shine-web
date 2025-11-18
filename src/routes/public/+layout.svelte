@@ -1,6 +1,6 @@
 <script lang="ts">
     import { type Snippet } from 'svelte';
-    import App from '@lib/app/App.svelte';
+    import App from '@components/App.svelte';
 
     interface Props {
         children: Snippet;

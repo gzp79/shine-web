@@ -1,6 +1,7 @@
 <script lang="ts">
-    import Button from '@atoms/Button.svelte';
     import * as flags from '@atoms/icons/flags';
+    import Button from '@atoms/inputs/Button.svelte';
+    import ImageButton from '@atoms/inputs/ImageButton.svelte';
     import InputGroup from '@atoms/inputs/InputGroup.svelte';
     import Popper from '@atoms/layouts/Popper.svelte';
     import { languageStore, t } from './i18n.svelte';
@@ -20,10 +21,10 @@
     });
 </script>
 
-<Button variant="ghost" id={`lang-trigger-${id}`} endIcon={items[current].icon} />
+<ImageButton size="xs" variant="ghost" id={`lang-trigger-${id}`} src={items[current].icon} />
 <Popper
     behavior="click"
-    alignWidth
+    placement="left-end"
     display="flex flex-col rounded-lg border max-h-96 overflow-y-auto"
     trigger={`#lang-trigger-${id}`}
 >

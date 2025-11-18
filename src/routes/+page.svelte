@@ -1,21 +1,21 @@
 <script lang="ts">
-    import App from '@lib/app/App.svelte';
-    import AppContent from '@lib/app/AppContent.svelte';
-    import Button from '@atoms/Button.svelte';
+    import LangSwitch from '@lib/i18n/LangSwitch.svelte';
+    import ThemeSwitch from '@lib/theme/ThemeSwitch.svelte';
+    import Button from '@atoms/inputs/Button.svelte';
+    import InputGroup from '@atoms/inputs/InputGroup.svelte';
+    import App from '@components/App.svelte';
+    import AppContent from '@components/AppContent.svelte';
+    import AppToolbar from '@components/AppToolbar.svelte';
 </script>
 
 <App>
-    <AppContent class="flex items-center justify-center">
+    <AppToolbar>
+        <InputGroup size="sm" vertical>
+            <LangSwitch />
+            <ThemeSwitch />
+        </InputGroup>
+    </AppToolbar>
+    <AppContent layout="centered">
         <Button href="/game" preload="code" color="secondary" size="lg">Play</Button>
-        <Button
-            href="/design"
-            preload="disable"
-            variant="outline"
-            color="surface"
-            size="xs"
-            class="absolute bottom-4 right-4"
-        >
-            Design
-        </Button>
     </AppContent>
 </App>

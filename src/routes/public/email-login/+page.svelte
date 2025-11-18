@@ -1,5 +1,5 @@
 <script lang="ts">
-    import AppContent from '@lib/app/AppContent.svelte';
+    import AppContent from '@components/AppContent.svelte';
     import { t } from '@lib/i18n/i18n.svelte';
     import Typography from '@atoms/Typography.svelte';
     import { Email } from '@atoms/icons/social';

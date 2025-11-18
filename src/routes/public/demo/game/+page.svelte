@@ -1,7 +1,7 @@
 <script lang="ts">
-    import Box from '@atoms/Box.svelte';
-    import Button from '@atoms/Button.svelte';
-    import Stack from '@atoms/Stack.svelte';
+    import Button from '@atoms/inputs/Button.svelte';
+    import Box from '@atoms/layouts/Box.svelte';
+    import Stack from '@atoms/layouts/Stack.svelte';
     import Game from '@features/game/Game.svelte';
     import { getGameUrls } from '@features/game/game.remote';
     import { Select, settingsStore } from '../../_components';
