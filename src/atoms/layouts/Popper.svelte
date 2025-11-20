@@ -2,7 +2,7 @@
     import type { Middleware } from '@floating-ui/dom';
     import * as floatingDom from '@floating-ui/dom';
     import { type Snippet, onMount } from 'svelte';
-    import { twMerge } from 'tailwind-merge';
+    import { fade } from 'svelte/transition';
     import type { Nullable } from '@lib/utils';
     import { portal } from '../utilities/Portal.svelte';
 
@@ -20,6 +20,7 @@
         | 'right'
         | 'right-start'
         | 'right-end';
+    export type Animation = 'fade' | 'none';
 
     // Global registry for managing multiple popper instances per layer
     class PopperRegistry {
@@ -127,6 +128,8 @@
         alignWidth?: boolean;
         /** Offset distance from the reference element */
         offset?: number;
+        /** Animation for popper open/close */
+        animate?: Animation;
 
         /** In/Out state indicating whether the popper is open */
         open?: boolean;
@@ -143,6 +146,7 @@
         placement = 'top',
         alignWidth = false,
         offset = 4,
+        animate = 'fade',
         open = $bindable(false),
         children
     }: Props = $props();
@@ -176,13 +180,24 @@
     // State variables
     let triggerEls: HTMLElement[] = [];
     let referenceEl: Nullable<HTMLElement> = null;
+    // svelte-ignore non_reactive_update - bound at mount time
     let contentEl: HTMLElement = null!;
     let popperLocator: HTMLElement = null!;
+    let showLocator = $state(false);
     let autoUpdateCleanup: null | (() => void) = null;
     let width = $state(0);
 
-    const divClass = $derived(twMerge('fixed left-0 top-0 z-40', !open ? 'hidden' : 'block'));
     const divStyle = $derived(alignWidth ? `min-width: ${width}px;` : '');
+    const popperTransition = (node: Element, params: { animate: Animation }) => {
+        if (params.animate === 'fade') {
+            return fade(node, { duration: 250 });
+        }
+
+        return {
+            duration: 0,
+            css: () => ''
+        };
+    };
 
     // Actions
     const show = () => {
@@ -219,6 +234,32 @@
         }
     };
 
+    const isPartiallyClipped = (el: HTMLElement): boolean => {
+        if (!el) return false;
+        const refRect = el.getBoundingClientRect();
+        let ancestor = el.parentElement;
+        while (ancestor && ancestor !== document.body && ancestor !== document.documentElement) {
+            const style = getComputedStyle(ancestor);
+            if (
+                ['hidden', 'clip', 'scroll', 'auto'].includes(style.overflow) ||
+                ['hidden', 'clip', 'scroll', 'auto'].includes(style.overflowX) ||
+                ['hidden', 'clip', 'scroll', 'auto'].includes(style.overflowY)
+            ) {
+                const ancestorRect = ancestor.getBoundingClientRect();
+                if (
+                    refRect.left < ancestorRect.left ||
+                    refRect.right > ancestorRect.right ||
+                    refRect.top < ancestorRect.top ||
+                    refRect.bottom > ancestorRect.bottom
+                ) {
+                    return true;
+                }
+            }
+            ancestor = ancestor.parentElement;
+        }
+        return false;
+    };
+
     const updatePosition = async () => {
         if (referenceEl) {
             width = referenceEl.getBoundingClientRect().width;
@@ -227,7 +268,7 @@
                 floatingDom.offset(offset),
                 floatingDom.flip(),
                 floatingDom.shift({ padding: 5 }),
-                floatingDom.hide()
+                floatingDom.hide({ strategy: 'referenceHidden' })
             ];
 
             const { x, y, strategy, middlewareData } = await floatingDom.computePosition(referenceEl, contentEl, {
@@ -242,7 +283,7 @@
 
             // Hide if reference is hidden, escaped, or partially clipped
             const hideData = middlewareData.hide;
-            if (hideData?.referenceHidden || hideData?.escaped) {
+            if (hideData?.referenceHidden || hideData?.escaped || isPartiallyClipped(referenceEl)) {
                 hide();
             }
         }
@@ -290,6 +331,9 @@
             }
         });
 
+        // to avoid css issues once the locator is used, we can remove it from the dom
+        showLocator = false;
+
         return () => {
             // Unregister this popper instance
             popperRegistry.unregister(layer, { hide, isOpen: () => open });
@@ -327,7 +371,17 @@
     });
 </script>
 
-<div class="hidden" bind:this={popperLocator}></div>
-<div use:portal={layer} bind:this={contentEl} class={divClass} style={divStyle}>
-    {@render children()}
-</div>
+{#if showLocator}
+    <div data-test="popper-locator" class="hidden" bind:this={popperLocator}></div>
+{/if}
+{#if open}
+    <div
+        use:portal={layer}
+        bind:this={contentEl}
+        class="fixed left-0 top-0 z-40"
+        style={divStyle}
+        transition:popperTransition={{ animate }}
+    >
+        {@render children()}
+    </div>
+{/if}

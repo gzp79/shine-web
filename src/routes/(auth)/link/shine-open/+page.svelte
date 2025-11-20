@@ -1,7 +1,7 @@
 <script lang="ts">
     import { identityApi } from '@lib/api/identity-api';
-    import AppContent from '@components/AppContent.svelte';
     import Button from '@atoms/inputs/Button.svelte';
+    import AppContent from '@components/AppContent.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';
     import LoadingCard from '@components/LoadingCard.svelte';
 

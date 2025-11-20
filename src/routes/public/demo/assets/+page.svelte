@@ -1,7 +1,7 @@
 <script lang="ts">
+    import Typography from '@atoms/Typography.svelte';
     import App from '@components/App.svelte';
     import AppContent from '@components/AppContent.svelte';
-    import Typography from '@atoms/Typography.svelte';
     import { getAssetUrl } from '@features/assets/assets.remote';
 
     let assetKey = $state('loginBackground');

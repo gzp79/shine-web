@@ -42,12 +42,7 @@
 /> -->
 
 <ImageButton size="xs" variant="ghost" id={`theme-trigger-${id}`} src={icon} />
-<Popper
-    behavior="click"
-    placement="left-end"
-    display="flex flex-col rounded-lg border max-h-96 overflow-y-auto"
-    trigger={`#theme-trigger-${id}`}
->
+<Popper behavior="click" placement="left-end" includeContent trigger={`#theme-trigger-${id}`}>
     <InputGroup vertical size="sm">
         <Button wide endIcon={Light} onclick={() => (theme.current = 'light')}>Light</Button>
         <Button wide endIcon={Dark} onclick={() => (theme.current = 'dark')}>Dark</Button>

@@ -1,10 +1,10 @@
 <script lang="ts">
     import { page } from '$app/state';
-    import App from '@components/App.svelte';
-    import AppContent from '@components/AppContent.svelte';
     import { t } from '@lib/i18n/i18n.svelte';
     import { logUser } from '@lib/loggers';
     import Button from '@atoms/inputs/Button.svelte';
+    import App from '@components/App.svelte';
+    import AppContent from '@components/AppContent.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';
 
     let errorType = $derived(page.url.searchParams.get('type'));
@@ -57,13 +57,11 @@
 </script>
 
 {#if !autoReturnUrl}
-    <App>
-        <AppContent>
-            <ErrorCard error={{ errorKind: 'other', message }}>
-                {#snippet actions()}
-                    <Button color="primary" href={returnUrl || '/game'}>{$t('common.back')}</Button>
-                {/snippet}
-            </ErrorCard>
-        </AppContent>
-    </App>
+    <AppContent>
+        <ErrorCard error={{ errorKind: 'other', message }}>
+            {#snippet actions()}
+                <Button color="primary" href={returnUrl || '/game'}>{$t('common.back')}</Button>
+            {/snippet}
+        </ErrorCard>
+    </AppContent>
 {/if}

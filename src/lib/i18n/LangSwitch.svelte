@@ -22,12 +22,7 @@
 </script>
 
 <ImageButton size="xs" variant="ghost" id={`lang-trigger-${id}`} src={items[current].icon} />
-<Popper
-    behavior="click"
-    placement="left-end"
-    display="flex flex-col rounded-lg border max-h-96 overflow-y-auto"
-    trigger={`#lang-trigger-${id}`}
->
+<Popper behavior="click" placement="left-end" includeContent trigger={`#lang-trigger-${id}`}>
     <InputGroup vertical size="sm">
         {#each items as item, index (item.data)}
             <Button wide endIcon={item.icon} onclick={() => (current = index)}>{item.caption}</Button>

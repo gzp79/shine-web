@@ -20,7 +20,10 @@
                     targetEl = document.querySelector(target);
                 }
                 if (targetEl === null) {
-                    throw new Error(`No element found matching css selector: "${target}"`);
+                    console.error(
+                        `No element found matching css selector "${target}", using document.body as fallback.`
+                    );
+                    targetEl = document.body;
                 }
             } else if (target instanceof HTMLElement) {
                 targetEl = target;

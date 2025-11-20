@@ -1,8 +1,17 @@
 <script module lang="ts">
     import { type Snippet } from 'svelte';
+    import { fade } from 'svelte/transition';
+    import { Hamburger } from '@atoms/icons/common';
+    import ImageButton from '@atoms/inputs/ImageButton.svelte';
     import { createContext } from '@atoms/types';
 
-    interface AppToolbarContext {
+    export interface Props {
+        showToolbar?: boolean;
+        /** Main content of the application */
+        children: Snippet;
+    }
+
+    export interface AppToolbarContext {
         setToolbar: (toolbar: Snippet | undefined) => void;
     }
 
@@ -11,15 +20,6 @@
 </script>
 
 <script lang="ts">
-    import { Hamburger } from '@atoms/icons/common';
-    import ImageButton from '@atoms/inputs/ImageButton.svelte';
-
-    interface Props {
-        showToolbar?: boolean;
-        /** Main content of the application */
-        children: Snippet;
-    }
-
     let { showToolbar = true, children }: Props = $props();
 
     let toolbar = $state<Snippet | undefined>(undefined);
@@ -41,11 +41,11 @@
     {#if showToolbar && toolbar}
         <div class="absolute right-4 top-4 z-10">
             <div class="flex items-start gap-2">
-                <header
-                    class={`overflow-hidden transition-all duration-300 ease-in-out ${isToolbarExpanded ? 'max-w-96' : 'max-w-0'}`}
-                >
-                    {@render toolbar()}
-                </header>
+                {#if isToolbarExpanded}
+                    <header transition:fade={{ duration: 250 }} class="overflow-hidden">
+                        {@render toolbar()}
+                    </header>
+                {/if}
                 <ImageButton
                     size="xs"
                     src={Hamburger}
@@ -58,3 +58,6 @@
     {/if}
     {@render children()}
 </div>
+
+<div id="popper"></div>
+<div id="modal"></div>

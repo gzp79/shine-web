@@ -1,18 +1,17 @@
 <script context="module" lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
+    import type { Component } from 'svelte';
     import LangSwitch from '@lib/i18n/LangSwitch.svelte';
     import ThemeSwitch from '@lib/theme/ThemeSwitch.svelte';
     import Typography from '@atoms/Typography.svelte';
-    import { Settings } from '@atoms/icons/common';
-    import Button from '@atoms/inputs/Button.svelte';
     import InputGroup from '@atoms/inputs/InputGroup.svelte';
     import Box from '@atoms/layouts/Box.svelte';
     import Stack from '@atoms/layouts/Stack.svelte';
-    import App from '@components/App.svelte';
+    import App, { type Props } from '@components/App.svelte';
     import AppContent from '@components/AppContent.svelte';
     import AppToolbar from '@components/AppToolbar.svelte';
 
-    const { Story } = defineMeta({
+    const { Story } = defineMeta<unknown, Component<Props & { layout: 'centered' | 'flow' }>>({
         title: 'Components/App',
         component: App,
         parameters: {
@@ -41,15 +40,15 @@
                 }
             },
             children: { table: { disable: true }, ref: { control: false } }
-        }
+        } as any
     });
 </script>
 
 {#snippet toolbar()}
-    <Stack direction="column">
+    <InputGroup vertical size="xs">
         <LangSwitch />
         <ThemeSwitch />
-    </Stack>
+    </InputGroup>
 {/snippet}
 
 <Story name="Basic">
@@ -63,7 +62,7 @@
             <AppContent {layout}>
                 <Box color="primary" class="max-w-md p-8">
                     <Typography variant="h1">Welcome</Typography>
-                    <Typography variant="body" class="mt-4">
+                    <Typography>
                         This is the basic App layout without a toolbar. The content is centered using the layout prop.
                     </Typography>
                 </Box>
@@ -83,7 +82,7 @@
             <AppContent {layout}>
                 <Box color="secondary" class="max-w-md p-8">
                     <Typography variant="h1">With Toolbar</Typography>
-                    <Typography variant="body" class="mt-4">
+                    <Typography>
                         The toolbar in the top-right corner contains language and theme switches. This is a common
                         pattern for application-wide settings.
                     </Typography>
@@ -104,13 +103,13 @@
             <AppContent {layout}>
                 <Stack spacing={6}>
                     <Typography variant="h1">Scrollable Content</Typography>
-                    <Typography variant="body">
+                    <Typography>
                         This story uses layout="flow" which enables scrolling. Scroll down to see more content.
                     </Typography>
                     {#each Array(20) as _, i}
                         <Box color={i % 2 === 0 ? 'primary' : 'secondary'} class="p-6">
                             <Typography variant="h3">Item {i + 1}</Typography>
-                            <Typography variant="body">
+                            <Typography>
                                 This demonstrates scrollable content within the app. The toolbar remains fixed at the
                                 top.
                             </Typography>

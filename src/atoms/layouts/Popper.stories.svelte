@@ -29,7 +29,8 @@
             includeContent: false,
             placement: 'bottom',
             alignWidth: false,
-            offset: 0
+            offset: 0,
+            animate: 'fade'
         },
         argTypes: {
             behavior: {
@@ -74,6 +75,15 @@
                     defaultValue: { summary: '4' }
                 }
             },
+            animate: {
+                control: 'select',
+                options: ['fade', 'none'],
+                description: 'Animation for popper open/close',
+                table: {
+                    type: { summary: 'fade | none' },
+                    defaultValue: { summary: 'fade' }
+                }
+            },
             trigger: { table: { disable: true }, ref: { control: false } },
             reference: { table: { disable: true }, ref: { control: false } },
             layer: { table: { disable: true }, ref: { control: false } },
@@ -113,9 +123,8 @@
                             <Button onclick={() => (manualOpen = true)}>{behaviorToTitle(behavior)}</Button>
                             <Popper {behavior} bind:open={manualOpen} {...otherArgs}>
                                 <Box border shadow>
-                                    <Typography variant="h1">Popper content</Typography>
-                                    <Typography>This popper opens on {behavior}.</Typography>
-                                    <Typography>Click outside to close.</Typography>
+                                    <Typography variant="h4">Popper</Typography>
+                                    <Typography>Behavior: {behavior}.</Typography>
                                     <Typography variant="footnote">Try scrolling!</Typography>
                                     {#if behavior === 'manual'}
                                         <Button onclick={() => (manualOpen = false)}>Close</Button>

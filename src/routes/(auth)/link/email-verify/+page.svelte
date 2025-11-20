@@ -1,10 +1,10 @@
 <script lang="ts">
     import { page } from '$app/state';
     import { identityApi } from '@lib/api/identity-api';
-    import AppContent from '@components/AppContent.svelte';
     import { t } from '@lib/i18n/i18n.svelte';
     import Typography from '@atoms/Typography.svelte';
     import Button from '@atoms/inputs/Button.svelte';
+    import AppContent from '@components/AppContent.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';
     import LoadingCard from '@components/LoadingCard.svelte';
     import { getCurrentUserStore } from '@features/account/currentUserStore.svelte';

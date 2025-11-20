@@ -8,14 +8,6 @@
     import AppToolbar from '@components/AppToolbar.svelte';
 </script>
 
-<App>
-    <AppToolbar>
-        <InputGroup size="sm" vertical>
-            <LangSwitch />
-            <ThemeSwitch />
-        </InputGroup>
-    </AppToolbar>
-    <AppContent layout="centered">
-        <Button href="/game" preload="code" color="secondary" size="lg">Play</Button>
-    </AppContent>
-</App>
+<AppContent layout="centered">
+    <Button href="/game" preload="code" color="secondary" size="lg">Play</Button>
+</AppContent>
