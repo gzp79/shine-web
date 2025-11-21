@@ -3,8 +3,9 @@
     import { lorem } from '@storybook-ext/lorem';
     import Typography from '@atoms/Typography.svelte';
     import Button from '@atoms/inputs/Button.svelte';
-    import Modal, { type ModalWidth } from '@atoms/layouts/Modal.svelte';
+    import Modal from '@atoms/layouts/Modal.svelte';
     import Stack from '@atoms/layouts/Stack.svelte';
+    import { layoutWidthList } from './types';
 
     const { Story } = defineMeta({
         component: Modal,
@@ -59,7 +60,7 @@
             },
             width: {
                 control: 'select',
-                options: ['small', 'big', 'full', 'fit'] satisfies ModalWidth[],
+                options: layoutWidthList,
                 description: 'Width preset for the modal',
                 table: {
                     type: { summary: 'ModalWidth' },

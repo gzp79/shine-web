@@ -51,7 +51,7 @@
                 options: ['small', 'big', 'fit', 'full'],
                 description: 'Card width variant',
                 table: {
-                    type: { summary: "'small' | 'big' | 'fit' | 'full'" },
+                    type: { summary: 'Width' },
                     defaultValue: { summary: 'fit' }
                 }
             },
@@ -70,9 +70,7 @@
                 }
             },
             children: { table: { disable: true }, ref: { control: false } },
-            actions: { table: { disable: true }, ref: { control: false } },
-            id: { table: { disable: true }, ref: { control: false } },
-            role: { table: { disable: true }, ref: { control: false } }
+            actions: { table: { disable: true }, ref: { control: false } }
         }
     });
 </script>

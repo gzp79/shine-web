@@ -1,5 +1,6 @@
 <script module lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
+    import type { Component } from 'svelte';
     import { v4 as uuid } from 'uuid';
     import type { ActiveSession } from '@lib/api/identity-api';
     import { async } from '@lib/utils';
@@ -44,12 +45,15 @@
         ...overrides
     });
 
-    const useService = (service: Partial<ActiveSessionService>): any => {
+    interface StoryArgs {
+        service: ActiveSessionService;
+    }
+
+    const useService = (service: Partial<ActiveSessionService>): StoryArgs => {
         return { service: { ...mockDataService, ...service } };
     };
 
-    const { Story } = defineMeta({
-        component: ActiveSessionCard,
+    const { Story } = defineMeta<unknown, Component<StoryArgs>>({
         title: 'Features/Account/ActiveSessionCard',
         args: {
             service: mockDataService
@@ -58,7 +62,8 @@
             service: { table: { disable: true } }
         },
         decorators: [
-            ((story: any, context: any) => {
+            /* eslint-disable @typescript-eslint/no-explicit-any */
+            ((_story: any, context: any) => {
                 const args = context.args;
                 const use = () => setActiveSessionStore(args.service);
                 return {
@@ -66,6 +71,7 @@
                     props: { use }
                 };
             }) as any
+            /* eslint-enable @typescript-eslint/no-explicit-any */
         ]
     });
 </script>
@@ -75,21 +81,27 @@
     args={useService({
         load: async.never
     })}
-/>
+>
+    <ActiveSessionCard />
+</Story>
 
 <Story
     name="Error"
     args={useService({
         load: () => async.error(new Error('Failed to load active sessions'))
     })}
-/>
+>
+    <ActiveSessionCard />
+</Story>
 
 <Story
     name="Empty"
     args={useService({
         load: async () => []
     })}
-/>
+>
+    <ActiveSessionCard />
+</Story>
 
 <Story
     name="Single Session - Firefox Windows"
@@ -103,7 +115,9 @@
             })
         ]
     })}
-/>
+>
+    <ActiveSessionCard />
+</Story>
 
 <Story
     name="Single Session - Edge Windows"
@@ -117,7 +131,9 @@
             })
         ]
     })}
-/>
+>
+    <ActiveSessionCard />
+</Story>
 
 <Story
     name="Single Session - Chrome macOS"
@@ -131,7 +147,9 @@
             })
         ]
     })}
-/>
+>
+    <ActiveSessionCard />
+</Story>
 
 <Story
     name="Single Session - Chrome Android"
@@ -159,7 +177,9 @@
             })
         ]
     })}
-/>
+>
+    <ActiveSessionCard />
+</Story>
 
 <Story
     name="Single Session - Custom Agent"
@@ -173,7 +193,9 @@
             })
         ]
     })}
-/>
+>
+    <ActiveSessionCard />
+</Story>
 
 <Story
     name="Multiple Sessions"
@@ -190,4 +212,6 @@
                 })
             )
     })}
-/>
+>
+    <ActiveSessionCard />
+</Story>

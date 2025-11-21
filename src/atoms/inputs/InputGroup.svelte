@@ -65,9 +65,9 @@
     });
 
     // Create reactive context for children
+    // svelte-ignore state_referenced_locally
     let context = $state<GroupInfo>({
         size,
-        //svelte-ignore state_referenced_locally
         color: effectiveColor,
         vertical,
         variant,
@@ -87,6 +87,7 @@
     );
 </script>
 
+``
 <div class={containerClass} {...rest}>
     {@render children()}
 </div>

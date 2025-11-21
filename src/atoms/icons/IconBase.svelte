@@ -13,14 +13,14 @@
         disabled?: boolean;
         class?: string;
     }
-</script>
 
-<script lang="ts">
-    interface Props extends IconProps {
+    export interface Props extends IconProps {
         viewBox: number[];
         children: Snippet;
     }
+</script>
 
+<script lang="ts">
     let { color, size = 'full', disabled = false, class: className, viewBox, children }: Props = $props();
     let svgClass = $derived(
         twMerge(

@@ -39,7 +39,7 @@
                 options: ['start', 'center', 'end', 'stretch'],
                 description: 'Align items along cross axis',
                 table: {
-                    type: { summary: "'start' | 'center' | 'end' | 'stretch'" },
+                    type: { summary: 'Alignment' },
                     defaultValue: { summary: 'stretch' }
                 }
             },
@@ -48,7 +48,7 @@
                 options: ['start', 'center', 'end', 'between', 'around', 'evenly'],
                 description: 'Justify items along main axis',
                 table: {
-                    type: { summary: "'start' | 'center' | 'end' | 'between' | 'around' | 'evenly'" },
+                    type: { summary: 'Justification' },
                     defaultValue: { summary: 'undefined' }
                 }
             },

@@ -69,7 +69,7 @@
 <Typography variant="h1">Room: {room}</Typography>
 
 <InputGroup class="w-full">
-    <TextArea placeholder="Text..." rows={3} disabled={!isConnected} onEnter={sendMessage} bind:text={currentMessage} />
+    <TextArea placeholder="Text..." rows={3} disabled={!isConnected} onenter={sendMessage} bind:text={currentMessage} />
     {#if isConnected}
         <Button onclick={sendMessage}>Send</Button>
     {:else}

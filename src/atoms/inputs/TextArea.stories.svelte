@@ -81,10 +81,8 @@
                 }
             },
             text: { table: { disable: true }, ref: { control: false } },
-            onEnter: { table: { disable: true }, ref: { control: false } },
-            onBlur: { table: { disable: true }, ref: { control: false } },
-            id: { table: { disable: true }, ref: { control: false } },
-            role: { table: { disable: true }, ref: { control: false } }
+            onenter: { table: { disable: true }, ref: { control: false } },
+            onblur: { table: { disable: true }, ref: { control: false } }
         }
     });
 </script>
@@ -130,7 +128,7 @@
 
 <Story name="Line Modes">
     {#snippet template(args)}
-        {@const { row, resizable, placeholder, ...otherArgs } = args}
+        {@const { rows, resizable, placeholder, ...otherArgs } = args}
         <Stack>
             <TextArea {...otherArgs} rows="single" placeholder="Single line" />
             <TextArea {...otherArgs} rows={2} placeholder="2 rows" />
@@ -163,7 +161,8 @@
                     action('text changed')(value);
                 }
             }
-            onblur={() => action('blurred')}
+            onblur={(text) => action('blurred')(text)}
+            onenter={(text) => action('entered')(text)}
         />
     {/snippet}
 </Story>

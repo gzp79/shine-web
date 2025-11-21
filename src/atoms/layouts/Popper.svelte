@@ -180,8 +180,9 @@
     // State variables
     let triggerEls: HTMLElement[] = [];
     let referenceEl: Nullable<HTMLElement> = null;
-    // svelte-ignore non_reactive_update - bound at mount time
+    // svelte-ignore non_reactive_update
     let contentEl: HTMLElement = null!;
+    // svelte-ignore non_reactive_update
     let popperLocator: HTMLElement = null!;
     let showLocator = $state(false);
     let autoUpdateCleanup: null | (() => void) = null;

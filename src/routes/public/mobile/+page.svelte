@@ -1,9 +1,9 @@
 <script lang="ts">
     import { t } from '@lib/i18n/i18n.svelte';
-    import GridItem from '@atoms/GridItem.svelte';
     import Typography from '@atoms/Typography.svelte';
     import ImageButton from '@atoms/inputs/ImageButton.svelte';
     import Grid from '@atoms/layouts/Grid.svelte';
+    import GridItem from '@atoms/layouts/GridItem.svelte';
     import Stack from '@atoms/layouts/Stack.svelte';
     import AppContent from '@components/AppContent.svelte';
 </script>

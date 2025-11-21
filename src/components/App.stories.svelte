@@ -8,10 +8,10 @@
     import Box from '@atoms/layouts/Box.svelte';
     import Stack from '@atoms/layouts/Stack.svelte';
     import App, { type Props } from '@components/App.svelte';
-    import AppContent from '@components/AppContent.svelte';
+    import AppContent, { type Layout } from '@components/AppContent.svelte';
     import AppToolbar from '@components/AppToolbar.svelte';
 
-    const { Story } = defineMeta<unknown, Component<Props & { layout: 'centered' | 'flow' }>>({
+    const { Story } = defineMeta<unknown, Component<Props & { layout: Layout }>>({
         title: 'Components/App',
         component: App,
         parameters: {
@@ -32,7 +32,7 @@
             },
             layout: {
                 control: 'select',
-                options: ['centered', 'flow'],
+                options: ['centered', 'flow', 'fullscreen'],
                 description: 'Preset layout option for AppContent',
                 table: {
                     type: { summary: 'Layout' },
@@ -40,7 +40,7 @@
                 }
             },
             children: { table: { disable: true }, ref: { control: false } }
-        } as any
+        }
     });
 </script>
 
@@ -85,7 +85,7 @@
                     <Typography>
                         This story uses layout="flow" which enables scrolling. Scroll down to see more content.
                     </Typography>
-                    {#each Array(20) as _, i}
+                    {#each Array(20) as _, i (i)}
                         <Box color={i % 2 === 0 ? 'primary' : 'secondary'} class="p-6">
                             <Typography variant="h3">Item {i + 1}</Typography>
                             <Typography>

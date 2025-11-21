@@ -1,6 +1,7 @@
 <script module lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
     import { action } from 'storybook/actions';
+    import type { Component } from 'svelte';
     import { v4 as uuid } from 'uuid';
     import type { ActiveToken } from '@lib/api/identity-api';
     import { async } from '@lib/utils';
@@ -35,12 +36,15 @@
         }
     };
 
-    const useService = (service: Partial<ActiveTokenService>): any => {
+    interface StoryArgs {
+        service: ActiveTokenService;
+    }
+
+    const useService = (service: Partial<ActiveTokenService>): StoryArgs => {
         return { service: { ...mockDataService, ...service } };
     };
 
-    const { Story } = defineMeta({
-        component: ActiveTokenCard,
+    const { Story } = defineMeta<unknown, Component<StoryArgs>>({
         title: 'Features/Account/ActiveTokenCard',
         args: {
             service: mockDataService
@@ -49,7 +53,8 @@
             service: { table: { disable: true } }
         },
         decorators: [
-            ((story: any, context: any) => {
+            /* eslint-disable @typescript-eslint/no-explicit-any */
+            ((_story: any, context: any) => {
                 const args = context.args;
                 const use = () => setActiveTokenStore(args.service);
                 return {
@@ -57,6 +62,7 @@
                     props: { use }
                 };
             }) as any
+            /* eslint-enable @typescript-eslint/no-explicit-any */
         ]
     });
 </script>
@@ -142,11 +148,17 @@
     }
 </script>
 
-<Story name="Loading" args={useService({})} />
+<Story name="Loading" args={useService({})}>
+    <ActiveTokenCard />
+</Story>
 
-<Story name="Error State" args={useService({ load: () => async.error(new Error('Failed to load active tokens')) })} />
+<Story name="Error State" args={useService({ load: () => async.error(new Error('Failed to load active tokens')) })}>
+    <ActiveTokenCard />
+</Story>
 
-<Story name="Empty Token List" args={useService({ load: async () => [] })} />
+<Story name="Empty Token List" args={useService({ load: async () => [] })}>
+    <ActiveTokenCard />
+</Story>
 
 <Story
     name="Multiple Tokens"
@@ -180,10 +192,12 @@
             })
         ]
     })}
-/>
+>
+    <ActiveTokenCard />
+</Story>
 
 <Story name="Dynamic Token Management">
-    {#snippet template(args)}
+    {#snippet template()}
         <ContextProvider
             use={() =>
                 setActiveTokenStore({

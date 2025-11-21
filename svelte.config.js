@@ -17,7 +17,7 @@ const config = {
             '@atoms': './src/atoms',
             '@components': './src/components',
             '@features': './src/features',
-            '@storybook-ext': './.storybook/ext'
+            '@storybook-ext': './src/storybook'
         },
         experimental: {
             remoteFunctions: true

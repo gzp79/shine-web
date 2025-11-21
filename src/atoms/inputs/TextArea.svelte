@@ -1,11 +1,11 @@
 <script lang="ts">
     import { twMerge } from 'tailwind-merge';
     import { getBoxContext } from '../layouts/Box.svelte';
-    import type { ActionColor, ElementProps } from '../types';
+    import type { ActionColor } from '../types';
     import { getInputGroupContext } from './InputGroup.svelte';
     import { type InputSize, type InputVariant, getGroupBorderClasses, getGroupColorClasses } from './types';
 
-    interface Props extends ElementProps {
+    interface Props {
         rows?: 'single' | number | [number, number];
         placeholder?: string;
         text?: string;
@@ -17,8 +17,8 @@
         disabled?: boolean;
         class?: string;
 
-        onEnter?: (test: string) => void;
-        onBlur?: (test: string) => void;
+        onenter?: (text: string) => void;
+        onblur?: (text: string) => void;
     }
 
     let {
@@ -31,8 +31,8 @@
         resizable,
         disabled,
         class: className,
-        onEnter,
-        onBlur
+        onenter,
+        onblur
     }: Props = $props();
 
     const sizeMods: Record<InputSize, string> = {
@@ -128,15 +128,13 @@
     });
 
     const handleKey = (e: KeyboardEvent) => {
-        if (onEnter && e.key === 'Enter' && !e.shiftKey) {
+        if (onenter && e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
-            onEnter?.(text ?? '');
+            onenter(text ?? '');
         }
     };
     const handleBlur = () => {
-        if (onBlur) {
-            onBlur(text ?? '');
-        }
+        onblur?.(text ?? '');
     };
 </script>
 

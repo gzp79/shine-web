@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { type Component, type Snippet, getContext } from 'svelte';
+    import { type Component, type Snippet } from 'svelte';
     import type { HTMLAttributes } from 'svelte/elements';
     import { twMerge } from 'tailwind-merge';
     import { getBoxContext } from '../layouts/Box.svelte';

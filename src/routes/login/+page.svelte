@@ -15,7 +15,6 @@
     import Stack from '@atoms/layouts/Stack.svelte';
     import { afterBFCacheRestore } from '@atoms/types/bfcache';
     import { EmailSchema } from '@atoms/types/validator';
-    import App from '@components/App.svelte';
     import AppContent from '@components/AppContent.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';
     import Turnstile from '@components/Turnstile.svelte';
@@ -116,7 +115,7 @@
     });
 </script>
 
-<AppContent layout="full">
+<AppContent layout="fullscreen">
     {#if currentUserStore.isError}
         <ErrorCard caption={$t('account.failedToLoadUserInfo')} error={currentUserStore.error}>
             {#snippet actions()}
@@ -229,7 +228,7 @@
             </div>
         </div>
 
-        <Modal hideOnClose isOpen={showLoading} class="bg-info text-on-info">
+        <Modal hideOnClose open={showLoading} class="bg-info text-on-info">
             <Stack>
                 <Typography variant="h3">
                     {$t('login.loadingCaptcha')}
@@ -241,7 +240,7 @@
             </Stack>
         </Modal>
 
-        <Modal isOpen={!showLoading && showEmailInput} caption={$t('login.emailModalTitle')}>
+        <Modal open={!showLoading && showEmailInput} caption={$t('login.emailModalTitle')}>
             <Stack>
                 <ValidatedTextArea
                     rows="single"

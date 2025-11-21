@@ -1,15 +1,12 @@
-<script module lang="ts">
+<script lang="ts">
     import { type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
     import Typography from '../Typography.svelte';
     import type { ActionColor } from '../types';
-    import Box, { type Width } from './Box.svelte';
+    import Box from './Box.svelte';
     import Stack from './Stack.svelte';
+    import type { Width } from './types';
 
-    export { type Width };
-</script>
-
-<script lang="ts">
     interface Props {
         caption?: string;
         shadow?: boolean;

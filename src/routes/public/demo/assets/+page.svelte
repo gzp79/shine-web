@@ -1,5 +1,7 @@
 <script lang="ts">
     import Typography from '@atoms/Typography.svelte';
+    import TextArea from '@atoms/inputs/TextArea.svelte';
+    import Stack from '@atoms/layouts/Stack.svelte';
     import App from '@components/App.svelte';
     import AppContent from '@components/AppContent.svelte';
     import { getAssetUrl } from '@features/assets/assets.remote';
@@ -11,7 +13,8 @@
 <App>
     <AppContent>
         <Stack>
-            <TextArea label="Asset Key" bind:value={assetKey} rows="single" />
+            <TextArea placeholder="Asset Key" bind:text={assetKey} rows="single" />
+
             {#if assetUrl.loading}
                 <Typography variant="h1" class="mb-4">Loading asset...</Typography>
             {:else if assetUrl.error}

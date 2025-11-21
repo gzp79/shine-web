@@ -67,7 +67,6 @@
         }
     });
 
-    const simpleError = new OtherError('A simple error message', { debug: 'internal details' });
     const complexError = new InternalError('Database connection failed', {
         host: 'db.example.com',
         port: 5432,

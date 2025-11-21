@@ -1,6 +1,7 @@
 <script module lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
     import { action } from 'storybook/actions';
+    import type { Component } from 'svelte';
     import { v4 as uuid } from 'uuid';
     import { type CurrentUser, unauthenticatedUser } from '@lib/api/identity-api';
     import { async } from '@lib/utils';
@@ -30,12 +31,15 @@
             `#logout_${encodeURIComponent(all)}_${encodeURIComponent(redirectUrl)}`
     };
 
-    const useService = (service: Partial<CurrentUserService>): any => {
+    interface StoryArgs {
+        service: CurrentUserService;
+    }
+
+    const useService = (service: Partial<CurrentUserService>): StoryArgs => {
         return { service: { ...mockDataService, ...service } };
     };
 
-    const { Story } = defineMeta({
-        component: CurrentUserCard,
+    const { Story } = defineMeta<unknown, Component<StoryArgs>>({
         title: 'Features/Account/CurrentUserCard',
         args: {
             service: mockDataService
@@ -44,7 +48,8 @@
             service: { table: { disable: true } }
         },
         decorators: [
-            ((story: any, context: any) => {
+            /* eslint-disable @typescript-eslint/no-explicit-any */
+            ((_story: any, context: any) => {
                 const args = context.args;
                 const use = () => setCurrentUserStore(args.service);
                 return {
@@ -52,6 +57,7 @@
                     props: { use }
                 };
             }) as any
+            /* eslint-enable @typescript-eslint/no-explicit-any */
         ]
     });
 
@@ -80,8 +86,10 @@
 
     type MockUser =
         | {
-              type: 'uuid';
+              type: 'user';
               id: string;
+              email?: string;
+              isEmailConfirmed?: boolean;
           }
         | {
               type: 'error';
@@ -92,7 +100,7 @@
               type: 'none';
               id: string;
           };
-    let currentMockedUser: MockUser = $state({ type: 'uuid', id: uuid() });
+    let currentMockedUser: MockUser = $state({ type: 'user', id: uuid() });
 
     // svelte-ignore state_referenced_locally
     const loadMockedUser = async (): Promise<CurrentUser> => {
@@ -103,19 +111,20 @@
             return async.error(new Error(mockUser.message));
         } else if (mockUser.type === 'none') {
             return unauthenticatedUser;
-        } else if (mockUser.type === 'uuid') {
+        } else if (mockUser.type === 'user') {
             return {
                 isAuthenticated: true,
                 userId: mockUser.id,
                 name: 'Changing user id',
-                isEmailConfirmed: false,
+                isEmailConfirmed: mockUser.isEmailConfirmed ?? false,
                 isLinked: true,
                 roles: [],
                 sessionLength: 1234,
                 remainingSessionTime: 4321,
                 details: {
                     kind: 'user',
-                    createdAt: new Date()
+                    createdAt: new Date(),
+                    email: mockUser.email
                 }
             };
         }
@@ -123,14 +132,17 @@
     };
 </script>
 
-<Story name="Loading" args={useService({})} />
+<Story name="Loading" args={useService({})}>
+    <CurrentUserCard />
+</Story>
 
-<Story
-    name="Error State"
-    args={useService({ load: () => async.error(new Error('Failed to load user information')) })}
-/>
+<Story name="Error State" args={useService({ load: () => async.error(new Error('Failed to load user information')) })}>
+    <CurrentUserCard />
+</Story>
 
-<Story name="User All Info" args={useService({ load: async () => baseUser })} />
+<Story name="User All Info" args={useService({ load: async () => baseUser })}>
+    <CurrentUserCard />
+</Story>
 
 <Story
     name="User Without Email Link"
@@ -143,7 +155,9 @@
             }
         })
     })}
-/>
+>
+    <CurrentUserCard />
+</Story>
 
 <Story
     name="User Without Email Confirmation"
@@ -153,10 +167,12 @@
             isEmailConfirmed: false
         })
     })}
-/>
+>
+    <CurrentUserCard />
+</Story>
 
 <Story name="Reaction to refresh user">
-    {#snippet template(args)}
+    {#snippet template()}
         <ContextProvider
             use={() =>
                 setCurrentUserStore({
@@ -170,11 +186,39 @@
                 <Button
                     size="xs"
                     onclick={() => {
-                        currentMockedUser = { type: 'uuid', id: uuid() };
+                        currentMockedUser = { type: 'user', id: uuid() };
                         store.refresh({ force: true });
                     }}
                 >
-                    Change User
+                    Change User (no email)
+                </Button>
+                <Button
+                    size="xs"
+                    onclick={() => {
+                        currentMockedUser = {
+                            type: 'user',
+                            id: uuid(),
+                            isEmailConfirmed: false,
+                            email: 'user@example.com'
+                        };
+                        store.refresh({ force: true });
+                    }}
+                >
+                    Change User (email un-confirmed)
+                </Button>
+                <Button
+                    size="xs"
+                    onclick={() => {
+                        currentMockedUser = {
+                            type: 'user',
+                            id: uuid(),
+                            isEmailConfirmed: true,
+                            email: 'user@example.com'
+                        };
+                        store.refresh({ force: true });
+                    }}
+                >
+                    Change User (email confirmed)
                 </Button>
                 <Button
                     size="xs"

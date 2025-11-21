@@ -1,11 +1,11 @@
 <script lang="ts" module>
     import type { Snippet } from 'svelte';
     import * as icons from '@atoms/icons/common';
-    import Card, { type Width } from '@atoms/layouts/Card.svelte';
+    import Card from '@atoms/layouts/Card.svelte';
+    import type { Width } from '@atoms/layouts/types';
     import type { ActionColor } from '@atoms/types';
 
     export type Variant = 'info' | 'success' | 'warning' | 'error';
-    export { type Width };
 </script>
 
 <script lang="ts">
@@ -28,7 +28,7 @@
 
     let { variant = 'info', caption, width, shadow = true, children, actions, showIcon = true }: Props = $props();
 
-    let Icon = $derived.by(() => {
+    let alertIcon = $derived.by(() => {
         switch (variant) {
             case 'info':
                 return icons.Info;
@@ -50,6 +50,7 @@
 </script>
 
 {#snippet icon()}
+    {@const Icon = alertIcon}
     <Icon size="md" />
 {/snippet}
 

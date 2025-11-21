@@ -1,12 +1,12 @@
 <script lang="ts">
     import { z } from 'zod';
     import Stack from '../layouts/Stack.svelte';
-    import type { ActionColor, ElementProps } from '../types';
+    import type { ActionColor } from '../types';
     import TextArea from './TextArea.svelte';
     import Validation, { type ValidationResult, isValidResult } from './Validation.svelte';
     import type { InputSize, InputVariant } from './types';
 
-    interface Props extends ElementProps {
+    interface Props {
         rows?: 'single' | number | [number, number];
         placeholder?: string;
         text?: string;
@@ -21,8 +21,8 @@
         disabled?: boolean;
         class?: string;
 
-        onEnter?: (text: string) => void;
-        onBlur?: (text: string) => void;
+        onenter?: (text: string) => void;
+        onblur?: (text: string) => void;
     }
 
     let {
@@ -38,8 +38,8 @@
         disabled,
         text = $bindable(''),
         class: className,
-        onEnter,
-        onBlur
+        onenter,
+        onblur
     }: Props = $props();
 
     let validateInput =
@@ -55,7 +55,6 @@
               };
 
     let result = $derived(validateInput(text));
-    $inspect(result);
 
     $effect(() => {
         valid = isValidResult(result);
@@ -73,8 +72,8 @@
         {resizable}
         {disabled}
         class={className}
-        {onEnter}
-        {onBlur}
+        {onenter}
+        {onblur}
     />
     {#if preserveErrorSpace || result !== undefined}
         <Validation {result} />

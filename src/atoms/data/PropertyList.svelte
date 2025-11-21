@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
-    import { type ElementProps, type Size } from '../types';
+    import { type Size } from '../types';
     import TailwindClasses from '../utilities/TailwindClasses.svelte';
 
     export interface DescriptionListItem {
@@ -15,7 +15,7 @@
         valueClass?: string;
     }
 
-    interface Props extends ElementProps {
+    interface Props {
         /** List of items to display */
         items: (DescriptionListItem | null)[];
         /** Size of the list */
@@ -26,7 +26,7 @@
         class?: string;
     }
 
-    const { items, size = 'md', wide = false, class: className, id, role }: Props = $props();
+    const { items, size = 'md', wide = false, class: className }: Props = $props();
 
     const filteredItems = $derived(items.filter((x) => x !== null) as DescriptionListItem[]);
     const tableClass = $derived(
@@ -36,7 +36,7 @@
 
 <TailwindClasses classList={['table-xs', 'table-sm', 'table-md', 'table-lg']} />
 
-<table {id} {role} class={tableClass}>
+<table class={tableClass}>
     <colgroup>
         <col class="w-1/3" />
         <col class="w-2/3" />

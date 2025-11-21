@@ -3,12 +3,10 @@
     import { twMerge } from 'tailwind-merge';
     import Typography from '../Typography.svelte';
     import { Cross } from '../icons/common';
-    import type { ElementProps } from '../types';
     import { portal } from '../utilities/Portal.svelte';
     import Box from './Box.svelte';
     import Stack from './Stack.svelte';
-
-    export type ModalWidth = 'small' | 'big' | 'full' | 'fit';
+    import type { Width } from './types';
 
     // Global registry for managing multiple modal instances per layer
     class ModalRegistry {
@@ -147,7 +145,7 @@
 </script>
 
 <script lang="ts">
-    interface Props extends ElementProps {
+    interface Props {
         /** Selector for the layer element containing the modal, defaults to #modal
          * @readonly - Not reactive: evaluated once on mount, do not bind dynamically.
          */
@@ -164,7 +162,7 @@
         /** When enabled, the modal will not unmount on close, just hide */
         hideOnClose?: boolean;
         /** Width preset for the modal */
-        width?: ModalWidth;
+        width?: Width;
         /** Custom class for the modal content */
         class?: string;
         /** In/Out state indicating whether the popper is open */

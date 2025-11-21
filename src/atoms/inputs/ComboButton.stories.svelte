@@ -5,7 +5,7 @@
     import * as icons from '@atoms/icons/common';
     import ComboButton from '@atoms/inputs/ComboButton.svelte';
     import InputGroup from '@atoms/inputs/InputGroup.svelte';
-    import { type InputSize, type InputVariant, inputSizeList, inputVariantList } from '@atoms/inputs/types';
+    import { type InputSize, inputSizeList } from '@atoms/inputs/types';
     import Box from '@atoms/layouts/Box.svelte';
     import Stack from '@atoms/layouts/Stack.svelte';
     import { type ActionColor, actionColorList } from '@atoms/types';

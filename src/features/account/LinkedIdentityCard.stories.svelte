@@ -1,6 +1,7 @@
 <script module lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
     import { action } from 'storybook/actions';
+    import type { Component } from 'svelte';
     import type { LinkedIdentity } from '@lib/api/identity-api';
     import { async } from '@lib/utils';
     import Typography from '@atoms/Typography.svelte';
@@ -36,25 +37,25 @@
         }
     };
 
-    const useService = (service: Partial<LinkedIdentityService>): any => {
+    interface StoryArgs {
+        service: LinkedIdentityService;
+    }
+
+    const useService = (service: Partial<LinkedIdentityService>): StoryArgs => {
         return { service: { ...mockDataService, ...service } };
     };
 
-    const availableProviders = ['google', 'twitter', 'github', 'discord', 'gitlab'];
-
-    const { Story } = defineMeta({
-        component: LinkedIdentityCard,
+    const { Story } = defineMeta<unknown, Component<StoryArgs>>({
         title: 'Features/Account/LinkedIdentityCard',
         args: {
-            service: mockDataService,
-            providers: availableProviders
+            service: mockDataService
         },
         argTypes: {
-            service: { table: { disable: true } },
-            providers: { table: { disable: true } }
+            service: { table: { disable: true } }
         },
         decorators: [
-            ((story: any, context: any) => {
+            /* eslint-disable @typescript-eslint/no-explicit-any */
+            ((_story: any, context: any) => {
                 const args = context.args;
                 const use = () => setLinkedIdentityStore(args.service);
                 return {
@@ -62,11 +63,14 @@
                     props: { use }
                 };
             }) as any
+            /* eslint-enable @typescript-eslint/no-explicit-any */
         ]
     });
 </script>
 
 <script lang="ts">
+    const availableProviders = ['google', 'twitter', 'github', 'discord', 'gitlab'];
+
     // Dynamic identity management for interactive story
     let mockedIdentities = $state<LinkedIdentity[]>([
         createIdentity({
@@ -146,14 +150,17 @@
     }
 </script>
 
-<Story name="Loading" args={useService({})} />
+<Story name="Loading" args={useService({})}>
+    <LinkedIdentityCard providers={availableProviders} />
+</Story>
 
-<Story
-    name="Error State"
-    args={useService({ load: () => async.error(new Error('Failed to load linked identities')) })}
-/>
+<Story name="Error State" args={useService({ load: () => async.error(new Error('Failed to load linked identities')) })}>
+    <LinkedIdentityCard providers={availableProviders} />
+</Story>
 
-<Story name="Empty Identity List" args={useService({ load: async () => [] })} />
+<Story name="Empty Identity List" args={useService({ load: async () => [] })}>
+    <LinkedIdentityCard providers={availableProviders} />
+</Story>
 
 <Story
     name="Multiple Identities"
@@ -189,10 +196,12 @@
             })
         ]
     })}
-/>
+>
+    <LinkedIdentityCard providers={availableProviders} />
+</Story>
 
 <Story name="Dynamic Identity Management">
-    {#snippet template(args)}
+    {#snippet template()}
         <ContextProvider
             use={() =>
                 setLinkedIdentityStore({

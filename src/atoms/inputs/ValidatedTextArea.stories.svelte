@@ -1,15 +1,13 @@
 <script module lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
-    import { action } from 'storybook/actions';
     import { z } from 'zod';
     import Typography from '@atoms/Typography.svelte';
     import ValidatedTextArea from '@atoms/inputs/ValidatedTextArea.svelte';
-    import { type InputVariant, inputSizeList, inputVariantList } from '@atoms/inputs/types';
+    import { type InputVariant } from '@atoms/inputs/types';
     import Box from '@atoms/layouts/Box.svelte';
     import Stack from '@atoms/layouts/Stack.svelte';
-    import { type ActionColor, type Size, actionColorList } from '@atoms/types';
+    import { type ActionColor, type Size } from '@atoms/types';
     import { rawValidationMessage } from '@atoms/types/validation-messages';
-    import { EmailSchema } from '@atoms/types/validator';
 
     const { Story } = defineMeta({
         component: ValidatedTextArea,
@@ -96,10 +94,8 @@
             text: { table: { disable: true }, ref: { control: false } },
             valid: { table: { disable: true }, ref: { control: false } },
             validate: { table: { disable: true }, ref: { control: false } },
-            onEnter: { table: { disable: true }, ref: { control: false } },
-            onBlur: { table: { disable: true }, ref: { control: false } },
-            id: { table: { disable: true }, ref: { control: false } },
-            role: { table: { disable: true }, ref: { control: false } }
+            onenter: { table: { disable: true }, ref: { control: false } },
+            onblur: { table: { disable: true }, ref: { control: false } }
         }
     });
 </script>

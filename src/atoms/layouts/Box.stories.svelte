@@ -98,7 +98,7 @@
                 options: [undefined, 'visible', 'auto', 'hidden', 'scroll'],
                 description: 'Overflow behavior',
                 table: {
-                    type: { summary: "'visible' | 'auto' | 'hidden' | 'scroll'" },
+                    type: { summary: 'Overflow type' },
                     defaultValue: { summary: 'undefined' }
                 }
             }

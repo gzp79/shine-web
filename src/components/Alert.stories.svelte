@@ -1,7 +1,6 @@
 <script context="module" lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
     import { action } from 'storybook/actions';
-    import { lorem } from '@storybook-ext/lorem';
     import Typography from '@atoms/Typography.svelte';
     import PropertyList from '@atoms/data/PropertyList.svelte';
     import Button from '@atoms/inputs/Button.svelte';
@@ -119,14 +118,13 @@
 </Story>
 
 <Story name="With Actions">
-    {#snippet template(args)}
+    {#snippet template()}
         <Stack direction="column" spacing={4} class="p-4">
             <Alert variant="warning" caption="Unsaved Changes" shadow>
-                {#snippet children()}
-                    <Typography variant="text">
-                        You have unsaved changes that will be lost if you leave this page.
-                    </Typography>
-                {/snippet}
+                <Typography variant="text">
+                    You have unsaved changes that will be lost if you leave this page.
+                </Typography>
+
                 {#snippet actions()}
                     <Button color="secondary" variant="outlined" size="sm" onclick={action('discard')}>Discard</Button>
                     <Button color="primary" size="sm" onclick={action('save')}>Save Changes</Button>
@@ -134,22 +132,20 @@
             </Alert>
 
             <Alert variant="error" caption="Connection Failed" shadow>
-                {#snippet children()}
-                    <Typography variant="text">
-                        Unable to connect to the server. Please check your internet connection and try again.
-                    </Typography>
-                {/snippet}
+                <Typography variant="text">
+                    Unable to connect to the server. Please check your internet connection and try again.
+                </Typography>
+
                 {#snippet actions()}
                     <Button color="primary" size="sm" onclick={action('retry')}>Retry</Button>
                 {/snippet}
             </Alert>
 
             <Alert variant="info" caption="New Feature Available" shadow>
-                {#snippet children()}
-                    <Typography variant="text">
-                        We've added a new feature to help you work more efficiently. Would you like to learn more?
-                    </Typography>
-                {/snippet}
+                <Typography variant="text">
+                    We've added a new feature to help you work more efficiently. Would you like to learn more?
+                </Typography>
+
                 {#snippet actions()}
                     <Button color="secondary" variant="text" size="sm" onclick={action('dismiss')}>Dismiss</Button>
                     <Button color="primary" size="sm" onclick={action('learn-more')}>Learn More</Button>

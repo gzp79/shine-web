@@ -54,7 +54,7 @@ export default [
         }
     },
     {
-        ignores: ['build/', '.svelte-kit/', 'dist/', 'static-generated/']
+        ignores: ['build/', '.svelte-kit/', 'dist/', 'static-generated/', 'node_modules/', 'storybook-static/']
     },
     ...storybook.configs['flat/recommended']
 ];

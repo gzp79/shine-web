@@ -1,5 +1,6 @@
 <script context="module" lang="ts">
     import { defineMeta } from '@storybook/addon-svelte-csf';
+    import type { Component } from 'svelte';
     import Typography from '@atoms/Typography.svelte';
     import { allIcons as animatedIcons } from '@atoms/icons/animated';
     import { allIcons as clientIcons } from '@atoms/icons/clients';
@@ -10,9 +11,11 @@
     import Box from '@atoms/layouts/Box.svelte';
     import Stack from '@atoms/layouts/Stack.svelte';
     import type { ActionColor } from '@atoms/types';
+    import IconBase, { type Props } from './IconBase.svelte';
 
-    const { Story } = defineMeta({
+    const { Story } = defineMeta<unknown, Component<Props & { iconId: number }>>({
         title: 'Atoms/Theme/Icons',
+        component: IconBase,
         args: {
             size: 'md' as IconSize,
             color: 'primary' as ActionColor,
@@ -58,7 +61,7 @@
     });
 </script>
 
-{#snippet iconGrid(args: any, icons: Record<string, any>)}
+{#snippet iconGrid(args: Props, icons: Record<string, Component>)}
     {@const { size, color, disabled } = args}
     <div class="flex flex-wrap justify-center gap-2">
         {#each Object.entries(icons) as [name, IconComponent] (name)}
@@ -100,9 +103,9 @@
     {/snippet}
 </Story>
 
-{#snippet sizeDemo(args: any, icons: Record<string, any>, category: string)}
+{#snippet sizeDemo(args: Props & { iconId: number }, icons: Record<string, Component>, category: string)}
     {@const { iconId, color, disabled, size } = args}
-    {#each Object.entries(icons) as [name, IconComponent], i}
+    {#each Object.entries(icons) as [name, IconComponent], i ([i, name])}
         {#if i === iconId % Object.keys(icons).length}
             <Stack align="center">
                 <Box border {color} class="w-96 h-96 flex items-center justify-center">

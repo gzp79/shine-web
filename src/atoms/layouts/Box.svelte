@@ -4,8 +4,7 @@
     import Typography from '../Typography.svelte';
     import { type ActionColor, type ElementProps, type Size, createContext } from '../types';
     import { type Spacing, toSpacingClasses } from '../types/spacing';
-
-    export type Width = 'small' | 'big' | 'fit' | 'full';
+    import type { Width } from './types';
 
     export type Legend = {
         text: string;

@@ -5,7 +5,8 @@
     import Typography from '@atoms/Typography.svelte';
     import Box from '@atoms/layouts/Box.svelte';
     import Stack from '@atoms/layouts/Stack.svelte';
-    import Alert, { type Width } from '@components/Alert.svelte';
+    import type { Width } from '@atoms/layouts/types';
+    import Alert from '@components/Alert.svelte';
 
     interface Props {
         /** Custom caption/title for the error (defaults to localized "Something went wrong") */
