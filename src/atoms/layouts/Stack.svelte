@@ -11,6 +11,8 @@
     interface Props extends ElementProps {
         direction?: 'row' | 'column' | ResponsiveProp<Direction>;
         spacing?: Spacing;
+        padding?: Spacing;
+        margin?: Spacing;
         align?: Alignment | ResponsiveProp<Alignment>;
         justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
         wrap?: boolean;
@@ -22,6 +24,8 @@
     let {
         direction = 'column',
         spacing = 2,
+        padding,
+        margin,
         align = 'stretch',
         justify,
         wrap,
@@ -32,6 +36,8 @@
     }: Props = $props();
 
     let spacingClass = $derived(toSpacingClasses(spacing, { all: 'gap', x: 'gap-x', y: 'gap-y' }));
+    let paddingClass = $derived(toSpacingClasses(padding, { all: 'p', x: 'px', y: 'py' }));
+    let marginClass = $derived(toSpacingClasses(margin, { all: 'm', x: 'mx', y: 'my' }));
     let directionClass = $derived(
         toResponsiveClass(direction, (m, dir) => (dir === 'row' ? [`${m}flex-row`] : [`${m}flex-col`]))
     );
@@ -55,6 +61,8 @@
             'flex',
             directionClass,
             spacingClass,
+            paddingClass,
+            marginClass,
             alignClass,
             justify && `justify-${justify}`,
             wrap && 'flex-wrap',

@@ -243,7 +243,7 @@
         <Box border {width} level={1} margin={0} padding={0}>
             <Stack class="h-full">
                 {#if hasHeader}
-                    <Stack direction="row" justify="between" class="p-2 bg-container">
+                    <Stack direction="row" justify="between" padding={2} class="bg-container">
                         <Typography variant="h5">
                             {#if caption}
                                 {caption}

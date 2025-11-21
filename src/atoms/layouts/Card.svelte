@@ -29,7 +29,7 @@
 </script>
 
 <Box compact border {color} {shadow} {width}>
-    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 0, sm: 2 }} align="stretch" class="p-2">
+    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 0, sm: 2 }} align="stretch" padding={2}>
         {#if icon}
             <div class={iconClass}>{@render icon()}</div>
         {/if}
@@ -48,7 +48,7 @@
             {/if}
 
             {#if actions}
-                <Stack direction="row" spacing={2} justify="end" class="sticky bottom-0 bg-inherit p-2">
+                <Stack direction="row" spacing={2} justify="end" padding={2} class="sticky bottom-0 bg-inherit">
                     {@render actions()}
                 </Stack>
             {/if}
