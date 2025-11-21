@@ -71,27 +71,6 @@
     {/snippet}
 </Story>
 
-<Story name="With Toolbar">
-    {#snippet template(args)}
-        {@const { showToolbar, layout } = args}
-        <App {showToolbar}>
-            <AppToolbar>
-                {@render toolbar()}
-            </AppToolbar>
-
-            <AppContent {layout}>
-                <Box color="secondary" class="max-w-md p-8">
-                    <Typography variant="h1">With Toolbar</Typography>
-                    <Typography>
-                        The toolbar in the top-right corner contains language and theme switches. This is a common
-                        pattern for application-wide settings.
-                    </Typography>
-                </Box>
-            </AppContent>
-        </App>
-    {/snippet}
-</Story>
-
 <Story name="Some Complex Content" args={{ layout: 'flow' }}>
     {#snippet template(args)}
         {@const { showToolbar, layout } = args}

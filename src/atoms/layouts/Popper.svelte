@@ -240,6 +240,11 @@
         let ancestor = el.parentElement;
         while (ancestor && ancestor !== document.body && ancestor !== document.documentElement) {
             const style = getComputedStyle(ancestor);
+            if (style.display === 'contents') {
+                // content has no box, skip to next ancestor
+                ancestor = ancestor.parentElement;
+                continue;
+            }
             if (
                 ['hidden', 'clip', 'scroll', 'auto'].includes(style.overflow) ||
                 ['hidden', 'clip', 'scroll', 'auto'].includes(style.overflowX) ||
@@ -252,6 +257,10 @@
                     refRect.top < ancestorRect.top ||
                     refRect.bottom > ancestorRect.bottom
                 ) {
+                    console.log('Ref element:', el);
+                    console.log('Ref rect:', refRect);
+                    console.log('Partially clipped by ancestor:', ancestor);
+                    console.log('Ancestor rect:', ancestorRect);
                     return true;
                 }
             }

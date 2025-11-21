@@ -116,7 +116,7 @@
     });
 </script>
 
-<AppContent>
+<AppContent layout="full">
     {#if currentUserStore.isError}
         <ErrorCard caption={$t('account.failedToLoadUserInfo')} error={currentUserStore.error}>
             {#snippet actions()}
@@ -124,7 +124,7 @@
             {/snippet}
         </ErrorCard>
     {:else}
-        <div class="relative flex flex-col h-full">
+        <div class="relative flex flex-col h-full w-full">
             {#await getAssetUrls(['loginBackground', 'loginBackground_alt']) then backgroundUrls}
                 <div
                     class="absolute pointer-events-none left-0 top-0 size-full bg-cover bg-center bg-no-repeat opacity-[0.25]"
