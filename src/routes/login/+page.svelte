@@ -123,110 +123,104 @@
             {/snippet}
         </ErrorCard>
     {:else}
-        <div class="relative flex flex-col h-full w-full">
-            {#await getAssetUrls(['loginBackground', 'loginBackground_alt']) then backgroundUrls}
-                <div
-                    class="absolute pointer-events-none left-0 top-0 size-full bg-cover bg-center bg-no-repeat opacity-[0.25]"
-                    style="background-image: {backgroundUrls.map((url) => `url('${url}')`).join(', ')};"
-                ></div>
-            {/await}
-
-            <Logo class="h-[20%] w-full shrink-0 fill-current p-4 text-on-surface" />
-
+        {#await getAssetUrls(['loginBackground', 'loginBackground_alt']) then backgroundUrls}
             <div
-                class="flex flex-col h-[80%] p-4 gap-2 overflow-hidden
-                            md:flex-row"
+                class="absolute pointer-events-none left-0 top-0 size-full bg-cover bg-center bg-no-repeat opacity-[0.25]"
+                style="background-image: {backgroundUrls.map((url) => `url('${url}')`).join(', ')};"
+            ></div>
+        {/await}
+
+        <Logo class="h-[20%] w-full shrink-0 fill-current p-4 text-on-surface" />
+
+        <Stack class="h-[80%] p-4 overflow-hidden" direction={{ xs: 'column', md: 'row' }} spacing={1}>
+            <Stack
+                class="w-full shrink-0 p-2 md:h-[80%] md:w-auto md:flex-1 md:max-w-[70%]"
+                items={{ xs: 'center', md: 'start' }}
             >
-                <div
-                    class="flex flex-col w-full shrink-0 items-center p-2
-                                md:h-[80%] md:w-auto md:flex-1 md:max-w-[70%] md:items-start"
-                >
-                    <Typography variant="h1" class="hidden md:block">{$t('login.title')}</Typography>
-                    {#if extraInfo.loginText}
-                        <Typography variant="h3" class="px-4">{extraInfo.loginText}</Typography>
-                    {:else}
-                        <Typography variant="h2" class="md:hidden">{$t('login.title')}</Typography>
-                    {/if}
-                    <!-- <div
-                            class="rounded border w-[80%] max-w-[600px] aspect-video ms-16 mt-16 my-auto overflow-hidden hidden md:block"
-                        >                           
-                        </div> -->
-                </div>
-
-                <div
-                    class="flex flex-col max-h-[60%] p-2 overflow-hidden items-center
-                               md:flex-none md:self-center"
-                >
-                    <Box border class="overflow-y-auto max-h-min">
-                        <div class="flex flex-col gap-2 items-center py-2">
-                            <Button
-                                color="secondary"
-                                wide
-                                disabled={!captcha}
-                                onclick={emailLogin}
-                                startIcon={providerIcon('email')}
-                                class="m-2"
-                            >
-                                {$t('login.email')}
-                            </Button>
-                            {#if providers && returnUrl}
-                                {#each providers as provider (provider)}
-                                    <Button
-                                        color="secondary"
-                                        wide
-                                        disabled={!captcha}
-                                        href={identityApi.getExternalLoginUrl(provider, rememberMe, captcha, returnUrl)}
-                                        startIcon={providerIcon(provider)}
-                                        class="m-2"
-                                    >
-                                        {provider}
-                                    </Button>
-                                {/each}
-                            {/if}
-                        </div>
-                    </Box>
-
-                    <div class="pt-2 shrink-0">
-                        <Toggle bind:value={rememberMe} onLabel={$t('login.rememberMe')} />
-                    </div>
-                </div>
-
-                {#if currentUserStore.isAuthenticated || extraInfo.allowGuest}
-                    <div class="mx-2 h-[80%] w-0 self-center border-l border-on-surface hidden md:block"></div>
-                    <div class="my-2 w-[80%] h-0 self-center border-t border-on-surface block md:hidden"></div>
-
-                    <div
-                        class="flex flex-col gap-2 bg-gray-200 p-2 rounded shrink-0 items-center
-                                    md:self-center"
-                    >
-                        {#if currentUserStore.isAuthenticated}
-                            <Button
-                                color="secondary"
-                                disabled={!captcha}
-                                href={returnUrl}
-                                startIcon={providerIcon('continue')}
-                                class="m-2"
-                            >
-                                {currentUserStore.content.name}
-                            </Button>
-                        {/if}
-
-                        {#if extraInfo.allowGuest && returnUrl}
-                            <Button
-                                variant="outline"
-                                size="sm"
-                                disabled={!captcha}
-                                href={identityApi.getGuestLoginUrl(captcha, returnUrl)}
-                                startIcon={providerIcon('guest')}
-                                class="m-2"
-                            >
-                                {$t('login.guest')}
-                            </Button>
-                        {/if}
-                    </div>
+                <Typography variant="h1" class="hidden md:block">{$t('login.title')}</Typography>
+                {#if extraInfo.loginText}
+                    <Typography variant="h3" class="px-4">{extraInfo.loginText}</Typography>
+                {:else}
+                    <Typography variant="h2" class="md:hidden">{$t('login.title')}</Typography>
                 {/if}
-            </div>
-        </div>
+                <!-- <div
+                            class="rounded border w-[80%] max-w-[600px] aspect-video ms-16 mt-16 my-auto overflow-hidden hidden md:block"
+                        >
+                        </div> -->
+            </Stack>
+
+            <Stack class="max-h-[60%] p-2 md:flex-none" items="center" self={{ md: 'center' }}>
+                <Box border class="overflow-y-auto max-h-full">
+                    <Stack items="center" class="py-2" spacing={1}>
+                        <Button
+                            color="secondary"
+                            wide
+                            disabled={!captcha}
+                            onclick={emailLogin}
+                            startIcon={providerIcon('email')}
+                            class="m-2"
+                        >
+                            {$t('login.email')}
+                        </Button>
+                        {#if providers && returnUrl}
+                            {#each providers as provider (provider)}
+                                <Button
+                                    color="secondary"
+                                    wide
+                                    disabled={!captcha}
+                                    href={identityApi.getExternalLoginUrl(provider, rememberMe, captcha, returnUrl)}
+                                    startIcon={providerIcon(provider)}
+                                    class="m-2"
+                                >
+                                    {provider}
+                                </Button>
+                            {/each}
+                        {/if}
+                    </Stack>
+                </Box>
+
+                <div class="pt-2 shrink-0">
+                    <Toggle bind:value={rememberMe} onLabel={$t('login.rememberMe')} />
+                </div>
+            </Stack>
+
+            {#if currentUserStore.isAuthenticated || extraInfo.allowGuest}
+                <div class="mx-2 h-[80%] w-0 self-center border-l border-on-surface hidden md:block"></div>
+                <div class="my-2 w-[80%] h-0 self-center border-t border-on-surface block md:hidden"></div>
+
+                <Stack
+                    spacing={1}
+                    class="bg-gray-200 p-2 rounded shrink-0"
+                    items="center"
+                    self={{ xs: 'center', md: 'center' }}
+                >
+                    {#if currentUserStore.isAuthenticated}
+                        <Button
+                            color="secondary"
+                            disabled={!captcha}
+                            href={returnUrl}
+                            startIcon={providerIcon('continue')}
+                            class="m-2"
+                        >
+                            {currentUserStore.content.name}
+                        </Button>
+                    {/if}
+
+                    {#if extraInfo.allowGuest && returnUrl}
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            disabled={!captcha}
+                            href={identityApi.getGuestLoginUrl(captcha, returnUrl)}
+                            startIcon={providerIcon('guest')}
+                            class="m-2"
+                        >
+                            {$t('login.guest')}
+                        </Button>
+                    {/if}
+                </Stack>
+            {/if}
+        </Stack>
 
         <Modal hideOnClose open={showLoading} class="bg-info text-on-info">
             <Stack>
