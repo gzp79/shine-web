@@ -87,7 +87,6 @@
     );
 </script>
 
-``
 <div class={containerClass} {...rest}>
     {@render children()}
 </div>

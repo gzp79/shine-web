@@ -47,6 +47,7 @@
     {#snippet actions()}
         <Button
             color="secondary"
+            size="sm"
             startIcon={Link}
             disabled={identityStore.isDirty}
             onclick={() => (showLinkModal = true)}
@@ -56,7 +57,7 @@
     {/snippet}
 </Card>
 
-<Modal closeButton closeOnClickOutside caption={$t('account.linkTitle')} bind:open={showLinkModal}>
+<Modal width="fit" closeButton closeOnClickOutside caption={$t('account.linkTitle')} bind:open={showLinkModal}>
     <Stack align="stretch">
         {#each providers as provider (provider)}
             <Button

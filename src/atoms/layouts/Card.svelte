@@ -20,16 +20,22 @@
     let { icon, caption, shadow, color, width = 'fit', children, actions }: Props = $props();
 
     let iconClass = $derived(
-        twMerge('flex shrink-0', 'h-12 w-12 sm:w-12', 'self-center sm:self-start items-center justify-center ')
+        twMerge(
+            'flex shrink-0',
+            'h-12 w-12 sm:w-12 mt-2 sm:ms-2',
+            'self-center sm:self-start items-center justify-center '
+        )
     );
     let captionClass = $derived(
         twMerge('p-2 sm:ps-0 overflow-hidden text-ellipsis', icon ? 'text-center sm:text-start' : 'text-center')
     );
-    let childClass = $derived(twMerge('max-h-smv min-h-3 overflow-y-auto overflow-x-hidden', caption && 'sm:ps-2'));
+    let childClass = $derived(
+        twMerge('max-h-smv min-h-3 overflow-y-auto overflow-x-hidden px-4', caption && 'sm:ps-4', !actions && 'pb-4')
+    );
 </script>
 
-<Box compact border {color} {shadow} {width}>
-    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 0, sm: 2 }} align="stretch" class="p-2">
+<Box border {color} {shadow} {width} padding={0}>
+    <Stack direction={{ xs: 'column', sm: 'row' }} spacing={{ xs: 0, sm: 2 }} align="stretch">
         {#if icon}
             <div class={iconClass}>{@render icon()}</div>
         {/if}

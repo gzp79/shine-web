@@ -32,7 +32,7 @@
     linkedIdentityStore.refresh();
 </script>
 
-<AppContent class="px-2 py-8">
+<AppContent layout="flow">
     <Stack spacing={4} align="center">
         {#if getProviders.current}
             <CurrentUserCard />

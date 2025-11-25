@@ -182,7 +182,7 @@
     {/snippet}
 </Card>
 
-<Modal caption={$t(`account.emailModal.${emailOp}.title`)} open={isModalOpen}>
+<Modal width="small" caption={$t(`account.emailModal.${emailOp}.title`)} open={isModalOpen}>
     {#if emailStatus instanceof FetchError}
         <ErrorCard error={emailStatus} />
         <div class="flex justify-end space-x-2">
@@ -198,22 +198,20 @@
             </Button>
         </div>
     {:else if emailStatus === 'gettingNewEmail'}
-        <Card>
-            <ValidatedTextArea
-                rows="single"
-                placeholder={$t('account.emailModal.update.newEmail')}
-                class="w-full"
-                validate={EmailSchema}
-                bind:text={newEmail}
-                bind:valid={isEmailValid}
-            />
-            <Stack direction="row" spacing={1} class="justify-end">
-                <Button onclick={cancelEmailChange}>{$t('common.cancel')}</Button>
-                <Button color="secondary" disabled={!isEmailValid} onclick={submitEmailChange}>
-                    {$t('common.update')}
-                </Button>
-            </Stack>
-        </Card>
+        <ValidatedTextArea
+            rows="single"
+            placeholder={$t('account.emailModal.update.newEmail')}
+            class="w-full"
+            validate={EmailSchema}
+            bind:text={newEmail}
+            bind:valid={isEmailValid}
+        />
+        <Stack direction="row" spacing={1} class="justify-end mt-4">
+            <Button onclick={cancelEmailChange}>{$t('common.cancel')}</Button>
+            <Button color="secondary" disabled={!isEmailValid} onclick={submitEmailChange}>
+                {$t('common.update')}
+            </Button>
+        </Stack>
     {:else if emailStatus === 'gettingAcknowledge'}
         <Typography variant="text" class="w-full text-justify">
             {$t(`account.emailModal.${emailOp}.completed`)}

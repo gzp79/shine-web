@@ -1,3 +1,5 @@
+// Local web pages with local services
+
 export const config = {
     environment: 'local',
 

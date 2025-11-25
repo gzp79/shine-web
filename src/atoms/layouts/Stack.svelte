@@ -7,12 +7,13 @@
 
     type Direction = 'row' | 'column';
     type Alignment = 'start' | 'center' | 'end' | 'stretch';
+    type Justification = 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
 
     interface Props extends ElementProps {
         direction?: 'row' | 'column' | ResponsiveProp<Direction>;
         spacing?: Spacing;
         align?: Alignment | ResponsiveProp<Alignment>;
-        justify?: 'start' | 'center' | 'end' | 'between' | 'around' | 'evenly';
+        justify?: Justification | ResponsiveProp<Justification>;
         wrap?: boolean;
         grow?: boolean;
         class?: string;
@@ -23,7 +24,7 @@
         direction = 'column',
         spacing = 2,
         align = 'stretch',
-        justify,
+        justify = 'center',
         wrap,
         grow,
         children,
@@ -35,20 +36,8 @@
     let directionClass = $derived(
         toResponsiveClass(direction, (m, dir) => (dir === 'row' ? [`${m}flex-row`] : [`${m}flex-col`]))
     );
-    let alignClass = $derived(
-        toResponsiveClass(align, (m, a) => {
-            switch (a) {
-                case 'start':
-                    return `${m}items-start`;
-                case 'center':
-                    return `${m}items-center`;
-                case 'end':
-                    return `${m}items-end`;
-                case 'stretch':
-                    return `${m}items-stretch`;
-            }
-        })
-    );
+    let alignClass = $derived(toResponsiveClass(align, (m, a) => `${m}items-${a}`));
+    let justifyClass = $derived(toResponsiveClass(justify, (m, j) => ` ${m}justify-${j}`));
 
     let clsStack = $derived(
         twMerge(
@@ -56,7 +45,7 @@
             directionClass,
             spacingClass,
             alignClass,
-            justify && `justify-${justify}`,
+            justifyClass,
             wrap && 'flex-wrap',
             grow && '[&>*]:flex-1',
             className

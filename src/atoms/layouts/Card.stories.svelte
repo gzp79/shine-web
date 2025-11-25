@@ -18,7 +18,7 @@
             shadow: false,
             color: undefined,
             width: undefined,
-            icon: Google as unknown as Snippet | null
+            icon: 'info' as any as Snippet // eslint-disable-line @typescript-eslint/no-explicit-any
         },
         argTypes: {
             caption: {

@@ -130,28 +130,26 @@
             ></div>
         {/await}
 
-        <Logo class="h-[20%] w-full shrink-0 fill-current p-4 text-on-surface" />
+        <Logo class="h-[20vh] lg:h-[20vh] w-full shrink-0 fill-current p-4 text-on-surface" />
 
-        <Stack class="h-[80%] p-4 overflow-hidden" direction={{ xs: 'column', md: 'row' }} spacing={1}>
+        <Stack direction={{ xs: 'column', lg: 'row' }} spacing={0}>
             <Stack
-                class="w-full shrink-0 p-2 md:h-[80%] md:w-auto md:flex-1 md:max-w-[70%]"
-                items={{ xs: 'center', md: 'start' }}
+                class="w-full shrink-0 p-2 lg:flex-1 lg:max-w-[70vw] lg:h-[70vh] lg:w-auto"
+                justify={{ xs: 'center', lg: 'start' }}
+                align={{ xs: 'center', lg: 'start' }}
             >
-                <Typography variant="h1" class="hidden md:block">{$t('login.title')}</Typography>
-                {#if extraInfo.loginText}
-                    <Typography variant="h3" class="px-4">{extraInfo.loginText}</Typography>
-                {:else}
-                    <Typography variant="h2" class="md:hidden">{$t('login.title')}</Typography>
-                {/if}
+                <Typography variant="h1" class="hidden lg:block">{$t('login.title')}</Typography>
+                <Typography variant="h3" class="hidden lg:block px-4">{extraInfo.loginText}</Typography>
+                <Typography variant="h5" class="lg:hidden">{extraInfo.loginText ?? $t('login.title')}</Typography>
                 <!-- <div
-                            class="rounded border w-[80%] max-w-[600px] aspect-video ms-16 mt-16 my-auto overflow-hidden hidden md:block"
+                            class="rounded border w-[80%] max-w-[600px] aspect-video ms-16 mt-16 my-auto overflow-hidden hidden lg:block"
                         >
                         </div> -->
             </Stack>
 
-            <Stack class="max-h-[60%] p-2 md:flex-none" items="center" self={{ md: 'center' }}>
-                <Box border class="overflow-y-auto max-h-full">
-                    <Stack items="center" class="py-2" spacing={1}>
+            <Stack align="center" justify={{ xs: 'start', lg: 'center' }}>
+                <Box border padding={0} overflow="y" class="max-h-[40vh] lg:max-h-[55vh]">
+                    <Stack class="m-4">
                         <Button
                             color="secondary"
                             wide
@@ -179,21 +177,14 @@
                     </Stack>
                 </Box>
 
-                <div class="pt-2 shrink-0">
-                    <Toggle bind:value={rememberMe} onLabel={$t('login.rememberMe')} />
-                </div>
+                <Toggle bind:value={rememberMe} onLabel={$t('login.rememberMe')} />
             </Stack>
 
             {#if currentUserStore.isAuthenticated || extraInfo.allowGuest}
-                <div class="mx-2 h-[80%] w-0 self-center border-l border-on-surface hidden md:block"></div>
-                <div class="my-2 w-[80%] h-0 self-center border-t border-on-surface block md:hidden"></div>
+                <div class="ms-4 h-auto w-px bg-on-surface hidden lg:block"></div>
+                <div class="my-4 self-center w-[80vw] h-px bg-on-surface block lg:hidden"></div>
 
-                <Stack
-                    spacing={1}
-                    class="bg-gray-200 p-2 rounded shrink-0"
-                    items="center"
-                    self={{ xs: 'center', md: 'center' }}
-                >
+                <Stack direction="column" justify="center" align="center">
                     {#if currentUserStore.isAuthenticated}
                         <Button
                             color="secondary"
@@ -222,11 +213,11 @@
             {/if}
         </Stack>
 
-        <Modal hideOnClose open={showLoading} class="bg-info text-on-info">
-            <Stack>
+        <Modal width="fit" hideOnClose open={showLoading} class="bg-info text-on-info">
+            <Stack align="center">
                 <Typography variant="h3">
                     {$t('login.loadingCaptcha')}
-                    <Dots class="inline-block h-8 w-8" />
+                    <Dots size="md" class="inline-block" />
                 </Typography>
                 {#if hasCaptcha}
                     <Turnstile siteKey={config.turnstile.siteKey} size="normal" bind:token={captcha} />

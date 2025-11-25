@@ -14,7 +14,6 @@
             shadow: false,
             ghost: false,
             width: undefined,
-            compact: false,
             color: undefined,
             legend: undefined,
             padding: undefined,
@@ -55,14 +54,6 @@
                     defaultValue: { summary: 'false' }
                 }
             },
-            compact: {
-                control: 'boolean',
-                description: 'Remove default padding',
-                table: {
-                    type: { summary: 'boolean' },
-                    defaultValue: { summary: 'false' }
-                }
-            },
             width: {
                 control: 'select',
                 options: ['small', 'big', 'fit', 'full'],
@@ -95,18 +86,19 @@
             },
             overflow: {
                 control: 'select',
-                options: [undefined, 'visible', 'auto', 'hidden', 'scroll'],
+                options: [undefined, 'y', 'x', 'auto', 'hidden'],
                 description: 'Overflow behavior',
                 table: {
                     type: { summary: 'Overflow type' },
                     defaultValue: { summary: 'undefined' }
                 }
-            }
+            },
+            children: { control: false, table: { disable: true } }
         }
     });
 </script>
 
-<Story name="Default">
+<Story name="Default" args={{ margin: 4 }}>
     {#snippet template(args)}
         <Box {...args}>
             <Typography variant="text">Default Box with standard padding and background</Typography>
@@ -169,20 +161,6 @@
     {/snippet}
 </Story>
 
-<Story name="Compact Mode">
-    {#snippet template(args)}
-        {@const { compact, ...otherArgs } = args}
-        <div class="flex gap-4">
-            <Box {...otherArgs}>
-                <Typography variant="text">Default padding</Typography>
-            </Box>
-            <Box {...otherArgs} compact>
-                <Typography variant="text">Compact (no padding)</Typography>
-            </Box>
-        </div>
-    {/snippet}
-</Story>
-
 <Story name="With Legend">
     {#snippet template(args)}
         {@const { legend, ...otherArgs } = args}
@@ -218,13 +196,20 @@
     {#snippet template(args)}
         {@const { overflow, ...otherArgs } = args}
         <div class="flex flex-col gap-4">
-            <Box {...otherArgs} border legend="Auto Overflow" overflow="auto" class="max-h-32">
+            <Box {...otherArgs} border overflow="y" class="max-h-32">
+                <Typography>Vertical Scroll (y)</Typography>
                 <Typography variant="text">{lorem.long}</Typography>
             </Box>
-            <Box {...otherArgs} border legend="Hidden Overflow" overflow="hidden" class="max-h-32">
+            <Box {...otherArgs} border overflow="x" class="w-64">
+                <Typography>Horizontal Scroll (x)</Typography>
+                <div class="w-[800px]"><Typography variant="text">{lorem.long}</Typography></div>
+            </Box>
+            <Box {...otherArgs} border overflow="auto" class="max-h-32">
+                <Typography>Auto Overflow</Typography>
                 <Typography variant="text">{lorem.long}</Typography>
             </Box>
-            <Box {...otherArgs} border legend="Visible Overflow (Default)" class="max-h-32">
+            <Box {...otherArgs} border overflow="hidden" class="max-h-32">
+                <Typography>Hidden Overflow</Typography>
                 <Typography variant="text">{lorem.long}</Typography>
             </Box>
         </div>

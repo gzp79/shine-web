@@ -2,7 +2,7 @@
     import { type Snippet } from 'svelte';
     import { twMerge } from 'tailwind-merge';
     import Typography from '../Typography.svelte';
-    import { type ActionColor, type ElementProps, type Size, createContext } from '../types';
+    import { type ActionColor, type Size, createContext } from '../types';
     import { type Spacing, toSpacingClasses } from '../types/spacing';
     import type { Width } from './types';
 
@@ -27,18 +27,22 @@
 </script>
 
 <script lang="ts">
-    interface Props extends ElementProps {
+    interface Props {
         color?: ActionColor;
         border?: boolean;
         shadow?: boolean;
         ghost?: boolean;
-        compact?: boolean;
         width?: Width;
         level?: number;
         legend?: string | Legend;
         padding?: Spacing;
         margin?: Spacing;
-        overflow?: 'visible' | 'auto' | 'hidden' | 'scroll';
+        // Overflow controls clipping and scrolling. Supported values:
+        // 'y' - inner vertical scrolling (overflow-y-auto)
+        // 'x' - inner horizontal scrolling (overflow-x-auto)
+        // 'auto' - inner auto scrolling (overflow-auto)
+        // 'hidden' - hide overflow on outer element
+        overflow?: 'y' | 'x' | 'auto' | 'hidden';
         class?: string;
         children?: Snippet;
     }
@@ -47,17 +51,15 @@
         border,
         shadow,
         color,
-        compact,
         ghost,
         width = 'fit',
         level,
         legend,
-        padding,
+        padding = 4,
         margin,
-        overflow = 'auto',
+        overflow = 'hidden',
         class: className,
-        children,
-        ...rest
+        children
     }: Props = $props();
 
     const colorRotation = ['container', 'sub-container', 'surface'];
@@ -99,6 +101,48 @@
     });
     setBoxContext(context);
 
+    const widthVariants: Record<Width, string> = {
+        fit: 'max-w-full w-fit',
+        small: 'w-[75%] lg:w-[60%]',
+        big: 'w-[95%] lg:w-[80%]',
+        full: 'w-full'
+    };
+
+    let legendText = $derived.by(() => (typeof legend === 'string' ? legend : legend?.text));
+
+    let paddingClass = $derived(toSpacingClasses(padding, { all: 'p', x: 'px', y: 'py' }));
+    let marginClass = $derived(toSpacingClasses(margin, { all: 'm', x: 'mx', y: 'my' }));
+
+    let outerClass = $derived(
+        twMerge(
+            'rounded-lg',
+            'min-h-0 min-w-0',
+            'flex flex-col',
+            widthVariants[width],
+            border && `border border-${colors.border}`,
+            !ghost && `bg-${colors.bgColor}`,
+            `text-${colors.fgColor}`,
+            shadow && `shadow-md shadow-${colors.fgColor}`,
+            'overflow-clip',
+            marginClass,
+            className
+        )
+    );
+
+    let innerScrollClass = $derived.by(() => {
+        switch (overflow) {
+            case 'y':
+                return 'overflow-y-auto flex-1';
+            case 'x':
+                return 'overflow-x-auto w-full';
+            case 'auto':
+                return 'overflow-auto flex-1';
+            default:
+                return undefined;
+        }
+    });
+    let innerClass = $derived(twMerge(paddingClass, innerScrollClass));
+
     let legendClass = $derived.by(() => {
         let size = 'text-md';
         let color = `text-${colors.border}`;
@@ -106,46 +150,21 @@
             size = legend?.size ? `text-${legend?.size}` : size;
             color = legend?.color ? `text-on-${legend?.color}` : color;
         }
-        return twMerge('p-2', size, color);
+        return twMerge('mx-3 p-1', size, color);
     });
-    let legendText = $derived.by(() => (typeof legend === 'string' ? legend : legend?.text));
-
-    let paddingClass = $derived(toSpacingClasses(padding, { all: 'p', x: 'px', y: 'py' }));
-    let marginClass = $derived(toSpacingClasses(margin, { all: 'm', x: 'mx', y: 'my' }));
-
-    const widthVariants: Record<Width, string> = {
-        fit: 'max-w-full w-fit',
-        small: 'max-w-sm',
-        big: 'max-w-3xl',
-        full: 'w-full'
-    };
-
-    let boxClass = $derived(
-        twMerge(
-            'rounded-lg',
-            'min-w-0', // Allow Box to shrink in flex containers while staying full-width when standalone
-            'min-h-min',
-            widthVariants[width],
-            !compact && 'p-4',
-            !ghost && `bg-${colors.bgColor}`,
-            `text-${colors.fgColor}`,
-            border && `border border-${colors.border}`,
-            shadow && `shadow-md shadow-${colors.fgColor}`,
-            overflow && `overflow-${overflow}`,
-            paddingClass,
-            marginClass,
-            className
-        )
-    );
 </script>
 
 {#if legend}
-    <fieldset class={boxClass} {...rest}>
+    <fieldset class={outerClass}>
         <Typography variant="legend" class={legendClass}>{legendText}</Typography>
-        {@render children?.()}
+        <div class={innerClass}>
+            {@render children?.()}
+        </div>
     </fieldset>
 {:else}
-    <div class={boxClass} {...rest}>
-        {@render children?.()}
+    <div class={outerClass}>
+        <div class={innerClass}>
+            {@render children?.()}
+        </div>
     </div>
 {/if}

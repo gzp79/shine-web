@@ -66,6 +66,12 @@
         ['highlight', 'hover:highlight'],
 
         ['justify-start', 'justify-end', 'justify-center', 'justify-between', 'justify-around', 'justify-evenly'],
+        ['xs:justify-start', 'xs:justify-end', 'xs:justify-center', 'xs:justify-between', 'xs:justify-around', 'xs:justify-evenly'],
+        ['sm:justify-start', 'sm:justify-end', 'sm:justify-center', 'sm:justify-between', 'sm:justify-around', 'sm:justify-evenly'],
+        ['md:justify-start', 'md:justify-end', 'md:justify-center', 'md:justify-between', 'md:justify-around', 'md:justify-evenly'],
+        ['lg:justify-start', 'lg:justify-end', 'lg:justify-center', 'lg:justify-between', 'lg:justify-around', 'lg:justify-evenly'],
+        ['xl:justify-start', 'xl:justify-end', 'xl:justify-center', 'xl:justify-between', 'xl:justify-around', 'xl:justify-evenly'],
+        
         ['items-start', 'items-end', 'items-center', 'items-baseline', 'items-stretch'],
         ['xs:items-start', 'xs:items-end', 'xs:items-center', 'xs:items-baseline', 'xs:items-stretch'],
         ['sm:items-start', 'sm:items-end', 'sm:items-center', 'sm:items-baseline', 'sm:items-stretch'],

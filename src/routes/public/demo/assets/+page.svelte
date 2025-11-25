@@ -2,7 +2,6 @@
     import Typography from '@atoms/Typography.svelte';
     import TextArea from '@atoms/inputs/TextArea.svelte';
     import Stack from '@atoms/layouts/Stack.svelte';
-    import App from '@components/App.svelte';
     import AppContent from '@components/AppContent.svelte';
     import { getAssetUrl } from '@features/assets/assets.remote';
 
@@ -10,23 +9,20 @@
     let assetUrl = $derived(getAssetUrl(assetKey));
 </script>
 
-<App>
-    <AppContent>
-        <Stack>
-            <TextArea placeholder="Asset Key" bind:text={assetKey} rows="single" />
-
-            {#if assetUrl.loading}
-                <Typography variant="h1" class="mb-4">Loading asset...</Typography>
-            {:else if assetUrl.error}
-                <Typography variant="h1" class="mb-4 text-red-600">
-                    Error loading asset: {assetUrl.error.message}
-                </Typography>
-            {:else}
-                <Typography variant="h1" class="mb-4">
-                    {assetUrl.current}
-                </Typography>
-                <img src={assetUrl.current} alt={assetUrl.current} />
-            {/if}
-        </Stack>
-    </AppContent>
-</App>
+<AppContent layout="centered">
+    <Stack align="center">
+        <TextArea placeholder="Asset Key" rows="single" bind:text={assetKey} class="w-md" />
+        {#if assetUrl.loading}
+            <Typography>Loading asset...</Typography>
+        {:else if assetUrl.error}
+            <Typography class="mb-4 text-red-600">
+                Error loading asset: {assetUrl.error.message}
+            </Typography>
+        {:else}
+            <Typography>
+                {assetUrl.current}
+            </Typography>
+            <img src={assetUrl.current} alt={assetUrl.current} class="max-w-[60%]" />
+        {/if}
+    </Stack>
+</AppContent>

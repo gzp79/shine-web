@@ -18,8 +18,8 @@
     let { children, class: className, layout = 'centered' }: Props = $props();
 
     const layoutClasses: Record<Layout, string> = {
-        fullscreen: '',
-        centered: 'flex items-center justify-center p-4 md:p-8',
+        fullscreen: 'h-screen w-screen overflow-hidden',
+        centered: 'flex flex-col items-center justify-center p-4 md:p-8',
         flow: 'overflow-y-auto p-4 md:p-8'
     };
 
