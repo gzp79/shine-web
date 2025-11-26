@@ -14,6 +14,8 @@ concurrency:
 jobs:
     build:
         runs-on: ubuntu-latest
+        outputs:
+            wrangler_version: ${{ steps.pre_build.outputs.wrangler_version }}
         permissions:
             contents: read
             packages: write
@@ -35,6 +37,7 @@ jobs:
                   cache: 'pnpm'
 
             - name: Pre-build
+              id: pre_build
               env:
                   ASSET_VERSION: ${{ github.sha }}
               run: |
@@ -43,6 +46,8 @@ jobs:
                   pnpm run env:prod
                   pnpm run lint
                   pnpm run check
+                  ver=$(pnpm list wrangler --depth=0 --json 2>/dev/null | jq -r '.[] | (.devDependencies.wrangler.version // .dependencies.wrangler.version) | select(.)' 2>/dev/null | head -n1)
+                  echo "wrangler_version=$ver" >> $GITHUB_OUTPUT
 
             - name: Build
               env:
@@ -73,7 +78,7 @@ jobs:
               if: github.event_name == 'pull_request'
               uses: cloudflare/wrangler-action@v3
               with:
-                  wranglerVersion: '4.42.0'
+                  wranglerVersion: ${{ steps.pre_build.outputs.wrangler_version }}
                   apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
                   accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
                   workingDirectory: ./dist
@@ -102,7 +107,7 @@ jobs:
             - name: Publish website to site
               uses: cloudflare/wrangler-action@v3
               with:
-                  wranglerVersion: '4.42.0'
+                  wranglerVersion: ${{ needs.build.outputs.wrangler_version }}
                   apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
                   accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
                   workingDirectory: ./dist
