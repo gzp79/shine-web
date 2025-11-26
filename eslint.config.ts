@@ -1,6 +1,8 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
 import js from '@eslint/js';
 import stylistic from '@stylistic/eslint-plugin';
 import prettier from 'eslint-config-prettier';
+import storybook from 'eslint-plugin-storybook';
 import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
 import ts from 'typescript-eslint';
@@ -52,6 +54,7 @@ export default [
         }
     },
     {
-        ignores: ['build/', '.svelte-kit/', 'dist/', 'static-generated/']
-    }
+        ignores: ['build/', '.svelte-kit/', 'dist/', 'static-generated/', 'node_modules/', 'storybook-static/']
+    },
+    ...storybook.configs['flat/recommended']
 ];

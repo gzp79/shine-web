@@ -1,9 +1,9 @@
 import { query } from '$app/server';
 import { config } from '@config';
 import z from 'zod';
+import { logResource } from '@lib/loggers';
+import { fetchError } from '@lib/utils';
 import { type ResourceService, ResourceStore } from '@atoms/types/resource.svelte';
-import { logResource } from '../../lib/loggers';
-import { fetchError } from '../../lib/utils';
 
 /// Cache resources on the server for this duration (in milliseconds)
 const ASSET_CACHE_DURATION = 60 * 60 * 1000;

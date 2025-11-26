@@ -19,10 +19,13 @@
     ],
     "importOrder": [
         "<THIRD_PARTY_MODULES>",
+
+        "^\\@storybook-ext/(.*)$",
         "^\\@config/(.*)$",
         "^\\@mocks/(.*)$",
         "^\\@generated/(.*)$",
         "^\\@assets/(.*)$",
+
         "^\\@lib/(.*)$",
         "^\\@atoms/(.*)$",
         "^\\@components/(.*)$",

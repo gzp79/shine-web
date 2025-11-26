@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { identityApi } from '$lib/api/identity-api';
-    import AppContent from '$lib/app/AppContent.svelte';
-    import LoadingCard from '@atoms/LoadingCard.svelte';
-    import Stack from '@atoms/Stack.svelte';
+    import { identityApi } from '@lib/api/identity-api';
+    import Stack from '@atoms/layouts/Stack.svelte';
+    import AppContent from '@components/AppContent.svelte';
+    import LoadingCard from '@components/LoadingCard.svelte';
     import ActiveSessionsCard from '@features/account/ActiveSessionCard.svelte';
     import ActiveTokensCard from '@features/account/ActiveTokenCard.svelte';
     import CurrentUserCard from '@features/account/CurrentUserCard.svelte';
@@ -32,7 +32,7 @@
     linkedIdentityStore.refresh();
 </script>
 
-<AppContent class="px-2 py-8">
+<AppContent layout="flow">
     <Stack spacing={4} align="center">
         {#if getProviders.current}
             <CurrentUserCard />

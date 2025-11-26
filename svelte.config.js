@@ -16,7 +16,8 @@ const config = {
             '@lib': './src/lib',
             '@atoms': './src/atoms',
             '@components': './src/components',
-            '@features': './src/features'
+            '@features': './src/features',
+            '@storybook-ext': './src/storybook'
         },
         experimental: {
             remoteFunctions: true

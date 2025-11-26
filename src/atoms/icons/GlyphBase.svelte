@@ -1,23 +1,23 @@
 <script lang="ts" module>
+    import type { Snippet } from 'svelte';
+    import { twMerge } from 'tailwind-merge';
+    import TailwindClasses from '../utilities/TailwindClasses.svelte';
+    import type { IconSize } from './types';
+
     export interface GlyphProps {
-        size?: Size;
+        size?: IconSize;
         disabled?: boolean;
         class?: string;
     }
 </script>
 
 <script lang="ts">
-    import type { Snippet } from 'svelte';
-    import { twMerge } from 'tailwind-merge';
-    import TailwindClasses from '../TailwindClasses.svelte';
-    import type { Size } from '../types';
-
     interface Props extends GlyphProps {
         viewBox: number[];
         children: Snippet;
     }
 
-    let { size, disabled = false, class: className, viewBox, children }: Props = $props();
+    let { size = 'full', disabled = false, class: className, viewBox, children }: Props = $props();
     let svgClass = $derived(
         twMerge(
             size ? `icon-${size}` : 'w-auto h-full',

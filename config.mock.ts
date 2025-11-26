@@ -1,4 +1,4 @@
-// Local web pages with mocked services
+// Local web pages with mocked services for vitest
 
 export const config = {
     environment: 'mock',

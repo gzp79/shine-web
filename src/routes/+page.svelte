@@ -1,21 +1,8 @@
 <script lang="ts">
-    import App from '$lib/app/App.svelte';
-    import AppContent from '$lib/app/AppContent.svelte';
-    import Button from '@atoms/Button.svelte';
+    import Button from '@atoms/inputs/Button.svelte';
+    import AppContent from '@components/AppContent.svelte';
 </script>
 
-<App>
-    <AppContent class="flex items-center justify-center">
-        <Button href="/game" preload="code" color="secondary" size="lg">Play</Button>
-        <Button
-            href="/design"
-            preload="disable"
-            variant="outline"
-            color="surface"
-            size="xs"
-            class="absolute bottom-4 right-4"
-        >
-            Design
-        </Button>
-    </AppContent>
-</App>
+<AppContent layout="centered">
+    <Button href="/game" preload="code" color="secondary" size="lg">Play</Button>
+</AppContent>

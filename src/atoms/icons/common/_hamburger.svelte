@@ -4,7 +4,7 @@
     let props: IconProps = $props();
 </script>
 
-<IconBase viewBox={[0, 0, 117, 83]} {...props}>
+<IconBase viewBox={[-10, -20, 137, 123]} {...props}>
     <path
         fill-opacity={TRANSPARENCY}
         stroke-width="4%"

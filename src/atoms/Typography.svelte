@@ -1,23 +1,32 @@
 <script lang="ts" module>
+    import type { Snippet } from 'svelte';
+    import { twMerge } from 'tailwind-merge';
+
     export type Variant = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'text' | 'footnote' | 'code' | 'legend';
     export type Weight = 'normal' | 'emphasis' | 'bold';
 </script>
 
 <script lang="ts">
-    import type { Snippet } from 'svelte';
-    import { twMerge } from 'tailwind-merge';
-
     interface Props {
-        variant: Variant;
+        variant?: Variant;
         element?: string;
 
         underline?: boolean;
         weight?: Weight;
+        italic?: boolean;
         class?: string;
 
         children: Snippet;
     }
-    let { variant, element, underline, weight = 'normal', class: className, children }: Props = $props();
+    let {
+        variant = 'text',
+        element,
+        underline,
+        weight = 'normal',
+        italic,
+        class: className,
+        children
+    }: Props = $props();
 
     let variantElement = {
         h1: 'h1',
@@ -40,7 +49,7 @@
         h4: `text-xl ${sharedHClasses}`,
         h5: `text-lg ${sharedHClasses}`,
         h6: `text-base ${sharedHClasses}`,
-        text: 'text-base',
+        text: 'text-base text-justify',
         footnote: 'text-sm',
         code: 'text-sm',
         legend: 'text-base'
@@ -54,7 +63,7 @@
 
     let el = $derived(element ?? variantElement[variant]);
     let textClass = $derived(
-        twMerge(variantClasses[variant], weightClasses[weight], underline && 'underline', className)
+        twMerge(variantClasses[variant], weightClasses[weight], underline && 'underline', italic && 'italic', className)
     );
 </script>
 

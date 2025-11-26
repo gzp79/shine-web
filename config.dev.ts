@@ -1,3 +1,5 @@
+// Local web pages with real services
+
 export const config = {
     environment: 'dev',
 

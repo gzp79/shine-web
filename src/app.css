@@ -8,6 +8,12 @@ Color helper:
 */
 
 @theme {
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 480px;
+    --breakpoint-md: 640px;
+    --breakpoint-lg: 768px;
+    --breakpoint-xl: 1280px;
+
     --color-*: initial;
 
     --color-surface: #ffffff;
@@ -232,6 +238,9 @@ Color helper:
     .icon-lg {
         @apply h-12 w-12;
     }
+    .icon-full {
+        @apply h-full max-h-full w-full max-w-full;
+    }
     .min-icon-xs {
         @apply min-h-4 min-w-4;
     }
@@ -284,28 +293,36 @@ Color helper:
             @apply px-4 py-3 align-middle;
         }
     }
-    .table-xs :not(thead):not(tfoot) tr {
+    .table-xs > :not(thead):not(tfoot) > tr {
         @apply text-xs;
     }
-    .table-xs :where(th, td) {
+    .table-xs > tbody > tr > :where(th, td),
+    .table-xs > thead > tr > :where(th, td),
+    .table-xs > tfoot > tr > :where(th, td) {
         @apply px-1 py-1;
     }
-    .table-sm :not(thead):not(tfoot) tr {
+    .table-sm > :not(thead):not(tfoot) > tr {
         @apply text-sm;
     }
-    .table-sm :where(th, td) {
+    .table-sm > tbody > tr > :where(th, td),
+    .table-sm > thead > tr > :where(th, td),
+    .table-sm > tfoot > tr > :where(th, td) {
         @apply px-2 py-1.5;
     }
-    .table-md :not(thead):not(tfoot) tr {
+    .table-md > :not(thead):not(tfoot) > tr {
         @apply text-sm;
     }
-    .table-md :where(th, td) {
+    .table-md > tbody > tr > :where(th, td),
+    .table-md > thead > tr > :where(th, td),
+    .table-md > tfoot > tr > :where(th, td) {
         @apply px-3 py-2;
     }
-    .table-lg :not(thead):not(tfoot) tr {
+    .table-lg > :not(thead):not(tfoot) > tr {
         @apply text-base;
     }
-    .table-lg :where(th, td) {
+    .table-lg > tbody > tr > :where(th, td),
+    .table-lg > thead > tr > :where(th, td),
+    .table-lg > tfoot > tr > :where(th, td) {
         @apply px-4 py-3;
     }
 }

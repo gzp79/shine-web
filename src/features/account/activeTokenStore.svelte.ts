@@ -1,5 +1,5 @@
 import { getContext, setContext } from 'svelte';
-import { type ActiveToken } from '@lib/api/identity-api';
+import { type ActiveToken, identityApi } from '@lib/api/identity-api';
 import { type ResourceService, ResourceStore } from '@atoms/types/resource.svelte';
 
 export interface ActiveTokenService extends ResourceService<ActiveToken[]> {
@@ -24,14 +24,21 @@ const contextKey = Symbol('activeTokenStore');
 
 export function setActiveTokenStore(dataService: ActiveTokenService): ActiveTokenStore {
     const store = new ActiveTokenStore(dataService);
-    setContext(contextKey, () => store);
+    setContext(contextKey, store);
     return store;
 }
 
+export function setDefaultActiveTokenStore(): ActiveTokenStore {
+    return setActiveTokenStore({
+        load: () => identityApi.getActiveTokens(),
+        revoke: (tokenHash: string) => identityApi.revokeToken(tokenHash)
+    });
+}
+
 export function getActiveTokenStore(): ActiveTokenStore {
-    const store = getContext<() => ActiveTokenStore>(contextKey);
+    const store = getContext<ActiveTokenStore>(contextKey);
     if (!store) {
         throw new Error('ActiveTokenStore not found, missing call to setActiveTokenStore');
     }
-    return store();
+    return store;
 }

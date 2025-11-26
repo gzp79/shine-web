@@ -6,3 +6,4 @@ yarn.lock
 src/components/atoms/svg/_parser.js
 src/generated
 static-generated
+storybook-static

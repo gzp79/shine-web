@@ -1,30 +1,30 @@
 <script lang="ts">
     import { page } from '$app/state';
-    import { identityApi } from '$lib/api/identity-api';
-    import App from '$lib/app/App.svelte';
-    import AppContent from '$lib/app/AppContent.svelte';
-    import { t } from '$lib/i18n/i18n.svelte';
-    import { logUser } from '$lib/loggers';
     import { config } from '@config';
-    import Box from '@atoms/Box.svelte';
-    import Button from '@atoms/Button.svelte';
-    import Modal from '@atoms/Modal.svelte';
-    import Stack from '@atoms/Stack.svelte';
-    import Toggle from '@atoms/Toggle.svelte';
+    import { identityApi } from '@lib/api/identity-api';
+    import { t } from '@lib/i18n/i18n.svelte';
+    import { logUser } from '@lib/loggers';
     import Typography from '@atoms/Typography.svelte';
     import Logo from '@atoms/icons/Logo.svelte';
     import { Dots } from '@atoms/icons/animated';
+    import Button from '@atoms/inputs/Button.svelte';
+    import Toggle from '@atoms/inputs/Toggle.svelte';
+    import ValidatedTextArea from '@atoms/inputs/ValidatedTextArea.svelte';
+    import Box from '@atoms/layouts/Box.svelte';
+    import Modal from '@atoms/layouts/Modal.svelte';
+    import Stack from '@atoms/layouts/Stack.svelte';
     import { afterBFCacheRestore } from '@atoms/types/bfcache';
     import { EmailSchema } from '@atoms/types/validator';
+    import AppContent from '@components/AppContent.svelte';
     import ErrorCard from '@components/ErrorCard.svelte';
     import Turnstile from '@components/Turnstile.svelte';
-    import ValidatedTextArea from '@components/ValidatedTextArea.svelte';
-    import { setDefaultCurrentUserStore } from '@features/account/currentUser.svelte';
+    import { setDefaultCurrentUserStore } from '@features/account/currentUserStore.svelte';
     import { getExternalLoginProviders, getSanitizedReturnUrl } from '@features/account/providers.remote';
     import { providerIcon } from '@features/account/providers.svelte';
     import { getAssetUrls } from '@features/assets/assets.remote';
 
     let currentUserStore = setDefaultCurrentUserStore();
+    currentUserStore.refresh();
 
     let prompt = $derived(page.url.searchParams.get('prompt'));
     let returnUrl = $derived.by(() => {
@@ -110,167 +110,142 @@
         }
     });
 
-    $effect(() => {
-        currentUserStore.refresh();
-    });
     afterBFCacheRestore(() => {
         currentUserStore.refresh({ force: true });
     });
 </script>
 
-<App>
-    <AppContent>
-        {#if currentUserStore.isError}
-            <ErrorCard caption={$t('account.failedToLoadUserInfo')} error={currentUserStore.error}>
-                {#snippet actions()}
-                    <Button onclick={() => currentUserStore.refresh({ force: true })}>{$t('common.retry')}</Button>
-                {/snippet}
-            </ErrorCard>
-        {:else}
-            <div class="relative flex flex-col h-full">
-                {#await getAssetUrls(['loginBackground', 'loginBackground_alt']) then backgroundUrls}
-                    <div
-                        class="absolute pointer-events-none left-0 top-0 size-full bg-cover bg-center bg-no-repeat opacity-[0.25]"
-                        style="background-image: {backgroundUrls.map((url) => `url('${url}')`).join(', ')};"
-                    ></div>
-                {/await}
+<AppContent layout="fullscreen">
+    {#if currentUserStore.isError}
+        <ErrorCard caption={$t('account.failedToLoadUserInfo')} error={currentUserStore.error}>
+            {#snippet actions()}
+                <Button onclick={() => currentUserStore.refresh({ force: true })}>{$t('common.retry')}</Button>
+            {/snippet}
+        </ErrorCard>
+    {:else}
+        {#await getAssetUrls(['loginBackground', 'loginBackground_alt']) then backgroundUrls}
+            <div
+                class="absolute pointer-events-none left-0 top-0 size-full bg-cover bg-center bg-no-repeat opacity-[0.25]"
+                style="background-image: {backgroundUrls.map((url) => `url('${url}')`).join(', ')};"
+            ></div>
+        {/await}
 
-                <Logo class="h-[20%] w-full shrink-0 fill-current p-4 text-on-surface" />
+        <Logo class="h-[20vh] lg:h-[20vh] w-full shrink-0 fill-current p-4 text-on-surface" />
 
-                <div
-                    class="flex flex-col h-[80%] p-4 gap-2 overflow-hidden
-                            md:flex-row"
-                >
-                    <div
-                        class="flex flex-col w-full shrink-0 items-center p-2
-                                md:h-[80%] md:w-auto md:flex-1 md:max-w-[70%] md:items-start"
-                    >
-                        <Typography variant="h1" class="hidden md:block">{$t('login.title')}</Typography>
-                        {#if extraInfo.loginText}
-                            <Typography variant="h3" class="px-4">{extraInfo.loginText}</Typography>
-                        {:else}
-                            <Typography variant="h2" class="md:hidden">{$t('login.title')}</Typography>
-                        {/if}
-                        <!-- <div
-                            class="rounded border w-[80%] max-w-[600px] aspect-video ms-16 mt-16 my-auto overflow-hidden hidden md:block"
-                        >                           
+        <Stack direction={{ xs: 'column', lg: 'row' }} spacing={0}>
+            <Stack
+                class="w-full shrink-0 p-2 lg:flex-1 lg:max-w-[70vw] lg:h-[70vh] lg:w-auto"
+                justify={{ xs: 'center', lg: 'start' }}
+                align={{ xs: 'center', lg: 'start' }}
+            >
+                <Typography variant="h1" class="hidden lg:block">{$t('login.title')}</Typography>
+                <Typography variant="h3" class="hidden lg:block px-4">{extraInfo.loginText}</Typography>
+                <Typography variant="h5" class="lg:hidden">{extraInfo.loginText ?? $t('login.title')}</Typography>
+                <!-- <div
+                            class="rounded border w-[80%] max-w-[600px] aspect-video ms-16 mt-16 my-auto overflow-hidden hidden lg:block"
+                        >
                         </div> -->
-                    </div>
+            </Stack>
 
-                    <div
-                        class="flex flex-col max-h-[60%] p-2 overflow-hidden items-center
-                               md:flex-none md:self-center"
-                    >
-                        <Box border class="overflow-y-auto max-h-min">
-                            <div class="flex flex-col gap-2 items-center py-2">
+            <Stack align="center" justify={{ xs: 'start', lg: 'center' }}>
+                <Box border padding={0} overflow="y" class="max-h-[40vh] lg:max-h-[55vh]">
+                    <Stack class="m-4">
+                        <Button
+                            color="secondary"
+                            wide
+                            disabled={!captcha}
+                            onclick={emailLogin}
+                            startIcon={providerIcon('email')}
+                            class="m-2"
+                        >
+                            {$t('login.email')}
+                        </Button>
+                        {#if providers && returnUrl}
+                            {#each providers as provider (provider)}
                                 <Button
                                     color="secondary"
                                     wide
                                     disabled={!captcha}
-                                    onclick={emailLogin}
-                                    startIcon={providerIcon('email')}
+                                    href={identityApi.getExternalLoginUrl(provider, rememberMe, captcha, returnUrl)}
+                                    startIcon={providerIcon(provider)}
                                     class="m-2"
                                 >
-                                    {$t('login.email')}
+                                    {provider}
                                 </Button>
-                                {#if providers && returnUrl}
-                                    {#each providers as provider (provider)}
-                                        <Button
-                                            color="secondary"
-                                            wide
-                                            disabled={!captcha}
-                                            href={identityApi.getExternalLoginUrl(
-                                                provider,
-                                                rememberMe,
-                                                captcha,
-                                                returnUrl
-                                            )}
-                                            startIcon={providerIcon(provider)}
-                                            class="m-2"
-                                        >
-                                            {provider}
-                                        </Button>
-                                    {/each}
-                                {/if}
-                            </div>
-                        </Box>
+                            {/each}
+                        {/if}
+                    </Stack>
+                </Box>
 
-                        <div class="pt-2 shrink-0">
-                            <Toggle bind:value={rememberMe} onLabel={$t('login.rememberMe')} />
-                        </div>
-                    </div>
+                <Toggle bind:value={rememberMe} onLabel={$t('login.rememberMe')} />
+            </Stack>
 
-                    {#if currentUserStore.isAuthenticated || extraInfo.allowGuest}
-                        <div class="mx-2 h-[80%] w-0 self-center border-l border-on-surface hidden md:block"></div>
-                        <div class="my-2 w-[80%] h-0 self-center border-t border-on-surface block md:hidden"></div>
+            {#if currentUserStore.isAuthenticated || extraInfo.allowGuest}
+                <div class="ms-4 h-auto w-px bg-on-surface hidden lg:block"></div>
+                <div class="my-4 self-center w-[80vw] h-px bg-on-surface block lg:hidden"></div>
 
-                        <div
-                            class="flex flex-col gap-2 bg-gray-200 p-2 rounded shrink-0 items-center
-                                    md:self-center"
-                        >
-                            {#if currentUserStore.isAuthenticated}
-                                <Button
-                                    color="secondary"
-                                    disabled={!captcha}
-                                    href={returnUrl}
-                                    startIcon={providerIcon('continue')}
-                                    class="m-2"
-                                >
-                                    {currentUserStore.content.name}
-                                </Button>
-                            {/if}
-
-                            {#if extraInfo.allowGuest && returnUrl}
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    disabled={!captcha}
-                                    href={identityApi.getGuestLoginUrl(captcha, returnUrl)}
-                                    startIcon={providerIcon('guest')}
-                                    class="m-2"
-                                >
-                                    {$t('login.guest')}
-                                </Button>
-                            {/if}
-                        </div>
-                    {/if}
-                </div>
-            </div>
-
-            <Modal hideOnClose isOpen={showLoading} class="bg-info text-on-info">
-                <Stack>
-                    <Typography variant="h3">
-                        {$t('login.loadingCaptcha')}
-                        <Dots class="inline-block h-8 w-8" />
-                    </Typography>
-                    {#if hasCaptcha}
-                        <Turnstile siteKey={config.turnstile.siteKey} size="normal" bind:token={captcha} />
-                    {/if}
-                </Stack>
-            </Modal>
-
-            <Modal isOpen={!showLoading && showEmailInput} caption={$t('login.emailModalTitle')}>
-                <Stack>
-                    <ValidatedTextArea
-                        rows="single"
-                        placeholder={$t('account.emailModal.update.newEmail')}
-                        class="w-full"
-                        validate={EmailSchema}
-                        bind:text={email}
-                        bind:valid={isEmailValid}
-                    />
-                    <Stack direction="row" spacing={1} class="justify-end">
-                        <Button onclick={() => (showEmailInput = false)}>{$t('common.cancel')}</Button>
+                <Stack direction="column" justify="center" align="center">
+                    {#if currentUserStore.isAuthenticated}
                         <Button
                             color="secondary"
-                            disabled={!isEmailValid}
-                            href={identityApi.getEmailLoginUrl(email, rememberMe, captcha, returnUrl!)}
+                            disabled={!captcha}
+                            href={returnUrl}
+                            startIcon={providerIcon('continue')}
+                            class="m-2"
                         >
-                            {$t('login.emailModalContinue')}
+                            {currentUserStore.content.name}
                         </Button>
-                    </Stack>
+                    {/if}
+
+                    {#if extraInfo.allowGuest && returnUrl}
+                        <Button
+                            variant="outline"
+                            size="sm"
+                            disabled={!captcha}
+                            href={identityApi.getGuestLoginUrl(captcha, returnUrl)}
+                            startIcon={providerIcon('guest')}
+                            class="m-2"
+                        >
+                            {$t('login.guest')}
+                        </Button>
+                    {/if}
                 </Stack>
-            </Modal>
-        {/if}
-    </AppContent>
-</App>
+            {/if}
+        </Stack>
+
+        <Modal width="fit" hideOnClose open={showLoading} class="bg-info text-on-info">
+            <Stack align="center">
+                <Typography variant="h3">
+                    {$t('login.loadingCaptcha')}
+                    <Dots size="md" class="inline-block" />
+                </Typography>
+                {#if hasCaptcha}
+                    <Turnstile siteKey={config.turnstile.siteKey} size="normal" bind:token={captcha} />
+                {/if}
+            </Stack>
+        </Modal>
+
+        <Modal open={!showLoading && showEmailInput} caption={$t('login.emailModalTitle')}>
+            <Stack>
+                <ValidatedTextArea
+                    rows="single"
+                    placeholder={$t('account.emailModal.update.newEmail')}
+                    class="w-full"
+                    validate={EmailSchema}
+                    bind:text={email}
+                    bind:valid={isEmailValid}
+                />
+                <Stack direction="row" spacing={1} class="justify-end">
+                    <Button onclick={() => (showEmailInput = false)}>{$t('common.cancel')}</Button>
+                    <Button
+                        color="secondary"
+                        disabled={!isEmailValid}
+                        href={identityApi.getEmailLoginUrl(email, rememberMe, captcha, returnUrl!)}
+                    >
+                        {$t('login.emailModalContinue')}
+                    </Button>
+                </Stack>
+            </Stack>
+        </Modal>
+    {/if}
+</AppContent>

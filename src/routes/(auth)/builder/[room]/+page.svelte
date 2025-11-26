@@ -1,11 +1,11 @@
 <script lang="ts">
     import { page } from '$app/state';
-    import { builderApi } from '$lib/api/builder-api';
     import { onMount } from 'svelte';
-    import Button from '@atoms/Button.svelte';
-    import InputGroup from '@atoms/InputGroup.svelte';
-    import TextArea from '@atoms/TextArea.svelte';
+    import { builderApi } from '@lib/api/builder-api';
     import Typography from '@atoms/Typography.svelte';
+    import Button from '@atoms/inputs/Button.svelte';
+    import InputGroup from '@atoms/inputs/InputGroup.svelte';
+    import TextArea from '@atoms/inputs/TextArea.svelte';
 
     type ChatMessage = {
         from: string;
@@ -69,7 +69,7 @@
 <Typography variant="h1">Room: {room}</Typography>
 
 <InputGroup class="w-full">
-    <TextArea placeholder="Text..." rows={3} disabled={!isConnected} onEnter={sendMessage} bind:text={currentMessage} />
+    <TextArea placeholder="Text..." rows={3} disabled={!isConnected} onenter={sendMessage} bind:text={currentMessage} />
     {#if isConnected}
         <Button onclick={sendMessage}>Send</Button>
     {:else}

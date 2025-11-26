@@ -3,7 +3,7 @@
         "NODE_ENV": "dev"
     },
 
-    "cSpell.words": ["crossenv", "daisyui", "endregion", "hoverable", "scytta", "tailwindcss"],
+    "cSpell.words": ["autodocs", "crossenv", "daisyui", "endregion", "hoverable", "scytta", "tailwindcss"],
     "cSpell.ignorePaths": ["/static/_headers"],
     "i18n-ally.localesPaths": ["./src/translations"],
     "i18n-ally.namespace": true,

@@ -1,13 +1,14 @@
 <script lang="ts">
-    import type { ActiveToken } from '$lib/api/identity-api';
-    import { t } from '$lib/i18n/i18n.svelte';
-    import { formatLocation } from '$lib/i18n/utils';
-    import Button from '@atoms/Button.svelte';
-    import Card from '@atoms/Card.svelte';
-    import KeyValueTable from '@atoms/KeyValueTable.svelte';
+    import type { ActiveToken } from '@lib/api/identity-api';
+    import { t } from '@lib/i18n/i18n.svelte';
+    import { formatLocation } from '@lib/i18n/utils';
+    import PropertyList from '@atoms/data/PropertyList.svelte';
+    import Button from '@atoms/inputs/Button.svelte';
+    import Card from '@atoms/layouts/Card.svelte';
     import { getActiveTokenStore } from './activeTokenStore.svelte';
 
     interface Props {
+        /** Active token information */
         token: ActiveToken;
     }
     const { token }: Props = $props();
@@ -21,13 +22,13 @@
 </script>
 
 <Card width="full">
-    <KeyValueTable
+    <PropertyList
         size="xs"
         items={[
             {
                 key: $t('account.tokenHash'),
                 value: token.tokenHash,
-                class: 'break-all'
+                valueClass: 'break-all'
             },
             {
                 key: $t('account.tokenKind'),
@@ -36,7 +37,7 @@
             {
                 key: $t('account.activeStatus'),
                 value: token.isExpired ? $t('account.expired') : $t('account.active'),
-                class: token.isExpired ? 'bg-warning text-on-warning px-1' : ''
+                valueClass: token.isExpired ? 'bg-warning text-on-warning px-1 inline-block' : ''
             },
             {
                 key: $t('account.creationDate'),
